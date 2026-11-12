@@ -19,6 +19,7 @@ const push = (x, z, y) => { if(x<X0||x>X1||z<Z0||z>Z1)return; const k = key(x, z
 PL.x = 0; PL.z = 58; PL.y = .5; PL.sit = null; settle(); 
 const stairsDone = new Set();
 let X0=1e9,X1=-1e9,Z0=1e9,Z1=-1e9;for(const b of B.slice(1))for(const k of b.boxes){X0=Math.min(X0,k.x0);X1=Math.max(X1,k.x1);Z0=Math.min(Z0,k.z0);Z1=Math.max(Z1,k.z1)}
+for(const r of v.vr||[]){X0=Math.min(X0,r.x0);X1=Math.max(X1,r.x1);Z0=Math.min(Z0,r.z0);Z1=Math.max(Z1,r.z1)}
 X0-=8;X1+=8;Z0-=8;Z1=Math.max(Z1+8,60);push(0, 58, PL.y);
 const LIMIT = 4000000; let n = 0;
 while (n < q.length && n < LIMIT) {
@@ -38,6 +39,7 @@ while (n < q.length && n < LIMIT) {
 // which rooms were stood in
 const rooms = [];
 for (const b of B.slice(1)) for (const R of b.rooms) rooms.push({b: b.name, n: R.n, x0: R.x0, x1: R.x1, z0: R.z0, z1: R.z1, y0: R.y, y1: (R.yt != null ? R.yt : R.y + 6), hit: 0});
+for (const R of v.vr || []) rooms.push({b: 'The villages', n: R.n, x0: R.x0, x1: R.x1, z0: R.z0, z1: R.z1, y0: R.y, y1: R.yt, hit: 0});
 for (const k of seen) {
   const [x, z, y2] = k.split(',').map(Number), y = y2 / 2;
   for (const R of rooms) if (!R.hit && x > R.x0 && x < R.x1 && z > R.z0 && z < R.z1 && y >= R.y0 && y < R.y1) R.hit = 1;
@@ -63,7 +65,7 @@ def main(folder, page='index.html', mode=''):
         print('  MISSED', m)
     if errors:
         print('page errors:', errors)
-    ok = (r['hit'] == r['total'] or mode == 'walk') and not errors and not r['capped']
+    ok = r['hit'] == r['total'] and not errors and not r['capped']
     if mode == 'walk': print('WALK-ONLY (no Upstairs button): %d of %d' % (r['hit'], r['total']))
     print('REACH TEST', 'PASS' if ok else 'FAIL')
     return ok

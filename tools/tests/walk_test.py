@@ -109,6 +109,14 @@ def main(folder, page='index.html'):
             check('halls dressed', h and h['halls'] >= 60 and h['pieces'] >= 1500, str(h))
             o = pg.evaluate("() => [[30,-18,8],[22,-18,8],[20,-23,8],[-33,-22,8],[-22,-22,8],[-20,-24,8],[24,-40,18],[22,-40,18],[-24,-38,18]].filter(([x,z,y]) => __vx.G(x,y,z) || __vx.G(x,y+1,z) || !__vx.G(x,y-1,z)).length")
             check('stair halls open', o == 0, '%d cells blocked' % o)
+        # v1.12 checks
+        if pg.evaluate('() => typeof __vx.grove') == 'function':
+            pg.wait_for_function('() => __vx.grove().ready >= 22', timeout=120000)
+            g = pg.evaluate('() => __vx.grove()'); f = pg.evaluate('() => __vx.flowers()')
+            check('kit trees planted and grown', g['trees'] > 600 and g['ready'] >= 22, str(g))
+            check('flower beds planted', f and f['plants'] > 1500, str(f))
+            check('village rooms', pg.evaluate('() => __vx.vr.length') >= 100, str(pg.evaluate('() => __vx.vr.length')))
+            check('map grown', pg.evaluate('() => [[0, 370], [280, 0], [-280, 100], [0, -280]].every(([x, z]) => [0, 1, 2, 3, 4].some(y => __vx.G(x, y, z) !== 0))'))
         pg.evaluate(TAP, 'bBack')
         check('back to overview', pg.evaluate("() => !document.getElementById('walk').classList.contains('on')"))
         pg.wait_for_timeout(1500)
