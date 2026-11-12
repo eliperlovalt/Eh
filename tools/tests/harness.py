@@ -1,0 +1,50 @@
+"""Shared harness: serve a folder, open the Estate in headless Chromium with
+three.js routed to the local npm copy, and collect page errors."""
+import contextlib, functools, http.server, os, socketserver, threading
+
+THREE = '/home/claude/tools/node_modules/three'
+CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0/'
+
+
+class _Quiet(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, *a):
+        pass
+
+
+@contextlib.contextmanager
+def serve(folder):
+    h = functools.partial(_Quiet, directory=folder)
+    socketserver.TCPServer.allow_reuse_address = True
+    srv = socketserver.ThreadingTCPServer(('127.0.0.1', 0), h)
+    t = threading.Thread(target=srv.serve_forever, daemon=True)
+    t.start()
+    try:
+        yield 'http://127.0.0.1:%d/' % srv.server_address[1]
+    finally:
+        srv.shutdown()
+
+
+def _route(route):
+    url = route.request.url
+    if url.startswith(CDN):
+        path = os.path.join(THREE, url[len(CDN):].split('?')[0])
+        if os.path.isfile(path):
+            return route.fulfill(path=path, content_type='application/javascript')
+        return route.fulfill(status=404, body='')
+    if url.startswith('http://127.0.0.1'):
+        return route.continue_()
+    return route.abort()  # fonts, worker, anything else outside
+
+
+def open_estate(p, base, page='index.html', w=844, h=390, timeout=180000):
+    browser = p.chromium.launch(args=['--use-gl=angle', '--use-angle=swiftshader',
+                                      '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])
+    ctx = browser.new_context(viewport={'width': w, 'height': h}, has_touch=True,
+                              is_mobile=False, device_scale_factor=1)
+    pg = ctx.new_page()
+    errors = []
+    pg.on('pageerror', lambda e: errors.append(str(e)))
+    pg.route('**/*', _route)
+    pg.goto(base + page, wait_until='domcontentloaded', timeout=timeout)
+    pg.wait_for_function('window.__vx && window.__vx.BLD', timeout=timeout)
+    return browser, pg, errors
