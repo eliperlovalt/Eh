@@ -37,7 +37,7 @@ def _route(route):
 
 
 def open_estate(p, base, page='index.html', w=844, h=390, timeout=180000):
-    browser = p.chromium.launch(args=['--use-gl=angle', '--use-angle=swiftshader',
+    browser = p.chromium.launch(executable_path=(os.environ.get('CHROME') or None), args=['--no-sandbox','--use-gl=angle', '--use-angle=swiftshader',
                                       '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])
     ctx = browser.new_context(viewport={'width': w, 'height': h}, has_touch=True,
                               is_mobile=False, device_scale_factor=1)

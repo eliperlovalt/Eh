@@ -10,6 +10,8 @@ This repo's `index.html` is that source built for the phone by `build.py`.
 - `tests/ftime.py BASE NEW`: software frame times at fixed spots, one build after the other.
 - `tests/ftime2.py BASE NEW [spots]`: the same, both builds open at once and timed in turn. It read about 4% either way on one build against itself, so it is a rough guide only.
 - `tests/ftime3.py BASE NEW [spots] [repeats]`: one build on screen at a time, the builds taken in turn, the median frame at each spot and the best of the repeats. Use this one to decide.
+- `tests/audit_test.py FOLDER`: doors, rugs and wall pieces, measured from the built world by `tests/audit.js`. Every door is found and its approach checked: no free-standing piece within two blocks of the door line, no wall piece hanging into the opening. No two rugs overlap at one height, none lies over a hole or through a wall. The lower edge of every hung piece sits above a third of its wall. Doors crowded by the building itself (a column, a stair) are listed by name in `KNOWN` as awaiting the floor plan; a new one fails the test.
+- `tests/dump.py FOLDER OUT.json` then `tests/plan.py OUT.json BUILDING FLOOR_Y OUT.png [x0,z0,x1,z1]`: a drawn plan of one floor with every room, door, rug and piece on it.
 - `tests/wshots.py FOLDER '[[name,x,y,z,yaw,pitch],...]' [day|dusk|night] [prefix]`: screenshots at fixed spots.
 
 The Depot's parts (seasons.js, trees.js, flowers.js) are embedded whole in the source inside `function KITS()`. To take a newer Depot part, replace its text there; nothing else in it is edited.
@@ -19,4 +21,16 @@ Since v1.14:
 - The window frames (`buildWindowDetail`) are the two broad faces of each bar, cut into 64-block pieces, and a piece more than about 125 blocks off is not drawn. That took a third of a million triangles out of the estate.
 - The grand flights and both terrace flights are climbed on unseen one-block steps (`flight2`) and drawn as fine stairs with strings, balusters, rails and newels (`buildStairs`). The walker is drawn on the slope (`stairRamp`).
 
-Run the walk test and the reach test before every push.
+Since v1.15:
+- `settle()` runs once everything is placed and before anything is drawn. It owns four rules; fix a fault there, at the root, not at the place that tripped it.
+  - Rugs (`settleRugs`): one height (floor + .58; the floor finish is at + .53, the pools of lamplight at + .65). Two rugs that overlap by a strip share it. A rug is cut back to the largest clear rectangle: not over another rug, a hole, a wall or a stair and its approaches. A rug squeezed out of shape is rewoven.
+  - Wall pieces (`settleHang`): portrait, tapestry, sconce, antlers, banner, coat of arms, wall lantern and picture rail rise until the lower edge is a third of the way up the wall. Notice boards, key cabinets and racks stay at hand height. A piece with no wall to rise on goes.
+  - Upper walls (`settleUpper`): state rooms nine blocks tall or more get an upper row from the pieces the Estate already has.
+  - Doors (`settleDoors`, `settlePlants`): whatever still stands within two blocks of a door line, or hangs into an opening, is taken out. Plants move to a free corner.
+- Wall runs (`K.tile` without a `test`) are laid one unbroken stretch of wall at a time, with a cut bay to finish, so no bay crosses a door or a window.
+- `K.windows` gives a sash no curtains when a door is within their reach (`_bare`), and no sash when the frame itself would cross the door.
+- `placeLamp` keeps lamp posts off the approach to every outside door (`doorway`).
+- The Saloon gallery floor runs three blocks out over the colonnade, so the columns carry it. The rail stands on the new edge.
+- The harness takes the browser from `CHROME=/path/to/chrome` when Playwright's own Chromium is not installed.
+
+Run the walk test, the reach test and the audit test before every push.
