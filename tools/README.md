@@ -46,4 +46,11 @@ Since v1.17 (Andy's Notes, second batch):
 - The werewolf: a dark hound at 2.4 scale on a `route` along the north-east outer forest (`spawnAnimals`).
 - The Great Oak is the Great Cedar: the estate's largest cedar until the Depot makes the tree built for lights.
 
+Since v1.18 (the Depot's contours, v15):
+- `ornament.js` and `contours.js` are embedded whole in `KITS()`, before `treeMesh`. To take a newer Depot issue, replace their text there; nothing in them is edited.
+- `fitContours` dresses the nine estate buildings one a slice after the first frame (`CSTYLE` maps names to styles; the Hall gets the wings as neighbours and both terraces as existing, the wings get the Hall). Colours go to linear with `s2l`, as the trees' do. `skinStep` swaps near and far at 115 blocks and hides a building's skin while it is opened. The skin casts no shadows.
+- On each dressed building the Estate's own window bars are put away (`g.gone`), and the kit's `solids` (portico piers, buttresses) become unseen blocks. The old south porch is not built.
+- The wall rule is replayed (no `openings` passed). The triangle counts match the Depot's table exactly, which shows the walls still follow that rule. `__vx.windows()` reads the real list from the built walls; it is filed as `windows.json`.
+- Not yet fitted: the 32 village houses.
+
 Run the walk test, the reach test and the audit test before every push.
