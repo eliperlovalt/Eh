@@ -33,4 +33,11 @@ Since v1.15:
 - The Saloon gallery floor runs three blocks out over the colonnade, so the columns carry it. The rail stands on the new edge.
 - The harness takes the browser from `CHROME=/path/to/chrome` when Playwright's own Chromium is not installed.
 
+Since v1.16 (Andy's Notes, first batch; the full list and its status is the doc "Andy's Notes"):
+- `URLS.globe` is the newest Globe. Every globe in a room opens it (`wireRecords`); the Seeing Stone opens `URLS.golem`.
+- The Glasshouse is the Greenhouse, in the source and in estate-plan.json.
+- The light court over the Saloon is glazed at y 38 and stone beams at y 37 carry the tower. No rug lies on glass. `settleCeil` removes a lantern or chandelier with no ceiling over it.
+- The park wall is eight blocks high. Ground beside every road is flat for three blocks, then rises one in three (the pass after `baseH`).
+- Flight rises and sinks at 35 blocks a second. `LOOKS` scales the look speed (the Look button; saved as `euph_look`). The pointer is two inline SVG cursors in the first style rules.
+
 Run the walk test, the reach test and the audit test before every push.
