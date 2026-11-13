@@ -40,4 +40,10 @@ Since v1.16 (Andy's Notes, first batch; the full list and its status is the doc 
 - The park wall is eight blocks high. Ground beside every road is flat for three blocks, then rises one in three (the pass after `baseH`).
 - Flight rises and sinks at 35 blocks a second. `LOOKS` scales the look speed (the Look button; saved as `euph_look`). The pointer is two inline SVG cursors in the first style rules.
 
+Since v1.17 (Andy's Notes, second batch):
+- The river: `RIV` and `riverD` (after `WALL`). A ring round park and villages, three tributaries, a stream from the west arm into the lake and on across the south park to the east arm. `baseH` cuts it, roads cross on stone decks, the wall crosses on arches, `blocked` keeps trees and beds off the banks. It added about 30 draw calls; trimming that is open.
+- Bodies: every mover has a radius (`BODYR`, `addLife`). `bodyGo` stops it at furniture as well as walls and at other bodies, and tries a step to either side before giving up. `lifeBlock` is His Grace against a body: people and small animals are shouldered aside, a horse, a cow or the wolf stands, and nobody in a doorway can shut him in.
+- The werewolf: a dark hound at 2.4 scale on a `route` along the north-east outer forest (`spawnAnimals`).
+- The Great Oak is the Great Cedar: the estate's largest cedar until the Depot makes the tree built for lights.
+
 Run the walk test, the reach test and the audit test before every push.
