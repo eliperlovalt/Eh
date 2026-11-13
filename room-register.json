@@ -1,0 +1,12352 @@
+{
+"issued": "2026-11-13",
+"estate": "v1.19",
+"note": "Rect is [x0,z0,x1,z1] on the wall lines; w and d are the clear floor inside. Doors and windows give the wall and the run of blocks along it. North is -z, east is +x.",
+"rooms": [
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Kitchen",
+"rect": [
+-64,
+-66,
+-32,
+-38
+],
+"w": 31,
+"d": 27,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "west",
+"from": -53,
+"to": -52,
+"width": 2
+},
+{
+"wall": "east",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "east",
+"from": -45,
+"to": -44,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -63,
+"to": -62
+},
+{
+"wall": "north",
+"from": -58,
+"to": -57
+},
+{
+"wall": "north",
+"from": -53,
+"to": -52
+},
+{
+"wall": "north",
+"from": -48,
+"to": -47
+},
+{
+"wall": "north",
+"from": -43,
+"to": -42
+},
+{
+"wall": "north",
+"from": -38,
+"to": -37
+},
+{
+"wall": "north",
+"from": -33,
+"to": -33
+},
+{
+"wall": "west",
+"from": -65,
+"to": -64
+},
+{
+"wall": "west",
+"from": -60,
+"to": -59
+},
+{
+"wall": "west",
+"from": -55,
+"to": -54
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49
+},
+{
+"wall": "west",
+"from": -45,
+"to": -44
+},
+{
+"wall": "west",
+"from": -40,
+"to": -39
+}
+],
+"fire": null,
+"pieces": 11,
+"kinds": {
+"kitchenTable": 2,
+"kitchenRange": 1,
+"welshDresser": 1,
+"windsor": 4,
+"menuSlate": 1,
+"copperRack": 2
+},
+"sig": "copperRack2|kitchenRange1|kitchenTable2|menuSlate1|welshDresser1|windsor4",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Scullery",
+"rect": [
+-32,
+-66,
+-16,
+-52
+],
+"w": 15,
+"d": 13,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": -24,
+"to": -23,
+"width": 2
+},
+{
+"wall": "west",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "east",
+"from": -59,
+"to": -58,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -28,
+"to": -27
+},
+{
+"wall": "north",
+"from": -23,
+"to": -22
+},
+{
+"wall": "north",
+"from": -18,
+"to": -17
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"kitchenTable": 1,
+"copperRack": 1
+},
+"sig": "copperRack1|kitchenTable1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Still Room",
+"rect": [
+-32,
+-52,
+-16,
+-38
+],
+"w": 15,
+"d": 13,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -24,
+"to": -23,
+"width": 2
+},
+{
+"wall": "south",
+"from": -24,
+"to": -23,
+"width": 2
+},
+{
+"wall": "west",
+"from": -45,
+"to": -44,
+"width": 2
+},
+{
+"wall": "east",
+"from": -45,
+"to": -44,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"kitchenTable": 1,
+"welshDresser": 1
+},
+"sig": "kitchenTable1|welshDresser1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Larders",
+"rect": [
+-16,
+-66,
+26,
+-52
+],
+"w": 41,
+"d": 13,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 5,
+"to": 6,
+"width": 2
+},
+{
+"wall": "west",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "east",
+"from": -54,
+"to": -53,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -13,
+"to": -12
+},
+{
+"wall": "north",
+"from": -8,
+"to": -7
+},
+{
+"wall": "north",
+"from": -3,
+"to": -2
+},
+{
+"wall": "north",
+"from": 2,
+"to": 3
+},
+{
+"wall": "north",
+"from": 7,
+"to": 8
+},
+{
+"wall": "north",
+"from": 12,
+"to": 13
+},
+{
+"wall": "north",
+"from": 17,
+"to": 18
+},
+{
+"wall": "north",
+"from": 22,
+"to": 23
+}
+],
+"fire": null,
+"pieces": 14,
+"kinds": {
+"noticeBoard": 2,
+"brushRack": 4,
+"coalScuttle": 1,
+"keyCabinet": 2,
+"copperRack": 3,
+"hallBench": 1,
+"dresserKitchen": 1
+},
+"sig": "brushRack4|coalScuttle1|copperRack3|dresserKitchen1|hallBench1|keyCabinet2|noticeBoard2",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Steward's Room",
+"rect": [
+26,
+-66,
+44,
+-42
+],
+"w": 17,
+"d": 23,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 35,
+"to": 36,
+"width": 2
+},
+{
+"wall": "west",
+"from": -54,
+"to": -53,
+"width": 2
+},
+{
+"wall": "east",
+"from": -54,
+"to": -53,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 27,
+"to": 28
+},
+{
+"wall": "north",
+"from": 32,
+"to": 33
+},
+{
+"wall": "north",
+"from": 37,
+"to": 38
+},
+{
+"wall": "north",
+"from": 42,
+"to": 43
+}
+],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"deskWriting": 1,
+"bookcase": 1,
+"bureau": 1
+},
+"sig": "bookcase1|bureau1|deskWriting1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Beer Cellar",
+"rect": [
+44,
+-66,
+64,
+-42
+],
+"w": 19,
+"d": 23,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -54,
+"to": -53,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 47,
+"to": 48
+},
+{
+"wall": "north",
+"from": 52,
+"to": 53
+},
+{
+"wall": "north",
+"from": 57,
+"to": 58
+},
+{
+"wall": "north",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": -65,
+"to": -64
+},
+{
+"wall": "east",
+"from": -60,
+"to": -59
+},
+{
+"wall": "east",
+"from": -55,
+"to": -54
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49
+},
+{
+"wall": "east",
+"from": -45,
+"to": -44
+}
+],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"wineRack": 9
+},
+"sig": "wineRack9",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Butler's Pantry",
+"rect": [
+-64,
+-38,
+-40,
+-18
+],
+"w": 23,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "west",
+"from": -21,
+"to": -20,
+"width": 2
+},
+{
+"wall": "east",
+"from": -29,
+"to": -28,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -35,
+"to": -34
+},
+{
+"wall": "west",
+"from": -30,
+"to": -29
+},
+{
+"wall": "west",
+"from": -25,
+"to": -24
+},
+{
+"wall": "west",
+"from": -19,
+"to": -19
+}
+],
+"fire": null,
+"pieces": 12,
+"kinds": {
+"sideboard": 1,
+"bookcase": 1,
+"strongbox": 1,
+"noticeBoard": 2,
+"brushRack": 2,
+"keyCabinet": 3,
+"copperRack": 2
+},
+"sig": "bookcase1|brushRack2|copperRack2|keyCabinet3|noticeBoard2|sideboard1|strongbox1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Silver Safe",
+"rect": [
+-64,
+-18,
+-40,
+-8
+],
+"w": 23,
+"d": 9,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": -13,
+"to": -12,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -15,
+"to": -14
+},
+{
+"wall": "west",
+"from": -10,
+"to": -9
+}
+],
+"fire": null,
+"pieces": 11,
+"kinds": {
+"brushRack": 2,
+"keyCabinet": 3,
+"noticeBoard": 2,
+"bootRack": 1,
+"copperRack": 1,
+"umbrellaStand": 1,
+"coalScuttle": 1
+},
+"sig": "bootRack1|brushRack2|coalScuttle1|copperRack1|keyCabinet3|noticeBoard2|umbrellaStand1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Housekeeper's Room",
+"rect": [
+-64,
+-8,
+-40,
+10
+],
+"w": 23,
+"d": 17,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": -2,
+"to": -1,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -5,
+"to": -4
+},
+{
+"wall": "west",
+"from": 0,
+"to": 1
+},
+{
+"wall": "west",
+"from": 5,
+"to": 6
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"deskWriting": 1,
+"bureau": 1,
+"armchair": 1,
+"clockLong": 1
+},
+"sig": "armchair1|bureau1|clockLong1|deskWriting1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Linen Room",
+"rect": [
+-64,
+10,
+-40,
+30
+],
+"w": 23,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -63,
+"to": -62
+},
+{
+"wall": "south",
+"from": -58,
+"to": -57
+},
+{
+"wall": "south",
+"from": -53,
+"to": -52
+},
+{
+"wall": "south",
+"from": -48,
+"to": -47
+},
+{
+"wall": "south",
+"from": -43,
+"to": -42
+},
+{
+"wall": "west",
+"from": 11,
+"to": 11
+},
+{
+"wall": "west",
+"from": 15,
+"to": 16
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21
+},
+{
+"wall": "west",
+"from": 25,
+"to": 26
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"ironingTable": 1,
+"wardrobe": 1
+},
+"sig": "ironingTable1|wardrobe1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Women's Stair",
+"rect": [
+-40,
+-36,
+-24,
+-22
+],
+"w": 15,
+"d": 13,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "south",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "west",
+"from": -29,
+"to": -28,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 7,
+"kinds": {
+"keyCabinet": 2,
+"noticeBoard": 1,
+"brushRack": 1,
+"copperRack": 1,
+"dresserKitchen": 1,
+"umbrellaStand": 1
+},
+"sig": "brushRack1|copperRack1|dresserKitchen1|keyCabinet2|noticeBoard1|umbrellaStand1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Servants' Hall",
+"rect": [
+-20,
+-36,
+20,
+-4
+],
+"w": 39,
+"d": 31,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 0,
+"to": 1,
+"width": 2
+},
+{
+"wall": "south",
+"from": 0,
+"to": 1,
+"width": 2
+},
+{
+"wall": "west",
+"from": -20,
+"to": -19,
+"width": 2
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 27,
+"kinds": {
+"tableDining": 1,
+"trestleTable": 1,
+"welshDresser": 1,
+"clockLong": 1,
+"windsor": 22,
+"bellBoard": 1
+},
+"sig": "bellBoard1|clockLong1|tableDining1|trestleTable1|welshDresser1|windsor22",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Men's Stair",
+"rect": [
+24,
+-36,
+40,
+-22
+],
+"w": 15,
+"d": 13,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 32,
+"to": 33,
+"width": 2
+},
+{
+"wall": "south",
+"from": 32,
+"to": 33,
+"width": 2
+},
+{
+"wall": "west",
+"from": -29,
+"to": -28,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"brushRack": 2,
+"copperRack": 2,
+"noticeBoard": 2,
+"keyCabinet": 2,
+"umbrellaStand": 1
+},
+"sig": "brushRack2|copperRack2|keyCabinet2|noticeBoard2|umbrellaStand1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Wine Cellar",
+"rect": [
+40,
+-42,
+64,
+6
+],
+"w": 23,
+"d": 47,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -18,
+"to": -17,
+"width": 2
+},
+{
+"wall": "east",
+"from": -6,
+"to": -5,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -40,
+"to": -39
+},
+{
+"wall": "east",
+"from": -35,
+"to": -34
+},
+{
+"wall": "east",
+"from": -30,
+"to": -29
+},
+{
+"wall": "east",
+"from": -25,
+"to": -24
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19
+},
+{
+"wall": "east",
+"from": -15,
+"to": -14
+},
+{
+"wall": "east",
+"from": -10,
+"to": -9
+},
+{
+"wall": "east",
+"from": -4,
+"to": -4
+},
+{
+"wall": "east",
+"from": 0,
+"to": 1
+},
+{
+"wall": "east",
+"from": 5,
+"to": 5
+}
+],
+"fire": null,
+"pieces": 22,
+"kinds": {
+"wineRack": 22
+},
+"sig": "wineRack22",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Lift to the Servery",
+"rect": [
+-40,
+-8,
+-26,
+4
+],
+"w": 13,
+"d": 11,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -33,
+"to": -32,
+"width": 2
+},
+{
+"wall": "south",
+"from": -33,
+"to": -32,
+"width": 2
+},
+{
+"wall": "west",
+"from": -2,
+"to": -1,
+"width": 2
+},
+{
+"wall": "east",
+"from": -2,
+"to": -1,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 8,
+"kinds": {
+"barrel": 1,
+"noticeBoard": 4,
+"sackPile": 2,
+"crateStack": 1
+},
+"sig": "barrel1|crateStack1|noticeBoard4|sackPile2",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Boot Room",
+"rect": [
+-40,
+10,
+-20,
+30
+],
+"w": 19,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -30,
+"to": -29,
+"width": 2
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21,
+"width": 2
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -38,
+"to": -37
+},
+{
+"wall": "south",
+"from": -33,
+"to": -32
+},
+{
+"wall": "south",
+"from": -28,
+"to": -27
+},
+{
+"wall": "south",
+"from": -23,
+"to": -22
+}
+],
+"fire": null,
+"pieces": 11,
+"kinds": {
+"hallBench": 1,
+"copperRack": 2,
+"noticeBoard": 3,
+"keyCabinet": 3,
+"umbrellaStand": 1,
+"coalScuttle": 1
+},
+"sig": "coalScuttle1|copperRack2|hallBench1|keyCabinet3|noticeBoard3|umbrellaStand1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Lamp Room",
+"rect": [
+-20,
+10,
+-4,
+30
+],
+"w": 15,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -12,
+"to": -11,
+"width": 2
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21,
+"width": 2
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -18,
+"to": -17
+},
+{
+"wall": "south",
+"from": -13,
+"to": -12
+},
+{
+"wall": "south",
+"from": -8,
+"to": -7
+}
+],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Brushing Room",
+"rect": [
+-4,
+10,
+12,
+30
+],
+"w": 15,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 4,
+"to": 5,
+"width": 2
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21,
+"width": 2
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -3,
+"to": -2
+},
+{
+"wall": "south",
+"from": 2,
+"to": 3
+},
+{
+"wall": "south",
+"from": 7,
+"to": 8
+}
+],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Coal Store",
+"rect": [
+12,
+10,
+28,
+30
+],
+"w": 15,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 20,
+"to": 21,
+"width": 2
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21,
+"width": 2
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 13,
+"to": 13
+},
+{
+"wall": "south",
+"from": 17,
+"to": 18
+},
+{
+"wall": "south",
+"from": 22,
+"to": 23
+},
+{
+"wall": "south",
+"from": 27,
+"to": 27
+}
+],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Estate Office",
+"rect": [
+-64,
+-66,
+-44,
+-42
+],
+"w": 19,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "south",
+"from": -53,
+"to": -51,
+"width": 3
+},
+{
+"wall": "east",
+"from": -54,
+"to": -53,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -63,
+"to": -62
+},
+{
+"wall": "north",
+"from": -58,
+"to": -57
+},
+{
+"wall": "north",
+"from": -53,
+"to": -52
+},
+{
+"wall": "north",
+"from": -48,
+"to": -47
+},
+{
+"wall": "west",
+"from": -65,
+"to": -64
+},
+{
+"wall": "west",
+"from": -60,
+"to": -59
+},
+{
+"wall": "west",
+"from": -55,
+"to": -54
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49
+},
+{
+"wall": "west",
+"from": -45,
+"to": -44
+}
+],
+"fire": null,
+"pieces": 10,
+"kinds": {
+"sofa": 1,
+"fern": 1,
+"deskWriting": 1,
+"pedestalTable": 1,
+"bookcase": 1,
+"bureau": 1,
+"strongbox": 1,
+"clockLong": 1,
+"fauteuil": 2
+},
+"sig": "bookcase1|bureau1|clockLong1|deskWriting1|fauteuil2|fern1|pedestalTable1|sofa1|strongbox1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Business Room",
+"rect": [
+-44,
+-66,
+-24,
+-42
+],
+"w": 19,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "south",
+"from": -30,
+"to": -29,
+"width": 2
+},
+{
+"wall": "west",
+"from": -54,
+"to": -53,
+"width": 2
+},
+{
+"wall": "east",
+"from": -55,
+"to": -53,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -43,
+"to": -42
+},
+{
+"wall": "north",
+"from": -38,
+"to": -37
+},
+{
+"wall": "north",
+"from": -33,
+"to": -32
+},
+{
+"wall": "north",
+"from": -28,
+"to": -27
+}
+],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"sofa": 1,
+"libraryTable": 1,
+"fern": 1,
+"deskWriting": 1,
+"bookcase": 1,
+"bureau": 1,
+"armchair": 3
+},
+"sig": "armchair3|bookcase1|bureau1|deskWriting1|fern1|libraryTable1|sofa1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Great Hall",
+"rect": [
+-24,
+-66,
+24,
+-42
+],
+"w": 47,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -12,
+"to": -10,
+"width": 3
+},
+{
+"wall": "south",
+"from": -1,
+"to": 1,
+"width": 3
+},
+{
+"wall": "west",
+"from": -55,
+"to": -53,
+"width": 3
+},
+{
+"wall": "east",
+"from": -54,
+"to": -53,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -23,
+"to": -22
+},
+{
+"wall": "north",
+"from": -18,
+"to": -17
+},
+{
+"wall": "north",
+"from": -13,
+"to": -13
+},
+{
+"wall": "north",
+"from": -8,
+"to": -7
+},
+{
+"wall": "north",
+"from": -3,
+"to": -2
+},
+{
+"wall": "north",
+"from": 2,
+"to": 3
+},
+{
+"wall": "north",
+"from": 7,
+"to": 8
+},
+{
+"wall": "north",
+"from": 12,
+"to": 13
+},
+{
+"wall": "north",
+"from": 17,
+"to": 18
+},
+{
+"wall": "north",
+"from": 22,
+"to": 23
+}
+],
+"fire": "south",
+"pieces": 40,
+"kinds": {
+"tableDining": 1,
+"chairHall": 20,
+"bisellium": 2,
+"fern": 2,
+"pedestalTable": 3,
+"settee": 3,
+"fireplace": 1,
+"fauteuil": 6,
+"suitArmor": 2
+},
+"sig": "bisellium2|chairHall20|fauteuil6|fern2|fireplace1|pedestalTable3|settee3|suitArmor2|tableDining1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Map Room",
+"rect": [
+24,
+-66,
+44,
+-42
+],
+"w": 19,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "south",
+"from": 30,
+"to": 31,
+"width": 2
+},
+{
+"wall": "west",
+"from": -54,
+"to": -53,
+"width": 2
+},
+{
+"wall": "east",
+"from": -54,
+"to": -53,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 27,
+"to": 28
+},
+{
+"wall": "north",
+"from": 32,
+"to": 33
+},
+{
+"wall": "north",
+"from": 37,
+"to": 38
+},
+{
+"wall": "north",
+"from": 42,
+"to": 43
+}
+],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"mapTable": 1,
+"sofa": 1,
+"libraryTable": 1,
+"fern": 1,
+"bookcase": 1,
+"armchair": 2,
+"globe": 2
+},
+"sig": "armchair2|bookcase1|fern1|globe2|libraryTable1|mapTable1|sofa1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Muniment Room",
+"rect": [
+44,
+-66,
+64,
+-42
+],
+"w": 19,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -54,
+"to": -53,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 47,
+"to": 48
+},
+{
+"wall": "north",
+"from": 52,
+"to": 53
+},
+{
+"wall": "north",
+"from": 57,
+"to": 58
+},
+{
+"wall": "north",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": -65,
+"to": -64
+},
+{
+"wall": "east",
+"from": -60,
+"to": -59
+},
+{
+"wall": "east",
+"from": -55,
+"to": -54
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49
+},
+{
+"wall": "east",
+"from": -45,
+"to": -44
+}
+],
+"fire": null,
+"pieces": 12,
+"kinds": {
+"fern": 1,
+"pedestalTable": 1,
+"chaise": 1,
+"bookcase": 5,
+"deedChest": 2,
+"fauteuil": 2
+},
+"sig": "bookcase5|chaise1|deedChest2|fauteuil2|fern1|pedestalTable1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The State Dining Room",
+"rect": [
+-64,
+-42,
+-40,
+-12
+],
+"w": 23,
+"d": 29,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -53,
+"to": -51,
+"width": 3
+},
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "west",
+"from": -19,
+"to": -17,
+"width": 3
+},
+{
+"wall": "east",
+"from": -32,
+"to": -31,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -40,
+"to": -39
+},
+{
+"wall": "west",
+"from": -35,
+"to": -34
+},
+{
+"wall": "west",
+"from": -30,
+"to": -29
+},
+{
+"wall": "west",
+"from": -25,
+"to": -24
+},
+{
+"wall": "west",
+"from": -20,
+"to": -20
+},
+{
+"wall": "west",
+"from": -15,
+"to": -14
+}
+],
+"fire": "east",
+"pieces": 20,
+"kinds": {
+"tableDining": 1,
+"sideboard": 2,
+"fireplace": 1,
+"chairDining": 14,
+"candelabra": 2
+},
+"sig": "candelabra2|chairDining14|fireplace1|sideboard2|tableDining1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Servery",
+"rect": [
+-64,
+-12,
+-40,
+6
+],
+"w": 23,
+"d": 17,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "south",
+"from": -49,
+"to": -48,
+"width": 2
+},
+{
+"wall": "east",
+"from": -11,
+"to": -10,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -10,
+"to": -9
+},
+{
+"wall": "west",
+"from": -5,
+"to": -4
+},
+{
+"wall": "west",
+"from": 0,
+"to": 1
+},
+{
+"wall": "west",
+"from": 5,
+"to": 5
+}
+],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"libraryTable": 1,
+"fern": 1,
+"chaise": 1,
+"armchair": 2
+},
+"sig": "armchair2|chaise1|fern1|libraryTable1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Oak Stair",
+"rect": [
+-40,
+-42,
+-20,
+-22
+],
+"w": 19,
+"d": 19,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -30,
+"to": -29,
+"width": 2
+},
+{
+"wall": "south",
+"from": -39,
+"to": -39,
+"width": 1
+},
+{
+"wall": "south",
+"from": -37,
+"to": -29,
+"width": 9
+},
+{
+"wall": "south",
+"from": -27,
+"to": -21,
+"width": 7
+},
+{
+"wall": "west",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "east",
+"from": -26,
+"to": -23,
+"width": 4
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"palm": 1,
+"bust": 2,
+"suitArmor": 2
+},
+"sig": "bust2|palm1|suitArmor2",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Billiard Room",
+"rect": [
+-40,
+-22,
+-20,
+0
+],
+"w": 19,
+"d": 21,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -39,
+"to": -39,
+"width": 1
+},
+{
+"wall": "north",
+"from": -37,
+"to": -29,
+"width": 9
+},
+{
+"wall": "north",
+"from": -27,
+"to": -21,
+"width": 7
+},
+{
+"wall": "south",
+"from": -30,
+"to": -29,
+"width": 2
+},
+{
+"wall": "west",
+"from": -11,
+"to": -10,
+"width": 2
+},
+{
+"wall": "east",
+"from": -21,
+"to": -19,
+"width": 3
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 1,
+"kinds": {
+"billiard": 1
+},
+"sig": "billiard1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Saloon",
+"rect": [
+-20,
+-36,
+20,
+-4
+],
+"w": 39,
+"d": 31,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -1,
+"to": 1,
+"width": 3
+},
+{
+"wall": "south",
+"from": -1,
+"to": 1,
+"width": 3
+},
+{
+"wall": "west",
+"from": -26,
+"to": -23,
+"width": 4
+},
+{
+"wall": "west",
+"from": -21,
+"to": -19,
+"width": 3
+},
+{
+"wall": "east",
+"from": -30,
+"to": -29,
+"width": 2
+},
+{
+"wall": "east",
+"from": -26,
+"to": -21,
+"width": 6
+},
+{
+"wall": "east",
+"from": -9,
+"to": -8,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 47,
+"kinds": {
+"column": 18,
+"palm": 4,
+"tableDining": 1,
+"fern": 4,
+"libraryTable": 4,
+"chaise": 4,
+"armchair": 9,
+"consoleTable": 2,
+"bust": 1
+},
+"sig": "armchair9|bust1|chaise4|column18|consoleTable2|fern4|libraryTable4|palm4|tableDining1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Grand Stair",
+"rect": [
+20,
+-42,
+40,
+-18
+],
+"w": 19,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": 30,
+"to": 31,
+"width": 2
+},
+{
+"wall": "south",
+"from": 21,
+"to": 24,
+"width": 4
+},
+{
+"wall": "south",
+"from": 26,
+"to": 36,
+"width": 11
+},
+{
+"wall": "south",
+"from": 38,
+"to": 40,
+"width": 3
+},
+{
+"wall": "west",
+"from": -30,
+"to": -29,
+"width": 2
+},
+{
+"wall": "west",
+"from": -26,
+"to": -21,
+"width": 6
+},
+{
+"wall": "east",
+"from": -18,
+"to": -18,
+"width": 1
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 6,
+"kinds": {
+"palm": 2,
+"bust": 2,
+"suitArmor": 2
+},
+"sig": "bust2|palm2|suitArmor2",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Gun Room",
+"rect": [
+20,
+-18,
+40,
+0
+],
+"w": 19,
+"d": 17,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": 21,
+"to": 24,
+"width": 4
+},
+{
+"wall": "north",
+"from": 26,
+"to": 36,
+"width": 11
+},
+{
+"wall": "north",
+"from": 38,
+"to": 40,
+"width": 3
+},
+{
+"wall": "south",
+"from": 30,
+"to": 31,
+"width": 2
+},
+{
+"wall": "west",
+"from": -9,
+"to": -8,
+"width": 2
+},
+{
+"wall": "east",
+"from": -18,
+"to": -17,
+"width": 2
+}
+],
+"windows": [],
+"fire": "west",
+"pieces": 6,
+"kinds": {
+"libraryTable": 1,
+"fern": 1,
+"chaise": 1,
+"armchair": 2,
+"fireplace": 1
+},
+"sig": "armchair2|chaise1|fern1|fireplace1|libraryTable1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Double Library",
+"rect": [
+40,
+-42,
+64,
+6
+],
+"w": 23,
+"d": 47,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "south",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "west",
+"from": -18,
+"to": -17,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -40,
+"to": -39
+},
+{
+"wall": "east",
+"from": -35,
+"to": -34
+},
+{
+"wall": "east",
+"from": -30,
+"to": -29
+},
+{
+"wall": "east",
+"from": -25,
+"to": -24
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19
+},
+{
+"wall": "east",
+"from": -15,
+"to": -14
+},
+{
+"wall": "east",
+"from": -10,
+"to": -9
+},
+{
+"wall": "east",
+"from": -5,
+"to": -4
+},
+{
+"wall": "east",
+"from": 0,
+"to": 1
+},
+{
+"wall": "east",
+"from": 5,
+"to": 5
+}
+],
+"fire": "west",
+"pieces": 29,
+"kinds": {
+"sofa": 2,
+"fern": 1,
+"pedestalTable": 4,
+"bookcase": 13,
+"fireplace": 1,
+"fauteuil": 4,
+"globe": 1,
+"candelabra": 1,
+"wingChairFine": 2
+},
+"sig": "bookcase13|candelabra1|fauteuil4|fern1|fireplace1|globe1|pedestalTable4|sofa2|wingChairFine2",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Drawing Room",
+"rect": [
+-64,
+6,
+-34,
+30
+],
+"w": 29,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -49,
+"to": -48,
+"width": 2
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -63,
+"to": -62
+},
+{
+"wall": "south",
+"from": -58,
+"to": -57
+},
+{
+"wall": "south",
+"from": -53,
+"to": -52
+},
+{
+"wall": "south",
+"from": -48,
+"to": -47
+},
+{
+"wall": "south",
+"from": -43,
+"to": -42
+},
+{
+"wall": "south",
+"from": -38,
+"to": -37
+},
+{
+"wall": "west",
+"from": 10,
+"to": 11
+},
+{
+"wall": "west",
+"from": 15,
+"to": 16
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21
+},
+{
+"wall": "west",
+"from": 25,
+"to": 26
+}
+],
+"fire": "north",
+"pieces": 17,
+"kinds": {
+"libraryTable": 2,
+"fern": 1,
+"chaise": 3,
+"fireplace": 1,
+"displayCabinet": 1,
+"armchair": 5,
+"standardLamp": 1,
+"consoleTable": 1,
+"screen": 1,
+"candelabra": 1
+},
+"sig": "armchair5|candelabra1|chaise3|consoleTable1|displayCabinet1|fern1|fireplace1|libraryTable2|screen1|standardLamp1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Music Room",
+"rect": [
+-34,
+6,
+-12,
+30
+],
+"w": 21,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -23,
+"to": -22,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+},
+{
+"wall": "east",
+"from": 14,
+"to": 16,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -33,
+"to": -32
+},
+{
+"wall": "south",
+"from": -28,
+"to": -27
+},
+{
+"wall": "south",
+"from": -23,
+"to": -22
+},
+{
+"wall": "south",
+"from": -18,
+"to": -17
+},
+{
+"wall": "south",
+"from": -13,
+"to": -13
+}
+],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"grandPiano": 1,
+"sofa": 1,
+"fern": 1,
+"pedestalTable": 1,
+"displayCabinet": 1,
+"harp": 1,
+"fauteuil": 2,
+"musicStand": 1
+},
+"sig": "displayCabinet1|fauteuil2|fern1|grandPiano1|harp1|musicStand1|pedestalTable1|sofa1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Entrance Hall",
+"rect": [
+-12,
+0,
+12,
+30
+],
+"w": 23,
+"d": 29,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -1,
+"to": 1,
+"width": 3
+},
+{
+"wall": "south",
+"from": -1,
+"to": 1,
+"width": 3
+},
+{
+"wall": "west",
+"from": 14,
+"to": 16,
+"width": 3
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -8,
+"to": -7
+},
+{
+"wall": "south",
+"from": -3,
+"to": -2
+},
+{
+"wall": "south",
+"from": 2,
+"to": 3
+},
+{
+"wall": "south",
+"from": 7,
+"to": 8
+}
+],
+"fire": null,
+"pieces": 6,
+"kinds": {
+"fern": 1,
+"consoleTable": 1,
+"clockLong": 1,
+"suitArmor": 1,
+"bust": 1,
+"gong": 1
+},
+"sig": "bust1|clockLong1|consoleTable1|fern1|gong1|suitArmor1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Smoking Room",
+"rect": [
+12,
+6,
+34,
+30
+],
+"w": 21,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": 23,
+"to": 24,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 13,
+"to": 13
+},
+{
+"wall": "south",
+"from": 17,
+"to": 18
+},
+{
+"wall": "south",
+"from": 22,
+"to": 23
+},
+{
+"wall": "south",
+"from": 27,
+"to": 28
+},
+{
+"wall": "south",
+"from": 32,
+"to": 33
+}
+],
+"fire": "west",
+"pieces": 10,
+"kinds": {
+"libraryTable": 1,
+"fern": 1,
+"chaise": 2,
+"fireplace": 1,
+"armchair": 3,
+"standardLamp": 1,
+"wingChairFine": 1
+},
+"sig": "armchair3|chaise2|fern1|fireplace1|libraryTable1|standardLamp1|wingChairFine1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "State floor",
+"y": 7,
+"name": "The Morning Room",
+"rect": [
+34,
+6,
+64,
+30
+],
+"w": 29,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 37,
+"to": 38
+},
+{
+"wall": "south",
+"from": 42,
+"to": 43
+},
+{
+"wall": "south",
+"from": 47,
+"to": 48
+},
+{
+"wall": "south",
+"from": 52,
+"to": 53
+},
+{
+"wall": "south",
+"from": 57,
+"to": 58
+},
+{
+"wall": "south",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": 10,
+"to": 11
+},
+{
+"wall": "east",
+"from": 15,
+"to": 16
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21
+},
+{
+"wall": "east",
+"from": 25,
+"to": 26
+}
+],
+"fire": null,
+"pieces": 13,
+"kinds": {
+"libraryTable": 2,
+"deskWriting": 1,
+"chaise": 2,
+"displayCabinet": 1,
+"standardLamp": 1,
+"armchair": 5,
+"birdcage": 1
+},
+"sig": "armchair5|birdcage1|chaise2|deskWriting1|displayCabinet1|libraryTable2|standardLamp1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Gold Bedroom",
+"rect": [
+-64,
+-66,
+-44,
+-46
+],
+"w": 19,
+"d": 19,
+"height": 7,
+"doors": [
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": -58,
+"to": -57,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -63,
+"to": -62
+},
+{
+"wall": "north",
+"from": -58,
+"to": -57
+},
+{
+"wall": "north",
+"from": -53,
+"to": -52
+},
+{
+"wall": "north",
+"from": -48,
+"to": -47
+},
+{
+"wall": "west",
+"from": -65,
+"to": -64
+},
+{
+"wall": "west",
+"from": -60,
+"to": -59
+},
+{
+"wall": "west",
+"from": -55,
+"to": -54
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49
+}
+],
+"fire": "south",
+"pieces": 12,
+"kinds": {
+"bed4": 1,
+"sofa": 1,
+"wardrobe": 1,
+"libraryTable": 1,
+"fern": 1,
+"fireplace": 1,
+"commode": 1,
+"armchair": 3,
+"standardLamp": 1,
+"washstand": 1
+},
+"sig": "armchair3|bed41|commode1|fern1|fireplace1|libraryTable1|sofa1|standardLamp1|wardrobe1|washstand1",
+"state": "same set as 1 other rooms, 2 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Long Gallery",
+"rect": [
+-44,
+-66,
+44,
+-50
+],
+"w": 87,
+"d": 15,
+"height": 7,
+"doors": [
+{
+"wall": "south",
+"from": -35,
+"to": -34,
+"width": 2
+},
+{
+"wall": "south",
+"from": -23,
+"to": 23,
+"width": 47
+},
+{
+"wall": "south",
+"from": 34,
+"to": 35,
+"width": 2
+},
+{
+"wall": "west",
+"from": -58,
+"to": -57,
+"width": 2
+},
+{
+"wall": "east",
+"from": -56,
+"to": -55,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -43,
+"to": -42
+},
+{
+"wall": "north",
+"from": -38,
+"to": -37
+},
+{
+"wall": "north",
+"from": -33,
+"to": -32
+},
+{
+"wall": "north",
+"from": -28,
+"to": -27
+},
+{
+"wall": "north",
+"from": -23,
+"to": -22
+},
+{
+"wall": "north",
+"from": -18,
+"to": -17
+},
+{
+"wall": "north",
+"from": -13,
+"to": -12
+},
+{
+"wall": "north",
+"from": -8,
+"to": -7
+},
+{
+"wall": "north",
+"from": -3,
+"to": -2
+},
+{
+"wall": "north",
+"from": 2,
+"to": 3
+},
+{
+"wall": "north",
+"from": 7,
+"to": 8
+},
+{
+"wall": "north",
+"from": 12,
+"to": 13
+},
+{
+"wall": "north",
+"from": 17,
+"to": 18
+},
+{
+"wall": "north",
+"from": 22,
+"to": 23
+},
+{
+"wall": "north",
+"from": 27,
+"to": 28
+},
+{
+"wall": "north",
+"from": 32,
+"to": 33
+},
+{
+"wall": "north",
+"from": 37,
+"to": 38
+},
+{
+"wall": "north",
+"from": 42,
+"to": 43
+}
+],
+"fire": null,
+"pieces": 35,
+"kinds": {
+"balustrade": 26,
+"balPost": 2,
+"sofa": 1,
+"commode": 2,
+"displayCabinet": 1,
+"suitArmor": 1,
+"bust": 2
+},
+"sig": "balPost2|balustrade26|bust2|commode2|displayCabinet1|sofa1|suitArmor1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Silver Bedroom",
+"rect": [
+44,
+-66,
+64,
+-46
+],
+"w": 19,
+"d": 19,
+"height": 7,
+"doors": [
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -56,
+"to": -55,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 47,
+"to": 48
+},
+{
+"wall": "north",
+"from": 52,
+"to": 53
+},
+{
+"wall": "north",
+"from": 57,
+"to": 58
+},
+{
+"wall": "north",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": -65,
+"to": -64
+},
+{
+"wall": "east",
+"from": -60,
+"to": -59
+},
+{
+"wall": "east",
+"from": -55,
+"to": -54
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49
+}
+],
+"fire": "south",
+"pieces": 7,
+"kinds": {
+"fourPosterOak": 1,
+"wardrobe": 1,
+"fireplace": 1,
+"commode": 1,
+"standardLamp": 1,
+"fauteuil": 1,
+"washstand": 1
+},
+"sig": "commode1|fauteuil1|fireplace1|fourPosterOak1|standardLamp1|wardrobe1|washstand1",
+"state": "sparse, same set as 1 other rooms, 2 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The White Bedroom",
+"rect": [
+-64,
+-46,
+-40,
+-28
+],
+"w": 23,
+"d": 17,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": -37,
+"to": -36,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -45,
+"to": -44
+},
+{
+"wall": "west",
+"from": -40,
+"to": -39
+},
+{
+"wall": "west",
+"from": -35,
+"to": -34
+},
+{
+"wall": "west",
+"from": -30,
+"to": -29
+}
+],
+"fire": "north",
+"pieces": 12,
+"kinds": {
+"fourPosterOak": 1,
+"wardrobe": 1,
+"fern": 1,
+"pedestalTable": 1,
+"settee": 1,
+"fireplace": 1,
+"commode": 1,
+"standardLamp": 1,
+"fauteuil": 3,
+"washstand": 1
+},
+"sig": "commode1|fauteuil3|fern1|fireplace1|fourPosterOak1|pedestalTable1|settee1|standardLamp1|wardrobe1|washstand1",
+"state": "same set as 1 other rooms, 3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Copper Bedroom",
+"rect": [
+-64,
+-28,
+-40,
+-11
+],
+"w": 23,
+"d": 16,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -25,
+"to": -24
+},
+{
+"wall": "west",
+"from": -20,
+"to": -19
+},
+{
+"wall": "west",
+"from": -15,
+"to": -14
+}
+],
+"fire": "north",
+"pieces": 12,
+"kinds": {
+"fourPosterOak": 1,
+"wardrobe": 1,
+"fern": 1,
+"pedestalTable": 1,
+"settee": 1,
+"fireplace": 1,
+"commode": 1,
+"standardLamp": 1,
+"fauteuil": 3,
+"washstand": 1
+},
+"sig": "commode1|fauteuil3|fern1|fireplace1|fourPosterOak1|pedestalTable1|settee1|standardLamp1|wardrobe1|washstand1",
+"state": "same set as 1 other rooms, 3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Blue Bedroom",
+"rect": [
+-64,
+-11,
+-40,
+6
+],
+"w": 23,
+"d": 16,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": -3,
+"to": -2,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -10,
+"to": -9
+},
+{
+"wall": "west",
+"from": -5,
+"to": -4
+},
+{
+"wall": "west",
+"from": 0,
+"to": 1
+},
+{
+"wall": "west",
+"from": 5,
+"to": 5
+}
+],
+"fire": "north",
+"pieces": 12,
+"kinds": {
+"bed4": 1,
+"wardrobe": 1,
+"libraryTable": 1,
+"fern": 1,
+"chaise": 1,
+"fireplace": 1,
+"commode": 1,
+"armchair": 3,
+"standardLamp": 1,
+"washstand": 1
+},
+"sig": "armchair3|bed41|chaise1|commode1|fern1|fireplace1|libraryTable1|standardLamp1|wardrobe1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Oak Stair Landing",
+"rect": [
+-40,
+-46,
+-24,
+-28
+],
+"w": 15,
+"d": 17,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "south",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "west",
+"from": -37,
+"to": -36,
+"width": 2
+},
+{
+"wall": "east",
+"from": -39,
+"to": -37,
+"width": 3
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Red Stair",
+"rect": [
+-40,
+-28,
+-24,
+-12
+],
+"w": 15,
+"d": 15,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "south",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "west",
+"from": -20,
+"to": -19,
+"width": 2
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Yellow Bedroom",
+"rect": [
+-40,
+-12,
+-24,
+6
+],
+"w": 15,
+"d": 17,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "south",
+"from": -29,
+"to": -28,
+"width": 2
+},
+{
+"wall": "west",
+"from": -3,
+"to": -2,
+"width": 2
+}
+],
+"windows": [],
+"fire": "west",
+"pieces": 7,
+"kinds": {
+"bed4": 1,
+"wardrobe": 1,
+"fireplace": 1,
+"commode": 1,
+"armchair": 1,
+"standardLamp": 1,
+"washstand": 1
+},
+"sig": "armchair1|bed41|commode1|fireplace1|standardLamp1|wardrobe1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Saloon Gallery",
+"rect": [
+-24,
+-40,
+24,
+0
+],
+"w": 47,
+"d": 39,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 0,
+"to": 1,
+"width": 2
+},
+{
+"wall": "north",
+"from": 20,
+"to": 24,
+"width": 5
+},
+{
+"wall": "south",
+"from": 0,
+"to": 1,
+"width": 2
+},
+{
+"wall": "west",
+"from": -39,
+"to": -37,
+"width": 3
+},
+{
+"wall": "west",
+"from": -20,
+"to": -19,
+"width": 2
+},
+{
+"wall": "east",
+"from": -40,
+"to": -39,
+"width": 2
+},
+{
+"wall": "east",
+"from": -27,
+"to": -26,
+"width": 2
+},
+{
+"wall": "east",
+"from": -11,
+"to": -10,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 68,
+"kinds": {
+"balustrade": 64,
+"balPost": 4
+},
+"sig": "balPost4|balustrade64",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Grand Stair Landing",
+"rect": [
+24,
+-46,
+40,
+-22
+],
+"w": 15,
+"d": 23,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 32,
+"to": 33,
+"width": 2
+},
+{
+"wall": "south",
+"from": 32,
+"to": 33,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -39,
+"width": 3
+},
+{
+"wall": "west",
+"from": -27,
+"to": -26,
+"width": 2
+},
+{
+"wall": "east",
+"from": -37,
+"to": -36,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Green Bedroom",
+"rect": [
+24,
+-22,
+40,
+0
+],
+"w": 15,
+"d": 21,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 32,
+"to": 33,
+"width": 2
+},
+{
+"wall": "south",
+"from": 32,
+"to": 33,
+"width": 2
+},
+{
+"wall": "west",
+"from": -11,
+"to": -10,
+"width": 2
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19,
+"width": 2
+},
+{
+"wall": "east",
+"from": -3,
+"to": -2,
+"width": 2
+}
+],
+"windows": [],
+"fire": "west",
+"pieces": 6,
+"kinds": {
+"fourPosterOak": 1,
+"wardrobe": 1,
+"fireplace": 1,
+"commode": 1,
+"fauteuil": 1,
+"washstand": 1
+},
+"sig": "commode1|fauteuil1|fireplace1|fourPosterOak1|wardrobe1|washstand1",
+"state": "sparse, 5 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Calendar Room",
+"rect": [
+40,
+-46,
+64,
+-28
+],
+"w": 23,
+"d": 17,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -37,
+"to": -36,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -45,
+"to": -44
+},
+{
+"wall": "east",
+"from": -40,
+"to": -39
+},
+{
+"wall": "east",
+"from": -35,
+"to": -34
+},
+{
+"wall": "east",
+"from": -30,
+"to": -29
+}
+],
+"fire": null,
+"pieces": 8,
+"kinds": {
+"libraryTable": 1,
+"fern": 1,
+"deskWriting": 1,
+"chaise": 1,
+"bookcase": 1,
+"armchair": 2,
+"clockLong": 1
+},
+"sig": "armchair2|bookcase1|chaise1|clockLong1|deskWriting1|fern1|libraryTable1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Registry",
+"rect": [
+40,
+-28,
+64,
+-12
+],
+"w": 23,
+"d": 15,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -20,
+"to": -19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -25,
+"to": -24
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19
+},
+{
+"wall": "east",
+"from": -15,
+"to": -14
+}
+],
+"fire": null,
+"pieces": 10,
+"kinds": {
+"deskWriting": 1,
+"bookcase": 9
+},
+"sig": "bookcase9|deskWriting1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Schoolroom",
+"rect": [
+40,
+-12,
+64,
+6
+],
+"w": 23,
+"d": 17,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "south",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "west",
+"from": -3,
+"to": -2,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -10,
+"to": -9
+},
+{
+"wall": "east",
+"from": -5,
+"to": -4
+},
+{
+"wall": "east",
+"from": 0,
+"to": 1
+},
+{
+"wall": "east",
+"from": 5,
+"to": 5
+}
+],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"fern": 1,
+"deskWriting": 1,
+"pedestalTable": 1,
+"chaise": 1,
+"standardLamp": 1,
+"screen": 1,
+"globe": 1,
+"fauteuil": 2
+},
+"sig": "chaise1|deskWriting1|fauteuil2|fern1|globe1|pedestalTable1|screen1|standardLamp1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Violet Bedroom",
+"rect": [
+-64,
+6,
+-40,
+30
+],
+"w": 23,
+"d": 23,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -63,
+"to": -62
+},
+{
+"wall": "south",
+"from": -58,
+"to": -57
+},
+{
+"wall": "south",
+"from": -53,
+"to": -52
+},
+{
+"wall": "south",
+"from": -48,
+"to": -47
+},
+{
+"wall": "south",
+"from": -43,
+"to": -42
+},
+{
+"wall": "west",
+"from": 10,
+"to": 11
+},
+{
+"wall": "west",
+"from": 15,
+"to": 16
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21
+},
+{
+"wall": "west",
+"from": 25,
+"to": 26
+}
+],
+"fire": "north",
+"pieces": 12,
+"kinds": {
+"fourPosterOak": 1,
+"wardrobe": 1,
+"fern": 1,
+"pedestalTable": 1,
+"chaise": 1,
+"fireplace": 1,
+"commode": 1,
+"standardLamp": 1,
+"fauteuil": 3,
+"washstand": 1
+},
+"sig": "chaise1|commode1|fauteuil3|fern1|fireplace1|fourPosterOak1|pedestalTable1|standardLamp1|wardrobe1|washstand1",
+"state": "2 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Pink Bedroom",
+"rect": [
+-40,
+6,
+-18,
+30
+],
+"w": 21,
+"d": 23,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -29,
+"to": -28,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -38,
+"to": -37
+},
+{
+"wall": "south",
+"from": -33,
+"to": -32
+},
+{
+"wall": "south",
+"from": -28,
+"to": -27
+},
+{
+"wall": "south",
+"from": -23,
+"to": -22
+}
+],
+"fire": "west",
+"pieces": 12,
+"kinds": {
+"bed4": 1,
+"wardrobe": 1,
+"libraryTable": 1,
+"fern": 1,
+"settee": 1,
+"fireplace": 1,
+"commode": 1,
+"armchair": 3,
+"standardLamp": 1,
+"washstand": 1
+},
+"sig": "armchair3|bed41|commode1|fern1|fireplace1|libraryTable1|settee1|standardLamp1|wardrobe1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Orange Bedroom",
+"rect": [
+-18,
+6,
+0,
+30
+],
+"w": 17,
+"d": 23,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -9,
+"to": -8,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -17,
+"to": -17
+},
+{
+"wall": "south",
+"from": -13,
+"to": -12
+},
+{
+"wall": "south",
+"from": -8,
+"to": -7
+},
+{
+"wall": "south",
+"from": -3,
+"to": -2
+}
+],
+"fire": "west",
+"pieces": 12,
+"kinds": {
+"bed4": 1,
+"sofa": 1,
+"wardrobe": 1,
+"libraryTable": 1,
+"fern": 1,
+"fireplace": 1,
+"commode": 1,
+"armchair": 3,
+"standardLamp": 1,
+"washstand": 1
+},
+"sig": "armchair3|bed41|commode1|fern1|fireplace1|libraryTable1|sofa1|standardLamp1|wardrobe1|washstand1",
+"state": "same set as 1 other rooms, 3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "The Grey Bedroom",
+"rect": [
+0,
+6,
+16,
+30
+],
+"w": 15,
+"d": 23,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 8,
+"to": 9,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+},
+{
+"wall": "east",
+"from": 10,
+"to": 11,
+"width": 2
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+},
+{
+"wall": "east",
+"from": 26,
+"to": 27,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 2,
+"to": 3
+},
+{
+"wall": "south",
+"from": 7,
+"to": 8
+},
+{
+"wall": "south",
+"from": 12,
+"to": 13
+}
+],
+"fire": "west",
+"pieces": 7,
+"kinds": {
+"fourPosterOak": 1,
+"wardrobe": 1,
+"fireplace": 1,
+"commode": 1,
+"standardLamp": 1,
+"fauteuil": 1,
+"washstand": 1
+},
+"sig": "commode1|fauteuil1|fireplace1|fourPosterOak1|standardLamp1|wardrobe1|washstand1",
+"state": "sparse, same set as 1 other rooms, 5 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "His Grace's Dressing Room",
+"rect": [
+16,
+6,
+34,
+14
+],
+"w": 17,
+"d": 7,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 25,
+"to": 26,
+"width": 2
+},
+{
+"wall": "south",
+"from": 25,
+"to": 26,
+"width": 2
+},
+{
+"wall": "west",
+"from": 10,
+"to": 11,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"wardrobe": 1,
+"screen": 1,
+"washstand": 1
+},
+"sig": "screen1|wardrobe1|washstand1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "His Grace's Bath",
+"rect": [
+16,
+14,
+34,
+22
+],
+"w": 17,
+"d": 7,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 25,
+"to": 26,
+"width": 2
+},
+{
+"wall": "south",
+"from": 25,
+"to": 26,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+},
+{
+"wall": "east",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "His Grace's Study",
+"rect": [
+16,
+22,
+34,
+30
+],
+"w": 17,
+"d": 7,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 25,
+"to": 26,
+"width": 2
+},
+{
+"wall": "west",
+"from": 26,
+"to": 27,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 17,
+"to": 18
+},
+{
+"wall": "south",
+"from": 22,
+"to": 23
+},
+{
+"wall": "south",
+"from": 27,
+"to": 28
+},
+{
+"wall": "south",
+"from": 32,
+"to": 33
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"deskWriting": 1,
+"bookcase": 1,
+"bureau": 1,
+"globe": 1
+},
+"sig": "bookcase1|bureau1|deskWriting1|globe1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "First floor",
+"y": 17,
+"name": "His Grace's Bedchamber",
+"rect": [
+34,
+6,
+64,
+30
+],
+"w": 29,
+"d": 23,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "west",
+"from": 18,
+"to": 19,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 37,
+"to": 38
+},
+{
+"wall": "south",
+"from": 42,
+"to": 43
+},
+{
+"wall": "south",
+"from": 47,
+"to": 48
+},
+{
+"wall": "south",
+"from": 52,
+"to": 53
+},
+{
+"wall": "south",
+"from": 57,
+"to": 58
+},
+{
+"wall": "south",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": 10,
+"to": 11
+},
+{
+"wall": "east",
+"from": 15,
+"to": 16
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21
+},
+{
+"wall": "east",
+"from": 25,
+"to": 26
+}
+],
+"fire": "north",
+"pieces": 16,
+"kinds": {
+"fourPosterOak": 1,
+"wardrobe": 1,
+"fern": 1,
+"pedestalTable": 2,
+"settee": 2,
+"fireplace": 1,
+"commode": 1,
+"standardLamp": 1,
+"screen": 1,
+"fauteuil": 5
+},
+"sig": "commode1|fauteuil5|fern1|fireplace1|fourPosterOak1|pedestalTable2|screen1|settee2|standardLamp1|wardrobe1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Day Nursery",
+"rect": [
+-64,
+-66,
+-40,
+-46
+],
+"w": 23,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": -52,
+"to": -51,
+"width": 2
+},
+{
+"wall": "east",
+"from": -56,
+"to": -55,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -63,
+"to": -62
+},
+{
+"wall": "north",
+"from": -58,
+"to": -57
+},
+{
+"wall": "north",
+"from": -53,
+"to": -52
+},
+{
+"wall": "north",
+"from": -48,
+"to": -47
+},
+{
+"wall": "north",
+"from": -43,
+"to": -42
+},
+{
+"wall": "west",
+"from": -65,
+"to": -64
+},
+{
+"wall": "west",
+"from": -60,
+"to": -59
+},
+{
+"wall": "west",
+"from": -55,
+"to": -54
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"toyFort": 1,
+"bedIron": 1,
+"rockingHorse": 1,
+"screen": 1
+},
+"sig": "bedIron1|rockingHorse1|screen1|toyFort1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Night Nursery",
+"rect": [
+-40,
+-66,
+-16,
+-46
+],
+"w": 23,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": -28,
+"to": -27,
+"width": 2
+},
+{
+"wall": "west",
+"from": -56,
+"to": -55,
+"width": 2
+},
+{
+"wall": "east",
+"from": -58,
+"to": -57,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -38,
+"to": -37
+},
+{
+"wall": "north",
+"from": -33,
+"to": -32
+},
+{
+"wall": "north",
+"from": -28,
+"to": -27
+},
+{
+"wall": "north",
+"from": -23,
+"to": -22
+},
+{
+"wall": "north",
+"from": -18,
+"to": -17
+}
+],
+"fire": null,
+"pieces": 6,
+"kinds": {
+"toyFort": 1,
+"bedIron": 1,
+"rockingHorse": 2,
+"sideChair": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|coatStand1|rockingHorse2|sideChair1|toyFort1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Governess's Room",
+"rect": [
+-16,
+-66,
+0,
+-50
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": -8,
+"to": -7,
+"width": 2
+},
+{
+"wall": "west",
+"from": -58,
+"to": -57,
+"width": 2
+},
+{
+"wall": "east",
+"from": -58,
+"to": -57,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -13,
+"to": -12
+},
+{
+"wall": "north",
+"from": -8,
+"to": -7
+},
+{
+"wall": "north",
+"from": -3,
+"to": -2
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"deskWriting": 1,
+"globe": 1,
+"coatStand": 1,
+"tallboy": 1
+},
+"sig": "coatStand1|deskWriting1|globe1|tallboy1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Schoolroom Annexe",
+"rect": [
+0,
+-66,
+16,
+-50
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 8,
+"to": 9,
+"width": 2
+},
+{
+"wall": "west",
+"from": -58,
+"to": -57,
+"width": 2
+},
+{
+"wall": "east",
+"from": -56,
+"to": -55,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 2,
+"to": 3
+},
+{
+"wall": "north",
+"from": 7,
+"to": 8
+},
+{
+"wall": "north",
+"from": 12,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"deskWriting": 1,
+"globe": 1,
+"rockingHorse": 1,
+"sideChair": 1
+},
+"sig": "deskWriting1|globe1|rockingHorse1|sideChair1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Laboratory",
+"rect": [
+16,
+-66,
+40,
+-46
+],
+"w": 23,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 28,
+"to": 29,
+"width": 2
+},
+{
+"wall": "west",
+"from": -56,
+"to": -55,
+"width": 2
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 17,
+"to": 18
+},
+{
+"wall": "north",
+"from": 22,
+"to": 23
+},
+{
+"wall": "north",
+"from": 27,
+"to": 28
+},
+{
+"wall": "north",
+"from": 32,
+"to": 33
+},
+{
+"wall": "north",
+"from": 37,
+"to": 38
+}
+],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"labBench": 2,
+"bookcase": 1,
+"globe": 1,
+"coatStand": 1,
+"tallboy": 1,
+"rockingHorse": 1,
+"blanketChest": 1,
+"sideChair": 1
+},
+"sig": "blanketChest1|bookcase1|coatStand1|globe1|labBench2|rockingHorse1|sideChair1|tallboy1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Convalescent Ward",
+"rect": [
+40,
+-66,
+64,
+-34
+],
+"w": 23,
+"d": 31,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 42,
+"to": 43
+},
+{
+"wall": "north",
+"from": 47,
+"to": 48
+},
+{
+"wall": "north",
+"from": 52,
+"to": 53
+},
+{
+"wall": "north",
+"from": 57,
+"to": 58
+},
+{
+"wall": "north",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": -65,
+"to": -64
+},
+{
+"wall": "east",
+"from": -60,
+"to": -59
+},
+{
+"wall": "east",
+"from": -55,
+"to": -54
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49
+},
+{
+"wall": "east",
+"from": -45,
+"to": -44
+},
+{
+"wall": "east",
+"from": -40,
+"to": -39
+},
+{
+"wall": "east",
+"from": -35,
+"to": -35
+}
+],
+"fire": null,
+"pieces": 11,
+"kinds": {
+"wardBed": 6,
+"fern": 1,
+"deskWriting": 1,
+"blanketChest": 1,
+"sideChair": 1,
+"rockingHorse": 1
+},
+"sig": "blanketChest1|deskWriting1|fern1|rockingHorse1|sideChair1|wardBed6",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Sewing Room",
+"rect": [
+40,
+-34,
+64,
+-22
+],
+"w": 23,
+"d": 11,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -28,
+"to": -27,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -30,
+"to": -29
+},
+{
+"wall": "east",
+"from": -25,
+"to": -24
+}
+],
+"fire": null,
+"pieces": 8,
+"kinds": {
+"ironingTable": 1,
+"wardrobe": 1,
+"sewingMachine": 2,
+"sideChair": 1,
+"coatStand": 1,
+"tallboy": 1,
+"rockingHorse": 1
+},
+"sig": "coatStand1|ironingTable1|rockingHorse1|sewingMachine2|sideChair1|tallboy1|wardrobe1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Upper Linen Room",
+"rect": [
+40,
+-22,
+64,
+-10
+],
+"w": 23,
+"d": 11,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "south",
+"from": 52,
+"to": 53,
+"width": 2
+},
+{
+"wall": "west",
+"from": -16,
+"to": -15,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -20,
+"to": -19
+},
+{
+"wall": "east",
+"from": -15,
+"to": -14
+}
+],
+"fire": null,
+"pieces": 7,
+"kinds": {
+"ironingTable": 1,
+"wardrobe": 1,
+"sewingMachine": 2,
+"sideChair": 1,
+"coatStand": 1,
+"tallboy": 1
+},
+"sig": "coatStand1|ironingTable1|sewingMachine2|sideChair1|tallboy1|wardrobe1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Red Staircase",
+"rect": [
+-40,
+-28,
+-24,
+-12
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "south",
+"from": -32,
+"to": -31,
+"width": 2
+},
+{
+"wall": "west",
+"from": -20,
+"to": -19,
+"width": 2
+},
+{
+"wall": "east",
+"from": -20,
+"to": -19,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"sideChair": 1,
+"coatStand": 1,
+"tallboy": 1
+},
+"sig": "coatStand1|sideChair1|tallboy1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "The Bachelors' Corridor",
+"rect": [
+-64,
+6,
+64,
+14
+],
+"w": 127,
+"d": 7,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 0,
+"to": 1,
+"width": 2
+},
+{
+"wall": "south",
+"from": -56,
+"to": -55,
+"width": 2
+},
+{
+"wall": "south",
+"from": -40,
+"to": -39,
+"width": 2
+},
+{
+"wall": "south",
+"from": -24,
+"to": -23,
+"width": 2
+},
+{
+"wall": "south",
+"from": -8,
+"to": -7,
+"width": 2
+},
+{
+"wall": "south",
+"from": 8,
+"to": 9,
+"width": 2
+},
+{
+"wall": "south",
+"from": 24,
+"to": 25,
+"width": 2
+},
+{
+"wall": "south",
+"from": 40,
+"to": 41,
+"width": 2
+},
+{
+"wall": "south",
+"from": 56,
+"to": 57,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": 10,
+"to": 11
+},
+{
+"wall": "east",
+"from": 10,
+"to": 11
+}
+],
+"fire": null,
+"pieces": 42,
+"kinds": {
+"sideChair": 5,
+"linenPress": 3,
+"coatStand": 5,
+"trunkStack": 4,
+"tallboy": 3,
+"potPlant": 5,
+"rockingHorse": 4,
+"standardLamp": 3,
+"blanketChest": 3,
+"hallBench": 4,
+"gamesTable": 1,
+"dollsHouse": 1,
+"ottoman": 1
+},
+"sig": "blanketChest3|coatStand5|dollsHouse1|gamesTable1|hallBench4|linenPress3|ottoman1|potPlant5|rockingHorse4|sideChair5|standardLamp3|tallboy3|trunkStack4",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom I",
+"rect": [
+-64,
+14,
+-48,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -56,
+"to": -55,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -63,
+"to": -62
+},
+{
+"wall": "south",
+"from": -58,
+"to": -57
+},
+{
+"wall": "south",
+"from": -53,
+"to": -52
+},
+{
+"wall": "west",
+"from": 15,
+"to": 16
+},
+{
+"wall": "west",
+"from": 20,
+"to": 21
+},
+{
+"wall": "west",
+"from": 25,
+"to": 26
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1
+},
+"sig": "bedIron1|fauteuil1|wardrobe1|washstand1",
+"state": "sparse, same set as 3 other rooms, 2 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom II",
+"rect": [
+-48,
+14,
+-32,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -40,
+"to": -39,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -47,
+"to": -47
+},
+{
+"wall": "south",
+"from": -43,
+"to": -42
+},
+{
+"wall": "south",
+"from": -38,
+"to": -37
+},
+{
+"wall": "south",
+"from": -33,
+"to": -33
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1
+},
+"sig": "bedIron1|fauteuil1|wardrobe1|washstand1",
+"state": "sparse, same set as 3 other rooms, 3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom III",
+"rect": [
+-32,
+14,
+-16,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -24,
+"to": -23,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -28,
+"to": -27
+},
+{
+"wall": "south",
+"from": -23,
+"to": -22
+},
+{
+"wall": "south",
+"from": -18,
+"to": -17
+}
+],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1,
+"blanketChest": 1
+},
+"sig": "bedIron1|blanketChest1|fauteuil1|wardrobe1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom IV",
+"rect": [
+-16,
+14,
+0,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": -8,
+"to": -7,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -13,
+"to": -12
+},
+{
+"wall": "south",
+"from": -8,
+"to": -7
+},
+{
+"wall": "south",
+"from": -3,
+"to": -2
+}
+],
+"fire": null,
+"pieces": 6,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1,
+"sideChair": 1,
+"rockingHorse": 1
+},
+"sig": "bedIron1|fauteuil1|rockingHorse1|sideChair1|wardrobe1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom V",
+"rect": [
+0,
+14,
+16,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 8,
+"to": 9,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 2,
+"to": 3
+},
+{
+"wall": "south",
+"from": 7,
+"to": 8
+},
+{
+"wall": "south",
+"from": 12,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 7,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1,
+"tallboy": 1,
+"rockingHorse": 1,
+"blanketChest": 1
+},
+"sig": "bedIron1|blanketChest1|fauteuil1|rockingHorse1|tallboy1|wardrobe1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom VI",
+"rect": [
+16,
+14,
+32,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 24,
+"to": 25,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 17,
+"to": 18
+},
+{
+"wall": "south",
+"from": 22,
+"to": 23
+},
+{
+"wall": "south",
+"from": 27,
+"to": 28
+}
+],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1,
+"sideChair": 1
+},
+"sig": "bedIron1|fauteuil1|sideChair1|wardrobe1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom VII",
+"rect": [
+32,
+14,
+48,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 40,
+"to": 41,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 33,
+"to": 33
+},
+{
+"wall": "south",
+"from": 37,
+"to": 38
+},
+{
+"wall": "south",
+"from": 42,
+"to": 43
+},
+{
+"wall": "south",
+"from": 47,
+"to": 47
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1
+},
+"sig": "bedIron1|fauteuil1|wardrobe1|washstand1",
+"state": "sparse, same set as 3 other rooms, 3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Second floor",
+"y": 25,
+"name": "Guest Bedroom VIII",
+"rect": [
+48,
+14,
+64,
+30
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 56,
+"to": 57,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 52,
+"to": 53
+},
+{
+"wall": "south",
+"from": 57,
+"to": 58
+},
+{
+"wall": "south",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": 15,
+"to": 16
+},
+{
+"wall": "east",
+"from": 20,
+"to": 21
+},
+{
+"wall": "east",
+"from": 25,
+"to": 26
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"bedIron": 1,
+"wardrobe": 1,
+"fauteuil": 1,
+"washstand": 1
+},
+"sig": "bedIron1|fauteuil1|wardrobe1|washstand1",
+"state": "sparse, same set as 3 other rooms, 2 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-64,
+-66,
+-54,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "east",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -63,
+"to": -62
+},
+{
+"wall": "north",
+"from": -58,
+"to": -57
+},
+{
+"wall": "west",
+"from": -65,
+"to": -64
+},
+{
+"wall": "west",
+"from": -60,
+"to": -59
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "2 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-54,
+-66,
+-44,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": -49,
+"to": -48,
+"width": 2
+},
+{
+"wall": "west",
+"from": -61,
+"to": -60,
+"width": 2
+},
+{
+"wall": "east",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -53,
+"to": -52
+},
+{
+"wall": "north",
+"from": -48,
+"to": -47
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-44,
+-66,
+-34,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": -39,
+"to": -38,
+"width": 2
+},
+{
+"wall": "west",
+"from": -61,
+"to": -60,
+"width": 2
+},
+{
+"wall": "east",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -43,
+"to": -42
+},
+{
+"wall": "north",
+"from": -38,
+"to": -37
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-34,
+-66,
+-24,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": -29,
+"to": -28,
+"width": 2
+},
+{
+"wall": "west",
+"from": -61,
+"to": -60,
+"width": 2
+},
+{
+"wall": "east",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -33,
+"to": -32
+},
+{
+"wall": "north",
+"from": -28,
+"to": -27
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-64,
+-56,
+-54,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "south",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "east",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -55,
+"to": -54
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-54,
+-56,
+-44,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -49,
+"to": -48,
+"width": 2
+},
+{
+"wall": "south",
+"from": -49,
+"to": -48,
+"width": 2
+},
+{
+"wall": "west",
+"from": -51,
+"to": -50,
+"width": 2
+},
+{
+"wall": "east",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"blanketChest": 1,
+"brushRack": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|blanketChest1|brushRack1|coatStand1|washstand1",
+"state": "same set as 5 other rooms, 4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-44,
+-56,
+-34,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -39,
+"to": -38,
+"width": 2
+},
+{
+"wall": "south",
+"from": -39,
+"to": -38,
+"width": 2
+},
+{
+"wall": "west",
+"from": -51,
+"to": -50,
+"width": 2
+},
+{
+"wall": "east",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"blanketChest": 1,
+"brushRack": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|blanketChest1|brushRack1|coatStand1|washstand1",
+"state": "same set as 5 other rooms, 4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-34,
+-56,
+-24,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -29,
+"to": -28,
+"width": 2
+},
+{
+"wall": "south",
+"from": -29,
+"to": -28,
+"width": 2
+},
+{
+"wall": "west",
+"from": -51,
+"to": -50,
+"width": 2
+},
+{
+"wall": "east",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"linenPress": 1
+},
+"sig": "bedIron1|linenPress1|washstand1",
+"state": "4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-64,
+-46,
+-54,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "south",
+"from": -59,
+"to": -58,
+"width": 2
+},
+{
+"wall": "east",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -45,
+"to": -44
+},
+{
+"wall": "west",
+"from": -40,
+"to": -39
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-54,
+-46,
+-44,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -49,
+"to": -48,
+"width": 2
+},
+{
+"wall": "south",
+"from": -49,
+"to": -48,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -40,
+"width": 2
+},
+{
+"wall": "east",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"blanketChest": 1,
+"brushRack": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|blanketChest1|brushRack1|coatStand1|washstand1",
+"state": "same set as 5 other rooms, 4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-44,
+-46,
+-34,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -39,
+"to": -38,
+"width": 2
+},
+{
+"wall": "south",
+"from": -39,
+"to": -38,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -40,
+"width": 2
+},
+{
+"wall": "east",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"linenPress": 1
+},
+"sig": "bedIron1|linenPress1|washstand1",
+"state": "4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Maid's Room",
+"rect": [
+-34,
+-46,
+-24,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -29,
+"to": -28,
+"width": 2
+},
+{
+"wall": "south",
+"from": -29,
+"to": -28,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -40,
+"width": 2
+},
+{
+"wall": "east",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|coatStand1|washstand1",
+"state": "4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+24,
+-66,
+34,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": 29,
+"to": 30,
+"width": 2
+},
+{
+"wall": "west",
+"from": -61,
+"to": -60,
+"width": 2
+},
+{
+"wall": "east",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 27,
+"to": 28
+},
+{
+"wall": "north",
+"from": 32,
+"to": 33
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+34,
+-66,
+44,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": 39,
+"to": 40,
+"width": 2
+},
+{
+"wall": "west",
+"from": -61,
+"to": -60,
+"width": 2
+},
+{
+"wall": "east",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 37,
+"to": 38
+},
+{
+"wall": "north",
+"from": 42,
+"to": 43
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+44,
+-66,
+54,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "west",
+"from": -61,
+"to": -60,
+"width": 2
+},
+{
+"wall": "east",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 47,
+"to": 48
+},
+{
+"wall": "north",
+"from": 52,
+"to": 53
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+54,
+-66,
+64,
+-56
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": 59,
+"to": 60,
+"width": 2
+},
+{
+"wall": "west",
+"from": -61,
+"to": -60,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 57,
+"to": 58
+},
+{
+"wall": "north",
+"from": 62,
+"to": 62
+},
+{
+"wall": "east",
+"from": -65,
+"to": -64
+},
+{
+"wall": "east",
+"from": -60,
+"to": -59
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "2 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+24,
+-56,
+34,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 29,
+"to": 30,
+"width": 2
+},
+{
+"wall": "south",
+"from": 29,
+"to": 30,
+"width": 2
+},
+{
+"wall": "west",
+"from": -51,
+"to": -50,
+"width": 2
+},
+{
+"wall": "east",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+34,
+-56,
+44,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 39,
+"to": 40,
+"width": 2
+},
+{
+"wall": "south",
+"from": 39,
+"to": 40,
+"width": 2
+},
+{
+"wall": "west",
+"from": -51,
+"to": -50,
+"width": 2
+},
+{
+"wall": "east",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"blanketChest": 1,
+"brushRack": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|blanketChest1|brushRack1|coatStand1|washstand1",
+"state": "same set as 5 other rooms, 4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+44,
+-56,
+54,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "south",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "west",
+"from": -51,
+"to": -50,
+"width": 2
+},
+{
+"wall": "east",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"linenPress": 1
+},
+"sig": "bedIron1|linenPress1|washstand1",
+"state": "4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+54,
+-56,
+64,
+-46
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 59,
+"to": 60,
+"width": 2
+},
+{
+"wall": "south",
+"from": 59,
+"to": 60,
+"width": 2
+},
+{
+"wall": "west",
+"from": -51,
+"to": -50,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -55,
+"to": -54
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+24,
+-46,
+34,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 29,
+"to": 30,
+"width": 2
+},
+{
+"wall": "south",
+"from": 29,
+"to": 30,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -40,
+"width": 2
+},
+{
+"wall": "east",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"blanketChest": 1,
+"brushRack": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|blanketChest1|brushRack1|coatStand1|washstand1",
+"state": "same set as 5 other rooms, 4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+34,
+-46,
+44,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 39,
+"to": 40,
+"width": 2
+},
+{
+"wall": "south",
+"from": 39,
+"to": 40,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -40,
+"width": 2
+},
+{
+"wall": "east",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"blanketChest": 1,
+"brushRack": 1,
+"coatStand": 1
+},
+"sig": "bedIron1|blanketChest1|brushRack1|coatStand1|washstand1",
+"state": "same set as 5 other rooms, 4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+44,
+-46,
+54,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "south",
+"from": 49,
+"to": 50,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -40,
+"width": 2
+},
+{
+"wall": "east",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"bedIron": 1,
+"washstand": 1,
+"linenPress": 1
+},
+"sig": "bedIron1|linenPress1|washstand1",
+"state": "4 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "A Footman's Room",
+"rect": [
+54,
+-46,
+64,
+-36
+],
+"w": 9,
+"d": 9,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 59,
+"to": 60,
+"width": 2
+},
+{
+"wall": "south",
+"from": 59,
+"to": 60,
+"width": 2
+},
+{
+"wall": "west",
+"from": -41,
+"to": -40,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "east",
+"from": -45,
+"to": -44
+},
+{
+"wall": "east",
+"from": -40,
+"to": -39
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "3 doors"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "The Box Room",
+"rect": [
+-24,
+14,
+0,
+30
+],
+"w": 23,
+"d": 15,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": -12,
+"to": -11,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -23,
+"to": -22
+},
+{
+"wall": "south",
+"from": -18,
+"to": -17
+},
+{
+"wall": "south",
+"from": -13,
+"to": -12
+},
+{
+"wall": "south",
+"from": -8,
+"to": -7
+},
+{
+"wall": "south",
+"from": -3,
+"to": -2
+}
+],
+"fire": null,
+"pieces": 10,
+"kinds": {
+"wardrobe": 1,
+"deedChest": 4,
+"brushRack": 2,
+"trunkStack": 1,
+"blanketChest": 1,
+"linenPress": 1
+},
+"sig": "blanketChest1|brushRack2|deedChest4|linenPress1|trunkStack1|wardrobe1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Attics",
+"y": 32,
+"name": "The Cistern Room",
+"rect": [
+0,
+14,
+24,
+30
+],
+"w": 23,
+"d": 15,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 12,
+"to": 13,
+"width": 2
+},
+{
+"wall": "west",
+"from": 22,
+"to": 23,
+"width": 2
+},
+{
+"wall": "east",
+"from": 22,
+"to": 23,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 2,
+"to": 3
+},
+{
+"wall": "south",
+"from": 7,
+"to": 8
+},
+{
+"wall": "south",
+"from": 12,
+"to": 13
+},
+{
+"wall": "south",
+"from": 17,
+"to": 18
+},
+{
+"wall": "south",
+"from": 22,
+"to": 23
+}
+],
+"fire": null,
+"pieces": 8,
+"kinds": {
+"wardrobe": 1,
+"deedChest": 4,
+"brushRack": 2,
+"linenPress": 1
+},
+"sig": "brushRack2|deedChest4|linenPress1|wardrobe1",
+"state": "furnished"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Tower rooms",
+"y": 38,
+"name": "The Flag Room",
+"rect": [
+-64,
+-66,
+-44,
+-46
+],
+"w": 19,
+"d": 19,
+"height": 7,
+"doors": [],
+"windows": [
+{
+"wall": "north",
+"from": -63,
+"to": -62
+},
+{
+"wall": "north",
+"from": -58,
+"to": -57
+},
+{
+"wall": "north",
+"from": -53,
+"to": -52
+},
+{
+"wall": "north",
+"from": -48,
+"to": -47
+},
+{
+"wall": "south",
+"from": -63,
+"to": -62
+},
+{
+"wall": "south",
+"from": -58,
+"to": -57
+},
+{
+"wall": "south",
+"from": -53,
+"to": -52
+},
+{
+"wall": "south",
+"from": -48,
+"to": -47
+},
+{
+"wall": "west",
+"from": -65,
+"to": -64
+},
+{
+"wall": "west",
+"from": -60,
+"to": -59
+},
+{
+"wall": "west",
+"from": -55,
+"to": -54
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49
+},
+{
+"wall": "east",
+"from": -65,
+"to": -64
+},
+{
+"wall": "east",
+"from": -60,
+"to": -59
+},
+{
+"wall": "east",
+"from": -55,
+"to": -54
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49
+}
+],
+"fire": null,
+"pieces": 1,
+"kinds": {
+"deedChest": 1
+},
+"sig": "deedChest1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Tower rooms",
+"y": 38,
+"name": "The Clock Room",
+"rect": [
+44,
+-66,
+64,
+-46
+],
+"w": 19,
+"d": 19,
+"height": 7,
+"doors": [],
+"windows": [
+{
+"wall": "north",
+"from": 45,
+"to": 46
+},
+{
+"wall": "north",
+"from": 50,
+"to": 51
+},
+{
+"wall": "north",
+"from": 55,
+"to": 56
+},
+{
+"wall": "north",
+"from": 60,
+"to": 61
+},
+{
+"wall": "south",
+"from": 45,
+"to": 46
+},
+{
+"wall": "south",
+"from": 50,
+"to": 51
+},
+{
+"wall": "south",
+"from": 55,
+"to": 56
+},
+{
+"wall": "south",
+"from": 60,
+"to": 61
+},
+{
+"wall": "west",
+"from": -65,
+"to": -64
+},
+{
+"wall": "west",
+"from": -60,
+"to": -59
+},
+{
+"wall": "west",
+"from": -55,
+"to": -54
+},
+{
+"wall": "west",
+"from": -50,
+"to": -49
+},
+{
+"wall": "east",
+"from": -65,
+"to": -64
+},
+{
+"wall": "east",
+"from": -60,
+"to": -59
+},
+{
+"wall": "east",
+"from": -55,
+"to": -54
+},
+{
+"wall": "east",
+"from": -50,
+"to": -49
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"deskWriting": 1,
+"clockLong": 1
+},
+"sig": "clockLong1|deskWriting1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Tower rooms",
+"y": 38,
+"name": "The Water Tower",
+"rect": [
+-64,
+10,
+-44,
+30
+],
+"w": 19,
+"d": 19,
+"height": 7,
+"doors": [],
+"windows": [
+{
+"wall": "north",
+"from": -63,
+"to": -62
+},
+{
+"wall": "north",
+"from": -58,
+"to": -57
+},
+{
+"wall": "north",
+"from": -53,
+"to": -52
+},
+{
+"wall": "north",
+"from": -48,
+"to": -47
+},
+{
+"wall": "south",
+"from": -63,
+"to": -62
+},
+{
+"wall": "south",
+"from": -58,
+"to": -57
+},
+{
+"wall": "south",
+"from": -53,
+"to": -52
+},
+{
+"wall": "south",
+"from": -48,
+"to": -47
+},
+{
+"wall": "west",
+"from": 11,
+"to": 12
+},
+{
+"wall": "west",
+"from": 16,
+"to": 17
+},
+{
+"wall": "west",
+"from": 21,
+"to": 22
+},
+{
+"wall": "west",
+"from": 26,
+"to": 27
+},
+{
+"wall": "east",
+"from": 11,
+"to": 12
+},
+{
+"wall": "east",
+"from": 16,
+"to": 17
+},
+{
+"wall": "east",
+"from": 21,
+"to": 22
+},
+{
+"wall": "east",
+"from": 26,
+"to": 27
+}
+],
+"fire": null,
+"pieces": 1,
+"kinds": {
+"deedChest": 1
+},
+"sig": "deedChest1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Tower rooms",
+"y": 38,
+"name": "His Grace's Belvedere",
+"rect": [
+44,
+10,
+64,
+30
+],
+"w": 19,
+"d": 19,
+"height": 7,
+"doors": [],
+"windows": [
+{
+"wall": "north",
+"from": 45,
+"to": 46
+},
+{
+"wall": "north",
+"from": 50,
+"to": 51
+},
+{
+"wall": "north",
+"from": 55,
+"to": 56
+},
+{
+"wall": "north",
+"from": 60,
+"to": 61
+},
+{
+"wall": "south",
+"from": 45,
+"to": 46
+},
+{
+"wall": "south",
+"from": 50,
+"to": 51
+},
+{
+"wall": "south",
+"from": 55,
+"to": 56
+},
+{
+"wall": "south",
+"from": 60,
+"to": 61
+},
+{
+"wall": "west",
+"from": 11,
+"to": 12
+},
+{
+"wall": "west",
+"from": 16,
+"to": 17
+},
+{
+"wall": "west",
+"from": 21,
+"to": 22
+},
+{
+"wall": "west",
+"from": 26,
+"to": 27
+},
+{
+"wall": "east",
+"from": 11,
+"to": 12
+},
+{
+"wall": "east",
+"from": 16,
+"to": 17
+},
+{
+"wall": "east",
+"from": 21,
+"to": 22
+},
+{
+"wall": "east",
+"from": 26,
+"to": 27
+}
+],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"libraryTable": 1,
+"telescope": 1,
+"armchair": 2,
+"seeingStoneFine": 1
+},
+"sig": "armchair2|libraryTable1|seeingStoneFine1|telescope1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Tower rooms",
+"y": 38,
+"name": "The Wireless Room",
+"rect": [
+-12,
+-32,
+12,
+-8
+],
+"w": 23,
+"d": 23,
+"height": 7,
+"doors": [
+{
+"wall": "north",
+"from": -1,
+"to": 1,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -11,
+"to": -10
+},
+{
+"wall": "north",
+"from": -7,
+"to": -6
+},
+{
+"wall": "north",
+"from": -3,
+"to": -2
+},
+{
+"wall": "north",
+"from": 2,
+"to": 2
+},
+{
+"wall": "north",
+"from": 5,
+"to": 6
+},
+{
+"wall": "north",
+"from": 9,
+"to": 10
+},
+{
+"wall": "south",
+"from": -11,
+"to": -10
+},
+{
+"wall": "south",
+"from": -7,
+"to": -6
+},
+{
+"wall": "south",
+"from": -3,
+"to": -2
+},
+{
+"wall": "south",
+"from": 1,
+"to": 2
+},
+{
+"wall": "south",
+"from": 5,
+"to": 6
+},
+{
+"wall": "south",
+"from": 9,
+"to": 10
+},
+{
+"wall": "west",
+"from": -31,
+"to": -30
+},
+{
+"wall": "west",
+"from": -27,
+"to": -26
+},
+{
+"wall": "west",
+"from": -23,
+"to": -22
+},
+{
+"wall": "west",
+"from": -19,
+"to": -18
+},
+{
+"wall": "west",
+"from": -15,
+"to": -14
+},
+{
+"wall": "west",
+"from": -11,
+"to": -10
+},
+{
+"wall": "east",
+"from": -31,
+"to": -30
+},
+{
+"wall": "east",
+"from": -27,
+"to": -26
+},
+{
+"wall": "east",
+"from": -23,
+"to": -22
+},
+{
+"wall": "east",
+"from": -19,
+"to": -18
+},
+{
+"wall": "east",
+"from": -15,
+"to": -14
+},
+{
+"wall": "east",
+"from": -11,
+"to": -10
+}
+],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"mapTable": 1,
+"wireless": 1,
+"clockLong": 1
+},
+"sig": "clockLong1|mapTable1|wireless1",
+"state": "sparse"
+},
+{
+"building": "Euphrates Hall",
+"bid": 1,
+"floor": "Observatory",
+"y": 46,
+"name": "The Observatory",
+"rect": [
+-12,
+-32,
+12,
+-8
+],
+"w": 23,
+"d": 23,
+"height": 7,
+"doors": [],
+"windows": [
+{
+"wall": "north",
+"from": -11,
+"to": -10
+},
+{
+"wall": "north",
+"from": -7,
+"to": -6
+},
+{
+"wall": "north",
+"from": -3,
+"to": -2
+},
+{
+"wall": "north",
+"from": 1,
+"to": 2
+},
+{
+"wall": "north",
+"from": 5,
+"to": 6
+},
+{
+"wall": "north",
+"from": 9,
+"to": 10
+},
+{
+"wall": "south",
+"from": -11,
+"to": -10
+},
+{
+"wall": "south",
+"from": -7,
+"to": -6
+},
+{
+"wall": "south",
+"from": -3,
+"to": -2
+},
+{
+"wall": "south",
+"from": 1,
+"to": 2
+},
+{
+"wall": "south",
+"from": 5,
+"to": 6
+},
+{
+"wall": "south",
+"from": 9,
+"to": 10
+},
+{
+"wall": "west",
+"from": -31,
+"to": -30
+},
+{
+"wall": "west",
+"from": -27,
+"to": -26
+},
+{
+"wall": "west",
+"from": -23,
+"to": -22
+},
+{
+"wall": "west",
+"from": -19,
+"to": -18
+},
+{
+"wall": "west",
+"from": -15,
+"to": -14
+},
+{
+"wall": "west",
+"from": -11,
+"to": -10
+},
+{
+"wall": "east",
+"from": -31,
+"to": -30
+},
+{
+"wall": "east",
+"from": -27,
+"to": -26
+},
+{
+"wall": "east",
+"from": -23,
+"to": -22
+},
+{
+"wall": "east",
+"from": -19,
+"to": -18
+},
+{
+"wall": "east",
+"from": -15,
+"to": -14
+},
+{
+"wall": "east",
+"from": -11,
+"to": -10
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"telescope": 1,
+"globe": 1
+},
+"sig": "globe1|telescope1",
+"state": "sparse"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "Below stairs",
+"y": 0,
+"name": "The Ballroom Cellars",
+"rect": [
+-128,
+-24,
+-65,
+16
+],
+"w": 62,
+"d": 39,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": -100,
+"to": -99,
+"width": 2
+},
+{
+"wall": "east",
+"from": -21,
+"to": -20,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -127,
+"to": -126
+},
+{
+"wall": "north",
+"from": -122,
+"to": -121
+},
+{
+"wall": "north",
+"from": -117,
+"to": -116
+},
+{
+"wall": "north",
+"from": -112,
+"to": -111
+},
+{
+"wall": "north",
+"from": -107,
+"to": -106
+},
+{
+"wall": "north",
+"from": -102,
+"to": -101
+},
+{
+"wall": "north",
+"from": -97,
+"to": -96
+},
+{
+"wall": "north",
+"from": -92,
+"to": -91
+},
+{
+"wall": "north",
+"from": -87,
+"to": -86
+},
+{
+"wall": "north",
+"from": -82,
+"to": -81
+},
+{
+"wall": "north",
+"from": -77,
+"to": -76
+},
+{
+"wall": "north",
+"from": -72,
+"to": -71
+},
+{
+"wall": "north",
+"from": -67,
+"to": -67
+},
+{
+"wall": "south",
+"from": -127,
+"to": -126
+},
+{
+"wall": "south",
+"from": -122,
+"to": -121
+},
+{
+"wall": "south",
+"from": -117,
+"to": -116
+},
+{
+"wall": "south",
+"from": -112,
+"to": -111
+},
+{
+"wall": "south",
+"from": -107,
+"to": -106
+},
+{
+"wall": "south",
+"from": -102,
+"to": -101
+},
+{
+"wall": "south",
+"from": -97,
+"to": -96
+},
+{
+"wall": "south",
+"from": -92,
+"to": -91
+},
+{
+"wall": "south",
+"from": -87,
+"to": -86
+},
+{
+"wall": "south",
+"from": -82,
+"to": -81
+},
+{
+"wall": "south",
+"from": -77,
+"to": -76
+},
+{
+"wall": "south",
+"from": -72,
+"to": -71
+},
+{
+"wall": "south",
+"from": -67,
+"to": -67
+},
+{
+"wall": "west",
+"from": -23,
+"to": -22
+},
+{
+"wall": "west",
+"from": -18,
+"to": -17
+},
+{
+"wall": "west",
+"from": -13,
+"to": -12
+},
+{
+"wall": "west",
+"from": -8,
+"to": -7
+},
+{
+"wall": "west",
+"from": -3,
+"to": -2
+},
+{
+"wall": "west",
+"from": 2,
+"to": 3
+},
+{
+"wall": "west",
+"from": 7,
+"to": 8
+},
+{
+"wall": "west",
+"from": 12,
+"to": 13
+},
+{
+"wall": "east",
+"from": -23,
+"to": -22
+},
+{
+"wall": "east",
+"from": -18,
+"to": -17
+},
+{
+"wall": "east",
+"from": -13,
+"to": -12
+},
+{
+"wall": "east",
+"from": -8,
+"to": -7
+},
+{
+"wall": "east",
+"from": -3,
+"to": -2
+},
+{
+"wall": "east",
+"from": 2,
+"to": 3
+},
+{
+"wall": "east",
+"from": 7,
+"to": 8
+},
+{
+"wall": "east",
+"from": 12,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 53,
+"kinds": {
+"barrel": 9,
+"keyCabinet": 8,
+"sackPile": 11,
+"crateStack": 14,
+"barrelRack": 11
+},
+"sig": "barrel9|barrelRack11|crateStack14|keyCabinet8|sackPile11",
+"state": "sparse"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "State floor",
+"y": 7,
+"name": "The Ballroom",
+"rect": [
+-128,
+-12,
+-65,
+16
+],
+"w": 62,
+"d": 27,
+"height": 12,
+"doors": [
+{
+"wall": "north",
+"from": -108,
+"to": -107,
+"width": 2
+},
+{
+"wall": "north",
+"from": -76,
+"to": -75,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -127,
+"to": -126
+},
+{
+"wall": "south",
+"from": -122,
+"to": -121
+},
+{
+"wall": "south",
+"from": -117,
+"to": -116
+},
+{
+"wall": "south",
+"from": -112,
+"to": -111
+},
+{
+"wall": "south",
+"from": -107,
+"to": -106
+},
+{
+"wall": "south",
+"from": -102,
+"to": -101
+},
+{
+"wall": "south",
+"from": -97,
+"to": -96
+},
+{
+"wall": "south",
+"from": -92,
+"to": -91
+},
+{
+"wall": "south",
+"from": -87,
+"to": -86
+},
+{
+"wall": "south",
+"from": -82,
+"to": -81
+},
+{
+"wall": "south",
+"from": -77,
+"to": -76
+},
+{
+"wall": "south",
+"from": -72,
+"to": -71
+},
+{
+"wall": "south",
+"from": -67,
+"to": -67
+},
+{
+"wall": "west",
+"from": -8,
+"to": -7
+},
+{
+"wall": "west",
+"from": -3,
+"to": -2
+},
+{
+"wall": "west",
+"from": 2,
+"to": 3
+},
+{
+"wall": "west",
+"from": 7,
+"to": 8
+},
+{
+"wall": "west",
+"from": 12,
+"to": 13
+},
+{
+"wall": "east",
+"from": -8,
+"to": -7
+},
+{
+"wall": "east",
+"from": -3,
+"to": -2
+},
+{
+"wall": "east",
+"from": 2,
+"to": 3
+},
+{
+"wall": "east",
+"from": 7,
+"to": 8
+},
+{
+"wall": "east",
+"from": 12,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 30,
+"kinds": {
+"grandPiano": 1,
+"consoleTable": 2,
+"harp": 1,
+"musicStand": 2,
+"chairHall": 24
+},
+"sig": "chairHall24|consoleTable2|grandPiano1|harp1|musicStand2",
+"state": "sparse"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "State floor",
+"y": 7,
+"name": "The Orangery Link",
+"rect": [
+-128,
+-24,
+-88,
+-12
+],
+"w": 39,
+"d": 11,
+"height": 12,
+"doors": [
+{
+"wall": "south",
+"from": -108,
+"to": -107,
+"width": 2
+},
+{
+"wall": "east",
+"from": -18,
+"to": -17,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -127,
+"to": -126
+},
+{
+"wall": "north",
+"from": -122,
+"to": -121
+},
+{
+"wall": "north",
+"from": -117,
+"to": -116
+},
+{
+"wall": "north",
+"from": -112,
+"to": -111
+},
+{
+"wall": "north",
+"from": -107,
+"to": -106
+},
+{
+"wall": "north",
+"from": -102,
+"to": -101
+},
+{
+"wall": "north",
+"from": -97,
+"to": -96
+},
+{
+"wall": "north",
+"from": -92,
+"to": -91
+},
+{
+"wall": "west",
+"from": -23,
+"to": -22
+},
+{
+"wall": "west",
+"from": -18,
+"to": -17
+},
+{
+"wall": "west",
+"from": -13,
+"to": -13
+}
+],
+"fire": null,
+"pieces": 14,
+"kinds": {
+"glasshouseBench": 1,
+"orangeTree": 4,
+"bench": 1,
+"birdcage": 1,
+"hallBench": 2,
+"palm": 1,
+"torchere": 1,
+"clockLong": 1,
+"fern": 1,
+"consoleTable": 1
+},
+"sig": "bench1|birdcage1|clockLong1|consoleTable1|fern1|glasshouseBench1|hallBench2|orangeTree4|palm1|torchere1",
+"state": "furnished"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "State floor",
+"y": 7,
+"name": "The West Lobby",
+"rect": [
+-88,
+-24,
+-65,
+-12
+],
+"w": 22,
+"d": 11,
+"height": 12,
+"doors": [
+{
+"wall": "south",
+"from": -76,
+"to": -75,
+"width": 2
+},
+{
+"wall": "west",
+"from": -18,
+"to": -17,
+"width": 2
+},
+{
+"wall": "east",
+"from": -19,
+"to": -17,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -87,
+"to": -86
+},
+{
+"wall": "north",
+"from": -82,
+"to": -81
+},
+{
+"wall": "north",
+"from": -77,
+"to": -76
+},
+{
+"wall": "north",
+"from": -72,
+"to": -71
+},
+{
+"wall": "north",
+"from": -67,
+"to": -67
+},
+{
+"wall": "east",
+"from": -23,
+"to": -22
+},
+{
+"wall": "east",
+"from": -13,
+"to": -13
+}
+],
+"fire": null,
+"pieces": 7,
+"kinds": {
+"hallBench": 1,
+"suitArmor": 2,
+"palm": 2,
+"torchere": 1,
+"bust": 1
+},
+"sig": "bust1|hallBench1|palm2|suitArmor2|torchere1",
+"state": "furnished"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "First floor",
+"y": 20,
+"name": "The Private Theatre",
+"rect": [
+-128,
+-8,
+-88,
+16
+],
+"w": 39,
+"d": 23,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -108,
+"to": -107,
+"width": 2
+},
+{
+"wall": "east",
+"from": 6,
+"to": 7,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -127,
+"to": -126
+},
+{
+"wall": "south",
+"from": -122,
+"to": -121
+},
+{
+"wall": "south",
+"from": -117,
+"to": -116
+},
+{
+"wall": "south",
+"from": -112,
+"to": -111
+},
+{
+"wall": "south",
+"from": -107,
+"to": -106
+},
+{
+"wall": "south",
+"from": -102,
+"to": -101
+},
+{
+"wall": "south",
+"from": -97,
+"to": -96
+},
+{
+"wall": "south",
+"from": -92,
+"to": -91
+},
+{
+"wall": "west",
+"from": -7,
+"to": -7
+},
+{
+"wall": "west",
+"from": -3,
+"to": -2
+},
+{
+"wall": "west",
+"from": 2,
+"to": 3
+},
+{
+"wall": "west",
+"from": 7,
+"to": 8
+},
+{
+"wall": "west",
+"from": 12,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 13,
+"kinds": {
+"seatRow": 12,
+"stageCurtain": 1
+},
+"sig": "seatRow12|stageCurtain1",
+"state": "sparse"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "First floor",
+"y": 20,
+"name": "The Theatre Foyer",
+"rect": [
+-128,
+-24,
+-88,
+-8
+],
+"w": 39,
+"d": 15,
+"height": 9,
+"doors": [
+{
+"wall": "south",
+"from": -108,
+"to": -107,
+"width": 2
+},
+{
+"wall": "east",
+"from": -14,
+"to": -13,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -127,
+"to": -126
+},
+{
+"wall": "north",
+"from": -122,
+"to": -121
+},
+{
+"wall": "north",
+"from": -117,
+"to": -116
+},
+{
+"wall": "north",
+"from": -112,
+"to": -111
+},
+{
+"wall": "north",
+"from": -107,
+"to": -106
+},
+{
+"wall": "north",
+"from": -102,
+"to": -101
+},
+{
+"wall": "north",
+"from": -97,
+"to": -96
+},
+{
+"wall": "north",
+"from": -92,
+"to": -91
+},
+{
+"wall": "west",
+"from": -23,
+"to": -22
+},
+{
+"wall": "west",
+"from": -18,
+"to": -17
+},
+{
+"wall": "west",
+"from": -13,
+"to": -12
+}
+],
+"fire": null,
+"pieces": 13,
+"kinds": {
+"displayCabinet": 1,
+"fern": 1,
+"urn": 1,
+"bust": 1,
+"hallBench": 1,
+"suitArmor": 1,
+"torchere": 1,
+"chairHall": 1,
+"clockLong": 1,
+"pedestalTable": 1,
+"statue": 1,
+"settee": 1,
+"palm": 1
+},
+"sig": "bust1|chairHall1|clockLong1|displayCabinet1|fern1|hallBench1|palm1|pedestalTable1|settee1|statue1|suitArmor1|torchere1|urn1",
+"state": "furnished"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "First floor",
+"y": 20,
+"name": "The Card Room",
+"rect": [
+-88,
+-4,
+-65,
+16
+],
+"w": 22,
+"d": 19,
+"height": 9,
+"doors": [
+{
+"wall": "north",
+"from": -76,
+"to": -75,
+"width": 2
+},
+{
+"wall": "west",
+"from": 6,
+"to": 7,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": -87,
+"to": -86
+},
+{
+"wall": "south",
+"from": -82,
+"to": -81
+},
+{
+"wall": "south",
+"from": -77,
+"to": -76
+},
+{
+"wall": "south",
+"from": -72,
+"to": -71
+},
+{
+"wall": "south",
+"from": -67,
+"to": -67
+},
+{
+"wall": "east",
+"from": -3,
+"to": -2
+},
+{
+"wall": "east",
+"from": 2,
+"to": 3
+},
+{
+"wall": "east",
+"from": 7,
+"to": 8
+},
+{
+"wall": "east",
+"from": 12,
+"to": 13
+}
+],
+"fire": "north",
+"pieces": 16,
+"kinds": {
+"cardTable": 3,
+"fireplace": 1,
+"chairHall": 12
+},
+"sig": "cardTable3|chairHall12|fireplace1",
+"state": "same set as 1 other rooms"
+},
+{
+"building": "The State Wing",
+"bid": 2,
+"floor": "First floor",
+"y": 20,
+"name": "The Ladies' Withdrawing Room",
+"rect": [
+-88,
+-24,
+-65,
+-4
+],
+"w": 22,
+"d": 19,
+"height": 9,
+"doors": [
+{
+"wall": "south",
+"from": -76,
+"to": -75,
+"width": 2
+},
+{
+"wall": "west",
+"from": -14,
+"to": -13,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -87,
+"to": -86
+},
+{
+"wall": "north",
+"from": -82,
+"to": -81
+},
+{
+"wall": "north",
+"from": -77,
+"to": -76
+},
+{
+"wall": "north",
+"from": -72,
+"to": -71
+},
+{
+"wall": "north",
+"from": -67,
+"to": -67
+},
+{
+"wall": "east",
+"from": -23,
+"to": -22
+},
+{
+"wall": "east",
+"from": -18,
+"to": -17
+},
+{
+"wall": "east",
+"from": -13,
+"to": -12
+},
+{
+"wall": "east",
+"from": -8,
+"to": -7
+}
+],
+"fire": "north",
+"pieces": 16,
+"kinds": {
+"cardTable": 3,
+"fireplace": 1,
+"chairHall": 12
+},
+"sig": "cardTable3|chairHall12|fireplace1",
+"state": "same set as 1 other rooms"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "Ground",
+"y": 0,
+"name": "The Bakehouse",
+"rect": [
+65,
+-24,
+81,
+-8
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 73,
+"to": 74,
+"width": 2
+},
+{
+"wall": "east",
+"from": -16,
+"to": -15,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 66,
+"to": 66
+},
+{
+"wall": "north",
+"from": 70,
+"to": 70
+},
+{
+"wall": "north",
+"from": 74,
+"to": 74
+},
+{
+"wall": "north",
+"from": 78,
+"to": 78
+},
+{
+"wall": "west",
+"from": -23,
+"to": -23
+},
+{
+"wall": "west",
+"from": -19,
+"to": -19
+},
+{
+"wall": "west",
+"from": -15,
+"to": -15
+},
+{
+"wall": "west",
+"from": -11,
+"to": -11
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"kitchenTable": 1,
+"welshDresser": 1
+},
+"sig": "kitchenTable1|welshDresser1",
+"state": "sparse"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "Ground",
+"y": 0,
+"name": "The Dairy",
+"rect": [
+81,
+-24,
+97,
+-8
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 89,
+"to": 90,
+"width": 2
+},
+{
+"wall": "west",
+"from": -16,
+"to": -15,
+"width": 2
+},
+{
+"wall": "east",
+"from": -16,
+"to": -15,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 82,
+"to": 82
+},
+{
+"wall": "north",
+"from": 86,
+"to": 86
+},
+{
+"wall": "north",
+"from": 90,
+"to": 90
+},
+{
+"wall": "north",
+"from": 94,
+"to": 94
+}
+],
+"fire": null,
+"pieces": 11,
+"kinds": {
+"kitchenTable": 1,
+"welshDresser": 1,
+"hallBench": 1,
+"copperRack": 2,
+"brushRack": 2,
+"keyCabinet": 2,
+"noticeBoard": 2
+},
+"sig": "brushRack2|copperRack2|hallBench1|keyCabinet2|kitchenTable1|noticeBoard2|welshDresser1",
+"state": "furnished"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "Ground",
+"y": 0,
+"name": "The Brewhouse",
+"rect": [
+97,
+-24,
+113,
+-8
+],
+"w": 15,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 100,
+"to": 101,
+"width": 2
+},
+{
+"wall": "south",
+"from": 105,
+"to": 106,
+"width": 2
+},
+{
+"wall": "west",
+"from": -16,
+"to": -15,
+"width": 2
+},
+{
+"wall": "east",
+"from": -16,
+"to": -15,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 98,
+"to": 98
+},
+{
+"wall": "north",
+"from": 102,
+"to": 102
+},
+{
+"wall": "north",
+"from": 106,
+"to": 106
+},
+{
+"wall": "north",
+"from": 110,
+"to": 110
+}
+],
+"fire": null,
+"pieces": 9,
+"kinds": {
+"kitchenTable": 1,
+"noticeBoard": 2,
+"keyCabinet": 2,
+"copperRack": 1,
+"brushRack": 2,
+"umbrellaStand": 1
+},
+"sig": "brushRack2|copperRack1|keyCabinet2|kitchenTable1|noticeBoard2|umbrellaStand1",
+"state": "furnished"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "Ground",
+"y": 0,
+"name": "The Lamp Room",
+"rect": [
+113,
+-24,
+128,
+-8
+],
+"w": 14,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 121,
+"to": 122,
+"width": 2
+},
+{
+"wall": "west",
+"from": -16,
+"to": -15,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 114,
+"to": 114
+},
+{
+"wall": "north",
+"from": 118,
+"to": 118
+},
+{
+"wall": "north",
+"from": 122,
+"to": 122
+},
+{
+"wall": "north",
+"from": 126,
+"to": 126
+},
+{
+"wall": "east",
+"from": -23,
+"to": -23
+},
+{
+"wall": "east",
+"from": -19,
+"to": -19
+},
+{
+"wall": "east",
+"from": -15,
+"to": -15
+},
+{
+"wall": "east",
+"from": -11,
+"to": -11
+}
+],
+"fire": null,
+"pieces": 0,
+"kinds": {},
+"sig": "",
+"state": "empty"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "Ground",
+"y": 0,
+"name": "The Estate Carpenter",
+"rect": [
+65,
+-4,
+81,
+16
+],
+"w": 15,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 73,
+"to": 74,
+"width": 2
+},
+{
+"wall": "east",
+"from": 6,
+"to": 7,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 66,
+"to": 66
+},
+{
+"wall": "south",
+"from": 70,
+"to": 70
+},
+{
+"wall": "south",
+"from": 74,
+"to": 74
+},
+{
+"wall": "south",
+"from": 78,
+"to": 78
+},
+{
+"wall": "west",
+"from": -3,
+"to": -3
+},
+{
+"wall": "west",
+"from": 1,
+"to": 1
+},
+{
+"wall": "west",
+"from": 5,
+"to": 5
+},
+{
+"wall": "west",
+"from": 9,
+"to": 9
+},
+{
+"wall": "west",
+"from": 13,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"kitchenTable": 1,
+"anvil": 1,
+"saddleRack": 1
+},
+"sig": "anvil1|kitchenTable1|saddleRack1",
+"state": "sparse"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "Ground",
+"y": 0,
+"name": "The Laundry",
+"rect": [
+81,
+-4,
+128,
+16
+],
+"w": 46,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 105,
+"to": 106,
+"width": 2
+},
+{
+"wall": "south",
+"from": 95,
+"to": 96,
+"width": 2
+},
+{
+"wall": "west",
+"from": 6,
+"to": 7,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 82,
+"to": 82
+},
+{
+"wall": "south",
+"from": 86,
+"to": 86
+},
+{
+"wall": "south",
+"from": 90,
+"to": 90
+},
+{
+"wall": "south",
+"from": 94,
+"to": 94
+},
+{
+"wall": "south",
+"from": 98,
+"to": 98
+},
+{
+"wall": "south",
+"from": 102,
+"to": 102
+},
+{
+"wall": "south",
+"from": 106,
+"to": 106
+},
+{
+"wall": "south",
+"from": 110,
+"to": 110
+},
+{
+"wall": "south",
+"from": 114,
+"to": 114
+},
+{
+"wall": "south",
+"from": 118,
+"to": 118
+},
+{
+"wall": "south",
+"from": 122,
+"to": 122
+},
+{
+"wall": "south",
+"from": 126,
+"to": 126
+},
+{
+"wall": "east",
+"from": -3,
+"to": -3
+},
+{
+"wall": "east",
+"from": 1,
+"to": 1
+},
+{
+"wall": "east",
+"from": 5,
+"to": 5
+},
+{
+"wall": "east",
+"from": 9,
+"to": 9
+},
+{
+"wall": "east",
+"from": 13,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 18,
+"kinds": {
+"kitchenRange": 1,
+"ironingTable": 2,
+"mangle": 2,
+"settle": 1,
+"keyCabinet": 3,
+"hallBench": 1,
+"copperRack": 2,
+"noticeBoard": 2,
+"brushRack": 2,
+"dresserKitchen": 1,
+"bootRack": 1
+},
+"sig": "bootRack1|brushRack2|copperRack2|dresserKitchen1|hallBench1|ironingTable2|keyCabinet3|kitchenRange1|mangle2|noticeBoard2|settle1",
+"state": "sparse"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "First floor",
+"y": 7,
+"name": "The Steward's Office",
+"rect": [
+65,
+-24,
+85,
+-8
+],
+"w": 19,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 76,
+"to": 76,
+"width": 1
+},
+{
+"wall": "east",
+"from": -16,
+"to": -15,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 66,
+"to": 66
+},
+{
+"wall": "north",
+"from": 70,
+"to": 70
+},
+{
+"wall": "north",
+"from": 74,
+"to": 74
+},
+{
+"wall": "north",
+"from": 78,
+"to": 78
+},
+{
+"wall": "north",
+"from": 82,
+"to": 82
+},
+{
+"wall": "west",
+"from": -23,
+"to": -23
+},
+{
+"wall": "west",
+"from": -19,
+"to": -19
+},
+{
+"wall": "west",
+"from": -15,
+"to": -15
+},
+{
+"wall": "west",
+"from": -11,
+"to": -11
+}
+],
+"fire": null,
+"pieces": 4,
+"kinds": {
+"deskWriting": 1,
+"bookcase": 1,
+"strongbox": 1,
+"clockLong": 1
+},
+"sig": "bookcase1|clockLong1|deskWriting1|strongbox1",
+"state": "sparse"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "First floor",
+"y": 7,
+"name": "The Agent's Room",
+"rect": [
+85,
+-24,
+105,
+-8
+],
+"w": 19,
+"d": 15,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": 95,
+"to": 96,
+"width": 2
+},
+{
+"wall": "west",
+"from": -16,
+"to": -15,
+"width": 2
+},
+{
+"wall": "east",
+"from": -16,
+"to": -15,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 86,
+"to": 86
+},
+{
+"wall": "north",
+"from": 90,
+"to": 90
+},
+{
+"wall": "north",
+"from": 94,
+"to": 94
+},
+{
+"wall": "north",
+"from": 98,
+"to": 98
+},
+{
+"wall": "north",
+"from": 102,
+"to": 102
+}
+],
+"fire": null,
+"pieces": 8,
+"kinds": {
+"deskWriting": 1,
+"bookcase": 1,
+"strongbox": 1,
+"clockLong": 1,
+"coatStand": 1,
+"trunkStack": 1,
+"blanketChest": 1,
+"brushRack": 1
+},
+"sig": "blanketChest1|bookcase1|brushRack1|clockLong1|coatStand1|deskWriting1|strongbox1|trunkStack1",
+"state": "furnished"
+},
+{
+"building": "The Service Wing",
+"bid": 3,
+"floor": "First floor",
+"y": 7,
+"name": "The Drying Loft",
+"rect": [
+81,
+-4,
+128,
+16
+],
+"w": 46,
+"d": 19,
+"height": 6,
+"doors": [
+{
+"wall": "north",
+"from": 105,
+"to": 106,
+"width": 2
+},
+{
+"wall": "west",
+"from": 6,
+"to": 7,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 82,
+"to": 82
+},
+{
+"wall": "south",
+"from": 86,
+"to": 86
+},
+{
+"wall": "south",
+"from": 90,
+"to": 90
+},
+{
+"wall": "south",
+"from": 94,
+"to": 94
+},
+{
+"wall": "south",
+"from": 98,
+"to": 98
+},
+{
+"wall": "south",
+"from": 102,
+"to": 102
+},
+{
+"wall": "south",
+"from": 106,
+"to": 106
+},
+{
+"wall": "south",
+"from": 110,
+"to": 110
+},
+{
+"wall": "south",
+"from": 114,
+"to": 114
+},
+{
+"wall": "south",
+"from": 118,
+"to": 118
+},
+{
+"wall": "south",
+"from": 122,
+"to": 122
+},
+{
+"wall": "south",
+"from": 126,
+"to": 126
+},
+{
+"wall": "east",
+"from": -3,
+"to": -3
+},
+{
+"wall": "east",
+"from": 1,
+"to": 1
+},
+{
+"wall": "east",
+"from": 5,
+"to": 5
+},
+{
+"wall": "east",
+"from": 9,
+"to": 9
+},
+{
+"wall": "east",
+"from": 13,
+"to": 13
+}
+],
+"fire": null,
+"pieces": 30,
+"kinds": {
+"linenPress": 3,
+"ironingTable": 6,
+"mangle": 3,
+"blanketChest": 4,
+"brushRack": 5,
+"washCopper": 2,
+"dryingRack": 5,
+"linenStack": 2
+},
+"sig": "blanketChest4|brushRack5|dryingRack5|ironingTable6|linenPress3|linenStack2|mangle3|washCopper2",
+"state": "furnished"
+},
+{
+"building": "The Chapel",
+"bid": 4,
+"floor": "The crypt",
+"y": -5,
+"name": "Pardes, the crypt study",
+"rect": [
+-168,
+-94,
+-142,
+-82
+],
+"w": 25,
+"d": 11,
+"height": 4,
+"doors": [
+{
+"wall": "west",
+"from": -88,
+"to": -87,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -167,
+"to": -167
+},
+{
+"wall": "north",
+"from": -163,
+"to": -163
+},
+{
+"wall": "north",
+"from": -159,
+"to": -159
+},
+{
+"wall": "north",
+"from": -155,
+"to": -155
+},
+{
+"wall": "north",
+"from": -151,
+"to": -151
+},
+{
+"wall": "north",
+"from": -147,
+"to": -147
+},
+{
+"wall": "south",
+"from": -167,
+"to": -167
+},
+{
+"wall": "south",
+"from": -163,
+"to": -163
+},
+{
+"wall": "south",
+"from": -159,
+"to": -159
+},
+{
+"wall": "south",
+"from": -155,
+"to": -155
+},
+{
+"wall": "south",
+"from": -151,
+"to": -151
+},
+{
+"wall": "south",
+"from": -147,
+"to": -147
+},
+{
+"wall": "west",
+"from": -93,
+"to": -93
+},
+{
+"wall": "west",
+"from": -89,
+"to": -89
+},
+{
+"wall": "west",
+"from": -85,
+"to": -85
+},
+{
+"wall": "east",
+"from": -93,
+"to": -93
+},
+{
+"wall": "east",
+"from": -89,
+"to": -89
+},
+{
+"wall": "east",
+"from": -85,
+"to": -85
+}
+],
+"fire": null,
+"pieces": 10,
+"kinds": {
+"hymnBoard": 8,
+"studyTable": 2
+},
+"sig": "hymnBoard8|studyTable2",
+"state": "furnished"
+},
+{
+"building": "The Chapel",
+"bid": 4,
+"floor": "The crypt",
+"y": -5,
+"name": "The Vestry",
+"rect": [
+-176,
+-91,
+-168,
+-85
+],
+"w": 7,
+"d": 5,
+"height": 4,
+"doors": [
+{
+"wall": "east",
+"from": -88,
+"to": -87,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -175,
+"to": -175
+},
+{
+"wall": "north",
+"from": -172,
+"to": -172
+},
+{
+"wall": "south",
+"from": -175,
+"to": -175
+},
+{
+"wall": "south",
+"from": -172,
+"to": -172
+},
+{
+"wall": "west",
+"from": -90,
+"to": -90
+},
+{
+"wall": "west",
+"from": -87,
+"to": -87
+},
+{
+"wall": "east",
+"from": -89,
+"to": -89
+}
+],
+"fire": null,
+"pieces": 6,
+"kinds": {
+"hymnBoard": 1,
+"candleStand": 2,
+"vestmentPress": 1,
+"studyTable": 2
+},
+"sig": "candleStand2|hymnBoard1|studyTable2|vestmentPress1",
+"state": "furnished"
+},
+{
+"building": "The Chapel",
+"bid": 4,
+"floor": "The nave",
+"y": 0,
+"name": "The Nave",
+"rect": [
+-168,
+-94,
+-142,
+-82
+],
+"w": 25,
+"d": 11,
+"height": 13,
+"doors": [
+{
+"wall": "south",
+"from": -156,
+"to": -154,
+"width": 3
+},
+{
+"wall": "west",
+"from": -89,
+"to": -87,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -167,
+"to": -167
+},
+{
+"wall": "north",
+"from": -163,
+"to": -163
+},
+{
+"wall": "north",
+"from": -159,
+"to": -159
+},
+{
+"wall": "north",
+"from": -155,
+"to": -155
+},
+{
+"wall": "north",
+"from": -151,
+"to": -151
+},
+{
+"wall": "north",
+"from": -147,
+"to": -147
+},
+{
+"wall": "south",
+"from": -167,
+"to": -167
+},
+{
+"wall": "south",
+"from": -163,
+"to": -163
+},
+{
+"wall": "south",
+"from": -159,
+"to": -159
+},
+{
+"wall": "south",
+"from": -151,
+"to": -151
+},
+{
+"wall": "south",
+"from": -147,
+"to": -147
+},
+{
+"wall": "west",
+"from": -93,
+"to": -93
+},
+{
+"wall": "west",
+"from": -85,
+"to": -85
+},
+{
+"wall": "east",
+"from": -93,
+"to": -93
+},
+{
+"wall": "east",
+"from": -89,
+"to": -89
+},
+{
+"wall": "east",
+"from": -85,
+"to": -85
+}
+],
+"fire": null,
+"pieces": 11,
+"kinds": {
+"pew": 8,
+"lectern": 1,
+"candleStand": 2
+},
+"sig": "candleStand2|lectern1|pew8",
+"state": "furnished"
+},
+{
+"building": "The Chapel",
+"bid": 4,
+"floor": "The nave",
+"y": 0,
+"name": "The Tower Porch",
+"rect": [
+-176,
+-91,
+-168,
+-85
+],
+"w": 7,
+"d": 5,
+"height": 23,
+"doors": [
+{
+"wall": "west",
+"from": -89,
+"to": -87,
+"width": 3
+},
+{
+"wall": "east",
+"from": -89,
+"to": -87,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -175,
+"to": -175
+},
+{
+"wall": "north",
+"from": -172,
+"to": -172
+},
+{
+"wall": "south",
+"from": -175,
+"to": -175
+},
+{
+"wall": "south",
+"from": -172,
+"to": -172
+},
+{
+"wall": "west",
+"from": -90,
+"to": -90
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"hymnBoard": 2
+},
+"sig": "hymnBoard2",
+"state": "furnished"
+},
+{
+"building": "The Greenhouse",
+"bid": 5,
+"floor": "The Greenhouse",
+"y": 0,
+"name": "The Engine Room",
+"rect": [
+146,
+-44,
+158,
+-22
+],
+"w": 11,
+"d": 21,
+"height": 7,
+"doors": [
+{
+"wall": "west",
+"from": -34,
+"to": -32,
+"width": 3
+},
+{
+"wall": "east",
+"from": -33,
+"to": -32,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 14,
+"kinds": {
+"noticeBoard": 3,
+"toolWall": 3,
+"waterButt": 2,
+"barrel": 1,
+"workbenchTerminal": 2,
+"crateStack": 2,
+"stove": 1
+},
+"sig": "barrel1|crateStack2|noticeBoard3|stove1|toolWall3|waterButt2|workbenchTerminal2",
+"state": "furnished"
+},
+{
+"building": "The Greenhouse",
+"bid": 5,
+"floor": "The Greenhouse",
+"y": 0,
+"name": "The Orangery Laboratory",
+"rect": [
+158,
+-44,
+178,
+-22
+],
+"w": 19,
+"d": 21,
+"height": 7,
+"doors": [
+{
+"wall": "south",
+"from": 167,
+"to": 169,
+"width": 3
+},
+{
+"wall": "west",
+"from": -33,
+"to": -32,
+"width": 2
+},
+{
+"wall": "east",
+"from": -33,
+"to": -32,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 21,
+"kinds": {
+"glasshouseBench": 4,
+"fern": 2,
+"orangeTree": 1,
+"noticeBoard": 3,
+"brushRack": 2,
+"keyCabinet": 4,
+"copperRack": 3,
+"settle": 1,
+"hallBench": 1
+},
+"sig": "brushRack2|copperRack3|fern2|glasshouseBench4|hallBench1|keyCabinet4|noticeBoard3|orangeTree1|settle1",
+"state": "furnished"
+},
+{
+"building": "The Greenhouse",
+"bid": 5,
+"floor": "The Greenhouse",
+"y": 0,
+"name": "The Genizah",
+"rect": [
+178,
+-44,
+190,
+-22
+],
+"w": 11,
+"d": 21,
+"height": 7,
+"doors": [
+{
+"wall": "west",
+"from": -33,
+"to": -32,
+"width": 2
+}
+],
+"windows": [],
+"fire": null,
+"pieces": 1,
+"kinds": {
+"editorsDesk": 1
+},
+"sig": "editorsDesk1",
+"state": "sparse"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Stables",
+"y": 0,
+"name": "The Stalls",
+"rect": [
+72,
+-112,
+112,
+-98
+],
+"w": 39,
+"d": 13,
+"height": 8,
+"doors": [
+{
+"wall": "south",
+"from": 90,
+"to": 93,
+"width": 4
+},
+{
+"wall": "east",
+"from": -105,
+"to": -104,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 73,
+"to": 73
+},
+{
+"wall": "north",
+"from": 77,
+"to": 77
+},
+{
+"wall": "north",
+"from": 81,
+"to": 81
+},
+{
+"wall": "north",
+"from": 85,
+"to": 85
+},
+{
+"wall": "north",
+"from": 89,
+"to": 89
+},
+{
+"wall": "north",
+"from": 93,
+"to": 93
+},
+{
+"wall": "north",
+"from": 97,
+"to": 97
+},
+{
+"wall": "north",
+"from": 101,
+"to": 101
+},
+{
+"wall": "north",
+"from": 105,
+"to": 105
+},
+{
+"wall": "north",
+"from": 109,
+"to": 109
+},
+{
+"wall": "south",
+"from": 73,
+"to": 73
+},
+{
+"wall": "south",
+"from": 77,
+"to": 77
+},
+{
+"wall": "south",
+"from": 81,
+"to": 81
+},
+{
+"wall": "south",
+"from": 89,
+"to": 89
+},
+{
+"wall": "south",
+"from": 97,
+"to": 97
+},
+{
+"wall": "south",
+"from": 101,
+"to": 101
+},
+{
+"wall": "south",
+"from": 105,
+"to": 105
+},
+{
+"wall": "south",
+"from": 109,
+"to": 109
+},
+{
+"wall": "west",
+"from": -111,
+"to": -111
+},
+{
+"wall": "west",
+"from": -107,
+"to": -107
+},
+{
+"wall": "west",
+"from": -103,
+"to": -103
+}
+],
+"fire": null,
+"pieces": 20,
+"kinds": {
+"stableStall": 6,
+"haystack": 1,
+"waterTrough": 1,
+"wheelbarrow": 1,
+"saddleRack": 1,
+"keyCabinet": 4,
+"noticeBoard": 3,
+"brushRack": 1,
+"coalScuttle": 1,
+"copperRack": 1
+},
+"sig": "brushRack1|coalScuttle1|copperRack1|haystack1|keyCabinet4|noticeBoard3|saddleRack1|stableStall6|waterTrough1|wheelbarrow1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Stables",
+"y": 0,
+"name": "The Tack Room",
+"rect": [
+112,
+-112,
+124,
+-98
+],
+"w": 11,
+"d": 13,
+"height": 8,
+"doors": [
+{
+"wall": "south",
+"from": 117,
+"to": 118,
+"width": 2
+},
+{
+"wall": "west",
+"from": -105,
+"to": -104,
+"width": 2
+},
+{
+"wall": "east",
+"from": -105,
+"to": -104,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 113,
+"to": 113
+},
+{
+"wall": "north",
+"from": 117,
+"to": 117
+},
+{
+"wall": "north",
+"from": 121,
+"to": 121
+},
+{
+"wall": "south",
+"from": 113,
+"to": 113
+},
+{
+"wall": "south",
+"from": 121,
+"to": 121
+}
+],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"deedChest": 1,
+"windsor": 1,
+"saddleRack": 3
+},
+"sig": "deedChest1|saddleRack3|windsor1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Stables",
+"y": 0,
+"name": "The Forge",
+"rect": [
+124,
+-112,
+136,
+-98
+],
+"w": 11,
+"d": 13,
+"height": 8,
+"doors": [
+{
+"wall": "south",
+"from": 129,
+"to": 131,
+"width": 3
+},
+{
+"wall": "west",
+"from": -105,
+"to": -104,
+"width": 2
+},
+{
+"wall": "east",
+"from": -108,
+"to": -104,
+"width": 5
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 125,
+"to": 125
+},
+{
+"wall": "north",
+"from": 129,
+"to": 129
+},
+{
+"wall": "north",
+"from": 133,
+"to": 133
+},
+{
+"wall": "south",
+"from": 125,
+"to": 125
+},
+{
+"wall": "south",
+"from": 133,
+"to": 133
+},
+{
+"wall": "east",
+"from": -111,
+"to": -111
+},
+{
+"wall": "east",
+"from": -103,
+"to": -103
+}
+],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"forgeHearth": 1,
+"grindstone": 1,
+"waterTrough": 1,
+"anvil": 1,
+"horseshoeRack": 1
+},
+"sig": "anvil1|forgeHearth1|grindstone1|horseshoeRack1|waterTrough1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Stables",
+"y": 0,
+"name": "The Coach House",
+"rect": [
+72,
+-98,
+86,
+-76
+],
+"w": 13,
+"d": 21,
+"height": 8,
+"doors": [
+{
+"wall": "south",
+"from": 79,
+"to": 80,
+"width": 2
+},
+{
+"wall": "east",
+"from": -92,
+"to": -86,
+"width": 7
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 73,
+"to": 73
+},
+{
+"wall": "north",
+"from": 77,
+"to": 77
+},
+{
+"wall": "north",
+"from": 81,
+"to": 81
+},
+{
+"wall": "west",
+"from": -97,
+"to": -97
+},
+{
+"wall": "west",
+"from": -93,
+"to": -93
+},
+{
+"wall": "west",
+"from": -89,
+"to": -89
+},
+{
+"wall": "west",
+"from": -85,
+"to": -85
+},
+{
+"wall": "west",
+"from": -81,
+"to": -81
+},
+{
+"wall": "west",
+"from": -77,
+"to": -77
+},
+{
+"wall": "east",
+"from": -97,
+"to": -97
+},
+{
+"wall": "east",
+"from": -93,
+"to": -93
+},
+{
+"wall": "east",
+"from": -85,
+"to": -85
+},
+{
+"wall": "east",
+"from": -81,
+"to": -81
+},
+{
+"wall": "east",
+"from": -77,
+"to": -77
+}
+],
+"fire": null,
+"pieces": 10,
+"kinds": {
+"carriage": 1,
+"cart": 1,
+"saddleRack": 1,
+"noticeBoard": 2,
+"brushRack": 2,
+"keyCabinet": 2,
+"umbrellaStand": 1
+},
+"sig": "brushRack2|carriage1|cart1|keyCabinet2|noticeBoard2|saddleRack1|umbrellaStand1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Stables",
+"y": 0,
+"name": "The Grooms' Mess",
+"rect": [
+72,
+-76,
+86,
+-64
+],
+"w": 13,
+"d": 11,
+"height": 8,
+"doors": [
+{
+"wall": "north",
+"from": 79,
+"to": 80,
+"width": 2
+},
+{
+"wall": "east",
+"from": -71,
+"to": -70,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 73,
+"to": 73
+},
+{
+"wall": "south",
+"from": 77,
+"to": 77
+},
+{
+"wall": "south",
+"from": 81,
+"to": 81
+},
+{
+"wall": "west",
+"from": -73,
+"to": -73
+},
+{
+"wall": "west",
+"from": -69,
+"to": -69
+},
+{
+"wall": "east",
+"from": -73,
+"to": -73
+},
+{
+"wall": "east",
+"from": -69,
+"to": -69
+}
+],
+"fire": null,
+"pieces": 7,
+"kinds": {
+"dartBoard": 2,
+"barrel": 1,
+"noticeBoard": 1,
+"coatStand": 1,
+"settle": 1,
+"trestleTable": 1
+},
+"sig": "barrel1|coatStand1|dartBoard2|noticeBoard1|settle1|trestleTable1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Stables",
+"y": 0,
+"name": "The Riding School",
+"rect": [
+137,
+-112,
+169,
+-84
+],
+"w": 31,
+"d": 27,
+"height": 8,
+"doors": [
+{
+"wall": "south",
+"from": 150,
+"to": 154,
+"width": 5
+},
+{
+"wall": "west",
+"from": -108,
+"to": -104,
+"width": 5
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 138,
+"to": 138
+},
+{
+"wall": "north",
+"from": 142,
+"to": 142
+},
+{
+"wall": "north",
+"from": 146,
+"to": 146
+},
+{
+"wall": "north",
+"from": 150,
+"to": 150
+},
+{
+"wall": "north",
+"from": 154,
+"to": 154
+},
+{
+"wall": "north",
+"from": 158,
+"to": 158
+},
+{
+"wall": "north",
+"from": 162,
+"to": 162
+},
+{
+"wall": "north",
+"from": 166,
+"to": 166
+},
+{
+"wall": "south",
+"from": 138,
+"to": 138
+},
+{
+"wall": "south",
+"from": 142,
+"to": 142
+},
+{
+"wall": "south",
+"from": 146,
+"to": 146
+},
+{
+"wall": "south",
+"from": 158,
+"to": 158
+},
+{
+"wall": "south",
+"from": 162,
+"to": 162
+},
+{
+"wall": "south",
+"from": 166,
+"to": 166
+},
+{
+"wall": "west",
+"from": -111,
+"to": -111
+},
+{
+"wall": "west",
+"from": -103,
+"to": -103
+},
+{
+"wall": "west",
+"from": -99,
+"to": -99
+},
+{
+"wall": "west",
+"from": -95,
+"to": -95
+},
+{
+"wall": "west",
+"from": -91,
+"to": -91
+},
+{
+"wall": "west",
+"from": -87,
+"to": -87
+},
+{
+"wall": "east",
+"from": -111,
+"to": -111
+},
+{
+"wall": "east",
+"from": -107,
+"to": -107
+},
+{
+"wall": "east",
+"from": -103,
+"to": -103
+},
+{
+"wall": "east",
+"from": -99,
+"to": -99
+},
+{
+"wall": "east",
+"from": -95,
+"to": -95
+},
+{
+"wall": "east",
+"from": -91,
+"to": -91
+},
+{
+"wall": "east",
+"from": -87,
+"to": -87
+}
+],
+"fire": null,
+"pieces": 25,
+"kinds": {
+"mountingBlock": 6,
+"waterTrough": 3,
+"wheelbarrow": 2,
+"saddleRack": 5,
+"hayRack": 1,
+"tackWall": 2,
+"feedBin": 1,
+"jumpPoles": 5
+},
+"sig": "feedBin1|hayRack1|jumpPoles5|mountingBlock6|saddleRack5|tackWall2|waterTrough3|wheelbarrow2",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging I",
+"rect": [
+72,
+-112,
+83,
+-98
+],
+"w": 10,
+"d": 13,
+"height": 5,
+"doors": [
+{
+"wall": "south",
+"from": 78,
+"to": 79,
+"width": 2
+},
+{
+"wall": "east",
+"from": -105,
+"to": -104,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 73,
+"to": 73
+},
+{
+"wall": "north",
+"from": 77,
+"to": 77
+},
+{
+"wall": "north",
+"from": 81,
+"to": 81
+},
+{
+"wall": "south",
+"from": 73,
+"to": 73
+},
+{
+"wall": "south",
+"from": 77,
+"to": 77
+},
+{
+"wall": "south",
+"from": 81,
+"to": 81
+},
+{
+"wall": "west",
+"from": -111,
+"to": -111
+},
+{
+"wall": "west",
+"from": -107,
+"to": -107
+},
+{
+"wall": "west",
+"from": -103,
+"to": -103
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "sparse"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging II",
+"rect": [
+83,
+-112,
+94,
+-98
+],
+"w": 10,
+"d": 13,
+"height": 5,
+"doors": [
+{
+"wall": "west",
+"from": -105,
+"to": -104,
+"width": 2
+},
+{
+"wall": "east",
+"from": -105,
+"to": -104,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 85,
+"to": 85
+},
+{
+"wall": "north",
+"from": 89,
+"to": 89
+},
+{
+"wall": "north",
+"from": 93,
+"to": 93
+},
+{
+"wall": "south",
+"from": 89,
+"to": 89
+},
+{
+"wall": "south",
+"from": 93,
+"to": 93
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "sparse"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging III",
+"rect": [
+94,
+-112,
+105,
+-98
+],
+"w": 10,
+"d": 13,
+"height": 5,
+"doors": [
+{
+"wall": "west",
+"from": -105,
+"to": -104,
+"width": 2
+},
+{
+"wall": "east",
+"from": -105,
+"to": -104,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 97,
+"to": 97
+},
+{
+"wall": "north",
+"from": 101,
+"to": 101
+},
+{
+"wall": "south",
+"from": 97,
+"to": 97
+},
+{
+"wall": "south",
+"from": 101,
+"to": 101
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "sparse"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging IV",
+"rect": [
+105,
+-112,
+116,
+-98
+],
+"w": 10,
+"d": 13,
+"height": 5,
+"doors": [
+{
+"wall": "west",
+"from": -105,
+"to": -104,
+"width": 2
+},
+{
+"wall": "east",
+"from": -105,
+"to": -104,
+"width": 2
+},
+{
+"wall": "east",
+"from": -101,
+"to": -100,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 109,
+"to": 109
+},
+{
+"wall": "north",
+"from": 113,
+"to": 113
+},
+{
+"wall": "south",
+"from": 109,
+"to": 109
+},
+{
+"wall": "south",
+"from": 113,
+"to": 113
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "sparse"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging V",
+"rect": [
+116,
+-112,
+126,
+-98
+],
+"w": 9,
+"d": 13,
+"height": 5,
+"doors": [
+{
+"wall": "west",
+"from": -105,
+"to": -104,
+"width": 2
+},
+{
+"wall": "west",
+"from": -101,
+"to": -100,
+"width": 2
+},
+{
+"wall": "east",
+"from": -105,
+"to": -104,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 117,
+"to": 117
+},
+{
+"wall": "north",
+"from": 121,
+"to": 121
+},
+{
+"wall": "north",
+"from": 125,
+"to": 125
+},
+{
+"wall": "south",
+"from": 117,
+"to": 117
+},
+{
+"wall": "south",
+"from": 121,
+"to": 121
+},
+{
+"wall": "south",
+"from": 125,
+"to": 125
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging VI",
+"rect": [
+126,
+-112,
+136,
+-98
+],
+"w": 9,
+"d": 13,
+"height": 5,
+"doors": [
+{
+"wall": "west",
+"from": -105,
+"to": -104,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 129,
+"to": 129
+},
+{
+"wall": "north",
+"from": 133,
+"to": 133
+},
+{
+"wall": "south",
+"from": 129,
+"to": 129
+},
+{
+"wall": "south",
+"from": 133,
+"to": 133
+},
+{
+"wall": "east",
+"from": -111,
+"to": -111
+},
+{
+"wall": "east",
+"from": -107,
+"to": -107
+},
+{
+"wall": "east",
+"from": -103,
+"to": -103
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging VII",
+"rect": [
+72,
+-98,
+86,
+-89
+],
+"w": 13,
+"d": 8,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 78,
+"to": 79,
+"width": 2
+},
+{
+"wall": "south",
+"from": 79,
+"to": 80,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 73,
+"to": 73
+},
+{
+"wall": "north",
+"from": 77,
+"to": 77
+},
+{
+"wall": "north",
+"from": 81,
+"to": 81
+},
+{
+"wall": "west",
+"from": -97,
+"to": -97
+},
+{
+"wall": "west",
+"from": -93,
+"to": -93
+},
+{
+"wall": "east",
+"from": -97,
+"to": -97
+},
+{
+"wall": "east",
+"from": -93,
+"to": -93
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging VIII",
+"rect": [
+72,
+-89,
+86,
+-81
+],
+"w": 13,
+"d": 7,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 79,
+"to": 80,
+"width": 2
+},
+{
+"wall": "south",
+"from": 79,
+"to": 80,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -85,
+"to": -85
+},
+{
+"wall": "east",
+"from": -85,
+"to": -85
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging IX",
+"rect": [
+72,
+-81,
+86,
+-72
+],
+"w": 13,
+"d": 8,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 79,
+"to": 80,
+"width": 2
+},
+{
+"wall": "south",
+"from": 79,
+"to": 80,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "west",
+"from": -77,
+"to": -77
+},
+{
+"wall": "west",
+"from": -73,
+"to": -73
+},
+{
+"wall": "east",
+"from": -77,
+"to": -77
+},
+{
+"wall": "east",
+"from": -73,
+"to": -73
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "furnished"
+},
+{
+"building": "The Stable Court",
+"bid": 6,
+"floor": "The Lodgings",
+"y": 9,
+"name": "Lodging X",
+"rect": [
+72,
+-72,
+86,
+-64
+],
+"w": 13,
+"d": 7,
+"height": 5,
+"doors": [
+{
+"wall": "north",
+"from": 79,
+"to": 80,
+"width": 2
+}
+],
+"windows": [
+{
+"wall": "south",
+"from": 73,
+"to": 73
+},
+{
+"wall": "south",
+"from": 77,
+"to": 77
+},
+{
+"wall": "south",
+"from": 81,
+"to": 81
+},
+{
+"wall": "west",
+"from": -69,
+"to": -69
+},
+{
+"wall": "east",
+"from": -69,
+"to": -69
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"bedIron": 1,
+"washstand": 1
+},
+"sig": "bedIron1|washstand1",
+"state": "furnished"
+},
+{
+"building": "The Gatehouse",
+"bid": 7,
+"floor": "Ground",
+"y": 0,
+"name": "The Gate",
+"rect": [
+-16,
+194,
+-6,
+206
+],
+"w": 9,
+"d": 11,
+"height": 6,
+"doors": [
+{
+"wall": "east",
+"from": 199,
+"to": 201,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -15,
+"to": -15
+},
+{
+"wall": "north",
+"from": -12,
+"to": -12
+},
+{
+"wall": "north",
+"from": -9,
+"to": -9
+},
+{
+"wall": "south",
+"from": -15,
+"to": -15
+},
+{
+"wall": "south",
+"from": -12,
+"to": -12
+},
+{
+"wall": "south",
+"from": -9,
+"to": -9
+},
+{
+"wall": "west",
+"from": 195,
+"to": 195
+},
+{
+"wall": "west",
+"from": 198,
+"to": 198
+},
+{
+"wall": "west",
+"from": 201,
+"to": 201
+},
+{
+"wall": "west",
+"from": 204,
+"to": 204
+},
+{
+"wall": "east",
+"from": 195,
+"to": 195
+},
+{
+"wall": "east",
+"from": 198,
+"to": 198
+},
+{
+"wall": "east",
+"from": 204,
+"to": 204
+}
+],
+"fire": null,
+"pieces": 5,
+"kinds": {
+"keyCabinet": 1,
+"umbrellaStand": 2,
+"coatStand": 1,
+"barrel": 1
+},
+"sig": "barrel1|coatStand1|keyCabinet1|umbrellaStand2",
+"state": "furnished"
+},
+{
+"building": "The Gatehouse",
+"bid": 7,
+"floor": "Ground",
+"y": 0,
+"name": "The Ambulance Bay",
+"rect": [
+6,
+194,
+16,
+206
+],
+"w": 9,
+"d": 11,
+"height": 6,
+"doors": [
+{
+"wall": "west",
+"from": 199,
+"to": 201,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 7,
+"to": 7
+},
+{
+"wall": "north",
+"from": 10,
+"to": 10
+},
+{
+"wall": "north",
+"from": 13,
+"to": 13
+},
+{
+"wall": "south",
+"from": 7,
+"to": 7
+},
+{
+"wall": "south",
+"from": 10,
+"to": 10
+},
+{
+"wall": "south",
+"from": 13,
+"to": 13
+},
+{
+"wall": "west",
+"from": 195,
+"to": 195
+},
+{
+"wall": "west",
+"from": 198,
+"to": 198
+},
+{
+"wall": "west",
+"from": 204,
+"to": 204
+},
+{
+"wall": "east",
+"from": 195,
+"to": 195
+},
+{
+"wall": "east",
+"from": 198,
+"to": 198
+},
+{
+"wall": "east",
+"from": 201,
+"to": 201
+},
+{
+"wall": "east",
+"from": 204,
+"to": 204
+}
+],
+"fire": null,
+"pieces": 3,
+"kinds": {
+"washBasin": 2,
+"stretcher": 1
+},
+"sig": "stretcher1|washBasin2",
+"state": "furnished"
+},
+{
+"building": "The Gatehouse",
+"bid": 7,
+"floor": "Upper",
+"y": 7,
+"name": "The Tenth Man's Tower Room",
+"rect": [
+-16,
+194,
+-6,
+206
+],
+"w": 9,
+"d": 11,
+"height": 6,
+"doors": [],
+"windows": [
+{
+"wall": "north",
+"from": -15,
+"to": -15
+},
+{
+"wall": "north",
+"from": -12,
+"to": -12
+},
+{
+"wall": "north",
+"from": -9,
+"to": -9
+},
+{
+"wall": "south",
+"from": -15,
+"to": -15
+},
+{
+"wall": "south",
+"from": -12,
+"to": -12
+},
+{
+"wall": "south",
+"from": -9,
+"to": -9
+},
+{
+"wall": "west",
+"from": 195,
+"to": 195
+},
+{
+"wall": "west",
+"from": 198,
+"to": 198
+},
+{
+"wall": "west",
+"from": 201,
+"to": 201
+},
+{
+"wall": "west",
+"from": 204,
+"to": 204
+},
+{
+"wall": "east",
+"from": 195,
+"to": 195
+},
+{
+"wall": "east",
+"from": 198,
+"to": 198
+},
+{
+"wall": "east",
+"from": 201,
+"to": 201
+},
+{
+"wall": "east",
+"from": 204,
+"to": 204
+}
+],
+"fire": null,
+"pieces": 1,
+"kinds": {
+"clockLong": 1
+},
+"sig": "clockLong1",
+"state": "furnished"
+},
+{
+"building": "The Gatehouse",
+"bid": 7,
+"floor": "Upper",
+"y": 7,
+"name": "The Watch Room",
+"rect": [
+6,
+194,
+16,
+206
+],
+"w": 9,
+"d": 11,
+"height": 6,
+"doors": [],
+"windows": [
+{
+"wall": "north",
+"from": 7,
+"to": 7
+},
+{
+"wall": "north",
+"from": 10,
+"to": 10
+},
+{
+"wall": "north",
+"from": 13,
+"to": 13
+},
+{
+"wall": "south",
+"from": 7,
+"to": 7
+},
+{
+"wall": "south",
+"from": 10,
+"to": 10
+},
+{
+"wall": "south",
+"from": 13,
+"to": 13
+},
+{
+"wall": "west",
+"from": 195,
+"to": 195
+},
+{
+"wall": "west",
+"from": 198,
+"to": 198
+},
+{
+"wall": "west",
+"from": 201,
+"to": 201
+},
+{
+"wall": "west",
+"from": 204,
+"to": 204
+},
+{
+"wall": "east",
+"from": 195,
+"to": 195
+},
+{
+"wall": "east",
+"from": 198,
+"to": 198
+},
+{
+"wall": "east",
+"from": 201,
+"to": 201
+},
+{
+"wall": "east",
+"from": 204,
+"to": 204
+}
+],
+"fire": null,
+"pieces": 10,
+"kinds": {
+"keyCabinet": 3,
+"mapRoll": 1,
+"hallBench": 1,
+"coatStand": 1,
+"wallCalendar": 2,
+"bedIron": 1,
+"ledgerDesk": 1
+},
+"sig": "bedIron1|coatStand1|hallBench1|keyCabinet3|ledgerDesk1|mapRoll1|wallCalendar2",
+"state": "furnished"
+},
+{
+"building": "The Lodge",
+"bid": 8,
+"floor": "The Lodge",
+"y": 0,
+"name": "The Lodge",
+"rect": [
+24,
+168,
+38,
+180
+],
+"w": 13,
+"d": 11,
+"height": 6,
+"doors": [
+{
+"wall": "west",
+"from": 173,
+"to": 175,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": 25,
+"to": 25
+},
+{
+"wall": "north",
+"from": 28,
+"to": 28
+},
+{
+"wall": "north",
+"from": 31,
+"to": 31
+},
+{
+"wall": "north",
+"from": 34,
+"to": 34
+},
+{
+"wall": "south",
+"from": 25,
+"to": 25
+},
+{
+"wall": "south",
+"from": 28,
+"to": 28
+},
+{
+"wall": "south",
+"from": 31,
+"to": 31
+},
+{
+"wall": "south",
+"from": 34,
+"to": 34
+},
+{
+"wall": "west",
+"from": 169,
+"to": 169
+},
+{
+"wall": "west",
+"from": 172,
+"to": 172
+},
+{
+"wall": "west",
+"from": 178,
+"to": 178
+},
+{
+"wall": "east",
+"from": 169,
+"to": 169
+},
+{
+"wall": "east",
+"from": 172,
+"to": 172
+},
+{
+"wall": "east",
+"from": 175,
+"to": 175
+},
+{
+"wall": "east",
+"from": 178,
+"to": 178
+}
+],
+"fire": null,
+"pieces": 2,
+"kinds": {
+"spinningWheel": 1,
+"cottageDresser": 1
+},
+"sig": "cottageDresser1|spinningWheel1",
+"state": "sparse"
+},
+{
+"building": "The Home Farm and Woodyard",
+"bid": 9,
+"floor": "The Home Farm",
+"y": 0,
+"name": "The Woodyard Barn",
+"rect": [
+-160,
+120,
+-134,
+138
+],
+"w": 25,
+"d": 17,
+"height": 8,
+"doors": [
+{
+"wall": "south",
+"from": -150,
+"to": -144,
+"width": 7
+},
+{
+"wall": "east",
+"from": 128,
+"to": 130,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -159,
+"to": -159
+},
+{
+"wall": "north",
+"from": -156,
+"to": -156
+},
+{
+"wall": "north",
+"from": -153,
+"to": -153
+},
+{
+"wall": "north",
+"from": -150,
+"to": -150
+},
+{
+"wall": "north",
+"from": -147,
+"to": -147
+},
+{
+"wall": "north",
+"from": -144,
+"to": -144
+},
+{
+"wall": "north",
+"from": -141,
+"to": -141
+},
+{
+"wall": "north",
+"from": -138,
+"to": -138
+},
+{
+"wall": "south",
+"from": -159,
+"to": -159
+},
+{
+"wall": "south",
+"from": -156,
+"to": -156
+},
+{
+"wall": "south",
+"from": -153,
+"to": -153
+},
+{
+"wall": "south",
+"from": -141,
+"to": -141
+},
+{
+"wall": "south",
+"from": -138,
+"to": -138
+},
+{
+"wall": "west",
+"from": 121,
+"to": 121
+},
+{
+"wall": "west",
+"from": 124,
+"to": 124
+},
+{
+"wall": "west",
+"from": 127,
+"to": 127
+},
+{
+"wall": "west",
+"from": 130,
+"to": 130
+},
+{
+"wall": "west",
+"from": 133,
+"to": 133
+},
+{
+"wall": "west",
+"from": 136,
+"to": 136
+},
+{
+"wall": "east",
+"from": 121,
+"to": 121
+},
+{
+"wall": "east",
+"from": 124,
+"to": 124
+},
+{
+"wall": "east",
+"from": 127,
+"to": 127
+},
+{
+"wall": "east",
+"from": 133,
+"to": 133
+},
+{
+"wall": "east",
+"from": 136,
+"to": 136
+}
+],
+"fire": null,
+"pieces": 12,
+"kinds": {
+"wheelbarrow": 2,
+"woodPile": 2,
+"barrel": 2,
+"feedBin": 1,
+"sackPile": 1,
+"sawHorse": 1,
+"choppingBlock": 1,
+"plough": 1,
+"haystack": 1
+},
+"sig": "barrel2|choppingBlock1|feedBin1|haystack1|plough1|sackPile1|sawHorse1|wheelbarrow2|woodPile2",
+"state": "furnished"
+},
+{
+"building": "The Home Farm and Woodyard",
+"bid": 9,
+"floor": "The Home Farm",
+"y": 0,
+"name": "The Farm Office",
+"rect": [
+-132,
+120,
+-118,
+132
+],
+"w": 13,
+"d": 11,
+"height": 6,
+"doors": [
+{
+"wall": "south",
+"from": -126,
+"to": -124,
+"width": 3
+}
+],
+"windows": [
+{
+"wall": "north",
+"from": -131,
+"to": -131
+},
+{
+"wall": "north",
+"from": -128,
+"to": -128
+},
+{
+"wall": "north",
+"from": -125,
+"to": -125
+},
+{
+"wall": "north",
+"from": -122,
+"to": -122
+},
+{
+"wall": "south",
+"from": -131,
+"to": -131
+},
+{
+"wall": "south",
+"from": -128,
+"to": -128
+},
+{
+"wall": "south",
+"from": -122,
+"to": -122
+},
+{
+"wall": "west",
+"from": 121,
+"to": 121
+},
+{
+"wall": "west",
+"from": 124,
+"to": 124
+},
+{
+"wall": "west",
+"from": 127,
+"to": 127
+},
+{
+"wall": "west",
+"from": 130,
+"to": 130
+},
+{
+"wall": "east",
+"from": 121,
+"to": 121
+},
+{
+"wall": "east",
+"from": 124,
+"to": 124
+},
+{
+"wall": "east",
+"from": 127,
+"to": 127
+},
+{
+"wall": "east",
+"from": 130,
+"to": 130
+}
+],
+"fire": null,
+"pieces": 7,
+"kinds": {
+"stove": 2,
+"wallCalendar": 2,
+"coatStand": 1,
+"hallBench": 1,
+"keyCabinet": 1
+},
+"sig": "coatStand1|hallBench1|keyCabinet1|stove2|wallCalendar2",
+"state": "furnished"
+}
+]
+}

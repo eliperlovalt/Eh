@@ -1,0 +1,186 @@
+[
+ {
+  "n": 1,
+  "building": 1,
+  "y": 7,
+  "x": -25.5,
+  "z": -42,
+  "move": "Business Room: the south door moves 4 east, to the middle of the landing bay beside the Oak Stair"
+ },
+ {
+  "n": 2,
+  "building": 1,
+  "y": 7,
+  "x": -20,
+  "z": -24,
+  "move": "Saloon, west wall: the Oak Stair arch is centred between the columns, 3 wide"
+ },
+ {
+  "n": 3,
+  "building": 1,
+  "y": 7,
+  "x": -20,
+  "z": -16,
+  "move": "Saloon, west wall: the Billiard Room arch moves one bay south, clear of its column"
+ },
+ {
+  "n": 4,
+  "building": 1,
+  "y": 7,
+  "x": 39,
+  "z": -18,
+  "move": "Gun Room corner: the two doors beside the men's stair rail are walled up"
+ },
+ {
+  "n": 5,
+  "building": 1,
+  "y": 7,
+  "x": 40,
+  "z": -30,
+  "move": "Double Library: a new west door from the Grand Stair hall, north of the fire"
+ },
+ {
+  "n": 6,
+  "building": 1,
+  "y": 7,
+  "x": 0,
+  "z": 6,
+  "move": "Entrance Hall: its north wall moves from z 0 to z 6. The cross gallery then runs the whole width of the house, 9 clear here, and the 3-wide strip is gone"
+ },
+ {
+  "n": 7,
+  "building": 1,
+  "y": 17,
+  "x": 0,
+  "z": -41,
+  "move": "The 1-wide strip between the two galleries is taken into the Saloon Gallery's north walk"
+ },
+ {
+  "n": 8,
+  "building": 1,
+  "y": 17,
+  "x": -34,
+  "z": -51,
+  "move": "Passage to the Oak Stair landing: 3 clear becomes 5"
+ },
+ {
+  "n": 9,
+  "building": 1,
+  "y": 17,
+  "x": 34,
+  "z": -51,
+  "move": "Passage to the Grand Stair landing: 3 clear becomes 5"
+ },
+ {
+  "n": 10,
+  "building": 1,
+  "y": 17,
+  "x": 0,
+  "z": -61,
+  "move": "Long Gallery over the Great Hall: the rail moves 2 south, 3 clear becomes 5"
+ },
+ {
+  "n": 11,
+  "building": 1,
+  "y": 17,
+  "x": -7.5,
+  "z": 30,
+  "move": "South balcony: the Orange Bedroom's window here becomes a glazed door"
+ },
+ {
+  "n": 12,
+  "building": 1,
+  "y": 17,
+  "x": 7.5,
+  "z": 30,
+  "move": "South balcony: the Grey Bedroom's window here becomes a glazed door, the pair of the other"
+ },
+ {
+  "n": 13,
+  "building": 1,
+  "y": 17,
+  "x": 16,
+  "z": 18,
+  "move": "Grey Bedroom: its three doors into His Grace's dressing room, bath and study are walled up. Those rooms open from his bedchamber only"
+ },
+ {
+  "n": 14,
+  "building": 1,
+  "y": 17,
+  "x": -40,
+  "z": 18,
+  "move": "Every bedroom on this floor keeps one door, onto its passage. The doors from bedroom to bedroom are walled up"
+ },
+ {
+  "n": 15,
+  "building": 1,
+  "y": 25,
+  "x": 0,
+  "z": 22,
+  "move": "Guest Bedrooms I to VIII: the seven doors from room to room are walled up. Each keeps one door, onto the Bachelors' Corridor"
+ },
+ {
+  "n": 16,
+  "building": 1,
+  "y": 25,
+  "x": -28,
+  "z": -58,
+  "move": "The nursery suite (Day Nursery, Night Nursery, Governess) keeps its connecting doors"
+ },
+ {
+  "n": 17,
+  "building": 1,
+  "y": 25,
+  "x": 28,
+  "z": -58,
+  "move": "Schoolroom Annexe, Laboratory, Ward, Sewing Room, Linen Room: connecting doors walled up, one door each onto the passage"
+ },
+ {
+  "n": 18,
+  "building": 1,
+  "y": 25,
+  "x": -22,
+  "z": -12,
+  "move": "Passage beside the Red Staircase: 3 clear becomes 4"
+ },
+ {
+  "n": 19,
+  "building": 1,
+  "y": 32,
+  "x": -44,
+  "z": -51,
+  "move": "Maids' rooms: twelve 9 by 9 cells with a door on every side become eight rooms 9 by 11, four either side of a passage 4 clear. One door each"
+ },
+ {
+  "n": 20,
+  "building": 1,
+  "y": 32,
+  "x": 44,
+  "z": -51,
+  "move": "Footmen's rooms: the same, eight rooms either side of a passage"
+ },
+ {
+  "n": 21,
+  "building": 1,
+  "y": 32,
+  "x": 0,
+  "z": 22,
+  "move": "Box Room and Cistern Room: side doors walled up"
+ },
+ {
+  "n": 22,
+  "building": 1,
+  "y": 32,
+  "x": -22,
+  "z": -10,
+  "move": "The open attic is divided: a passage 4 clear round the light court, with a trunk room, a lumber room, a linen store and two sitting rooms off it, in place of one floor of scattered boxes"
+ },
+ {
+  "n": 23,
+  "building": 4,
+  "y": 0,
+  "x": -168,
+  "z": -87,
+  "move": "Tower Porch: the crypt stair moves against the outer wall and the nave door moves 2 south, so a clear way 3 wide runs from the porch door into the nave"
+ }
+]
