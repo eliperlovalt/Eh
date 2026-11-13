@@ -53,4 +53,12 @@ Since v1.18 (the Depot's contours, v15):
 - The wall rule is replayed (no `openings` passed). The triangle counts match the Depot's table exactly, which shows the walls still follow that rule. `__vx.windows()` reads the real list from the built walls; it is filed as `windows.json`.
 - v1.18.1: the 32 village houses are dressed too. Each kind is dressed once and set on every house with `houseMatrix` and the house's quarter turn (`b.q`). A village skin is not drawn beyond 160 blocks.
 
+Since v1.19 (the slow opening, the river's draw calls, the seating groups, walks and trails):
+- The slow opening: `CONTOURS.dress` cost 4.3 s of main thread on a desk (2.5 s of it one stall for the Hall), far more on a phone. `fitContours` now starts a worker built from `KITS.toString()` as soon as the buildings and villages are known (after `genGrounds`), and `skinSet` sets one finished dressing a frame. `contourJob` is the one job, run in the worker or, where no worker can be had, on the main thread as before (`CSKINS.mode` says which; a watchdog takes the work back if the worker says nothing in eight seconds).
+- The river's draw calls: `mergeWater` joins the 133 small water meshes (river, lake, ponds) into at most twelve sheets after the chunk groups are made. 20 to 40 fewer draws at most spots.
+- The seating groups: `settleGroups` runs first in `settle()`. A pasted group is a table with a long seat and two chairs turned 70 degrees apart. The one nearest a fire is drawn up to it; a room with no fire has it in the middle, facing the windows, or as two chairs across a table at a window; three or more groups in one room stand in the quarters and face the middle. Nothing goes in a door's approach or on another piece, and a room whose floor would be cut in two is put back. `__vx.settle.groups` has the counts.
+- Walks and trails: `TRAILS` (kind 2 cobbled, kind 1 earth), drawn into `TRAILM` by `mkTrails` on first use; `surf` colours them, `blocked` and `flowerBed` keep planting off them. The ground is not moved. Seventeen park meadows where there were eleven.
+- The drawn floor plans: `tools/tests/dump2.py FOLDER OUT.json` then `plan2.py OUT.json OUTDIR TAG` gives one sheet for every floor of every building, faults numbered in red. `map.py` draws the park from above (`__vx.palette` is exported for it). `loadprof2.py` profiles the first seconds of main thread.
+- The test harness lets `blob:` requests through so the worker runs under test.
+
 Run the walk test, the reach test and the audit test before every push.

@@ -31,7 +31,7 @@ def _route(route):
         if os.path.isfile(path):
             return route.fulfill(path=path, content_type='application/javascript')
         return route.fulfill(status=404, body='')
-    if url.startswith('http://127.0.0.1'):
+    if url.startswith('http://127.0.0.1') or url.startswith('blob:'):
         return route.continue_()
     return route.abort()  # fonts, worker, anything else outside
 
