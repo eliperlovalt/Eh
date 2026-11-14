@@ -7,7 +7,7 @@ usage: build.py SOURCE_HTML OUT_HTML
 """
 import os, re, subprocess, sys, tempfile
 
-TOOLS = '/home/claude/tools/node_modules'
+TOOLS = os.environ.get('EH_NODE_MODULES', '/home/claude/tools/node_modules')
 ESBUILD = os.path.join(TOOLS, '.bin', 'esbuild')
 
 PWA = '''<meta name="robots" content="noindex,nofollow,noarchive">

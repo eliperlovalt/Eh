@@ -4,7 +4,7 @@ One big self-contained three.js (0.160.0) voxel page. Live at https://eliperlova
 
 ## Where things are
 - `src/index.html`: THE SOURCE (about 760 KB, one file, ES module importing three from a CDN). Edit this, never the root file.
-- `index.html` (root): the built web copy. Made by `python3 tools/build.py src/index.html index.html` (bundles three with esbuild, minifies whitespace). Do not hand-edit.
+- `index.html` (root): the built web copy. Made by `python3 tools/build.py src/index.html index.html` (bundles three with esbuild, minifies whitespace). Do not hand-edit. First time on a new machine: `npm i three@0.160.0 esbuild` somewhere, then set `EH_NODE_MODULES` to that `node_modules` folder.
 - `src/estate-plan.json`, `src/kits.json`: data the page embeds or mirrors. `kits.json` and the `KITS()` function inside the source are the Parts Depot's work: do not patch them (see The fence).
 - `windows.json`, `room-register.json`, `wall-moves-v20.json`: issued data. The register lists all 157 rooms as built; the wall-moves file is the agreed plan for v20.
 - `tools/README.md`: the running engineering notes, one section per version ("Since v1.15" ... "Since v1.19"). Read it before changing anything.
