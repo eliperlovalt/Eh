@@ -2073,7 +2073,7 @@ function buildLife(){const pm=PMAT();const hip=9*PS;let n=0;
 let BIRDS=null;function makeBirds(){const n=14;const geo=new THREE.BufferGeometry();const v=new Float32Array([-1,0,-.3, 0,0,.4, 0,.08,0, 1,0,-.3, 0,0,.4, 0,.08,0]);geo.setAttribute('position',new THREE.BufferAttribute(v,3));geo.computeVertexNormals();
   BIRDS=new THREE.InstancedMesh(geo,new THREE.MeshBasicMaterial({color:'#2b2626',side:THREE.DoubleSide}),n);BIRDS.frustumCulled=false;BIRDS.userData.f=[...Array(n)].map((_,i)=>({a:i*.45,r:100+(i%5)*8,h:72+(i%4)*3,ox:(i%3)*4,oz:Math.floor(i/3)*3}));scene.add(BIRDS)}
 const _pos=new THREE.Vector3();
-function lifeStep(dt){if(!LIFE_ON)return;const cam=camera.position;const far=MODE==='walk'?90:340;
+function lifeStep(dt){if(!LIFE_ON)return;const cam=camera.position;const far=MODE==='walk'?(FULL.on?GOV.far:90):340;
   for(const e of LIFE){const dx=e.x-cam.x,dz=e.z-cam.z,dd=dx*dx+dz*dz;e.fig.visible=dd<far*far;if(!e.fig.visible||e.static){if(e.static&&e.fig.visible){if(e.kh)kairosStep(e,dt);else e.fig.rotation.y+=Math.sin(tt*.3+e.ph)*.002}continue}
     const ud=e.fig.userData;
     if(e.wait>0){e.wait-=dt;if(ud.l1){ud.l1.rotation.x*=.85;ud.l2.rotation.x*=.85}continue}
@@ -3912,7 +3912,7 @@ function skinSet(r){const j=CSKINS.jobs[r.id];if(!j||j.got)return;j.got=1;const 
       CSKINS.push({b,name:B.name,style:j.st,items,tris:r.tris,solids:r.solids.length,cells,blind:r.blind,cross:r.cross,ms:r.ms})}}
   if(CSKINS.jobs.every(x=>x.got)){CSKINS.done=1;CSKINS.all=Math.round(performance.now()-CSKINS.t0);if(CSKINS.w){try{CSKINS.w.terminate()}catch(e){}CSKINS.w=null}}}
 function skinStep(){CSKINS.live=1;if(!CSKINS.started)fitContours();if(CSKINS.watch)CSKINS.watch();if(CSKINS.inbox&&CSKINS.inbox.length)skinSet(CSKINS.inbox.shift());const c=camera.position,open=typeof OPEN_B!=='undefined'?OPEN_B:null;
-  for(const s of CSKINS){const hide=open!=null&&open===s.b;for(const it of s.items){const dd=Math.hypot(it.c[0]-c.x,it.c[1]-c.y,it.c[2]-c.z),fa=dd>115,out=it.v&&dd>160;if(it.near)it.near.visible=!hide&&!out&&(!fa||!it.far);if(it.far)it.far.visible=!hide&&!out&&fa}}}
+  for(const s of CSKINS){const hide=open!=null&&open===s.b;for(const it of s.items){const dd=Math.hypot(it.c[0]-c.x,it.c[1]-c.y,it.c[2]-c.z),fa=!FULL.on&&dd>115,out=!FULL.on&&it.v&&dd>160;if(it.near)it.near.visible=!hide&&!out&&(!fa||!it.far);if(it.far)it.far.visible=!hide&&!out&&fa}}}
 
 /* v1.18: the real list of openings, read from the walls as built. __vx.windows() gives the rows filed as windows.json */
 function windowList(){const rows=[];for(let b=1;b<BLD.length;b++){const B=BLD[b];B.boxes.forEach((bx,bi)=>{const y0=bx.yb||0,y1=(bx.roofY||40)+12;
@@ -3942,14 +3942,19 @@ function genLamps(){for(let x=16;x<=136;x+=20){placeLamp(x,55);placeLamp(-x,55)}
   for(const[x,z]of[[-150,-72],[-160,-72],[-170,-72],[-136,-98]])hero('treeYew',x,z,x&7);for(let z=-60;z<=40;z+=14)hero('treePoplar',-148,z+7,z&7);for(let z=-40;z<=40;z+=16)hero('treePoplar',148,z,z&7)}
 function fxLightInit(){const LK=new Set(['chandelier','chandelierGilt','chandelierIron','lanternPendant','standardLamp','sconce','fireplace','candelabra','torchere','inglenook','kitchenRange','forgeHearth','wallLantern','stove','tableDining']);
   for(const it of PQ){const k=it.r.kind;if(!LK.has(k)||it.bid===0&&!VROOMS.length)continue;let y=Math.floor(it.y+.6),n=0;const x=Math.round(it.x),z=Math.round(it.z);while(n<22&&!(G(x,y,z)&&!(PF[G(x,y,z)]&IV))){y--;n++}if(n>=22)continue;POOLS_IN.push([it.x,y+.65,it.z,k==='sconce'||k==='standardLamp'||k==='candelabra'?2.4:k==='fireplace'||k==='inglenook'?3.6:4.6])}
-  const mk=(list,rad)=>{const g=new THREE.CircleGeometry(1,20);g.rotateX(-Math.PI/2);const m=new THREE.InstancedMesh(g,new THREE.MeshBasicMaterial({color:'#ffcf7a',transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}),Math.max(1,list.length));m.frustumCulled=false;const M=new THREE.Matrix4();
-    list.forEach((p,i)=>{const r=p[3]||rad;M.makeScale(r,1,r);M.setPosition(p[0],p[1],p[2]);m.setMatrixAt(i,M)});m.count=list.length;m.instanceMatrix.needsUpdate=true;m.renderOrder=3;scene.add(m);return m};
+  /* v1.21: the pools are kept in 64-block cells, each with its own bounds, so the cells out of view are not drawn (they were one mesh across the estate, always drawn: 6 to 8 percent of a frame by the Hall). The group carries the one shared material */
+  const mk=(list,rad)=>{const g=new THREE.CircleGeometry(1,20);g.rotateX(-Math.PI/2);const mat=new THREE.MeshBasicMaterial({color:'#ffcf7a',transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}),grp=new THREE.Group();grp.material=mat;const M=new THREE.Matrix4(),cells=new Map();
+    for(const p of list){const k=Math.floor(p[0]/64)+','+Math.floor(p[2]/64);let c=cells.get(k);if(!c)cells.set(k,c=[]);c.push(p)}
+    for(const c of cells.values()){const m=new THREE.InstancedMesh(g,mat,c.length);c.forEach((p,i)=>{const r=p[3]||rad;M.makeScale(r,1,r);M.setPosition(p[0],p[1],p[2]);m.setMatrixAt(i,M)});m.instanceMatrix.needsUpdate=true;m.computeBoundingSphere();m.renderOrder=3;grp.add(m)}
+    scene.add(grp);return grp};
   fxPoolO=mk(LAMPS,7.5);fxPoolI=mk(POOLS_IN,4);fxLantern=new THREE.PointLight('#ffd9a0',0,26,1.4);scene.add(fxLantern)}
 function fxLight(ts){if(!fxPoolO)return;const k=TODK,walk=MODE==='walk',fl=.94+.06*Math.sin(ts*7.3);const o=k==='night'?.34:k==='dusk'?.2:0;fxPoolO.visible=o>0;fxPoolO.material.opacity=o*fl;
   const oi=walk?(k==='night'?.3:k==='dusk'?.2:.07):0;fxPoolI.visible=oi>0;fxPoolI.material.opacity=oi*fl;
-  if(walk){fxLantern.position.set(PL.x,PL.y+2.2,PL.z);fxLantern.intensity=(k==='night'?38:k==='dusk'?16:(WB?7:0))*fl}else fxLantern.intensity=0;
+  if(walk){fxLantern.position.set(PL.x,PL.y+2.2,PL.z);fxLantern.intensity=(k==='night'?38:k==='dusk'?16:0)*fl}else fxLantern.intensity=0;
   /* v1.20: a light at nothing is still worked out for every pixel. Out of doors by day, and over the estate, the lantern is out of the scene: 13 to 20 percent of the frame */
   fxLantern.visible=fxLantern.intensity>0}
+/* v1.21: indoors by day the lantern is replaced by the room light, raised by LDAY.k (matched to the lantern's average brightness in five rooms); the lantern is carried at dusk and night only */
+const LDAY={k:1.36};
 /* both ways of the shaders, with the lantern and without, are made once the estate is up, so going indoors the first time does not stall */
 function fxWarm(){if(!fxLantern)return;const v=fxLantern.visible;fxLantern.visible=!v;try{const p=renderer.compileAsync?renderer.compileAsync(scene,camera):(renderer.compile(scene,camera),null);if(p&&p.catch)p.catch(()=>{})}catch(e){}fxLantern.visible=v}
 
@@ -4256,7 +4261,7 @@ function walkStep(dt){{let b=null,bd=2.4;if(!PL.sit)for(const s of SEATS){const 
   const sw=Math.sin(PL.moving*2.4)*.5*(mag>.08?1:0);player.userData.l1.rotation.x=sw;player.userData.l2.rotation.x=-sw;
   /* auto lift the floors above */
   const b=bidUnder();WB=b&&BLD[b]?b:null;WL=WB?BLD[WB].band[Math.round(PL.y-.5)+OY]:0;if(OPEN_B!=null){OPEN_B=null;applyVis()}
-  hemi.intensity=TOD[TODK].hemi[2]*(WB?(TODK==="night"?2.1:TODK==="dusk"?1.6:1.35):(TODK==="night"?1.3:1));
+  hemi.intensity=TOD[TODK].hemi[2]*(WB?(TODK==="night"?2.1:TODK==="dusk"?1.6:1.35*LDAY.k):(TODK==="night"?1.3:1));
   /* camera */
   const head=new THREE.Vector3(PL.x,py+2,PL.z);const inside=WB!=null;const want=inside?Math.min(PL.dist,4.2):PL.dist;const pt=inside?Math.min(PL.pitch,.32):PL.pitch;
   const PAD=[[0,0,0],[.3,0,0],[-.3,0,0],[0,0,.3],[0,0,-.3],[0,.3,0],[0,-.3,0]];const hit=p=>{for(const q of PAD){const xi=Math.round(p.x+q[0]),yi=Math.round(p.y+q[1]),zi=Math.round(p.z+q[2]);if(inb(xi,yi,zi)){const i=I(xi,yi,zi);if(VOX[i]&&(VOX[i]===C.win||!(PF[VOX[i]]&(TR|WA|IV)))&&visibleCell(TAG[i],yi))return true}}return false};
@@ -4284,19 +4289,27 @@ function groveGeo(k){const m=TGEO.get(k);if(!m||m.done)return;const[sp,v,l]=k.sp
   const im=new THREE.InstancedMesh(g,PMAT(),b.items.length);im.count=0;im.frustumCulled=false;im.castShadow=true;im.receiveShadow=true;im.matrixAutoUpdate=false;im.userData={k:'tree',quads:m.quads};scene.add(im);b[l]=im;GROVE.t=-9;GROVE.ready++;if(l==='far')GROVE.shadow=2;if(l==='far'||l==='dot'){GROVE.fd=(GROVE.fd||0)+1;if(GROVE.fd>=GROVE.b.size*2)veilOff()}}
 function veilOff(){$('#load').style.display='none'}
 function groveInit(){if(!KIT||!TREEPL.length)return;const Q=new THREE.Quaternion(),Y=new THREE.Vector3(0,1,0),P3=new THREE.Vector3(),S3=new THREE.Vector3();
-  for(const t of TREEPL){const v=t.seed%TVAR[t.species]+1,k=t.species+'/'+v;let b=GROVE.b.get(k);if(!b)GROVE.b.set(k,b={items:[],dot:null,far:null,near:null,hero:null});b.items.push({x:t.x,y:t.y,z:t.z,m:new THREE.Matrix4().compose(P3.set(t.x,t.y,t.z),Q.setFromAxisAngle(Y,t.rot*Math.PI/180),S3.set(t.scale,t.scale,t.scale))})}
+  for(const t of TREEPL){const v=t.seed%TVAR[t.species]+1,k=t.species+'/'+v;let b=GROVE.b.get(k);if(!b)GROVE.b.set(k,b={items:[],dot:null,far:null,near:null,hero:null});b.items.push({x:t.x,y:t.y,z:t.z,cy:t.y+10*t.scale,r:Math.hypot(TRAD[t.species]||8,12)*t.scale+2,m:new THREE.Matrix4().compose(P3.set(t.x,t.y,t.z),Q.setFromAxisAngle(Y,t.rot*Math.PI/180),S3.set(t.scale,t.scale,t.scale))})}
   GROVE.n=TREEPL.length;TGOT=groveGeo;for(const k of TGEO.keys())groveGeo(k);treeAsk(l=>l==='hero'||!TEARLY);
   if(!TWORK)treeLocal()}
 const GDIR=new THREE.Vector3();
-function groveStep(){if(!GROVE.n||tt-GROVE.t<.15)return;GROVE.t=tt;const walk=MODE==='walk',cp=camera.position;camera.getWorldDirection(GDIR);
+/* v1.21: with every tree in its finest shape, a tree out of view is not set out at all. The test uses a view wider than the camera's (1.8 times the angle), so a quick turn between counts never shows a gap */
+const GFR=new THREE.Frustum(),GSPH=new THREE.Sphere(),GM4=new THREE.Matrix4();let GCAM=null,GCUT=false;
+function groveFrustum(){GCUT=false;if(ISO||!camera.isPerspectiveCamera)return;GCAM=GCAM||camera.clone();GCAM.copy(camera);GCAM.fov=Math.min(170,camera.fov*1.8);GCAM.updateProjectionMatrix();GCAM.updateMatrixWorld();GFR.setFromProjectionMatrix(GM4.multiplyMatrices(GCAM.projectionMatrix,GCAM.matrixWorldInverse));GCUT=true}
+/* v1.21: the shadows were drawn from whichever trees the camera had in hand at that moment, so trees behind you or far off threw none, and what you saw hung on when the map was last drawn.
+   Now, whenever the shadow map is to be drawn, every tree is set out first, the shadows drawn on their own (into a one-pixel target), and the camera's own trees put back */
+let SHRT=null;
+function groveAll(){for(const b of GROVE.b.values()){const L=FULL.on&&b.hero?b.hero:(b.far||b.near||b.hero);if(!L)continue;for(const k of['hero','near','far','dot'])if(b[k]&&b[k]!==L)b[k].count=0;let n=0;for(const it of b.items)L.setMatrixAt(n++,it.m);L.count=n;L.instanceMatrix.needsUpdate=true}}
+function shadowPass(){if(!renderer.shadowMap.needsUpdate||!GROVE.n)return;groveAll();SHRT=SHRT||new THREE.WebGLRenderTarget(1,1);const was=renderer.getRenderTarget();renderer.setRenderTarget(SHRT);renderer.render(scene,camera);renderer.setRenderTarget(was);GROVE.key=null;GROVE.t=-9;groveStep()}
+function groveStep(){if(!GROVE.n||tt-GROVE.t<.05)return;GROVE.t=tt;const walk=MODE==='walk',cp=camera.position;camera.getWorldDirection(GDIR);
   /* v1.20: nothing has moved and no new shape has come: the trees drawn are the trees drawn last time, so they are not counted and sent to the card again */
-  {const k=cp.x+','+cp.y+','+cp.z+','+GDIR.x+','+GDIR.z+','+MODE+','+GOV.lv+','+GOV.far+','+GROVE.ready+','+(GROVE.got||0)+','+TVER;if(k===GROVE.key){if(GROVE.shadow&&--GROVE.shadow===0)renderer.shadowMap.needsUpdate=true;return}GROVE.key=k}const gone=walk?GOV.far+30:1e9,g2=gone*gone,HR=[11,9,0,0][GOV.lv],NR=[44,38,30,26][GOV.lv],DR=walk?[118,105,95,85][GOV.lv]:[380,300,220,170][GOV.lv],H2=HR*HR,N2=NR*NR,D2=DR*DR;let drawn=0;
-  for(const b of GROVE.b.values()){let nf=0,nn=0,nh=0,nd=0;if(b.far||b.near)for(const it of b.items){const dx=it.x-cp.x,dz=it.z-cp.z,dy=walk?0:cp.y-it.y,d2=dx*dx+dz*dz+dy*dy;if(d2>g2)continue;if(walk&&d2>1600&&dx*GDIR.x+dz*GDIR.z<-.35*Math.sqrt(d2))continue;
-      if(d2<H2&&b.hero)b.hero.setMatrixAt(nh++,it.m);else if((d2<N2||!b.far)&&b.near)b.near.setMatrixAt(nn++,it.m);else if(d2>D2&&b.dot)b.dot.setMatrixAt(nd++,it.m);else if(b.far)b.far.setMatrixAt(nf++,it.m)}
+  {const k=cp.x+','+cp.y+','+cp.z+','+GDIR.x+','+GDIR.y+','+GDIR.z+','+camera.fov+','+MODE+','+GOV.lv+','+GOV.far+','+GROVE.ready+','+(GROVE.got||0)+','+TVER+','+FULL.on;if(k===GROVE.key){if(GROVE.shadow&&--GROVE.shadow===0)renderer.shadowMap.needsUpdate=true;return}GROVE.key=k}groveFrustum();const gone=walk?GOV.far+30:1e9,g2=gone*gone,HR=[11,9,0,0][GOV.lv],NR=[44,38,30,26][GOV.lv],DR=walk?[118,105,95,85][GOV.lv]:[380,300,220,170][GOV.lv],H2=HR*HR,N2=NR*NR,D2=DR*DR;let drawn=0;
+  for(const b of GROVE.b.values()){let nf=0,nn=0,nh=0,nd=0;if(b.far||b.near)for(const it of b.items){const dx=it.x-cp.x,dz=it.z-cp.z,dy=walk?0:cp.y-it.y,d2=dx*dx+dz*dz+dy*dy;if(d2>g2)continue;if(walk&&d2>1600&&dx*GDIR.x+dz*GDIR.z<-.35*Math.sqrt(d2))continue;if(GCUT){GSPH.center.set(it.x,it.cy,it.z);GSPH.radius=it.r;if(!GFR.intersectsSphere(GSPH))continue}
+      if((FULL.on||d2<H2)&&b.hero)b.hero.setMatrixAt(nh++,it.m);else if((d2<N2||!b.far)&&b.near)b.near.setMatrixAt(nn++,it.m);else if(d2>D2&&b.dot)b.dot.setMatrixAt(nd++,it.m);else if(b.far)b.far.setMatrixAt(nf++,it.m)}
     if(b.far){b.far.count=nf;b.far.instanceMatrix.needsUpdate=true}if(b.near){b.near.count=nn;b.near.instanceMatrix.needsUpdate=true}if(b.hero){b.hero.count=nh;b.hero.instanceMatrix.needsUpdate=true}if(b.dot){b.dot.count=nd;b.dot.instanceMatrix.needsUpdate=true}drawn+=nf+nn+nh+nd}
   GROVE.drawn=drawn;if(GROVE.shadow&&--GROVE.shadow===0)renderer.shadowMap.needsUpdate=true}
 let FBED=null;const FPT=new THREE.Vector3();
-function flowersInit(){if(!KIT||!FLOWPL.length)return;FBED=FLOWERS.plant(T3,FLOWPL,{st:SEA,variants:2,far:12,gone:62,material:PMAT()});
+function flowersInit(){if(!KIT||!FLOWPL.length)return;FBED=FLOWERS.plant(T3,FLOWPL,{st:SEA,variants:2,far:FULL.on?1e6:12,gone:FULL.on?GOV.far:62,material:PMAT()});
   flowersDress();scene.add(FBED.group)}
 function flowersDress(){FBED.group.traverse(o=>{if(!o.isInstancedMesh)return;const g=o.geometry,c=g.attributes.color;o.visible=!!g.userData.quads;if(!o.visible)return;if(c&&!g.userData.lin){for(let i=0;i<c.array.length;i++)c.array[i]=s2l(c.array[i]);c.needsUpdate=true;g.userData.lin=1}o.receiveShadow=true})}
 /* ---------- v1.13: choosing the season. The lawns are repainted where they lie, the trees regrown in the worker and swapped in, the beds put into their stage, and the weather and the sky follow ---------- */
@@ -4395,8 +4408,10 @@ function buildStairs(){let quads=0;const mat=PMAT();
 function stairRamp(){if(PL.fly||PL.sit)return null;for(const f of FLIGHTS){const zx=f.axis==='z',v=zx?PL.x:PL.z;if(v<f.l0-.75||v>f.l1+.75)continue;const u=((zx?PL.z:PL.x)-f.e0)*f.dir;if(u<-.6||u>f.L+.6)continue;
     const ry=f.y0+Math.max(0,Math.min(f.L,u))*f.s,d=PL.y-ry;if(PL.jmp){if(d>-1.4&&d<5)return NaN;continue}if(d<-1.35||d>1.7)continue;return ry}return null}
 /* the speed budget: when frames run long the picture is drawn a little smaller and the far distance closes in; it opens again when there is room */
+/* v1.21: full detail. Nothing is drawn plainer or dropped as it gets further off: the Depot's stonework, the trees, the flower beds, the window frames, the outdoor pieces and the people are all drawn at their finest out to the mist. FULL.on=false brings back the old distances (for measuring) */
+const FULL={on:true};
 const GOV={lv:0,acc:0,n:0,last:0,good:0,wmax:0,base:1,far:290,ms:16,worst:16,off:false,PR:[1,.85,.72,.6],FAR:[290,240,200,165]};
-function govSet(lv){GOV.lv=lv;GOV.far=GOV.FAR[lv];renderer.setPixelRatio(GOV.base*GOV.PR[lv]);size()}
+function govSet(lv){GOV.lv=lv;GOV.far=FULL.on?GOV.FAR[0]:GOV.FAR[lv];renderer.setPixelRatio(GOV.base*GOV.PR[lv]);size()}
 let cullT=0;const BBOX=[];
 function bbOf(bid){let b=BBOX[bid];if(b)return b;const B=BLD[bid];b={x0:1e9,x1:-1e9,z0:1e9,z1:-1e9,glass:false};for(const k of B.boxes){b.x0=Math.min(b.x0,k.x0);b.x1=Math.max(b.x1,k.x1);b.z0=Math.min(b.z0,k.z0);b.z1=Math.max(b.z1,k.z1);if(k.glassWalls||k.roof==='arch')b.glass=true}b.far=b.glass||!!B.main;b.top=0;for(const v of B.band)if(v!=null&&v<31&&v>b.top)b.top=v;return BBOX[bid]=b}
 /* far detail: the furniture of a house you are not in or near is not drawn, nor the floors well above or below you; small outdoor pieces drop out with distance */
@@ -4408,15 +4423,15 @@ function intCut(g,walk,px,pz){const b=bbOf(g.bid),B=BLD[g.bid];if(!walk)return O
   const d=B.main?Math.hypot(Math.max(Math.abs(g.x-px)-32,0),Math.max(Math.abs(g.z-pz)-32,0)):bd,eb=B.band[Math.max(0,Math.min(B.band.length-1,Math.round(PL.y)+2+OY))];return d>WRI||g.band>Math.max(2,eb+1)}
 const paneOf=(g,walk,px,pz)=>{if(!walk)return MATS.gl;if(!g.bid)return MATS.wn;const b=bbOf(g.bid);return intCut(g.band===31?{bid:g.bid,band:b.top,x:g.x,z:g.z}:g,true,px,pz)?MATS.gl:MATS.wn};
 function cullStep(){const walk=MODE==='walk',px=walk?PL.x:camera.position.x,pz=walk?PL.z:camera.position.z,cyv=walk?0:camera.position.y,czm=walk?1:(camera.zoom||1);
-  for(const g of GROUPS){if(g.vh){const dc=Math.hypot(g.x-px,g.z-pz),cut=g.si?(!walk||dc>VHR):(walk&&dc>GOV.far-34);if(cut!==!!g.cut){g.cut=cut;g.obj.visible=!cut}if(g.wn){const m=walk&&dc<=VHR?MATS.wn2:MATS.gl;if(g.wn.material!==m)g.wn.material=m}continue}
-    if(g.lod){const near=Math.hypot(g.x-px,g.z-pz)<LODR,cut=g.lod===1?!near:near;if(cut!==!!g.cut){g.cut=cut;g.obj.visible=!cut}continue}
-    if(g.wd){if(g.gone){g.obj.visible=false;continue}let d;if(g.ch)d=Math.hypot(g.x-px,g.z-pz)-30;else{const b=bbOf(g.bid);d=Math.hypot(Math.max(b.x0-px,0,px-b.x1),Math.max(b.z0-pz,0,pz-b.z1))}const cut=!ISO&&Math.hypot(d,cyv)/czm>WDR;if(cut!==!!g.cut){g.cut=cut;g.obj.visible=g.v!==false&&!cut}continue}
+  for(const g of GROUPS){if(g.vh){const dc=Math.hypot(g.x-px,g.z-pz),cut=g.si?(!walk||dc>VHR):(walk&&dc>GOV.far+(FULL.on?60:-34));if(cut!==!!g.cut){g.cut=cut;g.obj.visible=!cut}if(g.wn){const m=walk&&dc<=VHR?MATS.wn2:MATS.gl;if(g.wn.material!==m)g.wn.material=m}continue}
+    if(g.lod){const near=FULL.on||Math.hypot(g.x-px,g.z-pz)<LODR,cut=g.lod===1?!near:near;if(cut!==!!g.cut){g.cut=cut;g.obj.visible=!cut}continue}
+    if(g.wd){if(g.gone){g.obj.visible=false;continue}let d;if(g.ch)d=Math.hypot(g.x-px,g.z-pz)-30;else{const b=bbOf(g.bid);d=Math.hypot(Math.max(b.x0-px,0,px-b.x1),Math.max(b.z0-pz,0,pz-b.z1))}const cut=!FULL.on&&!ISO&&Math.hypot(d,cyv)/czm>WDR;if(cut!==!!g.cut){g.cut=cut;g.obj.visible=g.v!==false&&!cut}continue}
     if(g.wn){const m=paneOf(g,walk,px,pz);if(g.wn.material!==m)g.wn.material=m}
     if(g.si){const cut=intCut(g,walk,px,pz);if(cut!==!!g.cut){g.cut=cut;g.obj.visible=g.v!==false&&!cut}continue}if(!g.d)continue;if(g.d>1){const dc=Math.hypot(g.x-px,g.z-pz),cut=g.d===2?(!walk||dc>95):(walk&&dc>GOV.far+60);if(cut!==!!g.cut){g.cut=cut;g.obj.visible=!cut}continue}const b=bbOf(g.bid),d=Math.hypot(Math.max(b.x0-px,0,px-b.x1),Math.max(b.z0-pz,0,pz-b.z1));let cut;
     if(walk){const dc=g.x!=null?Math.hypot(g.x-px,g.z-pz):0;cut=d>46;if(!cut&&WB===g.bid)cut=(g.band>=0&&Math.abs(g.band-WL)>1)||dc>84||(g.band!==WL&&g.x!=null&&dc>(PL.tall?70:46));else if(!cut){if(b.glass)cut=dc>58;else{const bn=BLD[g.bid].band,eb=bn[Math.max(0,Math.min(bn.length-1,Math.round(PL.y)+2+OY))];cut=dc>58||g.band>Math.max(2,eb+1)||(eb>2&&g.band<eb-1)}}}
     else if(OPEN_B!=null)cut=g.bid!==OPEN_B&&BLD[g.bid].hideWith!==OPEN_B;else cut=!(b.far&&d<=170&&(b.glass||g.band===1||g.band===2));
     if(cut!==!!g.cut){g.cut=cut;g.obj.visible=g.v!==false&&!cut}}
-  for(const I of INSTS){const d=Math.hypot(I.x-px,I.z-pz);I.obj.visible=!walk||d<(I.small?130:GOV.far+90)}}
+  for(const I of INSTS){const d=Math.hypot(I.x-px,I.z-pz);I.obj.visible=!walk||d<(I.small&&!FULL.on?130:GOV.far+90)}}
 let DBG=false,dbgT=0;function dbgToggle(){DBG=!DBG;$('#dbg').hidden=!DBG;if(DBG)toast('Frame readout on.')}
 function dbgStep(){if(!DBG||tt-dbgT<.5)return;dbgT=tt;const i=renderer.info.render;$('#dbg').textContent=GOV.ms.toFixed(1)+' ms  '+(1000/GOV.ms).toFixed(0)+' fps  worst '+GOV.worst.toFixed(0)+' ms\n'+i.calls+' draws  '+(i.triangles/1000|0)+'k tris  level '+GOV.lv+'  x'+renderer.getPixelRatio().toFixed(2)}
 function sysStep(dt){const now=performance.now();if(GOV.last){const ms=now-GOV.last;GOV.acc+=ms;GOV.n++;if(ms>GOV.wmax)GOV.wmax=ms;
@@ -4461,7 +4476,7 @@ function frame(){requestAnimationFrame(frame);if(document.hidden||SHEET){clock.g
   const fv=OPEN_B!==1;flag.visible=fv;flag.userData.mast.visible=fv;if(fv){FLAG.forEach((f,i)=>{M4.makeTranslation(f[0],f[1],-56+Math.round(Math.sin(tt*3+f[0]*.9)*.9*((f[0]+54)/6)));flag.setMatrixAt(i,M4)});flag.instanceMatrix.needsUpdate=true}
   holo.visible=OPEN_B!==1||OPEN_S>=6;holo.rotation.y=tt*.45;ring.rotation.z=tt*.3;holo.position.y=50+Math.sin(tt*1.1)*.4;
   if(MODE==='over')placeLabels();else if(labelEls.length){LBL.innerHTML='';labelEls=[];lblKey=''}
-  postRender();dbgStep()}
+  shadowPass();postRender();dbgStep()}
 
 /* =========================================================
    Build it
@@ -4477,19 +4492,20 @@ function mergeWater(){const T=new Map();let was=0,now=0;
     const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(P,3));g.setAttribute('normal',new THREE.BufferAttribute(N,3,true));g.setAttribute('color',new THREE.BufferAttribute(K,3,true));g.setIndex(new THREE.BufferAttribute(I,1));
     const m=new THREE.Mesh(g,MATS.w);m.scale.setScalar(.5);m.receiveShadow=true;m.matrixAutoUpdate=false;m.updateMatrix();m.userData.k='water';scene.add(m);now++}
   return[was,now]}
-const TM={};function build(){const t0=performance.now();let tm=t0;TM.start=Math.round(t0);const mark=k=>{const n=performance.now();TM[k]=Math.round(n-tm);tm=n};genGround();mark('ground');const hall=genBuildings();TM.blind=blindPanes();mark('buildings');const PRO=genProps2();mark('rooms');genGrounds();mark('grounds');try{fitContours()}catch(e){}const PRS=genSets();mark('sets');genTrees();mark('trees');genFlowers();mark('flowers');settle();mark('settle');TM.blind+=blindPanes();const t1=performance.now();
-  const groups=ST.net?netMesh():mesh();const t2=performance.now();let quads=0;
+/* v1.21: the raising gives the browser a breath between its phases, so a phone never sees one long freeze (it was 2.4 s on a desk in one piece). The veil covers the page meanwhile, so nothing can be pressed half built. TM.wall is the whole time, breaths included */
+const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start=Math.round(t0);const mark=k=>{const n=performance.now();TM[k]=Math.round(n-tm);tm=n};const Y=async()=>{await new Promise(r=>setTimeout(r,0));tm=performance.now()};genGround();mark('ground');await Y();const hall=genBuildings();TM.blind=blindPanes();mark('buildings');await Y();const PRO=genProps2();mark('rooms');await Y();genGrounds();mark('grounds');try{fitContours()}catch(e){}const PRS=genSets();mark('sets');await Y();genTrees();mark('trees');genFlowers();mark('flowers');settle();mark('settle');await Y();TM.blind+=blindPanes();const t1=performance.now();
+  const groups=ST.net?netMesh():mesh();const t2=performance.now();await Y();let quads=0;
   for(const g of groups.values()){const obj=new THREE.Group();
     for(const k of['sg','glg']){const geo=g[k];if(!geo)continue;quads+=geo.index.count/6;const m=new THREE.Mesh(geo,k==='sg'?MATS.s:MATS.gl);if(k==='sg'){m.castShadow=true;m.receiveShadow=true}m.matrixAutoUpdate=false;m.updateMatrix();obj.add(m)}
     let wn=null;for(const k of['s','gl','wn','w','gs']){const gb=g[k];if(!gb||!gb.n)continue;quads+=gb.n;const m=new THREE.Mesh(gb.geo(),k==='wn'?MATS.gl:MATS[k]);m.scale.setScalar(.5);if(k==='wn')wn=m;if(k==='s'){m.castShadow=true;m.receiveShadow=true;if(g.gq)GRQ.push({m,q:g.gq})}else if(k==='w')m.receiveShadow=true;m.matrixAutoUpdate=false;m.updateMatrix();obj.add(m)}obj.matrixAutoUpdate=false;obj.updateMatrix();scene.add(obj);GROUPS.push({obj,bid:g.bid,band:g.band,si:g.si||0,vh:g.vh||0,x:g.x,z:g.z,wn})}
-  try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');const WIN=LIVE?buildWindowDetail():0;mark('windows');const PRB=buildProps();mark('props');TM.stairq=buildStairs();mark('stairs');const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
-  window.__vx={pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
-  frame();setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
+  try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');await Y();const WIN=LIVE?buildWindowDetail():0;mark('windows');await Y();const PRB=buildProps();mark('props');await Y();TM.stairq=buildStairs();mark('stairs');await Y();const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
+  window.__vx={LDAY,FULL,GROVE,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
+  TM.wall=Math.round(performance.now()-t0);frame();setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
 function styleUI(){$('#brandS').textContent='Euphrates Hall v1.20 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
   $('#styleList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>pickStyle(b.dataset.st));$('#bStyle').onclick=()=>{$('#stylebox').hidden=!$('#stylebox').hidden};
   if(ISO){for(const[id,dd]of[['#bRotL',-1],['#bRotR',1]]){const b=$(id);b.hidden=false;b.onclick=()=>{if(ISOV.rot)return;const a=ISOV.yaw;ISOV.rot={t0:performance.now(),a,b:a+dd*Math.PI/2};if(MODE==='walk'){ISOV.yaw=a+dd*Math.PI/2;ISOV.rot=null}}}}}
 $('#load').innerHTML='Raising Euphrates Hall<i>The '+ST.n+' Estate. Raising the mansion, about ten seconds.</i>';
-requestAnimationFrame(()=>setTimeout(()=>{try{build()}catch(e){console.error(e);$('#load').innerHTML='The estate could not be raised on this device.<i>'+esc(e.message)+'</i>'}},30));
+requestAnimationFrame(()=>setTimeout(()=>{build().catch(e=>{console.error(e);$('#load').innerHTML='The estate could not be raised on this device.<i>'+esc(e.message)+'</i>'})},30));
 </script>
 </body>
 </html>
