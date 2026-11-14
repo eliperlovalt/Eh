@@ -33,6 +33,9 @@ Then stop and report before starting larger rebuilds.
 ## How the source is laid out (search for these names)
 `G/S` voxel grid get/set, palette `C`/`PAL`, `BLD[]` building specs (boxes, levels, rooms, doors), `HALLS`, `FLIGHTS` (stairs), `PQ` prop queue, `RK` room kit, `furnishFrom` (places a Depot room plan), `settle()` (post-pass: seating groups, plants, rugs, wall pieces, doors), `GROUPS` (culled mesh groups), `LIFE`/`lifeStep` (people and animals with bodies), `fitContours`/`skinSet`/`skinStep` (Depot stonework, dressed in a Web Worker), `mergeWater`, `TRAILS`/`trailAt`, `surf`/`baseH` (ground), `build()` (boot order), `frame()` (loop).
 
+## The backlog
+`BACKLOG.md` lists every idea not yet built, A1 to G1, with an owner for each. His Grace strikes or keeps lines; never delete a struck line. After the first job, ask him which section to take next.
+
 ## Known open work
 - v20: the 23 wall moves in `wall-moves-v20.json`, then new room plans from the Depot for every room.
 - Bodies do not yet use doors, stairs or seats. The werewolf is a scaled dog. The Great Cedar is a stand-in.
