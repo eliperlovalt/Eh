@@ -55,9 +55,12 @@ def main(folder, page='index.html'):
             check('Down sinks and lands', abs(y3 - .5) < .01 and pg.evaluate('() => __vx.PL.fly') == 0, 'y %.2f' % y3)
             pg.evaluate('() => { __vx.PL.dn = 0 }')
             check('labels restored', pg.evaluate("() => document.getElementById('bJump').textContent") == 'Jump')
-            # keyboard: double-tap Space, hold Space, Shift
+            # keyboard: double-tap Space, hold Space, Shift. Two taps inside 340 ms toggle flight, so each separate press
+            # waits that out: on a fast machine the steps above finish inside the window and the press would toggle again
+            pg.wait_for_timeout(400)
             pg.evaluate(KEY2)
             check('double-tap Space starts flight', pg.evaluate('() => __vx.PL.fly') == 1)
+            pg.wait_for_timeout(400)
             pg.keyboard.down('Space'); y4 = pg.evaluate(FRAMES, 60); pg.keyboard.up('Space')
             check('Space rises', y4 > 5, 'y %.1f' % y4)
             pg.keyboard.down('Shift'); y5 = pg.evaluate(FRAMES, 600); pg.keyboard.up('Shift')

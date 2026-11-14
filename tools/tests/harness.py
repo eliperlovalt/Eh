@@ -2,7 +2,7 @@
 three.js routed to the local npm copy, and collect page errors."""
 import contextlib, functools, http.server, os, socketserver, threading
 
-THREE = '/home/claude/tools/node_modules/three'
+THREE = os.path.join(os.environ.get('EH_NODE_MODULES', '/home/claude/tools/node_modules'), 'three')
 CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0/'
 
 

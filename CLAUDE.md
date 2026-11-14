@@ -1,6 +1,6 @@
 # Euphrates Hall: the Voxel Estate
 
-One big self-contained three.js (0.160.0) voxel page. Live at https://eliperlovalt.github.io/Eh/ (this repo's root `index.html`, served by GitHub Pages from `main`). Current version: v1.19. The brand line in the page says the version; bump it on every release.
+One big self-contained three.js (0.160.0) voxel page. Live at https://eliperlovalt.github.io/Eh/ (this repo's root `index.html`, served by GitHub Pages from `main`). Current version: v1.20. The brand line in the page says the version; bump it on every release.
 
 ## Where things are
 - `src/index.html`: THE SOURCE (about 760 KB, one file, ES module importing three from a CDN). Edit this, never the root file.
@@ -8,7 +8,7 @@ One big self-contained three.js (0.160.0) voxel page. Live at https://eliperlova
 - `src/estate-plan.json`, `src/kits.json`: data the page embeds or mirrors. `kits.json` and the `KITS()` function inside the source are the Parts Depot's work: do not patch them (see The fence).
 - `windows.json`, `room-register.json`, `wall-moves-v20.json`: issued data. The register lists all 157 rooms as built; the wall-moves file is the agreed plan for v20.
 - `tools/README.md`: the running engineering notes, one section per version ("Since v1.15" ... "Since v1.19"). Read it before changing anything.
-- `tools/tests/`: Playwright tests and tools. `harness.py` serves a folder and opens the page in headless Chrome (set `CHROME` to a Chrome binary; software GL works).
+- `tools/tests/`: Playwright tests and tools. `harness.py` serves a folder and opens the page in headless Chrome (set `CHROME` to a Chrome binary; software GL works; it takes three from `EH_NODE_MODULES` too). Test the source with FOLDER = `src`, the built copy with FOLDER = the repo root. `metrics.py BASE NEW` measures load, heap, geometry, draws and triangles.
 
 ## Your first job (the owner's order, 14 November 2026)
 1. Read it all: `tools/README.md`, then `src/index.html` end to end.

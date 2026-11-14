@@ -3,7 +3,7 @@
 The source of the Estate is the Claude artifact "Euphrates Hall: the Voxel Estate" (its `index.html`).
 This repo's `index.html` is that source built for the phone by `build.py`.
 
-- `build.py SOURCE OUT`: bundles three.js 0.160.0 with esbuild 0.28, minifies whitespace, adds the PWA tags. Needs `npm i three@0.160.0 esbuild` in `/home/claude/tools`. It reproduced v1.9 byte for byte.
+- `build.py SOURCE OUT`: bundles three.js 0.160.0 with esbuild 0.28, minifies whitespace, adds the PWA tags. Needs `npm i three@0.160.0 esbuild`; set `EH_NODE_MODULES` to that `node_modules` (the default is `/home/claude/tools/node_modules`). It reproduced v1.9 byte for byte, and v1.19 byte for byte on Windows.
 - `tests/walk_test.py FOLDER`: landscape phone, every walk button, flight, photo mode, the stair openings, each fine stair climbed and descended on foot with the drawn height checked for jumps, the gallery and terrace rails, the window panes near and far, no page errors.
 - `tests/reach_test.py FOLDER [index.html] [walk]`: all 277 rooms on foot from the front lawn (157 on the estate, 120 in the villages). `walk` leaves the Upstairs button out, and still must reach every room.
 - `tests/perf.py FOLDER [BASE]`: draw calls and triangles at fixed spots against the last version's source (kept in `/home/claude/v113`).
@@ -60,5 +60,14 @@ Since v1.19 (the slow opening, the river's draw calls, the seating groups, walks
 - Walks and trails: `TRAILS` (kind 2 cobbled, kind 1 earth), drawn into `TRAILM` by `mkTrails` on first use; `surf` colours them, `blocked` and `flowerBed` keep planting off them. The ground is not moved. Seventeen park meadows where there were eleven.
 - The drawn floor plans: `tools/tests/dump2.py FOLDER OUT.json` then `plan2.py OUT.json OUTDIR TAG` gives one sheet for every floor of every building, faults numbered in red. `map.py` draws the park from above (`__vx.palette` is exported for it). `loadprof2.py` profiles the first seconds of main thread.
 - The test harness lets `blob:` requests through so the worker runs under test.
+
+Since v1.20 (the speed pass; first work in Claude Code. The look is unchanged):
+- The lantern (`fxLantern`, a point light) is out of the scene whenever it gives no light: out of doors by day and in the overview. A light at intensity 0 is still worked out for every pixel; leaving it out is 13 to 20 percent of the frame (in-page A/B, software GL). `fxWarm` compiles the shaders both ways in the background 2.5 s after the first frame, so the first step indoors does not stall on a new shader.
+- `propTrim` lets go of each prop kind's cubes (`r.V`) and quads (`r.q`) once everything is meshed, after `buildFloors`. Its box (`pbox`, `r.bx`) and seat height (`r.st`) are worked out first and kept. JS heap after a full collection: 125 MB to 23 MB. Code that runs after the build must not read `r.V` or `r.q`; `propGet` for a kind not yet built still builds it whole.
+- Every quad mesh (`GB`, `FB`) shares one index (`quadIndex`, `QIX`) and draws to its own `drawRange`. About 20 MB less geometry, in memory and on the card. Read `drawRange.count`, not `index.count`, for a mesh's size. Never `dispose()` one of these geometries without setting its `index` to null first: three would free the shared buffer for every mesh (`mergeWater` does this).
+- The clouds are one mesh each of the faces that look out (`cloudGeo`), not a box for every cube: 133 thousand triangles to 18 thousand. They only show in the overview; the walker's far plane is nearer than they are.
+- `groveStep` does not re-count and re-send the tree instances when the camera, the speed level and the tree shapes are all as they were.
+- Tools: `metrics.py BASE NEW [runs]` (load, long tasks, heap after a collection, geometry bytes, draws and triangles at the ftime3 spots and looking up, two builds taken in turn), `breakdown.py FOLDER [spots]` (draws and triangles by kind of object in view), `heapprof.py FOLDER` (live heap by the function that made it). `ftime3_spots.py` holds the spots. The harness and `build.py` take `EH_NODE_MODULES` and run on Windows.
+- `walk_test.py` waits 400 ms between its separate Space presses. On a fast machine its steps finished inside the 340 ms double-tap window and the hold-Space press toggled flight off again; v1.19 failed "Space rises" the same way.
 
 Run the walk test, the reach test and the audit test before every push.

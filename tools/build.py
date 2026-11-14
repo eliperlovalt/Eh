@@ -8,7 +8,7 @@ usage: build.py SOURCE_HTML OUT_HTML
 import os, re, subprocess, sys, tempfile
 
 TOOLS = os.environ.get('EH_NODE_MODULES', '/home/claude/tools/node_modules')
-ESBUILD = os.path.join(TOOLS, '.bin', 'esbuild')
+ESBUILD = os.path.join(TOOLS, '.bin', 'esbuild.cmd' if os.name == 'nt' else 'esbuild')
 
 PWA = '''<meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,19 +37,19 @@ def build(src, extra=()):
     if True:
         entry = os.path.join(td, 'main.js')
         out = os.path.join(td, 'out.js')
-        open(entry, 'w').write(js)
+        open(entry, 'w', encoding='utf8', newline='\n').write(js)
         env = dict(os.environ, NODE_PATH=TOOLS)
         subprocess.run([ESBUILD, entry, '--bundle', '--format=iife', '--target=esnext',
                         '--minify-whitespace', '--log-level=error',
                         '--alias:three/addons=three/examples/jsm', '--outfile=' + out, *extra],
                        check=True, env=env, cwd=td)
-        bundle = open(out).read()
+        bundle = open(out, encoding='utf8').read()
     head = lines[:vi + 1] + [PWA.rstrip('\n')] + lines[vi + 1:ii]
     tail = lines[end + 1:]
     return '\n'.join(head + ['<script>' + bundle + '</script>'] + tail)
 
 
 if __name__ == '__main__':
-    src = open(sys.argv[1]).read()
-    open(sys.argv[2], 'w').write(build(src))
+    src = open(sys.argv[1], encoding='utf8').read()
+    open(sys.argv[2], 'w', encoding='utf8', newline='\n').write(build(src))
     print('built', sys.argv[2], os.path.getsize(sys.argv[2]), 'bytes')

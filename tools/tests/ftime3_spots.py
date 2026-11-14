@@ -1,0 +1,2 @@
+"""The fixed spots ftime3.py times, shared with metrics.py: name -> [x, y, z, yaw]."""
+ALL = {"lawn": [0, 0, 58, 0], "lawn_away": [0, 0, 58, 3.14], "saloon": [0, 7, -20, 0], "state_hall": [-15, 7, -39, -1.57], "park": [120, 0, 120, 0.8], "garden_n": [0, 0, -100, 3.14], "avenue": [0, 0, 150, 0], "terrace": [22, 7, 40, 0], "east_wall": [80, 0, 18, 1.5708], "village": [-150, 0, 276, 0], "village_ring": [-150, 0, 318, 0], "morning": [50, 7, 18, 3.14], "grand_stair": [31, 7, -14, 0], "entrance": [0, 0, 62, 0]}
