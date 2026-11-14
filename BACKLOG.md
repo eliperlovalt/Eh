@@ -4,6 +4,14 @@ Issued 14 November 2026 by Kairos XI, at v1.19. His Grace strikes or keeps each 
 Owner key: **Estate** (this repo), **Depot** (the Parts Depot chat makes the part; the Estate places it), **His Grace** (a choice he must make), **Verify** (may already exist; check the source before building).
 Work order when nothing else is said: section A, then B, then whatever he picks.
 
+## His Grace's order, 14 November 2026, 3:00 AM: keep all, do it all
+He kept every line. Work through the whole list in one sustained run, without stopping to ask between items, under these terms:
+- **Redundant or done already:** if an item is already built, is covered by another item, or no longer makes sense against the source, skip it. Mark it `[done]` or `[redundant]` with one line saying why. Do not build it twice.
+- **Depot items (A3 to A6, B1 to B5, C5):** the fence still holds. Do not make the part. Build everything on the Estate side that is ready for it (openings, placements, hooks, season switches), then mark the item `[waiting on Depot]`. When the Depot's v20 hand-back arrives in this repo or from His Grace, fit it.
+- **His Grace's calls (B7, B8, C4, F4) and the design-first items (D1, E2):** gather all of them into one short multiple-choice quiz, ask it once near the start, then carry on with the answers. Do not stop the run for any other question.
+- **Ship in safe batches:** one batch per section or so. Every push passes the walk, reach and audit tests on both copies and the frame-time check, and bumps the version. A batch that fails is fixed before the next starts.
+- **At the end:** one report to His Grace: what was built, what was skipped and why, what waits on the Depot, and the live link.
+
 ## A. Version 20 (agreed; the Depot works first)
 - [ ] A1. Build the 23 inner wall moves in `wall-moves-v20.json`: no passage under 5 clear on the state and first floors, under 4 elsewhere; free the 7 crowded doors. (Estate)
 - [ ] A2. Every bedroom one door onto a passage, suites excepted; the attic maids' and footmen's cells rebuilt as eight rooms each side of a passage. (Estate)

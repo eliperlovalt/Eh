@@ -34,7 +34,7 @@ Then stop and report before starting larger rebuilds.
 `G/S` voxel grid get/set, palette `C`/`PAL`, `BLD[]` building specs (boxes, levels, rooms, doors), `HALLS`, `FLIGHTS` (stairs), `PQ` prop queue, `RK` room kit, `furnishFrom` (places a Depot room plan), `settle()` (post-pass: seating groups, plants, rugs, wall pieces, doors), `GROUPS` (culled mesh groups), `LIFE`/`lifeStep` (people and animals with bodies), `fitContours`/`skinSet`/`skinStep` (Depot stonework, dressed in a Web Worker), `mergeWater`, `TRAILS`/`trailAt`, `surf`/`baseH` (ground), `build()` (boot order), `frame()` (loop).
 
 ## The backlog
-`BACKLOG.md` lists every idea not yet built, A1 to G1, with an owner for each. His Grace strikes or keeps lines; never delete a struck line. After the first job, ask him which section to take next.
+`BACKLOG.md` lists every idea not yet built, A1 to G1, with an owner for each. **Standing order (14 Nov): His Grace kept every line and wants it all done in one run once the first job is reported.** Follow the terms in BACKLOG.md under "keep all, do it all": skip anything redundant or already done (marked, never built twice), keep the Depot fence, ask his choices in one quiz at the start, ship in tested batches, and report once at the end. Never delete a line.
 
 ## Known open work
 - v20: the 23 wall moves in `wall-moves-v20.json`, then new room plans from the Depot for every room.
