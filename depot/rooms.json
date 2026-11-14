@@ -1,0 +1,1739 @@
+{
+ "version": "1.0",
+ "made": "2026-11-12",
+ "source": "Euphrates Hall: The Mansion Plan (https://claude.ai/artifact/NpK2xoafAPvXi3PTw9nrMs)",
+ "coords": "rect is in blocks inside the 128 x 96 main block: x from the west wall, z from the north wall; the front faces south (+z). floorY is blocks above the terrace.",
+ "rooms": [
+  {
+   "id": "estate-office",
+   "name": "Estate Office",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 0,
+    "z": 0,
+    "w": 20,
+    "d": 20
+   },
+   "house": "silver",
+   "kind": "room",
+   "record": {
+    "object": "The ledger book and the strongbox",
+    "prop": "strongbox",
+    "opens": "Car fund, payday split, first-$100 target, the coin treasury",
+    "golem": "ledger"
+   },
+   "furnish": [
+    "deskWriting",
+    "strongbox",
+    "bookcase",
+    "panelling",
+    "clockLong"
+   ]
+  },
+  {
+   "id": "business",
+   "name": "Business Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 20,
+    "z": 0,
+    "w": 20,
+    "d": 24
+   },
+   "house": "silver",
+   "kind": "room",
+   "record": {
+    "object": "The ticker desk",
+    "prop": "deskWriting",
+    "opens": "The Wager Desk and the side-income desks",
+    "golem": "wager"
+   },
+   "furnish": [
+    "deskWriting",
+    "bookcase",
+    "panelling",
+    "armchair"
+   ]
+  },
+  {
+   "id": "great-hall",
+   "name": "The Great Hall",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 18,
+   "rect": {
+    "x": 40,
+    "z": 0,
+    "w": 48,
+    "d": 24
+   },
+   "house": "gold",
+   "kind": "room",
+   "record": {
+    "object": "The Bisellium on the dais",
+    "prop": "bisellium",
+    "opens": "Kairos: talk, the tray of drafts, today's starred task",
+    "golem": "tray"
+   },
+   "furnish": [
+    "bisellium",
+    "chandelier",
+    "fireplace",
+    "panelling",
+    "cornice",
+    "rug",
+    "portrait",
+    "doorDouble"
+   ]
+  },
+  {
+   "id": "map-room",
+   "name": "Map Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 88,
+    "z": 0,
+    "w": 20,
+    "d": 24
+   },
+   "house": "gold",
+   "kind": "room",
+   "record": {
+    "object": "The map table",
+    "prop": "mapTable",
+    "opens": "Nepsis: the focus tree, the summit path, the Great Tree",
+    "golem": "carving/state"
+   },
+   "furnish": [
+    "mapTable",
+    "globe",
+    "bookcase",
+    "panelling"
+   ]
+  },
+  {
+   "id": "muniment",
+   "name": "Muniment Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 108,
+    "z": 0,
+    "w": 20,
+    "d": 20
+   },
+   "house": "copper",
+   "kind": "room",
+   "record": {
+    "object": "The deed chests",
+    "prop": "deedChest",
+    "opens": "The Rules, with every change and its date",
+    "golem": "rules/latest"
+   },
+   "furnish": [
+    "deedChest",
+    "bookcase",
+    "panelling"
+   ]
+  },
+  {
+   "id": "dining",
+   "name": "State Dining Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 0,
+    "z": 20,
+    "w": 24,
+    "d": 34
+   },
+   "house": "brown",
+   "kind": "room",
+   "furnish": [
+    "tableDining",
+    "chairDining",
+    "chandelier",
+    "fireplace",
+    "dado",
+    "cornice",
+    "portrait",
+    "sash",
+    "rug",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "servery",
+   "name": "Servery",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 0,
+    "z": 54,
+    "w": 24,
+    "d": 18
+   },
+   "house": "brown",
+   "kind": "room"
+  },
+  {
+   "id": "oak-stair",
+   "name": "Oak Stair",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 24,
+    "z": 24,
+    "w": 20,
+    "d": 20
+   },
+   "house": null,
+   "kind": "stair"
+  },
+  {
+   "id": "billiard",
+   "name": "Billiard Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 24,
+    "z": 44,
+    "w": 20,
+    "d": 22
+   },
+   "house": null,
+   "kind": "room",
+   "furnish": [
+    "billiard",
+    "armchair",
+    "panelling",
+    "chandelier"
+   ]
+  },
+  {
+   "id": "saloon",
+   "name": "The Saloon",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 18,
+   "rect": {
+    "x": 44,
+    "z": 30,
+    "w": 40,
+    "d": 32
+   },
+   "house": "gold",
+   "kind": "feature",
+   "record": {
+    "object": "The great table under the lantern",
+    "prop": "tableDining",
+    "opens": "Today: orders due, deadlines, the Edition headline",
+    "golem": "edition/today"
+   },
+   "furnish": [
+    "tableDining",
+    "chandelier",
+    "lantern",
+    "column",
+    "balustrade",
+    "palm",
+    "clockLong",
+    "rug",
+    "sash"
+   ]
+  },
+  {
+   "id": "grand-stair",
+   "name": "Grand Stair",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 84,
+    "z": 24,
+    "w": 20,
+    "d": 24
+   },
+   "house": null,
+   "kind": "stair"
+  },
+  {
+   "id": "gun-room",
+   "name": "Gun Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 84,
+    "z": 48,
+    "w": 20,
+    "d": 18
+   },
+   "house": "grey",
+   "kind": "room",
+   "record": {
+    "object": "The rifle rack and the field chest",
+    "prop": "deedChest",
+    "opens": "His airsoft kit list and the OSINT toolkit",
+    "golem": "kit-list"
+   },
+   "furnish": [
+    "deedChest",
+    "panelling",
+    "fireplace"
+   ]
+  },
+  {
+   "id": "library",
+   "name": "The Double Library",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 104,
+    "z": 20,
+    "w": 24,
+    "d": 52
+   },
+   "house": "copper",
+   "kind": "room",
+   "record": {
+    "object": "The card catalog; any shelf",
+    "prop": "cardCatalog",
+    "opens": "All 141 toolkits by house, genre or task; every doc and artifact",
+    "golem": "kits"
+   },
+   "furnish": [
+    "bookcase",
+    "cardCatalog",
+    "libraryTable",
+    "sofa",
+    "armchair",
+    "column",
+    "fireplace",
+    "globe",
+    "rug",
+    "cornice"
+   ]
+  },
+  {
+   "id": "drawing",
+   "name": "Drawing Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 0,
+    "z": 72,
+    "w": 30,
+    "d": 24
+   },
+   "house": "violet",
+   "kind": "room",
+   "record": {
+    "object": "The address book; the portrait wall",
+    "prop": "portrait",
+    "opens": "My Circle, the Thought Web, Public Figures",
+    "golem": "people"
+   },
+   "furnish": [
+    "sofa",
+    "armchair",
+    "fireplace",
+    "dado",
+    "cornice",
+    "portrait",
+    "sash",
+    "rug",
+    "candelabra",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "music",
+   "name": "Music Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 30,
+    "z": 72,
+    "w": 22,
+    "d": 24
+   },
+   "house": "violet",
+   "kind": "room",
+   "record": {
+    "object": "The piano",
+    "prop": "grandPiano",
+    "opens": "Media: Margin Notes, the meme studio, the Kairos voice",
+    "golem": "media"
+   },
+   "furnish": [
+    "grandPiano",
+    "chairDining",
+    "dado",
+    "cornice",
+    "sash",
+    "rug",
+    "portrait",
+    "candelabra"
+   ]
+  },
+  {
+   "id": "entrance",
+   "name": "Entrance Hall",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 52,
+    "z": 66,
+    "w": 24,
+    "d": 30
+   },
+   "house": "grey",
+   "kind": "room",
+   "furnish": [
+    "gong",
+    "clockLong",
+    "column",
+    "rug",
+    "doorDouble"
+   ]
+  },
+  {
+   "id": "smoking",
+   "name": "Smoking Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 76,
+    "z": 72,
+    "w": 22,
+    "d": 24
+   },
+   "house": "violet",
+   "kind": "room",
+   "record": {
+    "object": "The newspapers on the rack",
+    "prop": "armchair",
+    "opens": "The Style Bible and the Saved Archive",
+    "golem": "style"
+   },
+   "furnish": [
+    "armchair",
+    "sofa",
+    "panelling",
+    "fireplace",
+    "rug",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "morning",
+   "name": "Morning Room",
+   "level": "state",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": {
+    "x": 98,
+    "z": 72,
+    "w": 30,
+    "d": 24
+   },
+   "house": "pink",
+   "kind": "room",
+   "record": {
+    "object": "The address book",
+    "prop": "deskWriting",
+    "opens": "My Circle, the Thought Web, Public Figures",
+    "golem": "people"
+   },
+   "furnish": [
+    "deskWriting",
+    "armchair",
+    "palm",
+    "sash",
+    "dado",
+    "rug"
+   ]
+  },
+  {
+   "id": "gold-bed",
+   "name": "Gold Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 0,
+    "z": 0,
+    "w": 20,
+    "d": 20
+   },
+   "house": "gold",
+   "kind": "room",
+   "decor": {
+    "color": "#d4af37",
+    "note": "Hangings, rug and upholstery in the Gold house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "long-gallery",
+   "name": "The Long Gallery",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 20,
+    "z": 0,
+    "w": 88,
+    "d": 16
+   },
+   "house": "violet",
+   "kind": "room",
+   "record": {
+    "object": "The portraits",
+    "prop": "portrait",
+    "opens": "Marginalia: every essay and every Call, hung as a picture",
+    "golem": "marginalia"
+   },
+   "furnish": [
+    "portrait",
+    "sofa",
+    "sash",
+    "cornice",
+    "rug"
+   ]
+  },
+  {
+   "id": "silver-bed",
+   "name": "Silver Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 108,
+    "z": 0,
+    "w": 20,
+    "d": 20
+   },
+   "house": "silver",
+   "kind": "room",
+   "decor": {
+    "color": "#b8bcc4",
+    "note": "Hangings, rug and upholstery in the Silver house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "white-bed",
+   "name": "White Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 0,
+    "z": 20,
+    "w": 24,
+    "d": 18
+   },
+   "house": "white",
+   "kind": "room",
+   "decor": {
+    "color": "#f4f1ea",
+    "note": "Hangings, rug and upholstery in the White house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "copper-bed",
+   "name": "Copper Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 0,
+    "z": 38,
+    "w": 24,
+    "d": 17
+   },
+   "house": "copper",
+   "kind": "room",
+   "decor": {
+    "color": "#b06a3a",
+    "note": "Hangings, rug and upholstery in the Copper house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "blue-bed",
+   "name": "Blue Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 0,
+    "z": 55,
+    "w": 24,
+    "d": 17
+   },
+   "house": "blue",
+   "kind": "room",
+   "decor": {
+    "color": "#2f4a6e",
+    "note": "Hangings, rug and upholstery in the Blue house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "oak-stair-first",
+   "name": "Oak Stair",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 24,
+    "z": 20,
+    "w": 16,
+    "d": 18
+   },
+   "house": null,
+   "kind": "stair"
+  },
+  {
+   "id": "red-stair",
+   "name": "Red Staircase",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 24,
+    "z": 38,
+    "w": 16,
+    "d": 16
+   },
+   "house": null,
+   "kind": "stair"
+  },
+  {
+   "id": "yellow-bed",
+   "name": "Yellow Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 24,
+    "z": 54,
+    "w": 16,
+    "d": 18
+   },
+   "house": "yellow",
+   "kind": "room",
+   "decor": {
+    "color": "#d9b84a",
+    "note": "Hangings, rug and upholstery in the Yellow house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "gallery",
+   "name": "Saloon gallery",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 40,
+    "z": 26,
+    "w": 48,
+    "d": 40
+   },
+   "house": null,
+   "kind": "room"
+  },
+  {
+   "id": "grand-landing",
+   "name": "Grand Stair landing",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 88,
+    "z": 20,
+    "w": 16,
+    "d": 24
+   },
+   "house": null,
+   "kind": "stair"
+  },
+  {
+   "id": "green-bed",
+   "name": "Green Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 88,
+    "z": 44,
+    "w": 16,
+    "d": 22
+   },
+   "house": "green",
+   "kind": "room",
+   "decor": {
+    "color": "#2f5a3a",
+    "note": "Hangings, rug and upholstery in the Green house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "calendar",
+   "name": "Calendar Room",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 104,
+    "z": 20,
+    "w": 24,
+    "d": 18
+   },
+   "house": "copper",
+   "kind": "room",
+   "record": {
+    "object": "The wall calendar and desk diary",
+    "prop": "clockLong",
+    "opens": "Orders, deadlines, the 90-day plan",
+    "golem": "orders"
+   },
+   "furnish": [
+    "clockLong",
+    "deskWriting",
+    "bookcase"
+   ]
+  },
+  {
+   "id": "registry",
+   "name": "The Registry",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 104,
+    "z": 38,
+    "w": 24,
+    "d": 16
+   },
+   "house": "copper",
+   "kind": "room",
+   "record": {
+    "object": "The bound register",
+    "prop": "bookcase",
+    "opens": "The full agent roster: 359 agents with kit, memory and voice status",
+    "golem": "roster"
+   },
+   "furnish": [
+    "bookcase",
+    "deskWriting"
+   ]
+  },
+  {
+   "id": "schoolroom",
+   "name": "Schoolroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 104,
+    "z": 54,
+    "w": 24,
+    "d": 18
+   },
+   "house": "gold",
+   "kind": "room",
+   "record": {
+    "object": "The slate and the school desks",
+    "prop": "globe",
+    "opens": "Coursework: the China doc, the presentation, papers due",
+    "golem": "coursework"
+   },
+   "furnish": [
+    "globe",
+    "deskWriting",
+    "chairDining"
+   ]
+  },
+  {
+   "id": "violet-bed",
+   "name": "Violet Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 0,
+    "z": 72,
+    "w": 24,
+    "d": 24
+   },
+   "house": "violet",
+   "kind": "room",
+   "decor": {
+    "color": "#5a3a7a",
+    "note": "Hangings, rug and upholstery in the Violet house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "pink-bed",
+   "name": "Pink Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 24,
+    "z": 72,
+    "w": 22,
+    "d": 24
+   },
+   "house": "pink",
+   "kind": "room",
+   "decor": {
+    "color": "#c98a9a",
+    "note": "Hangings, rug and upholstery in the Pink house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "orange-bed",
+   "name": "Orange Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 46,
+    "z": 72,
+    "w": 18,
+    "d": 24
+   },
+   "house": "orange",
+   "kind": "room",
+   "decor": {
+    "color": "#c96a2a",
+    "note": "Hangings, rug and upholstery in the Orange house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "grey-bed",
+   "name": "Grey Bedroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 64,
+    "z": 72,
+    "w": 16,
+    "d": 24
+   },
+   "house": "grey",
+   "kind": "room",
+   "decor": {
+    "color": "#6b6b6b",
+    "note": "Hangings, rug and upholstery in the Grey house colour"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "washstand",
+    "armchair",
+    "fireplace",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "dressing",
+   "name": "Dressing Room",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 80,
+    "z": 72,
+    "w": 18,
+    "d": 8
+   },
+   "house": "brown",
+   "kind": "room",
+   "furnish": [
+    "wardrobe",
+    "washstand"
+   ]
+  },
+  {
+   "id": "bath",
+   "name": "Bathroom",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 80,
+    "z": 80,
+    "w": 18,
+    "d": 8
+   },
+   "house": "brown",
+   "kind": "room"
+  },
+  {
+   "id": "study",
+   "name": "His Grace's Study",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 80,
+    "z": 88,
+    "w": 18,
+    "d": 8
+   },
+   "house": null,
+   "kind": "room",
+   "furnish": [
+    "deskWriting",
+    "bookcase"
+   ]
+  },
+  {
+   "id": "bedchamber",
+   "name": "His Grace's Bedchamber",
+   "level": "first",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": {
+    "x": 98,
+    "z": 72,
+    "w": 30,
+    "d": 24
+   },
+   "house": null,
+   "kind": "feature",
+   "record": {
+    "object": "The bedside journal",
+    "prop": "bed4",
+    "opens": "The night watch and tomorrow's top three",
+    "golem": "night"
+   },
+   "furnish": [
+    "bed4",
+    "wardrobe",
+    "fireplace",
+    "armchair",
+    "rug",
+    "sash",
+    "bellPull"
+   ]
+  },
+  {
+   "id": "kitchen",
+   "name": "The Kitchen",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 0,
+    "z": 0,
+    "w": 32,
+    "d": 28
+   },
+   "house": "brown",
+   "kind": "feature",
+   "record": {
+    "object": "The menu slate",
+    "prop": "menuSlate",
+    "opens": "The meal plan and the grocery list",
+    "golem": "meals"
+   },
+   "furnish": [
+    "kitchenRange",
+    "kitchenTable",
+    "menuSlate"
+   ]
+  },
+  {
+   "id": "scullery",
+   "name": "Scullery",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 32,
+    "z": 0,
+    "w": 16,
+    "d": 14
+   },
+   "house": "brown",
+   "kind": "room",
+   "furnish": [
+    "kitchenTable"
+   ]
+  },
+  {
+   "id": "still-room",
+   "name": "Still Room",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 32,
+    "z": 14,
+    "w": 16,
+    "d": 14
+   },
+   "house": "brown",
+   "kind": "room",
+   "furnish": [
+    "kitchenTable"
+   ]
+  },
+  {
+   "id": "larders",
+   "name": "Larders",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 48,
+    "z": 0,
+    "w": 42,
+    "d": 14
+   },
+   "house": "brown",
+   "kind": "room"
+  },
+  {
+   "id": "steward",
+   "name": "Steward's Room",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 90,
+    "z": 0,
+    "w": 18,
+    "d": 24
+   },
+   "house": "silver",
+   "kind": "room",
+   "furnish": [
+    "deskWriting",
+    "bookcase"
+   ]
+  },
+  {
+   "id": "beer",
+   "name": "Beer Cellar",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 108,
+    "z": 0,
+    "w": 20,
+    "d": 20
+   },
+   "house": "brown",
+   "kind": "room",
+   "furnish": [
+    "wineRack"
+   ]
+  },
+  {
+   "id": "pantry",
+   "name": "Butler's Pantry",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 0,
+    "z": 28,
+    "w": 24,
+    "d": 20
+   },
+   "house": "brown",
+   "kind": "room",
+   "record": {
+    "object": "The silver safe",
+    "prop": "strongbox",
+    "opens": "Kept drafts and finished work, the cabinet",
+    "golem": "cabinet"
+   },
+   "furnish": [
+    "strongbox",
+    "bookcase"
+   ]
+  },
+  {
+   "id": "silver",
+   "name": "Silver Safe",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 0,
+    "z": 48,
+    "w": 24,
+    "d": 10
+   },
+   "house": "brown",
+   "kind": "room"
+  },
+  {
+   "id": "housekeeper",
+   "name": "Housekeeper's Room",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 0,
+    "z": 58,
+    "w": 24,
+    "d": 18
+   },
+   "house": "brown",
+   "kind": "room",
+   "record": {
+    "object": "Her keys and the day book",
+    "prop": "deskWriting",
+    "opens": "Log today, the Daily Watch, streaks",
+    "golem": "days"
+   },
+   "furnish": [
+    "deskWriting",
+    "armchair",
+    "clockLong"
+   ]
+  },
+  {
+   "id": "linen",
+   "name": "Linen Room",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 0,
+    "z": 76,
+    "w": 24,
+    "d": 20
+   },
+   "house": "brown",
+   "kind": "room",
+   "furnish": [
+    "wardrobe"
+   ]
+  },
+  {
+   "id": "women-stair",
+   "name": "Women's stair",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 24,
+    "z": 30,
+    "w": 16,
+    "d": 14
+   },
+   "house": null,
+   "kind": "stair"
+  },
+  {
+   "id": "hall",
+   "name": "The Servants' Hall",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 44,
+    "z": 30,
+    "w": 40,
+    "d": 32
+   },
+   "house": "brown",
+   "kind": "feature",
+   "record": {
+    "object": "The bell board",
+    "prop": "bellBoard",
+    "opens": "Call any agent by bell; each bell shows whether that agent is fully built",
+    "golem": "roster"
+   },
+   "furnish": [
+    "tableDining",
+    "bellBoard",
+    "chairDining",
+    "clockLong"
+   ]
+  },
+  {
+   "id": "men-stair",
+   "name": "Men's stair",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 88,
+    "z": 30,
+    "w": 16,
+    "d": 14
+   },
+   "house": null,
+   "kind": "stair"
+  },
+  {
+   "id": "wine",
+   "name": "Wine Cellar",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 104,
+    "z": 20,
+    "w": 24,
+    "d": 52
+   },
+   "house": "brown",
+   "kind": "room",
+   "furnish": [
+    "wineRack"
+   ]
+  },
+  {
+   "id": "boot",
+   "name": "Boot Room",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 24,
+    "z": 76,
+    "w": 20,
+    "d": 20
+   },
+   "house": "red",
+   "kind": "room"
+  },
+  {
+   "id": "lamp",
+   "name": "Lamp Room",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 44,
+    "z": 76,
+    "w": 16,
+    "d": 20
+   },
+   "house": "red",
+   "kind": "room"
+  },
+  {
+   "id": "brushing",
+   "name": "Brushing Room",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 60,
+    "z": 76,
+    "w": 16,
+    "d": 20
+   },
+   "house": "brown",
+   "kind": "room"
+  },
+  {
+   "id": "coal",
+   "name": "Coal Store",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 76,
+    "z": 76,
+    "w": 16,
+    "d": 20
+   },
+   "house": "red",
+   "kind": "room"
+  },
+  {
+   "id": "dumbwaiter",
+   "name": "Lift to the Servery",
+   "level": "below",
+   "floorY": -6,
+   "ceiling": 6,
+   "rect": {
+    "x": 24,
+    "z": 58,
+    "w": 14,
+    "d": 12
+   },
+   "house": null,
+   "kind": "room"
+  },
+  {
+   "id": "day-nursery",
+   "name": "Day Nursery and Night Nursery",
+   "level": "second",
+   "floorY": 18,
+   "ceiling": 6,
+   "rect": null,
+   "house": "pink",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "governess",
+   "name": "Governess's Room and Schoolroom Annexe",
+   "level": "second",
+   "floorY": 18,
+   "ceiling": 6,
+   "rect": null,
+   "house": "gold",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "bachelors",
+   "name": "Bachelors' Corridor, 8 guest bedrooms",
+   "level": "second",
+   "floorY": 18,
+   "ceiling": 6,
+   "rect": null,
+   "house": null,
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "ward",
+   "name": "The Convalescent Ward",
+   "level": "second",
+   "floorY": 18,
+   "ceiling": 6,
+   "rect": null,
+   "house": "yellow",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "laboratory",
+   "name": "The Laboratory",
+   "level": "second",
+   "floorY": 18,
+   "ceiling": 6,
+   "rect": null,
+   "house": "yellow",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "sewing",
+   "name": "Sewing Room and Linen Room",
+   "level": "second",
+   "floorY": 18,
+   "ceiling": 6,
+   "rect": null,
+   "house": "brown",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "attic-men",
+   "name": "Men's servants' bedrooms (12)",
+   "level": "attic",
+   "floorY": 25,
+   "ceiling": 5,
+   "rect": null,
+   "house": "brown",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "attic-women",
+   "name": "Women's servants' bedrooms (12)",
+   "level": "attic",
+   "floorY": 25,
+   "ceiling": 5,
+   "rect": null,
+   "house": "brown",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "box-room",
+   "name": "Box Room and Cistern Room",
+   "level": "attic",
+   "floorY": 25,
+   "ceiling": 5,
+   "rect": null,
+   "house": "brown",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "wireless",
+   "name": "The Wireless Room",
+   "level": "tower",
+   "floorY": 31,
+   "ceiling": 7,
+   "rect": null,
+   "house": "blue",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan",
+   "record": {
+    "object": "The wireless set",
+    "prop": "wireless",
+    "opens": "The DataHub Edition, alerts, the AI Frontier",
+    "golem": "edition/today"
+   }
+  },
+  {
+   "id": "observatory",
+   "name": "The Observatory",
+   "level": "tower",
+   "floorY": 38,
+   "ceiling": 7,
+   "rect": null,
+   "house": "blue",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan",
+   "record": {
+    "object": "The holo globe",
+    "prop": "telescope",
+    "opens": "The globe with all ten layers",
+    "golem": "flashpoints"
+   }
+  },
+  {
+   "id": "clock-room",
+   "name": "The Clock Room (NE tower)",
+   "level": "tower",
+   "floorY": 31,
+   "ceiling": 7,
+   "rect": null,
+   "house": "copper",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "flag-room",
+   "name": "The Flag Room (NW tower)",
+   "level": "tower",
+   "floorY": 31,
+   "ceiling": 7,
+   "rect": null,
+   "house": "gold",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "belvedere",
+   "name": "His Grace's Belvedere (SE tower)",
+   "level": "tower",
+   "floorY": 31,
+   "ceiling": 7,
+   "rect": null,
+   "house": null,
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "water-tower",
+   "name": "The Water Tower (SW tower)",
+   "level": "tower",
+   "floorY": 31,
+   "ceiling": 7,
+   "rect": null,
+   "house": "orange",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "ballroom",
+   "name": "The Ballroom, with a musicians' gallery",
+   "level": "west-wing",
+   "floorY": 0,
+   "ceiling": 12,
+   "rect": null,
+   "house": "violet",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "orangery",
+   "name": "The Orangery Link",
+   "level": "west-wing",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": null,
+   "house": "green",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "theatre",
+   "name": "The Private Theatre",
+   "level": "west-wing",
+   "floorY": 10,
+   "ceiling": 9,
+   "rect": null,
+   "house": "violet",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "card-room",
+   "name": "The Card Room and Ladies' Withdrawing Room",
+   "level": "west-wing",
+   "floorY": 10,
+   "ceiling": 7,
+   "rect": null,
+   "house": "pink",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "laundry",
+   "name": "The Laundry",
+   "level": "east-wing",
+   "floorY": 0,
+   "ceiling": 6,
+   "rect": null,
+   "house": "brown",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "bakehouse",
+   "name": "Bakehouse, Dairy and Brewhouse",
+   "level": "east-wing",
+   "floorY": 0,
+   "ceiling": 6,
+   "rect": null,
+   "house": "brown",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "carpenter",
+   "name": "The Estate Carpenter and the Lamp Room",
+   "level": "east-wing",
+   "floorY": 0,
+   "ceiling": 6,
+   "rect": null,
+   "house": "orange",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "steward-office",
+   "name": "The Steward's Office and the Agent's Room",
+   "level": "east-wing",
+   "floorY": 10,
+   "ceiling": 6,
+   "rect": null,
+   "house": "silver",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "kitchen-court",
+   "name": "Kitchen Court",
+   "level": "court",
+   "floorY": 0,
+   "ceiling": 0,
+   "rect": null,
+   "house": "brown",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "stable-court",
+   "name": "Stables, Riding School, Coach House, Tack Room, Forge",
+   "level": "court",
+   "floorY": 0,
+   "ceiling": 8,
+   "rect": null,
+   "house": "obsidian",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "grooms",
+   "name": "Grooms' and coachmen's lodgings",
+   "level": "court",
+   "floorY": 10,
+   "ceiling": 5,
+   "rect": null,
+   "house": "obsidian",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan"
+  },
+  {
+   "id": "chapel",
+   "name": "The Chapel and Cloister; the crypt below is the Pardes",
+   "level": "court",
+   "floorY": 0,
+   "ceiling": 6,
+   "rect": null,
+   "house": "white",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan",
+   "record": {
+    "object": "The study table",
+    "prop": "libraryTable",
+    "opens": "The Pardes journal",
+    "golem": "pardes"
+   }
+  },
+  {
+   "id": "gatehouse",
+   "name": "The Gatehouse: the Gate, the Tenth Man's room, the Ambulance Bay",
+   "level": "court",
+   "floorY": 0,
+   "ceiling": 7,
+   "rect": null,
+   "house": "grey",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan",
+   "record": {
+    "object": "The gate lever",
+    "prop": null,
+    "opens": "Konetz",
+    "golem": "konetz"
+   }
+  },
+  {
+   "id": "glasshouse",
+   "name": "The Glasshouse",
+   "level": "park",
+   "floorY": 0,
+   "ceiling": 9,
+   "rect": null,
+   "house": "green",
+   "kind": "room",
+   "note": "Position set at stage 1; size in the Mansion Plan",
+   "record": {
+    "object": "The Genizah shelves",
+    "prop": "bookcase",
+    "opens": "The Genizah newsletter and library",
+    "golem": "genizah"
+   }
+  }
+ ]
+}

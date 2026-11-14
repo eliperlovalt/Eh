@@ -5,7 +5,7 @@ One big self-contained three.js (0.160.0) voxel page. Live at https://eliperlova
 ## Where things are
 - `src/index.html`: THE SOURCE (about 760 KB, one file, ES module importing three from a CDN). Edit this, never the root file.
 - `index.html` (root): the built web copy. Made by `python3 tools/build.py src/index.html index.html` (bundles three with esbuild, minifies whitespace). Do not hand-edit. First time on a new machine: `npm i three@0.160.0 esbuild` somewhere, then set `EH_NODE_MODULES` to that `node_modules` folder.
-- `src/estate-plan.json`, `src/kits.json`: data the page embeds or mirrors. `kits.json` and the `KITS()` function inside the source are the Parts Depot's work: do not patch them (see The fence).
+- `src/estate-plan.json`, `src/kits.json`: data the page embeds or mirrors. `kits.json` and the `KITS()` function inside the source embed the Depot's code from `depot/`; keep them in step with it.
 - `windows.json`, `room-register.json`, `wall-moves-v20.json`: issued data. The register lists all 157 rooms as built; the wall-moves file is the agreed plan for v20.
 - `tools/README.md`: the running engineering notes, one section per version ("Since v1.15" ... "Since v1.19"). Read it before changing anything.
 - `tools/tests/`: Playwright tests and tools. `harness.py` serves a folder and opens the page in headless Chrome (set `CHROME` to a Chrome binary; software GL works; it takes three from `EH_NODE_MODULES` too). Test the source with FOLDER = `src`, the built copy with FOLDER = the repo root. `metrics.py BASE NEW` measures load, heap, geometry, draws and triangles.
@@ -24,11 +24,12 @@ Then stop and report before starting larger rebuilds.
 - The page must run on a phone in landscape, GTA-style touch controls. That is the target device.
 - Debug hooks live on `window.__vx` (grid, buildings, props queue, settle stats, skins, palette). Tests depend on them.
 
-## The fence (two teams work on this)
-- The Estate (this repo) owns everything inside the wall face, all placing and all collision.
-- The Parts Depot (a separate chat) owns parts, room plans, and the outside and roofline as kits (`KITS()`, `kits.json`, `CONTOURS`, `SEASONS`, `TREES`, `FLOWERS`).
-- Outer building boxes do not move. Add or restyle nothing on an outer wall face or roof.
-- Make no new parts and never patch a Depot kit. A kit fault is written up for the Depot.
+## You are the Estate AND the Depot (His Grace's order, 14 Nov 2026)
+There is no separate Depot chat any more. You make the parts and you place them.
+- The Depot's work lives in `depot/` (start with `depot/README.md` and `depot/HANDOFF.md`). Change a kit there, then carry it into the source: `KITS()` in `src/index.html` and `src/kits.json` embed the Depot's code, so keep them in step with `depot/`.
+- Depot v20 (13 Nov) is delivered but not fitted: plans for every room (`rooms20.json`), the glazing cross, the balcony door case, hero trees, the stronger spring, 15 new parts. Fit it as part of the backlog.
+- Still binding: outer building boxes do not move. Changes to the outside and roofline go through the kits (`ornament.js`, `contours.js`), never as one-off voxels on a wall face.
+- Measure every new part: triangles near and far, as the Depot's tables do in `HANDOFF.md`.
 
 ## How the source is laid out (search for these names)
 `G/S` voxel grid get/set, palette `C`/`PAL`, `BLD[]` building specs (boxes, levels, rooms, doors), `HALLS`, `FLIGHTS` (stairs), `PQ` prop queue, `RK` room kit, `furnishFrom` (places a Depot room plan), `settle()` (post-pass: seating groups, plants, rugs, wall pieces, doors), `GROUPS` (culled mesh groups), `LIFE`/`lifeStep` (people and animals with bodies), `fitContours`/`skinSet`/`skinStep` (Depot stonework, dressed in a Web Worker), `mergeWater`, `TRAILS`/`trailAt`, `surf`/`baseH` (ground), `build()` (boot order), `frame()` (loop).

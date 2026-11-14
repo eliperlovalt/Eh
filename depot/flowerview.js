@@ -1,0 +1,41 @@
+/* Euphrates Hall, Parts Depot v14: the "Flowers" view. The flower kit (flowers.js): nine kinds in every colour,
+   near and far, the four stages of the year, and the five layouts planted instanced. */
+export function mountFlowers(ctx){
+const{THREE,S,R,cam,ctl,lights,list,card,floor}=ctx;const SE=SEASONS,F=FLOWERS;
+const root=new THREE.Group();S.add(root);const mat=new THREE.MeshLambertMaterial({vertexColors:true});
+const sky=SE.Sky(THREE,{radius:260});S.add(sky);
+const lawnMat=new THREE.MeshLambertMaterial({color:0x4f7c33});const lawn=new THREE.Mesh(new THREE.CircleGeometry(150,48),lawnMat);lawn.rotation.x=-Math.PI/2;lawn.position.y=-.012;root.add(lawn);
+const soilMat=new THREE.MeshLambertMaterial({color:0x4a3626}),gravelMat=new THREE.MeshLambertMaterial({color:0xb4a68a});
+const PV=45;let full=false;let mode='lineup',seed=1,season='Today',lvl='near',st=null,stage=new THREE.Group(),bed=null,acc=9,info=[];root.add(stage);
+const PRE={Spring:[4,5],Summer:[6,1],Autumn:[9,10],Winter:[0,20]};
+const setSeason=k=>{season=k;if(k==='Today'){st=SE.state(new Date());st.wind=[.4,.2];return}const d=new Date();const y=PRE[k][0]<2&&d.getMonth()>2?d.getFullYear()+1:d.getFullYear();st=SE.state(new Date(y,PRE[k][0],PRE[k][1],13));st.wind=[.4,.2]};setSeason('Today');
+const clear=()=>{if(bed){bed.dispose();bed=null}while(stage.children.length){const c=stage.children.pop();if(c.geometry&&!c.geometry.userData.species)c.geometry.dispose()}};
+const slab=(x0,z0,x1,z1,m,y)=>{const p=new THREE.Mesh(new THREE.PlaneGeometry(x1-x0,z1-z0),m);p.rotation.x=-Math.PI/2;p.position.set((x0+x1)/2,y||-.004,(z0+z1)/2);stage.add(p)};
+const frameBox=(b,pad)=>{const c=b.getCenter(new THREE.Vector3()),sz=b.getSize(new THREE.Vector3()),asp=innerWidth/innerHeight,t=Math.tan(cam.fov*Math.PI/360),dir=new THREE.Vector3(.2,.62,1).normalize();
+  const wide=Math.hypot(sz.x,sz.z*.5),tall=sz.y+sz.z*.62;const d=Math.max(tall*.5/(t*.7),wide*.5/(t*asp))*(pad||1.1);ctl.target.copy(c);cam.position.copy(c).addScaledVector(dir,d);ctl.update()};
+const LAY={bed:['A mixed bed','Drifts of several kinds, each drift one colour.',{x0:-5,z0:-2,x1:5,z1:2},{}],border:['A long border','Graded by height: tall at the back, short at the front.',{x0:-7,z0:-1.6,x1:7,z1:1.6},{back:'n'}],
+  parterre:['A parterre','Formal and symmetric: lavender edging, tulips in two colours on the diagonals, roses at the centre.',{x0:-4,z0:-4,x1:4,z1:4},{}],rows:['Lavender rows','Straight rows of one kind.',{x0:-6,z0:-3,x1:6,z1:3},{}],meadow:['A meadow','Loose and sparse: wildflowers and poppies in the grass.',{x0:-9,z0:-6,x1:9,z1:6},{}],
+  drift:['Spring drifts','Bulbs naturalised in grass: daffodils, crocus, snowdrops and primroses in loose clumps.',{x0:-9,z0:-6,x1:9,z1:6},{}],carpet:['A bluebell wood','The floor of a wood in May, with bare paths wandering through.',{x0:-8,z0:-5,x1:8,z1:5},{}],spring:['A spring bed','Tulips in blocks of colour, daffodils behind, a crocus and primrose edge.',{x0:-7,z0:-2.5,x1:7,z1:2.5},{}]};
+function show(){clear();lawnMat.color.setHex(st.snow>.4?0xe8ecef:st.season==='autumn'?0x6b7a3a:0x4f7c33);
+  if(mode==='lineup'||F.SPECIES.includes(mode)){const kinds=mode==='lineup'?F.SPECIES:[mode];let x=0,q=[],z=0;
+    for(const sp of kinds){const cols=mode==='lineup'?[F.info[sp].colors[(seed-1)%F.info[sp].colors.length]]:F.info[sp].colors;for(const c of cols){const sg=mode==='lineup'&&!full?F.stage(sp,st):'bloom';const g=F.geometry(THREE,sp,{seed,color:c,stage:sg,lod:lvl});if(g.userData.quads){const m=new THREE.Mesh(g,mat);m.position.set(x,0,z);stage.add(m)}
+        if(mode!=='lineup'){for(const[i,s2]of['green','bare'].entries()){const g2=F.geometry(THREE,sp,{seed,color:c,stage:s2,lod:lvl});if(c===cols[0]&&g2.userData.quads){const m=new THREE.Mesh(g2,mat);m.position.set(5+1.25*i,0,0);stage.add(m)}}}
+        q.push(g.userData.quads);x+=1.25;if(mode==='lineup'&&x>3){x=0;z+=1.3}else if(mode!=='lineup'&&x>2.6){x=0;z+=1.4}}}
+    {const bb=new THREE.Box3().setFromObject(stage);slab(bb.min.x-.3,bb.min.z-.3,bb.max.x+.3,bb.max.z+.3,soilMat)}stage.updateMatrixWorld(true);frameBox(new THREE.Box3().setFromObject(stage),1.1);
+    if(mode==='lineup')info=['All '+F.SPECIES.length+', '+(full?'all in bloom':season.toLowerCase()),'Row by row: '+F.SPECIES.map(k=>F.info[k].label.toLowerCase()).join(', ')+'.','<b>Quads, '+lvl+':</b> '+q.join(', ')+'. Real seasons are the rule: each kind is shown as today, or the season you pick, finds it. All in bloom is only for looking.','<b>Call:</b> FLOWERS.build(species,{seed,color,stage,lod})'];
+    else{const I=F.info[mode];info=[I.label+': '+I.colors.join(', '),'<b>Goes:</b> '+I.where+'. About '+I.height+' blocks tall. Blooms day '+I.bloom[0]+' to '+I.bloom[1]+' of the year.','<b>Quads, '+lvl+':</b> '+q.join(', ')+'. Each colour in bloom; set apart on the right, the same plant in leaf and cut back for winter.','<b>Call:</b> FLOWERS.geometry(THREE,\''+mode+'\',{seed:'+seed+',color:\''+I.colors[0]+'\',stage:\'bloom\'})']}}
+  else{const[title,what,rect,o]=LAY[mode];const pl=F.layout(mode,rect,Object.assign({seed},o));if(mode!=='meadow'){slab(rect.x0-.6,rect.z0-.6,rect.x1+.6,rect.z1+.6,gravelMat,-.008);slab(rect.x0,rect.z0,rect.x1,rect.z1,soilMat)}
+    bed=F.plant(THREE,pl,{st,material:mat,far:PV,stage:full?'bloom':undefined});stage.add(bed.group);const w=rect.x1-rect.x0,d=rect.z1-rect.z0;frameBox(new THREE.Box3(new THREE.Vector3(rect.x0,0,rect.z0),new THREE.Vector3(rect.x1,1,rect.z1)),1.05);bed.update(cam.position);window.__bed=bed;info=[title,what,w+' x '+d+' blocks',mode,pl.length]}
+  [...list.children].forEach(b=>b.classList.toggle('on',!!(b.dataset.m===mode||(!full&&b.dataset.s===season)||(full&&b.dataset.f)||(b.dataset.l&&b.dataset.l===lvl))))}
+list.innerHTML='';const btn=(t,f,ds)=>{const b=document.createElement('button');b.textContent=t;Object.assign(b.dataset,ds||{});b.onclick=()=>{f();show()};list.appendChild(b);return b};
+btn('All kinds',()=>{mode='lineup'},{m:'lineup'});for(const k in LAY)btn(LAY[k][0],()=>{mode=k},{m:k});for(const k of F.SPECIES)btn(F.info[k].label,()=>{mode=k},{m:k});
+btn('New seed',()=>{seed=seed%97+1});btn('Today',()=>{full=false;setSeason('Today')},{s:'Today'});btn('All in bloom',()=>{full=true;setSeason('Summer')},{f:1});for(const k in PRE)btn(k,()=>{full=false;setSeason(k)},{s:k});for(const l of['near','far'])btn(l[0].toUpperCase()+l.slice(1),()=>{lvl=l},{l});
+const saved={fog:S.fog,hemi:[lights.hemi.color.getHex(),lights.hemi.groundColor.getHex(),lights.hemi.intensity],sun:[lights.sun.color.getHex(),lights.sun.intensity,lights.sun.position.clone()],fill:lights.fill.intensity,clear:R.getClearColor(new THREE.Color()).getHex()};
+floor.visible=false;S.fog=new THREE.Fog(0x9fb3c8,90,260);show();
+function tick(dt){const sk=SE.sky(st);sky.set(sk,cam);lights.hemi.color.set(sk.hemiSky);lights.hemi.groundColor.set(sk.hemiGround);lights.hemi.intensity=sk.hemiI*1.15;lights.sun.color.set(sk.sunColor);lights.sun.intensity=sk.sunI*1.25;lights.sun.position.set(...sk.sunDir).multiplyScalar(60);
+  lights.fill.intensity=.35;if(S.fog)S.fog.color.set(sk.fog);R.setClearColor(sk.fog);if(bed)bed.update(cam.position,dt);acc+=dt;
+  if(acc>.5){acc=0;if(bed){const s=bed.stats();card(info[0]+', '+(full?'all in bloom':season.toLowerCase()),[info[1]+' '+info[2]+', '+info[4]+' plants.','<b>Now:</b> '+s.near+' near, '+s.far+' far; '+s.drawCalls+' draw calls, '+s.quads.toLocaleString()+' quads.','In this preview a plant draws near within 45 blocks of the eye (the default is 14), far out to 70, then not at all. Zoom out and watch them swap.','<b>Call:</b> FLOWERS.plant(THREE,FLOWERS.layout(\''+info[3]+'\',rect,{seed}),{st})'])}else card(info[0],info.slice(1))}}
+function dispose(){clear();S.remove(root);S.remove(sky);floor.visible=true;S.fog=saved.fog;R.setClearColor(saved.clear);
+  lights.hemi.color.setHex(saved.hemi[0]);lights.hemi.groundColor.setHex(saved.hemi[1]);lights.hemi.intensity=saved.hemi[2];lights.sun.color.setHex(saved.sun[0]);lights.sun.intensity=saved.sun[1];lights.sun.position.copy(saved.sun[2]);lights.fill.intensity=saved.fill}
+window.__flowers={set:(m,o={})=>{mode=m;if(o.full!=null)full=o.full;if(o.seed)seed=o.seed;if(o.lvl)lvl=o.lvl;if(o.season)setSeason(o.season);show();return true}};
+return{tick,mirror(){},dispose,sound:()=>({st})}}
