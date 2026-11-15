@@ -100,3 +100,8 @@ The first phone test (15 November 2026, His Grace's iPhone, iOS 18.7 Safari, App
 - First frame 3.7 s, raising 3.3 s. Memory: Safari gives none.
 - Median frame 17.0 ms (59 fps), worst 5 percent 18.0 ms, at the lawn, the Saloon, the park, the village and the north garden (1.7 to 2.0 million triangles, 350 to 680 draws). The overview 18.0 ms (56 fps), worst 21.0 ms, 2.56 million triangles, 731 draws.
 - 17 ms is the screen's own 60 Hz pace, so these show the phone keeps up, not how much room is left. The software-GL times in this file overstate a phone's cost several times over; read them as relative only.
+
+Since v1.28 (the reel audit, first batch; the fault list is KAIROS's, kept on His Grace's PC in Jarvis\Reels\audit\FAULTS.md):
+- The Chapel nave: `chapelCeil` closes the underside of the roof with a ceiling one block above the nave (the house's ceiling finish dresses it as a ribbed vault); `chapelGlass` puts a stained-glass lancet (`lancetTex`, a canvas texture) just inside every pane of the nave, culled with the nave's insides. The glass dims at dusk and night (`CHG.mats`, set in `fxLight`). Nothing on the outer wall face changes; from outside the glass shows through the clear pane.
+- `placeLamp` refuses a roof cell, and any raised top with air under it (the Chapel porch, the Home Farm barn, two village roofs: `__vx.settle.lampRoof`). The terrace lamps stand.
+- Tools: `reelshots.py FOLDER OUTDIR` shoots every Estate reel camera (`reel-shots.json`, both ends of each shot) the reels' way; `spotshots.py FOLDER OUTDIR 'name:x,y,z,yaw,pitch[,tod];...'` shoots any poses (y the floor, as in the audit).
