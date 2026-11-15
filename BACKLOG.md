@@ -17,7 +17,7 @@ D1: a room-first registry (a room opens its Color's landing page, listed objects
 
 ## A. Version 20 (agreed; the Depot works first)
 - [ ] A1. Build the 23 inner wall moves in `wall-moves-v20.json`: no passage under 5 clear on the state and first floors, under 4 elsewhere; free the 7 crowded doors. (Estate)
-- [ ] A2. Every bedroom one door onto a passage, suites excepted; the attic maids' and footmen's cells rebuilt as eight rooms each side of a passage. (Estate) [part, v1.34] Every bedroom and guest or ward room has a door onto a passage, except the Blue and Violet Bedrooms (corner rooms with no passage beside them; each keeps its door through a neighbour). The attic cells are still to rebuild.
+- [ ] A2. Every bedroom one door onto a passage, suites excepted; the attic maids' and footmen's cells rebuilt as eight rooms each side of a passage. (Estate) [part, v1.34] Every bedroom and guest or ward room has a door onto a passage, except the Blue and Violet Bedrooms (corner rooms with no passage beside them; each keeps its door through a neighbour). The attic cells: [done] v1.35, eight rooms 9 by 11 either side of a passage on each side, one door each.
 - [ ] A3. Fit the Depot's new room plan for every one of the 157 rooms in `room-register.json`; no copied sets. (Depot, then Estate)
 - [ ] A4. A pair of glazed doors onto the south balcony from the Orange and Grey Bedrooms. (Depot surround, Estate opening)
 - [x] A5. The slim glazing cross on every window surround (His Grace said yes). (Depot) [done] v1.22: contours.js v20 fitted; the slim cross is on every dressed window.
