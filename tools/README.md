@@ -110,3 +110,7 @@ Since v1.29 (the reel audit, second batch):
 - `doorCasings`: every inner doorway of the Service Wing and the Stable Court gets a dark oak casing, its jambs and head recoloured in the wall (361 cells). Only walls with the inside of the same building on both sides (`B.boxes`) are touched. The Dairy now reads as a door onto a passage.
 - A hammerbeam hangs only under a ceiling 9 or more blocks up (`furnishFrom`, hanging pieces). The Great Hall's seven trusses stay; the Long Gallery "stair" in the audit (r039) is one of them seen end-on from x 0.
 - Found, not yet fixed: the Bakehouse's door into the passage (x 73 to 74, z -8) opens onto the side of the service stair that climbs the passage from x 70 to 75; the door wants cutting clear of the stair. The Tack Room's dark mass is a solid block stair to the lodgings (x 114 to 121, z -101 to -100).
+
+Since v1.30 (the reel audit, third batch):
+- `doorsOffStairs` runs after `genProps2`: in the Service Wing and the Stable Court an inner doorway whose far side is blocked (it was cut before the service stair rose) is walled up and cut again, the same width and height, at the nearest place in the same wall clear on both sides. It moved two: the Bakehouse and the Estate Carpenter, from x 73 to x 76 (`__vx.TM.doorsMoved`). `sealDoors` still runs where it did; it cannot see stairs built later.
+- `doorCasings` now runs after it (so the casing frames the new door), and `passageBoards` lays the passages (`HALLS`) of the two buildings in dark boards (909 cells), so a doorway visibly opens onto another space.
