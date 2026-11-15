@@ -118,3 +118,8 @@ Since v1.30 (the reel audit, third batch):
 Since v1.31 (the reel audit, fourth batch):
 - The ground is one block thick, so a room below it (the Chapel crypt and Vestry) looked out into the hollow under the lawn and showed sky. `sealBlind` (after `blindPanes`, before furnishing) turns into wall of its box any pane on a box's outer edge that looks into that hollow, or onto anything solid (or, for a blind pane, solid one block beyond); and fills the hollow just outside a box with a room below ground with earth (470 cells). It sealed 733 panes, most where buildings meet.
 - Not reached: the Hall's basement row behind the south and north terraces (r017 to r019, r004) stays navy. The terraces rise after the walls are checked and after the rooms are furnished, so sealing them later would leave their curtains on bare wall. To settle with batch A (a light well, or no window and no curtain).
+
+Since v1.32 (the reel audit, fifth batch):
+- `chapelDress`: warm stone pilasters with gilded capitals stand inside the nave between the lancets (none beside a door), and the east end has a reredos behind the altar, a crimson dossal with a gilded cross.
+- `gunScreen`: the Gun Room's open screen onto the Grand Stair (cut on purpose in the source, columns at x 25 and 37) gets a third column at x 31: two bays of five. A fourth pair (x 29, 33) crowded a bay and failed the audit.
+- `stairTreads` (after `genProps2`): a block stair standing in a room of the Service Wing or the Stable Court (the Tack Room's, to the lodgings) has light oak treads over a two-tone panelled body.
