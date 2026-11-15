@@ -18,6 +18,7 @@ Then stop and report before starting larger rebuilds.
 
 ## Rules that bind every change
 - Run `walk_test.py`, `reach_test.py` and `audit_test.py` on BOTH `src/` and the built root copy before every push. No push if one fails.
+- `tools/tests/gate.sh` runs all six plus a build check; a hook in `.claude/` blocks page pushes until it passes and blocks hand edits to the root copy.
 - Compare frame times against the last version with `ftime3.py OLD_FOLDER NEW_FOLDER "" 2` (16.7 ms steps; noise about 4 percent). No push on a real slowdown.
 - Both copies every time: rebuild the root `index.html` whenever `src/index.html` changes.
 - Never delete old versions or files. Never offer to. Git history is the archive.
