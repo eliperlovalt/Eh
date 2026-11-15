@@ -62,7 +62,7 @@ D1: a room-first registry (a room opens its Color's landing page, listed objects
 ## F. Shipping
 - [ ] F1. A public template build with none of his private GOLEM in it. (Estate)
 - [ ] F2. The Estate (and the Globe) packaged for the App Store: requirements, security, legal. (Estate)
-- [ ] F3. A test on a real phone with numbers: load time, frame rate, memory. (Estate)
+- [x] F3. A test on a real phone with numbers: load time, frame rate, memory. (Estate) [done] 15 Nov, His Grace's iPhone (iOS 18.7, Safari, Apple GPU, drawn at 1.5x), v1.25: first frame 3.7 s; 59 fps (17 ms median, 18 ms worst 5 percent) at the lawn, the Saloon, the park, the village and the north garden; 56 fps over the estate (21 ms worst). Memory is not given by Safari. Notes in tools/README.md.
 - [x] F4. Claude Code's ten optimisation suggestions, once reported. (His Grace to rank) [done] reported in v1.20; His Grace ordered all ten done (14 Nov). The other chat's ten (15 Nov) are ranked: the phone test first, then this backlog.
 
 ## G. Small faults

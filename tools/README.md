@@ -95,3 +95,8 @@ Tooling (15 November 2026; from the owner's toolkit doc, fitted to the Estate):
 Since v1.23 (the phone test, F3; His Grace's ranking of 15 Nov puts it first):
 - Open the Estate with `?stats` (https://eliperlovalt.github.io/Eh/?stats), or press the Stats button under Find (v1.26; both a little smaller, with a 5px tap margin; it is always there, in both views; the home-screen app drops ?stats, and the gold name takes no taps). The panel (`benchUI`) shows the device, the graphics chip, the load (`BENCH.first`, `TM.wall`, `BENCH.ready`) and the memory where the browser gives it. "Run the test" walks the six `BSPOTS` with the speed budget off and times 90 frames at each (median and worst 5 percent, draws, triangles); "Copy the numbers" puts the text on the clipboard. Nothing is sent anywhere.
 - On a phone (`coarse`) the tree portraits begin at 50 blocks (`IMP.D`), on a PC at 100.
+
+The first phone test (15 November 2026, His Grace's iPhone, iOS 18.7 Safari, Apple GPU, 844 by 390 at 3x drawn at 1.5x, v1.25, speed budget off):
+- First frame 3.7 s, raising 3.3 s. Memory: Safari gives none.
+- Median frame 17.0 ms (59 fps), worst 5 percent 18.0 ms, at the lawn, the Saloon, the park, the village and the north garden (1.7 to 2.0 million triangles, 350 to 680 draws). The overview 18.0 ms (56 fps), worst 21.0 ms, 2.56 million triangles, 731 draws.
+- 17 ms is the screen's own 60 Hz pace, so these show the phone keeps up, not how much room is left. The software-GL times in this file overstate a phone's cost several times over; read them as relative only.
