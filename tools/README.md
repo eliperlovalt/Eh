@@ -80,3 +80,8 @@ Since v1.21 (full detail at every distance; the owner's order of 14 November 202
 - Tools: `lookdiff.py BASE NEW OUTDIR` (screenshots against a noise floor).
 
 Run the walk test, the reach test and the audit test before every push.
+
+Tooling (15 November 2026; from the owner's toolkit doc, fitted to the Estate):
+- `tools/tests/gate.sh`: the push gate. Checks the root `index.html` is byte for byte the build of `src/index.html` (the build is repeatable), then runs `walk_test`, `reach_test` and `audit_test` on `src/` and on the root copy. About 4.5 minutes in a cloud session. On a pass it writes `.git/eh-gate-ok` (never committed) with the hashes of both pages. It finds `EH_NODE_MODULES` and `CHROME` on its own when they are not set.
+- `.claude/settings.json` and `.claude/hooks/guard.py`: a hook before every edit and command. It refuses an edit or a shell write to the root `index.html` (edit the source and rebuild), and refuses a `git push` that carries page changes unless the gate passed on exactly the committed pages. Pushes that touch only docs, `depot/` or `tools/` go through. The frame-time check (`ftime3.py`) is still by hand.
+- Fresh cloud session: `npm i three@0.160.0 esbuild` into `/root/eh-node`, `pip install playwright` (the browser is already in `/opt/pw-browsers`; do not run `playwright install`).
