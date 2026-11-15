@@ -123,3 +123,7 @@ Since v1.32 (the reel audit, fifth batch):
 - `chapelDress`: warm stone pilasters with gilded capitals stand inside the nave between the lancets (none beside a door), and the east end has a reredos behind the altar, a crimson dossal with a gilded cross.
 - `gunScreen`: the Gun Room's open screen onto the Grand Stair (cut on purpose in the source, columns at x 25 and 37) gets a third column at x 31: two bays of five. A fourth pair (x 29, 33) crowded a bay and failed the audit.
 - `stairTreads` (after `genProps2`): a block stair standing in a room of the Service Wing or the Stable Court (the Tack Room's, to the lodgings) has light oak treads over a two-tone panelled body.
+
+Since v1.33 (the reel audit, sixth batch):
+- `glazeInside`: every window of the State Wing (102) gets white glazing bars on its inside face (`barsTex`, a border and a bar at every block, lit with the room, culled with the insides), so the tall bays of the Ballroom, the Orangery Link and the Theatre Foyer read as glazed and not as holes onto the sky. The window rectangles are found as `windowList` finds them.
+- Deferred to batch A (the room plans): the Stable lodgings' frame pieces are taller than their two rows of glass (r141); fit the frames to the glass there, not the glass to the frames (that would change the outer walls).
