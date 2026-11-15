@@ -135,3 +135,7 @@ Since v1.34 (batch A begins: the v20 wall plan, the door moves 13 to 17 and 21, 
 
 Since v1.35 (the v20 wall plan, moves 19 and 20; A2 done but for two corner bedrooms):
 - The attic servants' rooms: on each side eight rooms 9 by 11 (`maids`, `men` in the Hall's spec), four either side of a passage 4 clear (`The Maids' Passage`, `The Footmen's Passage`, rooms in the spec, so the reach test counts them). `wallPlanDoors` walls up every door from cell to cell (12) and cuts a passage door where a cell had none (4). 18 rooms on the attic floor where there were 24.
+
+Since v1.36 (the v20 wall plan, moves 1 to 5):
+- In `gunScreen`: the Gun Room screen's narrow east bay (x 38 to 39) and the Gun Room's east door into the Double Library (x 40, z -18 to -17) are walled up; the Double Library has a new west door from the Grand Stair hall (x 40, z -31 to -30). The Oak Stair arch into the Saloon is z -25 to -23, centred between two of the Saloon's columns (they stand at z -34, -27, -20, -13, -6); the Billiard Room arch moved one bay south to z -18 to -16; the Business Room's south door moved 4 east to x -26 to -25, off the Oak Stair's steps.
+- `audit_test.py` KNOWN keeps only the Chapel nave door (move 23); the six freed doors now fail the test if they come back.

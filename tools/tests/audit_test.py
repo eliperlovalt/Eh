@@ -10,13 +10,9 @@ from harness import serve, open_estate
 from playwright.sync_api import sync_playwright
 
 # doors crowded by the building itself, not by furniture. They wait for the floor plan (v1.15 primer, order 5).
+# v1.36: the wall plan's moves 1 to 5 freed six of the seven (the Business Room door, the Oak Stair and Billiard Room bays, the three doors by the
+# men's stair). They are gone from this list, so if one comes back it fails. The Chapel waits on move 23.
 KNOWN = {
-    '1,7,x,-42,-30': 'Business Room south door opens under the Oak Stair',
-    '1,7,z,-20,-26': 'Oak Stair bay into the Saloon: a column stands in it',
-    '1,7,z,-20,-21': 'Billiard Room bay into the Saloon: a column stands in it',
-    '1,7,x,-18,38': 'Grand Stair to Gun Room door beside the stair foot',
-    '1,7,z,40,-17': 'Gun Room east door beside the men\'s stair rail',
-    '1,7,z,40,-18': 'Double Library west door beside the men\'s stair rail',
     '4,0,z,-168,-89': 'Chapel Nave door at the porch stair',
 }
 folder = sys.argv[1]
