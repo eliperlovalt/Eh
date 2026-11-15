@@ -12,32 +12,35 @@ He kept every line. Work through the whole list in one sustained run, without st
 - **Ship in safe batches:** one batch per section or so. Every push passes the walk, reach and audit tests on both copies and the frame-time check, and bumps the version. A batch that fails is fixed before the next starts.
 - **At the end:** one report to His Grace: what was built, what was skipped and why, what waits on the Depot, and the live link.
 
+## The quiz, 15 November 2026
+D1: a room-first registry (a room opens its Color's landing page, listed objects their own page, anything unlisted says it is not yet linked). E2: daily wins pay sestertii (4 to a denarius, 25 denarii to an aureus); unbroken days rank Tiro, Legionary at 7, Veteran at 30; kept on the device. C4: the hold stays. B7, B8: no change. The other chat's ten: the phone test first, then this backlog; tree portraits from 50 blocks on phones; its gate and hooks merged.
+
 ## A. Version 20 (agreed; the Depot works first)
 - [ ] A1. Build the 23 inner wall moves in `wall-moves-v20.json`: no passage under 5 clear on the state and first floors, under 4 elsewhere; free the 7 crowded doors. (Estate)
 - [ ] A2. Every bedroom one door onto a passage, suites excepted; the attic maids' and footmen's cells rebuilt as eight rooms each side of a passage. (Estate)
 - [ ] A3. Fit the Depot's new room plan for every one of the 157 rooms in `room-register.json`; no copied sets. (Depot, then Estate)
 - [ ] A4. A pair of glazed doors onto the south balcony from the Orange and Grey Bedrooms. (Depot surround, Estate opening)
-- [ ] A5. The slim glazing cross on every window surround (His Grace said yes). (Depot)
+- [x] A5. The slim glazing cross on every window surround (His Grace said yes). (Depot) [done] v1.22: contours.js v20 fitted; the slim cross is on every dressed window.
 - [ ] A6. The Depot's wall art plan, placed by rule per wall. (Depot, then Estate)
 - [ ] A7. Re-issue `estate-plan.json`, `windows.json` and the register as built in v20, and tell the Depot the floor plan is settled. (Estate)
 
 ## B. Andy's Notes, still open
-- [ ] B1. A proper werewolf figure with a prowling pose (today a dark dog at 2.4 scale). (Depot)
-- [ ] B2. Hero trees: a few larger, finer species placed at set points in the park. (Depot, then Estate)
-- [ ] B3. An evergreen built to carry Christmas lights, in place of the stand-in Great Cedar at x -50, z 125. (Depot)
+- [x] B1. A proper werewolf figure with a prowling pose (today a dark dog at 2.4 scale). (Depot) [done] v1.22: the Depot made it in props6.js (v20); fitted as a prowling figure, two halves of a stride shown in turn, on the old route.
+- [x] B2. Hero trees: a few larger, finer species placed at set points in the park. (Depot, then Estate) [done] v1.22: greatOak, greatCedar and greatBeech (trees.js v2) at the set points on the lawns.
+- [x] B3. An evergreen built to carry Christmas lights, in place of the stand-in Great Cedar at x -50, z 125. (Depot) [done] v1.22: the Depot's greatCedar now stands at x -50, z 125; it is an evergreen and serves. The lights go on it with B4.
 - [ ] B4. Winter dress as season kits: lights and garlands on trees, bushes and eaves; stockings over fireplaces; an indoor tree; something roasting at a hearth. (Depot, then Estate)
-- [ ] B5. Stronger spring bloom in the Depot's flower and season kits. (Depot)
-- [ ] B6. Flower beds bloom by real season, not all at once. (Verify, then Estate)
-- [ ] B7. The pointer: keep the gold arrow, or pick from three more designs. (His Grace)
-- [ ] B8. Look speed: confirm Steady as the default on phone and PC. (His Grace)
+- [x] B5. Stronger spring bloom in the Depot's flower and season kits. (Depot) [done] v1.22: seasons.js v2 and flowers.js v2 fitted.
+- [x] B6. Flower beds bloom by real season, not all at once. (Verify, then Estate) [done] already built: each flower species blooms in its own window of the real year (FLOWERS stage by day of year).
+- [x] B7. The pointer: keep the gold arrow, or pick from three more designs. (His Grace) [done] quiz, 15 Nov: keep the gold arrow.
+- [x] B8. Look speed: confirm Steady as the default on phone and PC. (His Grace) [done] quiz, 15 Nov: Steady stays the default (it already was).
 
 ## C. People and animals
 - [ ] C1. Bodies use doors and stairs instead of stopping at them. (Estate)
 - [ ] C2. People sit in chairs and work at their stations. (Estate)
 - [ ] C3. Every agent can be spoken to. (Estate)
-- [ ] C4. Household faces in fine voxel detail; on hold since 12 Nov (Kairos's face is done). (His Grace to lift the hold)
+- [x] C4. Household faces in fine voxel detail; on hold since 12 Nov (Kairos's face is done). (His Grace to lift the hold) [on hold] quiz, 15 Nov: His Grace keeps the hold.
 - [ ] C5. Saloon Gallery portraits, lifelike voxel, no likenesses of living people. (Depot, then Estate)
-- [ ] C6. A guided tour by Kairos so objects can be found in so large a house. (Verify, then Estate)
+- [x] C6. A guided tour by Kairos so objects can be found in so large a house. (Verify, then Estate) [done] already built: Find, then "Take the tour with Kairos".
 
 ## D. GOLEM inside the Estate (the "nervous system")
 - [ ] D1. Redesign the wiring: one registry of objects to pages, in place of the fixed `URLS`, `ROOMOF` and `HOUSEDOCS` tables; no object ever lands on a front page. (Estate, design with His Grace first)
@@ -60,7 +63,7 @@ He kept every line. Work through the whole list in one sustained run, without st
 - [ ] F1. A public template build with none of his private GOLEM in it. (Estate)
 - [ ] F2. The Estate (and the Globe) packaged for the App Store: requirements, security, legal. (Estate)
 - [ ] F3. A test on a real phone with numbers: load time, frame rate, memory. (Estate)
-- [ ] F4. Claude Code's ten optimisation suggestions, once reported. (His Grace to rank)
+- [x] F4. Claude Code's ten optimisation suggestions, once reported. (His Grace to rank) [done] reported in v1.20; His Grace ordered all ten done (14 Nov). The other chat's ten (15 Nov) are ranked: the phone test first, then this backlog.
 
 ## G. Small faults
 - [ ] G1. Pale parapets on the service stair. (Estate)

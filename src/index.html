@@ -140,7 +140,9 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 /* v1.12: the Depot's parts, whole and unchanged: seasons (v1.11), the tree kit and the flower kit.
    They sit inside one function so the very same source can also run in a worker, where the trees are grown without holding up the house. */
 function KITS(){
-/* Euphrates Hall, Parts Depot: SEASONS v1 (seasons and nightfall)
+/* Euphrates Hall, Parts Depot: SEASONS v2 (seasons and nightfall; v20 strengthens the spring)
+   New in state(): bud, blossomEarly, candles, petals, spring (0..1 each) and bulbs {snowdrop,crocus,daffodil,primrose,tulip,bluebell}.
+   The grass greens three weeks sooner and brighter; young leaf is lime, not olive; blossom shows before the leaf.
    Plain script, no dependencies at load. Works in the browser (window.SEASONS) and in node (require).
    Everything is driven by a real Date: the season, the sun, dusk, the lamplighter's round, lit windows,
    fires at seven, snow, autumn leaves, spring blossom, fireflies, dawn fog on the lake.
@@ -181,15 +183,19 @@ function state(date=new Date(),o={}){const lat=o.lat??HOME.lat,lon=o.lon??HOME.l
   const{alt,az}=sun(date,lat,lon),{rise,set}=riseSet(date,lat,lon);const night=ss(4,-8,alt),dusk=ss(-6,6,alt)*(1-ss(6,14,alt));
   const season=doy>=80&&doy<172?'spring':doy>=172&&doy<266?'summer':doy>=266&&doy<355?'autumn':'winter';
   const leaf=win(doy,100,135,293,329),turn=win(doy,263,301,345,360),fresh=win(doy,100,118,128,160),blossom=win(doy,105,116,124,136);
+  /* v20, a stronger spring: buds haze the bare trees before the leaf, cherry flowers before apple, chestnut candles in May, petals fall as each blossom goes over, and the bulbs come in their order */
+  const bud=win(doy,86,98,108,124),blossomEarly=win(doy,92,101,111,122),candles=win(doy,122,130,142,152);
+  const petals=clamp(Math.max(doy>108?blossomEarly:blossomEarly*.4,doy>121?blossom:blossom*.5),0,1),spring=clamp(Math.max(bud*.6,fresh,blossom,blossomEarly),0,1);
+  const bulbs={snowdrop:win(doy,40,52,72,84),crocus:win(doy,60,70,86,97),daffodil:win(doy,80,92,112,124),primrose:win(doy,84,96,124,136),tulip:win(doy,96,108,128,138),bluebell:win(doy,110,120,138,150)};
   const snow=win(doy,344,5,56,74),ice=win(doy,362,12,46,64);const dayH=h3(date.getFullYear(),doy,7);
   const snowing=(snow>.3&&dayH<.3)||(doy>=324&&doy<344&&dayH<.12)?1:0;const raining=!snowing&&snow<.2&&ice<.1&&dayH>.82?1:0;
   const falling=clamp(4*leaf*(1-leaf)*turn*1.4,0,1),litter=clamp((1-leaf)*turn*1.2,0,1)*(1-snow);
-  const grass=mix(ramp([[0,'#8a8a5a'],[95,'#8a8a5a'],[120,'#6aa64a'],[170,'#5a8f3a'],[230,'#6f9440'],[290,'#829a4c'],[330,'#8f9256'],[365,'#8a8a5a']],doy),'#e9eef3',snow);
+  const grass=mix(ramp([[0,'#8a8a5a'],[80,'#8a8a5a'],[104,'#7cc04c'],[136,'#62ac40'],[170,'#5a8f3a'],[230,'#6f9440'],[290,'#829a4c'],[330,'#8f9256'],[365,'#8a8a5a']],doy),'#e9eef3',snow);
   const fireflies=doy>=160&&doy<=215?night*(raining?0:1):0;
   const tr=mins-rise;const fogDawn=(tr>-70&&tr<130?(tr<15?ss(-70,15,tr):1-ss(15,130,tr)):0)*({spring:.7,summer:.55,autumn:1,winter:.35}[season])*(1-ice);
   const hour=mins/60;const fires=hour>=19||hour<7?1:0,chandeliers=night>.3&&hour>=15&&hour<23.5?1:hour>=19&&hour<23.5?1:0;
   const windows=night<.15?0:hour>=23?clamp(1-(hour-23)*.8,.12,1):hour<5?.08:hour<8?.45:.85;
-  return{date,doy,mins,hour,lat,lon,season,alt,az,rise,set,night,dusk,leaf,turn,fresh,blossom,snow,ice,snowing,raining,falling,litter,grass,fireflies,fogDawn,fires,chandeliers,windows,
+  return{bud,blossomEarly,candles,petals,spring,bulbs,date,doy,mins,hour,lat,lon,season,alt,az,rise,set,night,dusk,leaf,turn,fresh,blossom,snow,ice,snowing,raining,falling,litter,grass,fireflies,fogDawn,fires,chandeliers,windows,
     label:season[0].toUpperCase()+season.slice(1)+', '+(night>.6?'night':dusk>.4?(mins<720?'dawn':'dusk'):'day')}}
 
 /* ---------- sky colours ---------- */
@@ -205,22 +211,29 @@ function sky(st){const a=st.alt,[dt,dh]=DAY[st.season];const over=st.raining||st
 
 /* ---------- dressing a voxel prop for the season and the hour ----------
    o.evergreen  keep foliage (cedar, yew, box, topiary, palm)
-   o.blossom    true for fruit trees (apple, pear, cherry)
+   o.blossom    true for fruit trees (apple, pear, cherry); o.early flowers a fortnight sooner, before the leaf; o.blossomTint 'pink'|'white'|'magenta'
+   o.candles    horse chestnut: cream candles on the crown in May
    o.beech      copper beech turns brown, not orange
    o.lit        lamps and candles lit (flame parts glow)
    o.windows    0..1 share of glass that glows (houses at night); o.lampGlass glows with the flame
    o.snow       false to skip snow; o.snowCap 'cap' adds a layer, 'paint' whitens the top (default by unit)
    o.unit       the prop's cube size (for choosing cap or paint)                                     */
 const AUT=['#c8642a','#d9902f','#b8452a','#e0b040','#a8642a','#c27a2e','#8a5a2a'],BEE=['#7a3a22','#8a4a2a','#6a3a24','#9a5a32'],BLO=['#f6d3dc','#fff2f4','#f0b8c8','#fbe4ea'];
+const BLOS={pink:['#f3a9c0','#f9cfdb','#ec8fb0','#fbe1e9'],white:['#fbfaf4','#f2f0e4','#ffffff','#eceedd'],magenta:['#d96a9c','#e88ab4','#c9508a','#f2b0cc']},BUD=['#c2dc62','#d8d868','#aecf52','#d6b86a'],CAN=['#f6efdc','#fbf6ea','#f1d9cf'];
 const GLASS=new Set(['#bfd8e8','#a8c8dc','#cfe2ee','#9fc0d8']);
 function restyle(V,st,o={}){const out=new Map(),glow=new Map(),seed=o.seed||0;
   for(const[k,v]of V){let[x,y,z,c,p]=v;const h=h3(x,y,z,seed),h2=h3(z,x,y,seed+1);
-    if(p==='leaf'&&!o.evergreen){if(h>Math.pow(st.leaf,1.6)+.01)continue;
-      if(o.blossom&&h2<st.blossom*.55)c=BLO[(h*97|0)%4];else if(h2<st.turn)c=(o.beech?BEE:AUT)[(h*131|0)%(o.beech?4:7)];else if(st.fresh>0)c=mix(c,'#9ac25a',st.fresh*.55)}
-    if(p==='leaf'&&o.evergreen&&st.fresh>0)c=mix(c,'#6a9a4a',st.fresh*.2);
+    if(p==='leaf'&&!o.evergreen){const bl=o.blossom?(o.early?(st.blossomEarly||0):st.blossom):0;
+      if(bl>0&&h2<bl*(o.early?.92:.8))c=(BLOS[o.blossomTint]||BLO)[(h*97|0)%4];                      /* blossom, and it comes whether or not the leaf has */
+      else if(h>Math.pow(st.leaf,1.6)+.01){if(!(st.bud>0&&st.leaf<.7&&h2<st.bud*.17))continue;c=BUD[(h*53|0)%4]}   /* not in leaf yet: a haze of buds */
+      else if(h2<st.turn)c=(o.beech?BEE:AUT)[(h*131|0)%(o.beech?4:7)];
+      else if(st.fresh>0)c=mix(c,h<.28?'#b9ec52':o.beech?'#9fe03c':'#8ed63a',st.fresh*(h<.28?.78:.62))}
+    if(p==='leaf'&&o.evergreen&&st.fresh>0)c=mix(c,'#6a9a4a',st.fresh*(out.has(x+','+(y-1)+','+z)&&h<.4?.42:.2));
     if(p==='flame'){if(o.lit){glow.set(k,[x,y,z,c,p]);continue}c='#4a4038';p='b'}
     if(GLASS.has(c)){if(o.lit&&o.lampGlass){glow.set(k,[x,y,z,'#ffd890','glass']);continue}if(o.windows&&h3(x>>2,y>>3,z>>2,seed+5)<o.windows){glow.set(k,[x,y,z,'#ffcf73','glass']);continue}if(st.night>.5)c=mix(c,'#1a2030',.6)}
     out.set(k,[x,y,z,c,p])}
+  /* chestnut candles: cream spikes standing on the crown in May */
+  if(o.candles&&st.candles>0){const n=(o.unit||.25)>.3?1:3,add=[];for(const v of out.values()){if(v[4]!=='leaf'||(v[0]&1)||(v[2]&1))continue;if(out.has(v[0]+','+(v[1]+1)+','+v[2]))continue;if(h3(v[0]>>1,3,v[2]>>1,seed+3)>st.candles*.16)continue;for(let i=1;i<=n;i++)add.push([v[0],v[1]+i,v[2],CAN[i===1&&n>1?2:(v[0]+v[2]>>1)&1],'blossom'])}for(const a of add)out.set(a[0]+','+a[1]+','+a[2],a)}
   if(st.snow>.02&&o.snow!==false){const mode=o.snowCap||((o.unit||.115)>.2?'paint':'cap');const add=[];
     for(const[k,v]of out){const[x,y,z,c,p]=v;if(out.has(x+','+(y+1)+','+z)||glow.has(x+','+(y+1)+','+z))continue;if(p==='ll'||p==='lr'||p==='al'||p==='ar'||p==='face')continue;if(h3(x,y,z,seed+9)>st.snow*.95)continue;
       if(mode==='paint')v[3]=mix(c,'#f2f5f8',.85);else add.push([x,y+1,z,'#f2f5f8','snow'])}
@@ -261,7 +274,7 @@ function Weather(THREE,o={}){const A=o.area||[-30,-22,30,22],TOP=o.top||14;const
   const spawn=(k,p,anyH)=>{p.x=rnd(A[0],A[2]);p.z=rnd(A[1],A[3]);p.y=anyH?rnd(0,TOP):TOP+rnd(0,3);p.rest=0;p.on=true;p.ph=Math.random()*9;
     if(k==='snow'){p.vy=-rnd(.5,.9);C.set('#f4f7fb')}else if(k==='rain'){p.vy=-rnd(9,12);C.set('#9fb0c4')}else if(k==='leaves'){p.vy=-rnd(.5,.9);C.set(AUT[(Math.random()*7)|0])}else if(k==='petals'){p.vy=-rnd(.35,.6);C.set(BLO[(Math.random()*4)|0])}
     else{p.y=rnd(.3,2.2);p.x=rnd(A[0]*.6,A[2]*.6);p.z=rnd(A[1]*.6,A[3]*.6);C.set('#d8ff6a')}const s=sys[k];const i=s.P.indexOf(p);s.col.set([C.r,C.g,C.b],i*3)};
-  grp.set=st=>{sys.snow.rate=st.snowing?1:0;sys.rain.rate=st.raining?1:0;sys.leaves.rate=st.falling;sys.petals.rate=st.blossom>.35?st.blossom:0;sys.flies.rate=st.fireflies;wind=st.wind||wind};
+  grp.set=st=>{sys.snow.rate=st.snowing?1:0;sys.rain.rate=st.raining?1:0;sys.leaves.rate=st.falling;sys.petals.rate=st.petals!=null?(st.petals>.25?st.petals:0):(st.blossom>.35?st.blossom:0);sys.flies.rate=st.fireflies;wind=st.wind||wind};
   grp.update=(dt,env={})=>{time+=dt;for(const k in sys){const s=sys[k],want=Math.round(s.n*s.rate);let on=0;
     s.P.forEach((p,i)=>{if(!p.on){if(on<want&&Math.random()<(k==='flies'?.05:.5)){spawn(k,p,s.firstFill!==true);on++}else{s.pos[i*3+1]=-99}return}on++;if(on>want&&p.rest<=0&&Math.random()<.02){p.on=false;s.pos[i*3+1]=-99;return}
       if(k==='flies'){p.ph+=dt;p.x+=Math.sin(p.ph*.7+i)*dt*.4;p.z+=Math.cos(p.ph*.5+i*2)*dt*.4;p.y+=Math.sin(p.ph*1.3)*dt*.2;const b=Math.max(0,Math.sin(p.ph*2.1+i))**6;C.setRGB(.85*b,1*b,.4*b);s.col.set([C.r,C.g,C.b],i*3)}
@@ -285,7 +298,10 @@ return{state,sky,restyle,lamplighter,sun,riseSet,Sky,Weather,Mist,mix,HOME,EVERG
 
 
 /* =========================================================
-   Euphrates Hall Parts Depot: trees.js v1 (Depot v13, Nov 12, 2026)
+   Euphrates Hall Parts Depot: trees.js v2 (Depot v20, Nov 13, 2026; v1 was Depot v13)
+   v20 adds six species. Hero trees, half as large again and a branch order finer: greatOak, greatCedar, greatBeech (TREES.HERO).
+   Spring trees: cherry (pink before the leaves), chestnut (white candles in May), and beech (TREES.SPRING lists the flowering ones).
+   The five first species grow exactly as before, seed for seed.
    The tree kit. Five species grown from a seed: English oak, Italian cypress,
    cedar of Lebanon, weeping willow, olive. Each has a real trunk with a root
    flare, branching limbs (three orders) and a layered, lobed canopy.
@@ -352,10 +368,11 @@ function trunk(g,r,H,r0,r1,bark,lean){let p=[0,0,0],d=norm([lean[0],1,lean[1]]);
 const SP={};
 SP.oak={label:'English oak',where:'The park, the avenue, the lawn below the house',season:{},
   bark:['#4a3b2a','#33281d','#62503a'],leaf:['#2c4a1f','#365a24','#41692b','#4f7a33','#5f8a3c'],
-  grow(g,r,seed){const s=.9+r()*.25,bark=barkFn(this.bark,seed);roots(g,r,5,3,5,bark);const top=trunk(g,r,15*s,3.4*s,2.5*s,bark,[(r()-.5)*.15,(r()-.5)*.15]);
-    const tips=[],S={forks:[2,3],spread:.62,decay:.66,taper:.72,radDecay:.86,kinks:3,bend:.32,lift:.05,droop:.25,up:.02};const n=4+Math.floor(r()*2),az0=r()*6.283;
-    for(let i=0;i<n;i++){const az=az0+i/n*6.283+(r()-.5)*.5,el=.55+r()*.45;branch(g,r,add(top,[0,-r()*3,0]),fromAngles(el,az),(13+r()*5)*s,2.3*s,3,S,tips,bark)}
-    for(const t of tips){const big=t.mid?.75:t.depth===0?1:.8;clump(g,t.p[0],t.p[1]+1.5,t.p[2],(4.6+r()*1.6)*big*s,(3.2+r()*1.1)*big*s,(4.6+r()*1.6)*big*s,seed+11)}
+  grow(g,r,seed,G){G=G||1;const big=G>1.3,s=(.9+r()*.25)*G,bark=barkFn(this.bark,seed);roots(g,r,big?8:5,3*G,5*G,bark);const top=trunk(g,r,15*s,3.4*s,2.5*s,bark,[(r()-.5)*.15,(r()-.5)*.15]);
+    const tips=[],S={forks:[2,3],spread:.62,decay:.66,taper:.72,radDecay:.86,kinks:3,bend:.32,lift:.05,droop:.25,up:.02};const n=4+Math.floor(r()*2)+(big?2:0),az0=r()*6.283;
+    for(let i=0;i<n;i++){const az=az0+i/n*6.283+(r()-.5)*.5,el=.55+r()*.45;branch(g,r,add(top,[0,-r()*3*G,0]),fromAngles(el,az),(13+r()*5)*s,2.3*s,3,S,tips,bark)}
+    if(big){/* a veteran: two great low boughs reaching out level, and one dead stag-headed limb above the crown */for(let i=0;i<2;i++){const az=az0+1.1+i*3.1+(r()-.5)*.4;branch(g,r,[top[0]*.6,top[1]*.62,top[2]*.6],fromAngles(.12+r()*.1,az),(13+r()*3)*s,2.6*s,2,Object.assign({},S,{lift:.02,droop:.12}),tips,bark)}crooked(g,r,add(top,[0,6*s,0]),fromAngles(1.05,az0+2),15*s,1.3*s,.5,bark,{kinks:3,bend:.3,lift:.05})}
+    const ks=big?.74:1;for(const t of tips){const bg=(t.mid?.75:t.depth===0?1:.8)*ks;clump(g,t.p[0],t.p[1]+1.5,t.p[2],(4.6+r()*1.6)*bg*s,(3.2+r()*1.1)*bg*s,(4.6+r()*1.6)*bg*s,seed+11,big?.36:undefined)}
     clump(g,top[0],top[1]+11*s,top[2],10*s,5.5*s,10*s,seed+12);shade(g.V,this.leaf,seed)}};
 SP.cypress={lods:{far:{unit:1,F:4,leaf:16,bark:12,shades:2,smooth:2}},label:'Italian cypress',where:'Paired at gates, along the terrace walk, framing the chapel',season:{evergreen:true},
   bark:['#5a4634','#43342a','#6e5a44'],leaf:['#17301d','#1d3a24','#24452b','#2c5233','#365e3c'],
@@ -366,12 +383,12 @@ SP.cypress={lods:{far:{unit:1,F:4,leaf:16,bark:12,shades:2,smooth:2}},label:'Ita
     g.put(lx*(H+1),H+1,lz*(H+1),'#000','leaf');shade(g.V,this.leaf,seed,{bias:-.04})}};
 SP.cedar={label:'Cedar of Lebanon',where:'The great lawns, one or two to a lawn, as at the old English houses',season:{evergreen:true},
   bark:['#5a4632','#3f3125','#6f5a44'],leaf:['#1e3a2c','#244434','#2b4f3c','#335a45','#3d664f'],
-  grow(g,r,seed){const s=.92+r()*.2,bark=barkFn(this.bark,seed);roots(g,r,5,3,4.5,bark);const H=40*s,top=trunk(g,r,H,3.6*s,1.3*s,bark,[(r()-.5)*.12,(r()-.5)*.12]);
-    const tiers=6,tips=[];for(let t=0;t<tiers;t++){const f=t/(tiers-1),y=(9+f*(H-11)),L=(25-f*17)*s*(.9+r()*.2),n=t===tiers-1?3:4+Math.floor(r()*2),az0=r()*6.283,c=[top[0]*y/H,y,top[2]*y/H];
+  grow(g,r,seed,G){G=G||1;const big=G>1.3,s=(.92+r()*.2)*G,bark=barkFn(this.bark,seed);roots(g,r,big?7:5,3*G,4.5*G,bark);const H=40*s,top=trunk(g,r,H,3.6*s,1.3*s,bark,[(r()-.5)*.12,(r()-.5)*.12]);
+    const tiers=big?7:6,tips=[];for(let t=0;t<tiers;t++){const f=t/(tiers-1),y=(9*G+f*(H-11*G)),L=(25-f*17)*s*(.9+r()*.2),n=t===tiers-1?3:4+Math.floor(r()*2),az0=r()*6.283,c=[top[0]*y/H,y,top[2]*y/H];
       for(let i=0;i<n;i++){const az=az0+i/n*6.283+(r()-.5)*.6,el=.08+r()*.16-(f<.3?.05:0);const e=crooked(g,r,c,fromAngles(el,az),L,(1.8-f*.9)*s,.6,bark,{kinks:3,bend:.14,lift:.04});
         tips.push({p:e.end,w:1-f*.45});for(let j=0;j<2;j++){const m=.45+j*.25+r()*.1,p=add(c,mul(fromAngles(el,az),L*m)),sd=fromAngles(.04+r()*.1,az+(j?1:-1)*(.9+r()*.4)),q=add(p,mul(sd,L*.32));limb(g,p,q,.8,.5,bark);tips.push({p:q,w:.65-f*.3})}}}
-    for(const t of tips){const w=Math.max(.38,t.w);clump(g,t.p[0],t.p[1]+1.2,t.p[2],(7.2*w+1.4)*s,(1.7+r()*.7),(7.2*w+1.4)*s,seed+21,.34)}
-    clump(g,top[0],H*s+1,top[2],6*s,1.8,6*s,seed+22,.3);shade(g.V,this.leaf,seed,{bias:.02})}};
+    for(const t of tips){const w=Math.max(.38,t.w);clump(g,t.p[0],t.p[1]+1.2,t.p[2],(7.2*w+1.4)*s*(big?.86:1),(1.7+r()*.7)*(big?1.35:1),(7.2*w+1.4)*s*(big?.86:1),seed+21,.34)}
+    clump(g,top[0],(big?H:H*s)+1,top[2],6*s,1.8*(big?1.35:1),6*s,seed+22,.3);shade(g.V,this.leaf,seed,{bias:.02})}};
 SP.willow={lods:{far:{unit:1,F:4,leaf:16,bark:12,shades:2,smooth:2}},label:'Weeping willow',where:'The lake shore and the stream banks',season:{},
   bark:['#5b4a36','#43362a','#6f5d47'],leaf:['#5f7f30','#6c8f37','#7a9e40','#8aad4b','#9bbd58'],
   grow(g,r,seed){const s=.9+r()*.2,bark=barkFn(this.bark,seed,'twist');roots(g,r,5,3,4,bark);const lean=[(r()-.5)*.3,(r()-.5)*.3],top=trunk(g,r,11*s,3.3*s,2.6*s,bark,lean);
@@ -392,6 +409,30 @@ SP.olive={lods:{far:{unit:1,F:4,leaf:16,bark:12,shades:2,smooth:2}},label:'Olive
       const nb=2+(r()<.5?1:0);for(let j=0;j<nb;j++)branch(g,r,p,fromAngles(.7+r()*.45,a+(j-(nb-1)/2)*1.1),(6.5+r()*2.5)*s,1.3*s,2,S,tips,bark)}
     for(const t of tips)clump(g,t.p[0],t.p[1]+1,t.p[2],(3.4+r()*1.2)*s,(2.4+r()*.7)*s,(3.4+r()*1.2)*s,seed+41,.3);
     let cx=0,cy=0,cz=0;for(const t of tips){cx+=t.p[0];cy+=t.p[1];cz+=t.p[2]}const n=tips.length||1;clump(g,cx/n,cy/n+1.5,cz/n,7*s,3.2*s,7*s,seed+42,.3);shade(g.V,this.leaf,seed)}};
+/* ---------- v20: the spring trees and the hero trees ---------- */
+SP.beech={label:'Beech',where:'The park clumps, the long avenue, the edge of the wood',season:{beech:true},
+  bark:['#8d8a80','#75726a','#a09d92'],leaf:['#2f5a22','#3a6a28','#467a2f','#548a37','#639a40'],
+  grow(g,r,seed,G){G=G||1;const big=G>1.3,s=(.95+r()*.2)*G,bark=barkFn(this.bark,seed);roots(g,r,big?8:6,3*G,4*G,bark);const H=22*s,top=trunk(g,r,H,3*s,1.6*s,bark,[(r()-.5)*.08,(r()-.5)*.08]);
+    const tips=[],S={forks:[2,3],spread:.5,decay:.68,taper:.7,radDecay:.84,kinks:3,bend:.2,lift:.12,droop:.1,up:.06},tiers=big?4:3;
+    for(let t=0;t<tiers;t++){const f=t/(tiers-1),y=H*(.36+f*.62),n=4+(r()<.5?1:0),az0=r()*6.283,c=[top[0]*y/H,y,top[2]*y/H];
+      for(let i=0;i<n;i++){const az=az0+i/n*6.283+(r()-.5)*.5,el=.22+f*.8+r()*.15;branch(g,r,c,fromAngles(el,az),(13-f*5+r()*3)*s,(1.7-f*.6)*s,2,S,tips,bark)}}
+    const ks=big?.9:1.12;for(const t of tips)clump(g,t.p[0],t.p[1]+1,t.p[2],(4.2+r()*1.4)*s*ks,(3+r())*s*ks,(4.2+r()*1.4)*s*ks,seed+51,big?.34:.3);
+    clump(g,top[0],H+5*s,top[2],7*s,6*s,7*s,seed+52);shade(g.V,this.leaf,seed)}};
+SP.cherry={lods:{far:{unit:1,F:4,leaf:16,bark:12,shades:2,smooth:2}},label:'Flowering cherry',where:'The drive, the garden walks, beside the chapel: pink before the leaves come',season:{blossom:true,early:true,blossomTint:'pink'},
+  bark:['#5a3a32','#432a26','#74504a'],leaf:['#35602a','#3f6f30','#4a7e37','#588e40','#689e4b'],
+  grow(g,r,seed){const s=.9+r()*.25,bark=barkFn(this.bark,seed);roots(g,r,4,1.6,2.5,bark);const top=trunk(g,r,8*s,1.7*s,1.3*s,bark,[(r()-.5)*.25,(r()-.5)*.25]);
+    const tips=[],S={forks:[2,3],spread:.55,decay:.7,taper:.7,radDecay:.84,kinks:2,bend:.25,lift:.1,droop:.05,up:.08},n=4+Math.floor(r()*2),az0=r()*6.283;
+    for(let i=0;i<n;i++)branch(g,r,top,fromAngles(.75+r()*.4,az0+i/n*6.283+(r()-.5)*.4),(8+r()*3)*s,1.1*s,2,S,tips,bark);
+    for(const t of tips)clump(g,t.p[0],t.p[1]+.8,t.p[2],(3.2+r()*1.2)*s,(2.4+r()*.8)*s,(3.2+r()*1.2)*s,seed+61,.34);clump(g,top[0],top[1]+7*s,top[2],6*s,4*s,6*s,seed+62,.3);shade(g.V,this.leaf,seed)}};
+SP.chestnut={label:'Horse chestnut',where:'The village green, the stable court, the cricket field: white candles in May',season:{candles:true},
+  bark:['#54463a','#3d332b','#6a5a4b'],leaf:['#274a1c','#305921','#3a6827','#46782e','#548837'],
+  grow(g,r,seed){SP.oak.grow.call(this,g,r,seed,1.12)}};
+SP.greatOak={hero:true,label:'The great oak',where:'One or two in the whole park: alone on the south lawn, at the head of the avenue',season:{},bark:SP.oak.bark,leaf:SP.oak.leaf,
+  grow(g,r,seed){SP.oak.grow.call(this,g,r,seed,1.5)}};
+SP.greatCedar={hero:true,label:'The great cedar',where:'One on the west lawn, where the house is seen through it',season:{evergreen:true},bark:SP.cedar.bark,leaf:SP.cedar.leaf,
+  grow(g,r,seed){SP.cedar.grow.call(this,g,r,seed,1.45)}};
+SP.greatBeech={hero:true,label:'The great beech',where:'The end of the long walk; a pair at the park gate',season:{beech:true},bark:SP.beech.bark,leaf:SP.beech.leaf,
+  grow(g,r,seed){SP.beech.grow.call(this,g,r,seed,1.5)}};
 const SPECIES=Object.keys(SP);
 
 /* ---------- coarser versions: near (two voxels a block) and far (one a block), interior filled, smoothed ---------- */
@@ -443,7 +484,7 @@ function mesh(r,scale){const s=(scale||1)*r.unit,V=r.V;let x0=1e9,y0=1e9,z0=1e9,
 
 /* ---------- three.js helpers (THREE passed in) ---------- */
 const cache=new Map();
-const seasonKey=st=>st?[st.leaf,st.turn,st.fresh,st.blossom,st.snow].map(v=>Math.round((v||0)*20)).join(':'):'-';
+const seasonKey=st=>st?[st.leaf,st.turn,st.fresh,st.blossom,st.snow,st.bud,st.blossomEarly,st.candles].map(v=>Math.round((v||0)*20)).join(':'):'-';
 function dressed(species,o){const r=build(species,o);if(o.st&&typeof SEASONS!=='undefined'){const d=SEASONS.restyle(r.V,o.st,Object.assign({unit:r.unit},r.season));r.V=d.V;r.count=r.V.size}return r}
 function geometry(THREE,species,o={}){const k=[species,o.seed|0,o.lod||'near',seasonKey(o.st)].join('/');let g=cache.get(k);if(g)return g;
   const r=dressed(species,o),m=mesh(r);g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(m.pos,3));g.setAttribute('color',new THREE.BufferAttribute(m.col,3));g.setAttribute('normal',new THREE.BufferAttribute(m.nor,3));g.setIndex(new THREE.BufferAttribute(m.index,1));
@@ -473,12 +514,15 @@ function forest(THREE,list,o={}){const VAR=o.variants||4,HERO=o.hero==null?16:o.
   function stats(){let q=0,dc=0;const by={hero:0,near:0,far:0};for(const b of buckets.values())for(const l of LV){const im=b[l];if(im.count){dc++;q+=im.count*im.geometry.userData.quads;by[l]+=im.count}}return{trees:list.length,drawCalls:dc,quads:q,hero:by.hero,near:by.near,far:by.far}}
   return{group,update,season,stats,dispose(){group.removeFromParent()}}}
 
-return{build,mesh,geometry,object,forest,clearCache,SPECIES,info:Object.fromEntries(SPECIES.map(k=>[k,{label:SP[k].label,where:SP[k].where,evergreen:!!SP[k].season.evergreen}])),
+return{build,mesh,geometry,object,forest,clearCache,SPECIES,info:Object.fromEntries(SPECIES.map(k=>[k,{label:SP[k].label,where:SP[k].where,evergreen:!!SP[k].season.evergreen,hero:!!SP[k].hero,blossom:!!SP[k].season.blossom,candles:!!SP[k].season.candles}])),
+  HERO:SPECIES.filter(k=>SP[k].hero),SPRING:SPECIES.filter(k=>SP[k].season.blossom||SP[k].season.candles),
   EVERGREEN:SPECIES.filter(k=>SP[k].season.evergreen),LODS,U,rng,h3}})();
 
 
 /* =========================================================
-   Euphrates Hall Parts Depot: flowers.js v1 (Depot v14, Nov 12, 2026)
+   Euphrates Hall Parts Depot: flowers.js v2 (Depot v20, Nov 13, 2026; v1 was Depot v14)
+   v20, a stronger spring: five bulbs and early flowers (snowdrop, crocus, daffodil, primrose, bluebell), three layouts
+   (drift, carpet, spring), FLOWERS.inBloom(st) and FLOWERS.SPRING. Snowdrop and crocus flower through the snow.
    The flower kit. Small-voxel flowers with stems, leaves and petals, grown from a seed:
    rose, lily, lavender, tulip, hydrangea, iris, peony, poppy, and a wildflower mix.
    Plus layouts that fill a rectangle: bed, border, parterre, rows, meadow.
@@ -568,10 +612,27 @@ SP.wild={label:'Wildflowers',where:'The meadow, the park edge, under the orchard
       else if(k==='cornflower'){g.box(x-1,h+1,z-1,x+1,h+1,z+1,cc,'petal');g.put(x,h+2,z,lum(cc,1.2),'petal')}
       else if(k==='buttercup'){g.put(x,h+1,z,cc,'petal');g.put(x+1,h+1,z,lum(cc,.9),'petal')}
       else{g.put(x,h+1,z,cc,'petal');g.put(x,h+2,z,lum(cc,1.15),'petal');g.put(x+1,h+1,z,cc,'petal');g.put(x,h+1,z+1,cc,'petal')}}}};
+/* ---------- v20: the spring bulbs, so the garden flowers from February, not from April ---------- */
+SP.snowdrop={label:'Snowdrop',where:'Under the bare trees, the churchyard, the north banks: the first flower of the year',height:.22,spread:.17,bloom:[40,84],after:'bare',winter:'bare',hardy:true,
+  colors:{white:'#f7f7f1'},
+  grow(g,r,c,st){if(st==='bare')return;const n=2+Math.floor(r()*3);for(let i=0;i<n;i++){const x=(i%3)-1,z=i>2?1:(i&1),h=2+Math.floor(r()*2);g.box(x,0,z,x,h-1,z,i&1?G.leaf:G.leafD,'leaf');if(st!=='bloom')continue;g.put(x,h,z,G.stem);const d=i&1?1:-1;g.put(x+d,h,z,c,'petal');g.put(x+d,h-1,z,lum(c,.93),'petal')}}};
+SP.crocus={label:'Crocus',where:'In the lawn in drifts, round the feet of the trees, the edges of the walks',height:.2,spread:.16,bloom:[60,97],after:'bare',winter:'bare',hardy:true,
+  colors:{purple:'#7a4aa8',yellow:'#f0b820',white:'#f4f1e8',lilac:'#b392d6'},
+  grow(g,r,c,st){if(st==='bare')return;const n=1+Math.floor(r()*3);for(let i=0;i<n;i++){const x=(i%2)*2-1+(i>1?1:0),z=i>1?-1:(i&1);g.put(x,0,z,G.leaf,'leaf');g.put(x+1,0,z,G.leafD,'leaf');g.put(x,1,z,st==='bloom'?c:G.leafL,st==='bloom'?'petal':'leaf');if(st==='bloom'){g.put(x,2,z,lum(c,1.12),'petal');if(r()<.5)g.put(x,3,z,'#f08a1c','eye')}}}};
+SP.daffodil={label:'Daffodil',where:'Drifts in the park grass, the banks of the drive, the orchard, the lake walk',height:.48,spread:.26,bloom:[80,124],after:'bare',winter:'bare',
+  colors:{yellow:'#f2cc1e',white:'#f6f1dc',lemon:'#f4e27a'},
+  grow(g,r,c,st){if(st==='bare')return;const n=1+Math.floor(r()*2);for(let i=0;i<n;i++){const x=i*2-(n>1?1:0),z=i,h=5+Math.floor(r()*3);g.box(x,0,z,x,h-1,z,G.stem);for(const d of[-1,1]){const L=3+Math.floor(r()*2);for(let k=0;k<L;k++)g.put(x+d,k,z,d>0?G.leaf:G.leafD,'leaf')}
+      if(st!=='bloom')continue;const f=r()<.5?1:-1;g.box(x-1,h-1,z+f,x+1,h+1,z+f,c,'petal');g.put(x-1,h-1,z+f,lum(c,.9),'petal');g.put(x+1,h+1,z+f,lum(c,.9),'petal');g.put(x,h,z+2*f,c==='#f6f1dc'?'#f0a020':'#f09a14','eye');g.put(x,h,z,G.stem)}}};
+SP.primrose={label:'Primrose',where:'Hedge banks, the wood edge, under the garden walls',height:.16,spread:.26,bloom:[84,136],after:'green',winter:'green',evergreen:true,
+  colors:{pale:'#f4ec9a',cream:'#f6f0cc',pink:'#e9a0b8'},
+  grow(g,r,c,st){for(let x=-2;x<=2;x++)for(let z=-2;z<=2;z++){if(Math.abs(x)+Math.abs(z)>3||r()<.18)continue;g.put(x,0,z,(x+z)&1?G.leaf:G.leafD,'leaf')}if(st!=='bloom')return;const n=3+Math.floor(r()*3);for(let i=0;i<n;i++){const x=Math.round((r()-.5)*3),z=Math.round((r()-.5)*3);g.put(x,1,z,c,'petal');if(r()<.4)g.put(x,1,z+1,lum(c,.92),'petal')}g.put(0,1,0,'#e8b020','eye')}};
+SP.bluebell={label:'Bluebell',where:'The floor of the wood in May, under the beeches, the shaded side of the lake',height:.4,spread:.2,bloom:[110,150],after:'bare',winter:'bare',
+  colors:{blue:'#4f5fc0',violet:'#6a55b8',white:'#eef0f6'},
+  grow(g,r,c,st){if(st==='bare')return;for(const[dx,dz]of[[1,0],[-1,0],[0,1]]){const L=2+Math.floor(r()*2);for(let k=0;k<L;k++)g.put(dx*(k>1?2:1),k,dz*(k>1?2:1),dx>0?G.leaf:G.leafD,'leaf')}if(st!=='bloom')return;const h=4+Math.floor(r()*3),d=r()<.5?1:-1;g.box(0,0,0,0,h-2,0,G.stem);g.put(d,h-1,0,G.stem);for(let k=0;k<3;k++){g.put(d*(k<2?1:2),h-2-k,0,k&1?lum(c,1.12):c,'petal')}g.put(0,h-1,0,c,'petal')}};
 const SPECIES=Object.keys(SP);
 
 /* ---------- season: which stage a species is in on a given day ---------- */
-function stage(species,st){const S=SP[species];if(!st)return'bloom';const d=st.doy;if(st.snow>.35||d<70||d>325)return S.winter;if(d>=S.bloom[0]&&d<=S.bloom[1])return'bloom';if(d>S.bloom[1])return S.after==='bare'&&d<S.bloom[1]+25?'green':S.after;return'green'}
+function stage(species,st){const S=SP[species];if(!st)return'bloom';const d=st.doy;if(S.hardy&&d>=S.bloom[0]&&d<=S.bloom[1])return'bloom';if(st.snow>.35||d<70||d>325)return S.winter;if(d>=S.bloom[0]&&d<=S.bloom[1])return'bloom';if(d>S.bloom[1])return S.after==='bare'&&d<S.bloom[1]+25?'green':S.after;return'green'}
 
 /* ---------- far version: a few quarter-block cubes, petal colour kept on top ---------- */
 function far(V){const F=FU/U,cells=new Map();for(const v of V.values()){const X=Math.floor((v[0]+F/2)/F),Y=Math.floor(v[1]/F),Z=Math.floor((v[2]+F/2)/F),k=X+','+Y+','+Z;let c=cells.get(k);if(!c)cells.set(k,c={x:X,y:Y,z:Z,n:0,pet:{},grn:{},np:0});c.n++;if(v[4]==='petal'){c.np++;c.pet[v[3]]=(c.pet[v[3]]||0)+1}else c.grn[v[3]]=(c.grn[v[3]]||0)+1}
@@ -603,7 +664,22 @@ function clearCache(){for(const g of cache.values())g.dispose();cache.clear()}
    meadow    loose and sparse: wildflowers and poppies scattered                                                 */
 const pick=(a,r)=>a[Math.floor(r()*a.length)],colFor=(sp,o,r)=>{const c=o.colors&&o.colors[sp];return c?(Array.isArray(c)?pick(c,r):c):pick(Object.keys(SP[sp].colors).filter(k=>k!=='mixed'||sp==='wild'),r)};
 function scatter(rect,sp,o,r,out,fn){const gap=SP[sp].spread/(o.density||1);for(let z=rect.z0+gap/2,row=0;z<rect.z1;z+=gap*.87,row++)for(let x=rect.x0+gap/2+(row%2?gap/2:0);x<rect.x1;x+=gap){const jx=(r()-.5)*gap*.3,jz=(r()-.5)*gap*.3;if(fn&&!fn(x,z))continue;out.push({x:x+jx,z:z+jz})}}
+/* v20: what is in flower on a given day, soonest first; and the spring species in their order */
+const SPRING=['snowdrop','crocus','daffodil','primrose','tulip','bluebell'];
+function inBloom(st){return SPECIES.filter(k=>stage(k,st)==='bloom').sort((a,b)=>SP[a].bloom[0]-SP[b].bloom[0])}
 const LAYOUTS={
+  /* v20. drift: bulbs naturalised in grass, in loose clumps that thin toward their edges, each clump one kind and one colour */
+  drift(rect,o,r){const sps=o.species||['daffodil','crocus','snowdrop','daffodil','primrose','crocus'],w=rect.x1-rect.x0,d=rect.z1-rect.z0,n=Math.max(2,Math.round(w*d/(o.every||14))),out=[];
+    for(let i=0;i<n;i++){const sp=sps[i%sps.length],col=colFor(sp,o,r),cx=rect.x0+r()*w,cz=rect.z0+r()*d,R=(1.4+r()*2.2)*(o.size||1),el=.5+r()*.8,rot=r()*3.14,m=Math.round(R*R*3.14/(SP[sp].spread*SP[sp].spread*6.5)*(o.density||1));
+      for(let k=0;k<m;k++){const a=r()*6.283,q=Math.pow(r(),.7)*R,px=Math.cos(a)*q,pz=Math.sin(a)*q*el,x=cx+px*Math.cos(rot)-pz*Math.sin(rot),z=cz+px*Math.sin(rot)+pz*Math.cos(rot);if(x<rect.x0||x>rect.x1||z<rect.z0||z>rect.z1)continue;out.push({species:sp,color:col,x,z})}}return out},
+  /* v20. carpet: the floor of a wood in May, thick, with paths of bare ground wandering through it */
+  carpet(rect,o,r){const sps=o.species||['bluebell'],w=rect.x1-rect.x0,d=rect.z1-rect.z0,n=Math.round(w*d*7*(o.density||1)),out=[],sd=o.seed|0;
+    for(let i=0;i<n;i++){const x=rect.x0+r()*w,z=rect.z0+r()*d,nz=h3(Math.round(x/2.5),0,Math.round(z/2.5),sd);if(nz<.22)continue;const sp=nz>.9?'primrose':pick(sps,r);out.push({species:sp,color:sp==='bluebell'?(h3(Math.round(x/5),1,Math.round(z/5),sd)<.12?'white':h3(Math.round(x/4),2,Math.round(z/4),sd)<.4?'violet':'blue'):colFor(sp,o,r),x,z})}return out},
+  /* v20. spring: a formal bed for April. Tulips in blocks of one colour, daffodils behind, a crocus and primrose edge */
+  spring(rect,o,r){const back=o.back||'n',alongX=back==='n'||back==='s',depth=alongX?rect.z1-rect.z0:rect.x1-rect.x0,len=alongX?rect.x1-rect.x0:rect.z1-rect.z0,flip=back==='s'||back==='e',out=[];
+    const band=(f0,f1)=>{const a=flip?1-f1:f0,b=flip?1-f0:f1;return alongX?{x0:rect.x0,x1:rect.x1,z0:rect.z0+depth*a,z1:rect.z0+depth*b}:{z0:rect.z0,z1:rect.z1,x0:rect.x0+depth*a,x1:rect.x0+depth*b}};
+    const fillB=(B,sps,seg)=>{for(let s0=0;s0*seg<len;s0++){const sp=sps[s0%sps.length],col=colFor(sp,o,r),part=alongX?{x0:B.x0+s0*seg,x1:Math.min(B.x1,B.x0+(s0+1)*seg),z0:B.z0,z1:B.z1}:{z0:B.z0+s0*seg,z1:Math.min(B.z1,B.z0+(s0+1)*seg),x0:B.x0,x1:B.x1},pts=[];scatter(part,sp,Object.assign({},o,{density:(o.density||1)*.62}),r,pts);for(const p of pts)out.push({species:sp,color:col,x:p.x,z:p.z})}};
+    fillB(band(0,.3),['daffodil'],3+r()*2);fillB(band(.3,.8),['tulip'],2+r()*1.5);fillB(band(.8,1),['crocus','primrose','crocus','snowdrop'],1.5+r());return out},
   bed(rect,o,r){const sps=o.species||['rose','peony','lavender','tulip','iris','lily'],w=rect.x1-rect.x0,d=rect.z1-rect.z0,n=Math.max(2,Math.round(Math.sqrt(w*d)/1.3)),seeds=[];
     for(let i=0;i<n;i++){const sp=sps[i%sps.length];seeds.push({sp,col:colFor(sp,o,r),x:rect.x0+r()*w,z:rect.z0+r()*d})}const out=[];
     for(const sp of sps){const pts=[];scatter(rect,sp,o,r,pts);for(const p of pts){let b=null,bd=1e9;for(const s of seeds){const dd=(s.x-p.x)**2+(s.z-p.z)**2;if(dd<bd){bd=dd;b=s}}if(b.sp===sp)out.push({species:sp,color:b.col,x:p.x,z:p.z})}}return out},
@@ -640,7 +716,7 @@ function plant(THREE,list,o={}){const VAR=o.variants||3,FAR=o.far||14,GONE=o.gon
   function stats(){let q=0,dc=0,n=0,f=0;for(const b of buckets.values())for(const l of LV){const im=b[l];if(im.count&&im.geometry.userData.quads){dc++;q+=im.count*im.geometry.userData.quads;l==='near'?n+=im.count:f+=im.count}}return{plants:list.length,drawCalls:dc,quads:q,near:n,far:f}}
   return{group,update,season,stats,dispose(){group.removeFromParent()}}}
 
-return{build,mesh,geometry,layout,plant,stage,clearCache,SPECIES,LAYOUTS:Object.keys(LAYOUTS),
+return{build,mesh,geometry,layout,plant,stage,inBloom,SPRING,clearCache,SPECIES,LAYOUTS:['bed','border','parterre','rows','meadow','drift','carpet','spring'],
   info:Object.fromEntries(SPECIES.map(k=>[k,{label:SP[k].label,where:SP[k].where,height:SP[k].height,spread:SP[k].spread,bloom:SP[k].bloom,evergreen:!!SP[k].evergreen,colors:Object.keys(SP[k].colors)}])),U,FU,rng,h3}})();
 
 
@@ -679,6 +755,17 @@ function Face(skin,d){this.s=skin;this.q=skin.q;this.far=skin.unit>=.5;this.axis
   this.Lc=Math.ceil(this.L);this.D=new Float32Array(this.Lc*Math.ceil(this.H))}
 Face.prototype.mark=function(u0,v0,u1,v1,val){const q=this.q,W=this.Wd,R=v=>Math.round(v*q);for(let i=Math.max(0,R(u0));i<Math.min(W,R(u1));i++)for(let j=Math.max(0,R(v0));j<Math.min(this.Hd,R(v1));j++)if(this.M[j*W+i]!==2)this.M[j*W+i]=val};
 Face.prototype.opening=function(o){this.open.push(o);this.mark(o.u0,o.v0,o.u1,o.v1,1)};
+/* v20: the slim glazing cross. One bar up and one across, .15 of a block wide, standing just proud of the wall face in the open of a window.
+   A glazed door gets two leaves instead: a meeting stile, a kick panel and two bars across. Near form only.
+   The bars are flat quads, not cubes (4 triangles a window, 8 a door); CONTOURS.dress adds them to the piece they stand in. */
+Face.prototype.glaze=function(o,k){if(this.far)return 0;k=k||{};const q=this.q,c=k.c||'#efe9da',w=o.u1-o.u0,h=o.v1-o.v0;if(w<1||h<1.5)return 0;const ci=Math.floor((o.u0+o.u1)/2*q),cj=Math.floor((o.v0+o.v1)/2*q);if(ci<0||cj<0||ci>=this.Wd||cj>=this.Hd||this.M[cj*this.Wd+ci]!==1)return 0;
+  const L=this.s.glz||(this.s.glz=[]),W=.06,quad=(u0,v0,u1,v1,col)=>{const P=[[u0,v0],[u1,v0],[u1,v1],[u0,v1]].map(([u,v])=>{const[x,z]=this.xz(u,W);return[x,v,z]});L.push({P,n:this.axis==='x'?[0,0,this.n]:[this.n,0,0],c:col||c})},uc=(o.u0+o.u1)/2;
+  if(k.door){const kick=Math.min(.75,h/5);quad(uc-.125,o.v0+kick,uc+.125,o.v1);quad(o.u0,o.v0,o.u1,o.v0+kick,k.panel||'#e4dccb');for(const t of[.4,.72]){const v=o.v0+kick+(h-kick)*t;quad(o.u0,v-.075,o.u1,v+.075)}return 4}
+  const vt=o.v0+h*.6;quad(uc-.075,o.v0,uc+.075,o.v1);quad(o.u0,vt-.075,o.u1,vt+.075);return 2};
+/* glazing quads as one mesh in the same form as the pieces */
+function glazeMesh(list){const n=list.length,pos=new Float32Array(n*12),col=new Float32Array(n*12),nor=new Float32Array(n*12),index=new Uint32Array(n*6);list.forEach((g,i)=>{const P=g.P,h=parseInt(g.c.slice(1),16),rgb=[(h>>16&255)/255,(h>>8&255)/255,(h&255)/255];
+    const e1=[P[1][0]-P[0][0],P[1][1]-P[0][1],P[1][2]-P[0][2]],e2=[P[2][0]-P[0][0],P[2][1]-P[0][1],P[2][2]-P[0][2]],cr=[e1[1]*e2[2]-e1[2]*e2[1],e1[2]*e2[0]-e1[0]*e2[2],e1[0]*e2[1]-e1[1]*e2[0]],flip=cr[0]*g.n[0]+cr[1]*g.n[1]+cr[2]*g.n[2]<0,Q=flip?[P[0],P[3],P[2],P[1]]:P;
+    for(let v=0;v<4;v++)for(let a=0;a<3;a++){pos[i*12+v*3+a]=Q[v][a];col[i*12+v*3+a]=rgb[a];nor[i*12+v*3+a]=g.n[a]}index.set([i*4,i*4+1,i*4+2,i*4,i*4+2,i*4+3],i*6)});return{pos,col,nor,index,quads:n}}
 Face.prototype.hide=function(u0,v0,u1,v1){this.mark(u0,v0,u1,v1,2)};
 Face.prototype.at=function(u,v){const i=Math.round(u*this.q),j=Math.round(v*this.q);return i<0||i>=this.Wd||j<0||j>=this.Hd?0:this.M[j*this.Wd+i]};
 Face.prototype.off=function(u){for(const z of this.zones)if(u>=z.u0&&u<z.u1)return z.off;return 0};
@@ -740,6 +827,13 @@ const P={
  buttress(F,uc,v0,v1,k){k=k||{};const c=k.c||PAL.trim,d=k.deep||PAL.deep,m=Math.round((v0+(v1-v0)*.55)*4)/4;if(F.far){F.on(uc-.5,v0,uc+.5,v1-.5,1,c,'butt');return}
   F.on(uc-.5,v0,uc+.5,v0+.5,1.25,d,'butt');F.on(uc-.5,v0+.5,uc+.5,m,1,c,'butt');F.on(uc-.5,m,uc+.5,m+.25,.75,d,'butt');F.on(uc-.5,m+.25,uc+.5,v1-.5,.5,c,'butt');F.on(uc-.5,v1-.5,uc+.5,v1-.25,.25,d,'butt')},
  /* a door case. It frames the opening and never narrows it. grand: wide jambs and a curved head */
+ /* v20: a glazed door onto a balcony. Jambs to the floor, a threshold, a frieze, a hood on two consoles and a key. */
+ balconyDoor(F,g,k){k=k||{};const c=k.c||PAL.trim,d=k.deep||PAL.deep,uc=(g.u0+g.u1)/2;
+  if(F.far){F.on(g.u0-.5,g.v1,g.u1+.5,g.v1+1,.5,d,'case');return}
+  F.on(g.u0-.5,g.v0,g.u0,g.v1,.25,c,'case');F.on(g.u1,g.v0,g.u1+.5,g.v1,.25,c,'case');F.on(g.u0-.5,g.v1,g.u1+.5,g.v1+.5,.25,c,'case');
+  F.on(g.u0-.5,g.v1+.5,g.u1+.5,g.v1+.75,.25,d,'case');F.on(g.u0-.75,g.v1+.75,g.u1+.75,g.v1+1,.75,d,'case');F.on(g.u0-.5,g.v1+1,g.u1+.5,g.v1+1.25,.5,c,'case');
+  for(const u of[g.u0-.5,g.u1+.25]){F.on(u,g.v1,u+.25,g.v1+.75,.5,d,'case');F.on(u,g.v1-.5,u+.25,g.v1,.25,d,'case')}
+  F.on(uc-.25,g.v1,uc+.25,g.v1+.75,.5,d,'key');F.on(g.u0-.5,g.v0,g.u0-.25,g.v0+.5,.5,d,'case');F.on(g.u1+.25,g.v0,g.u1+.5,g.v0+.5,.5,d,'case')},
  doorcase(F,g,k){k=k||{};const c=k.c||PAL.trim,d=k.deep||PAL.deep,uc=(g.u0+g.u1)/2,w=g.u1-g.u0;
   if(F.far){F.on(g.u0-.5,g.v1,g.u1+.5,g.v1+1,.5,d,'case');return}
   if(k.grand){F.on(g.u0-.75,g.v0,g.u0,g.v1,.5,c,'case');F.on(g.u1,g.v0,g.u1+.75,g.v1,.5,c,'case');F.on(g.u0-.75,g.v1,g.u1+.75,g.v1+.75,.5,c,'case');F.on(g.u0-1,g.v1+.75,g.u1+1,g.v1+1.25,1,d,'case');
@@ -800,7 +894,7 @@ function build(kind,o){o=o||{};const S=new Skin(o.lod==='far'?.5:.25),len=o.len|
   const r={V,unit:S.unit,size:[(x1-x0+1)*S.unit,(y1-y0+1)*S.unit,(z1+1)*S.unit],depth:(z1+1)*S.unit,cover:[...cover].map(s=>s.split(',').map(Number))};r.quads=typeof TREES!=='undefined'?TREES.mesh(r).quads:null;return r}
 function geometry(THREE,m){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(m.pos,3));g.setAttribute('color',new THREE.BufferAttribute(m.col,3));g.setAttribute('normal',new THREE.BufferAttribute(m.nor,3));g.setIndex(new THREE.BufferAttribute(m.index,1));g.computeBoundingSphere();g.userData.quads=m.quads;return g}
 const KINDS=['pilaster','cornice','window','blind','sill','base','balcony','balustrade','door','obelisk','urn','column'];
-return{PAL,STUB,KEY,Skin,Face,P,W,mesh,concat,build,geometry,KINDS}})();
+return{PAL,STUB,KEY,Skin,Face,P,W,mesh,concat,glazeMesh,build,geometry,KINDS}})();
 if(typeof module!=='undefined')module.exports=ORNAMENT;
 
 /* contours.js : Euphrates Hall, Parts Depot v15 (Kairos XI.1, Nov 12 2026). The contours of every building.
@@ -884,7 +978,7 @@ function dressFace(F,c){const st=c.st,pal=c.pal,B=c.bands,top=c.top,L=F.L,g=c.gr
     if(kind==='band'){if(far||!gs.length)return;const ws=gs.filter(x=>!x.door);if(ws.length){const v0=median(ws.map(x=>x.v0)),v1=median(ws.map(x=>x.v1));F.course(v0-.25,v0,.25,D,null,null,'sillband')}
       for(const x of gs)if(x.door)P.doorcase(F,x,{c:T,deep:D,hood:st.sign!=='shop'});return}
     const k=Object.assign({c:T,deep:D},ROW[kind]||ROW.plain);
-    for(const x of gs){if(x.door){P.doorcase(F,x,{c:T,deep:D,grand:kind==='state'&&x.u1-x.u0>=3,arch:st.arch&&x.u1-x.u0>=3,jamb:st.arch&&x.u1-x.u0>=3?.75:.5});continue}
+    for(const x of gs){if(x.door&&(x.balcony||i_isBal(bi))){x.balcony=true;P.balconyDoor(F,x,{c:T,deep:D});continue}if(x.door){P.doorcase(F,x,{c:T,deep:D,grand:kind==='state'&&x.u1-x.u0>=3,arch:st.arch&&x.u1-x.u0>=3,jamb:st.arch&&x.u1-x.u0>=3?.75:.5});continue}
       const o=Object.assign({},k);if(k.alt)o.head=rank((x.u0+x.u1)/2)%2?'tri':'seg';if(i_isBal(bi))o.sill=false;P.surround(F,x,o)}
     for(const x of slots[bi]){const o=Object.assign({},k,{niche:st.niche&&kind==='state'});if(k.alt)o.head=rank((x.u0+x.u1)/2)%2?'tri':'seg';if(i_isBal(bi))o.sill=false;P.blind(F,x,o)}});
   function i_isBal(bi){return bal>=0&&bi===bal+1}
@@ -1004,7 +1098,9 @@ function sidesOf(b){return[{side:'S',axis:'x',o:b.x0-.5,f:b.z1+.5,n:1,L:b.x1-b.x
 const ext=(b,g)=>({x0:b.x0-.5,x1:b.x1+.5,z0:b.z0-.5,z1:b.z1+.5,y0:b.yb!=null?b.yb+.5:-99,y1:b.roofY+.5});
 function layout(spec,st,env,lod,o){const far=lod==='far',S=new Skin(far?.5:.25),R=far?S:new Skin(.5),g=env.ground,pal=Object.assign({},PAL,st.pal||{}),solids=[],facesOut=[];let blind=0;
   if(st.special==='glass'){glasshouse(S,spec,pal,env,far);return{S,R,solids,faces:facesOut,blind,cross:0,pruned:0}}
-  const rows=(o.openings?rowsFrom(o.openings,spec):spec.openings||openings(spec)),cands=[];spec.boxes.forEach((b,bi)=>cands.push(Object.assign(ext(b),{own:bi})));
+  let rows=(o.openings?rowsFrom(o.openings,spec):spec.openings||openings(spec));const cands=[];
+  /* v20, wall moves 11 and 12: balcony doors. Given as [x0,x1,floorY] in cells on the show front; the window there becomes a door to the floor. Rows the Estate already marks door at the balcony storey need no entry here. */
+  if(spec.balconyDoors&&!o.openings){rows=rows.map(r=>Object.assign({},r));for(const[xa,xb,fy]of spec.balconyDoors){let best=null;for(const r of rows){if(r.door||r.side!=='S'||r.y1<fy+2||r.y0>fy+5)continue;const dd=Math.abs((r.a0+r.a1)/2-(xa+xb)/2);if(dd<=3.5&&(!best||dd<best.dd))best={r,dd}}if(best)Object.assign(best.r,{a0:xa-.5,a1:xb+.5,y0:fy+.5,door:true,balcony:true})}}spec.boxes.forEach((b,bi)=>cands.push(Object.assign(ext(b),{own:bi})));
   for(const nsp of env.neighbours||[])for(const b of nsp.boxes)cands.push(ext(b));for(const e of env.existing||[])cands.push({x0:e.x0,x1:e.x1,z0:e.z0,z1:e.z1,y0:e.y0==null?-99:e.y0,y1:e.y1});
   const frontSide=(rows.find(r=>r.door&&spec.boxes[r.box].yb==null)||{}).side,allF=[];let cross=0;
   spec.boxes.forEach((b,bi)=>{const t=b.roof||'hip',lv=levelsOf(spec,b),flat=t==='flat'||t==='dome',ov=b.ov||[1,1,1,1],endFree={N:true,S:true,E:true,W:true},perFace=[];
@@ -1018,7 +1114,7 @@ function layout(spec,st,env,lod,o){const far=lod==='far',S=new Skin(far?.5:.25),
       const free=(e)=>{const al=e?sd.o+sd.L+.3:sd.o-.3,nr=sd.f-sd.n*.3;return!cands.some(c=>c.own!==bi&&inside(c,al,nr)&&c.y1>=top-.1&&c.y0<bands[0][0]+.1)};
       const F=new Face(S,{axis:sd.axis,o:sd.o,f:sd.f,n:sd.n,L:sd.L,H:top+12,zones,free0:free(0),free1:free(1)});
       if(st.centre&&!sub&&sd.side===frontSide||st.centre&&!sub&&sd.L>100){const ws=rows.filter(r=>r.box===bi&&r.side===sd.side&&!r.door).map(r=>[r.a0-sd.o,r.a1-sd.o]),mid=sd.L/2;let a=null,b2=null;for(const w of ws){if(w[1]<=mid-st.centre+1.6&&(a==null||w[1]>a))a=w[1];if(w[0]>=mid+st.centre-1.6&&(b2==null||w[0]<b2))b2=w[0]}if(a!=null&&b2!=null&&st.zoneOff&&!far)zones.push({u0:a,u1:b2,off:st.zoneOff,top})}
-      for(const r of rows)if(r.box===bi&&r.side===sd.side)F.opening({u0:r.a0-sd.o,u1:r.a1-sd.o,v0:r.y0,v1:r.y1,door:r.door});
+      for(const r of rows)if(r.box===bi&&r.side===sd.side)F.opening({u0:r.a0-sd.o,u1:r.a1-sd.o,v0:r.y0,v1:r.y1,door:r.door,balcony:r.balcony});
       for(const r of rows)if(foreign.includes(r.box)&&r.side===sd.side)F.mark(r.a0-sd.o,r.y0,r.a1-sd.o,r.y1,1);
       if(sub)F.hide(-1,-9,sd.L+1,b.yb+.5);for(const h of hides)F.hide(h[0],h[1],h[2],h[3]);
       {let n=0,t2=0;for(let u=.5;u<sd.L;u+=1)for(let v=bands[0][0]+.5;v<top;v+=1){t2++;if(F.at(u,v)===2)n++}hidAll=t2>0&&n/t2>.97}
@@ -1037,9 +1133,10 @@ function layout(spec,st,env,lod,o){const far=lod==='far',S=new Skin(far?.5:.25),
     if(st.turret&&bi===0&&rg)turret(S,R,rg,b,pal)});
   if(st.gateArch)gateArch(S,spec,pal,g);
   /* the pane rule, enforced: any cell in front of an opening (within 2 blocks) is taken out, whichever piece put it there. Then proved: a second sweep must find none. */
-  let pruned=0;const sweep=del=>{let n=0;for(const F of allF)for(const sk of R===S?[S]:[S,R]){const sc=sk.q,O0=Math.round(F.o*sc),F0=Math.round(F.f*sc);for(const o of F.open)for(let i=Math.round(o.u0*sc);i<Math.round(o.u1*sc);i++)for(let j=Math.round(o.v0*sc);j<Math.round(o.v1*sc);j++)for(let k=0;k<2*sc;k++){const A=O0+i,N=F.n>0?F0+k:F0-1-k,key=F.axis==='x'?O.KEY(A,j,N):O.KEY(N,j,A),v=sk.V.get(key);if(v&&v[4]!=='stub'){n++;if(del)sk.V.delete(key)}}}return n};
+  let glazed=0;if(o.glaze!==false&&st.glaze!==false)for(const F of allF)for(const op of F.open){if(op.door&&!op.balcony)continue;if(F.glaze(op,{door:!!op.door,left:(op.u0+op.u1)/2<F.L/2}))glazed++}
+  let pruned=0;const sweep=del=>{let n=0;for(const F of allF)for(const sk of R===S?[S]:[S,R]){const sc=sk.q,O0=Math.round(F.o*sc),F0=Math.round(F.f*sc);for(const o of F.open)for(let i=Math.round(o.u0*sc);i<Math.round(o.u1*sc);i++)for(let j=Math.round(o.v0*sc);j<Math.round(o.v1*sc);j++)for(let k=0;k<2*sc;k++){const A=O0+i,N=F.n>0?F0+k:F0-1-k,key=F.axis==='x'?O.KEY(A,j,N):O.KEY(N,j,A),v=sk.V.get(key);if(v&&v[4]!=='stub'&&v[4]!=='glaze'){n++;if(del)sk.V.delete(key)}}}return n};
   pruned=sweep(true);cross=sweep(false);
-  return{S,R,solids,faces:facesOut,blind,cross,pruned}}
+  return{S,R,solids,faces:facesOut,blind,cross,pruned,glazed}}
 
 function dress(spec,o){o=o||{};const name=o.style||spec.style||'service',st=typeof name==='string'?STYLES[name]:name;if(!st)throw new Error('CONTOURS.dress: unknown style '+name);const env={neighbours:o.neighbours||[],existing:o.existing||[],ground:o.ground==null?.5:o.ground};
   const N=layout(spec,st,env,'near',o),Fa=o.far===false?null:layout(spec,st,env,'far',o),parts=new Map(),add=(m,lod)=>{for(const[k,v]of m){let p=parts.get(k);if(!p)parts.set(k,p={id:k});p[lod]=O.concat(p[lod],v)}};
@@ -1047,8 +1144,11 @@ function dress(spec,o){o=o||{};const name=o.style||spec.style||'service',st=type
   let mx=1e9,mz=1e9;for(const b of spec.boxes){mx=Math.min(mx,b.x0);mz=Math.min(mz,b.z0)}const ox=Math.floor((mx-3)/32)*32,oz=Math.floor((mz-3)/32)*32;
   add(O.mesh(N.S,64,ox,oz),'near');if(N.R!==N.S)add(O.mesh(N.R,64,ox,oz),'near');if(Fa)add(O.mesh(Fa.S,64,ox,oz),'far');
   const pieces=[],q={near:0,far:0};for(const p of parts.values()){let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];const m=p.near||p.far;for(let i=0;i<m.pos.length;i+=3)for(let k=0;k<3;k++){mn[k]=Math.min(mn[k],m.pos[i+k]);mx[k]=Math.max(mx[k],m.pos[i+k])}
-    p.min=mn;p.max=mx;p.centre=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2];q.near+=p.near?p.near.quads:0;q.far+=p.far?p.far.quads:0;pieces.push(p)}
-  return{name:spec.name,style:typeof name==='string'?name:'custom',pieces,quads:q,tris:{near:q.near*2,far:q.far*2},faces:N.faces,solids:N.solids,cross:N.cross+(Fa?Fa.cross:0),pruned:N.pruned,blind:N.blind}}
+    p.min=mn;p.max=mx;p.centre=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2];pieces.push(p)}
+  /* v20: the glazing bars are flat quads; each joins the near form of the piece it stands in */
+  const glz=(N.S.glz||[]).concat(N.R!==N.S?N.R.glz||[]:[]),nearP=pieces.filter(p=>p.near);if(glz.length&&nearP.length){const by=new Map();for(const g of glz){const c=[(g.P[0][0]+g.P[2][0])/2,(g.P[0][1]+g.P[2][1])/2,(g.P[0][2]+g.P[2][2])/2];let best=null,bd=1e9;for(const p of nearP){let d=0;for(let k=0;k<3;k++)d+=Math.max(0,p.min[k]-c[k],c[k]-p.max[k]);if(d<bd){bd=d;best=p}}if(!by.has(best))by.set(best,[]);by.get(best).push(g)}for(const[p,l]of by)p.near=O.concat(p.near,O.glazeMesh(l))}
+  for(const p of pieces){q.near+=p.near?p.near.quads:0;q.far+=p.far?p.far.quads:0}
+  return{name:spec.name,style:typeof name==='string'?name:'custom',pieces,quads:q,tris:{near:q.near*2,far:q.far*2},faces:N.faces,solids:N.solids,cross:N.cross+(Fa?Fa.cross:0),pruned:N.pruned,blind:N.blind,glazed:N.glazed||0}}
 
 const GEO=new WeakMap();
 function object(THREE,d,o){o=o||{};const geo=m=>{let g=GEO.get(m);if(!g){g=O.geometry(THREE,m);GEO.set(m,g)}return g};const mat=o.material||new THREE.MeshLambertMaterial({vertexColors:true}),grp=new THREE.Group(),farAt=o.far||115;grp.userData={k:'contours',o:{building:d.name,style:d.style}};const items=[];
@@ -1056,7 +1156,7 @@ function object(THREE,d,o){o=o||{};const geo=m=>{let g=GEO.get(m);if(!g){g=O.geo
   grp.update=cam=>{for(const it of items){const fa=cam&&it.c.distanceTo(cam)>farAt;if(it.near)it.near.visible=!fa||!it.far;if(it.far)it.far.visible=fa}};grp.setLod=l=>{for(const it of items){if(it.near)it.near.visible=l!=='far'||!it.far;if(it.far)it.far.visible=l==='far'}};
   /* geometry is shared by every object made from the same dressed building; dispose when the last one goes */
   grp.dispose=()=>{for(const p of d.pieces)for(const lod of['near','far'])if(p[lod]&&GEO.has(p[lod])){GEO.get(p[lod]).dispose();GEO.delete(p[lod])}};return grp}
-return{STYLES,VT,openings,rowsFrom,dress,object,village,houseMatrix,sidesOf,_layout:layout,version:'15'}})();
+return{STYLES,VT,openings,rowsFrom,dress,object,village,houseMatrix,sidesOf,_layout:layout,version:'20'}})();
 if(typeof module!=='undefined')module.exports=CONTOURS;
 
 function treeMesh(species,seed,lod,date){const st=date?SEASONS.state(new Date(date)):null;const r=TREES.build(species,{seed,lod:lod==='dot'?'far':lod});if(st){const d=SEASONS.restyle(r.V,st,Object.assign({unit:r.unit},r.season));r.V=d.V}
@@ -1073,7 +1173,8 @@ function seaDate(k){const n=new Date(),P=SEADAY[k];return P?new Date(n.getFullYe
 function seaState(){const st=SEASONS.state(SEAD?new Date(SEAD):seaDate(SEAK));if(SEAK!=='now'&&!SEAD){st.raining=0;st.snowing=SEAK==='winter'?1:0}return st}
 let SEADATE=seaDate(SEAK),SEA=seaState();
 /* the trees are grown off the main thread from the moment the page opens: far shapes first, then near, then the close-up ones */
-const TVAR={oak:3,cedar:2,willow:2,olive:2,cypress:2},TGEO=new Map(),TJOBS=[];let TWORK=null,TBAD=false,TGOT=null,TVER=0;
+/* v1.22: the Depot's hero trees (trees.js v2), one shape each */
+const TVAR={oak:3,cedar:2,willow:2,olive:2,cypress:2,greatOak:1,greatCedar:1,greatBeech:1},TGEO=new Map(),TJOBS=[];let TWORK=null,TBAD=false,TGOT=null,TVER=0;
 /* with cores to spare the trees grow while the house is raised; on a small machine they wait until it stands, so the two do not fight */
 const TEARLY=(navigator.hardwareConcurrency||2)>=4;
 for(const l of['far','dot','near','hero'])for(const sp in TVAR)for(let v=1;v<=TVAR[sp];v++)TJOBS.push([sp,v,l]);
@@ -1695,10 +1796,10 @@ function plantTree(sp,x,z,sc=1,gap=0){x=Math.round(x);z=Math.round(z);if(!inb(x,
   if(gap){const a=Math.floor(x/16),b=Math.floor(z/16);for(let i=-1;i<=1;i++)for(let j=-1;j<=1;j++){const c=TCELL.get((a+i)+','+(b+j));if(c)for(const q of c)if(Math.hypot(q[0]-x,q[1]-z)<gap)return false}}
   {const k=Math.floor(x/16)+','+Math.floor(z/16);let c=TCELL.get(k);if(!c)TCELL.set(k,c=[]);c.push([x,z])}
   TREEPL.push({species:sp,x,z,y:h+.5,rot:Math.floor(rnd()*360),scale:sc,seed:Math.floor(rnd()*97)});CUR=0;for(let y=g;y<g+4;y++)S(x,y,z,C.inv);return true}
-const TRAD={oak:9,cedar:8,willow:5,olive:5.5,cypress:1.5};
+const TRAD={oak:9,cedar:8,willow:5,olive:5.5,cypress:1.5,greatOak:13.5,greatCedar:11.6,greatBeech:12};
 function genTreesKit(){CUR=0;const room=(x,z,r)=>{for(let a=0;a<8;a++)if(blocked(Math.round(x+Math.cos(a*.785)*r),Math.round(z+Math.sin(a*.785)*r)))return false;return true};
   /* the Great Oak, the largest tree on the estate */
-  plantTree('cedar',-50,125,1.8);OBJ.push({n:'The Great Cedar: the Great Tree',a:['nx','tree'],x:-50,y:1,z:125,bid:0,l:0,room:null,out:'The Great Cedar'});
+  plantTree('greatCedar',-50,125,1.25);OBJ.push({n:'The Great Cedar: the Great Tree',a:['nx','tree'],x:-50,y:1,z:125,bid:0,l:0,room:null,out:'The Great Cedar'});
   /* the cypress avenue, from the forecourt to the gate and on to the village road */
   for(let z=92;z<=188;z+=9)for(const x of[-8,8])plantTree('cypress',x,z,1);for(let z=216;z<=264;z+=12)for(const x of[-9,9])plantTree('cypress',x,z,.9);
   /* the park: oaks in open ground, cedars as specimens, willows by the water, olives and cypresses for the south */
@@ -1984,7 +2085,7 @@ function spawnAnimals(){const A=[];const rectSpawn=(kind,n,R,opt={})=>{for(let i
   rectSpawn('cat',2,[30,44,40,50],i=>({c:['#3a3230','#d9a066'][i],speed:.7}));rectSpawn('cat',2,[150,170,217,226],i=>({c:['#f1ede4','#6b6b6b'][i],speed:.7}));
   rectSpawn('hen',8,[-130,-118,138,150],i=>({c:['#c9682f','#f1ede4','#8a3b2a'][i%3],speed:.8}));rectSpawn('hen',5,[160-12,160+12,217,226],{speed:.8});
   {const way=[[-40,-258],[0,-262],[40,-260],[80,-262],[120,-258],[160,-262],[200,-258],[240,-254],[256,-230],[258,-190],[256,-150]];
-   rectSpawn('dog',1,[-46,-34,-264,-252],{c:'#25252b',e:'#0d0d11',speed:2.3,scale:2.4,route:way.concat(way.slice(1,-1).reverse())})}
+   rectSpawn('dog',1,[-46,-34,-264,-252],{were:1,c:'#25252b',e:'#0d0d11',speed:2.3,scale:2.4,route:way.concat(way.slice(1,-1).reverse())})}
   A.push({kind:'horse',x:-1,y:1,z:105,static:true,c:'#6b4226',m:'#4a2d1a'});return A}
 /* ---------- v1.7: Kairos's face, the tour, a gentler overview ---------- */
 let KH=null;
@@ -2053,6 +2154,10 @@ function kchatInit(){$('#kcx').onclick=kchatClose;$('#kcsend').onclick=kcSend;$(
   $('#kcfull').onclick=()=>run(['doc',URLS.chat]);$('#kcvoice').onclick=()=>{KC.speak=!KC.speak;$('#kcvoice').classList.toggle('on',KC.speak);$('#kcvoice').textContent=KC.speak?'Voice on':'Voice off'};
   $('#kcreset').onclick=()=>{kcSave(null);KC.msgs=[];kcPaint()}}
 
+/* v1.22: the werewolf is the Depot's (props6.js, v20): a prowling figure in two halves of a stride, shown in turn as he walks. He keeps the old route, pace and body */
+function wereFig(mat){const g=new THREE.Group(),st=[];for(const s of[0,1]){const r=propGet('werewolf',{step:s}),u=r.unit,fb=new FB();
+    for(const q of r.q){if(fb.n===fb.cap)fb.grow();const o=fb.n*12,col=q.f?[1,.85,.45]:lin(q.c);for(let k=0;k<4;k++){const P=q.p[k],j=o+k*3;fb.p[j]=P[0]*u;fb.p[j+1]=P[1]*u;fb.p[j+2]=P[2]*u;fb.nm[j]=q.n[0]*127;fb.nm[j+1]=q.n[1]*127;fb.nm[j+2]=q.n[2]*127;fb.c[j]=Math.min(255,col[0]*255);fb.c[j+1]=Math.min(255,col[1]*255);fb.c[j+2]=Math.min(255,col[2]*255)}fb.n++}
+    const m=new THREE.Mesh(fb.geo(),mat);m.castShadow=true;m.visible=!s;g.add(m);st.push(m)}g.userData={st};return g}
 function buildLife(){const pm=PMAT();const hip=9*PS;let n=0;
   const mkPerson=p=>{let sd=(p.x*73856093^p.y*19349663^p.z*83492791)>>>0;const r=()=>{sd=(sd*1664525+1013904223)>>>0;return sd/4294967296};
     let o=outfit(p.role==='villager'||p.role==='gardener'||p.role==='groom'||p.role==='farmhand'||p.role==='priest'?'none':(p.h||'none'),p.role==='kairos'?'kairos':null,r);
@@ -2062,7 +2167,7 @@ function buildLife(){const pm=PMAT();const hip=9*PS;let n=0;
     const B=p.b||[p.x-6,p.x+6,p.z-6,p.z+6];const E={wrap,fig,x:p.x+0,z:p.z+0,y:p.y,indoor:!!bid,b:B,static:p.role==='kairos',speed:p.child?1.5:1.05,wait:rnd()*4,tgt:null,ph:rnd()*6,kind:'person'};if(p.role==='kairos'&&KSEAT){E.seated=true;E.x=KSEAT.x;E.z=KSEAT.z;E.y=KSEAT.y-hip+.58;wrap.position.set(E.x,E.y-.5,E.z);fig.rotation.y=KSEAT.yaw;const ud=fig.userData;if(ud.l1){ud.l1.rotation.x=-1.45;ud.l2.rotation.x=-1.45}}if(p.role==='kairos')E.kh=true;addLife(E);n++};
   for(const p of PEOPLE)mkPerson(p);
   for(const p of spawnOutdoorPeople())mkPerson(Object.assign(p,{bid:0}));
-  let an=0;for(const a of spawnAnimals()){const{V,hip:ah}=animalVox(a.kind,a);const wrap=new THREE.Group();const fig=figMesh(V,ah,pm,ah);wrap.add(fig);wrap.position.set(a.x,a.y-.5,a.z);fig.rotation.y=a.static?0:rnd()*6.28;if(a.scale)wrap.scale.setScalar(a.scale);scene.add(wrap);
+  let an=0;for(const a of spawnAnimals()){const{V,hip:ah}=animalVox(a.kind,a);const wrap=new THREE.Group();const fig=a.were?wereFig(pm):figMesh(V,ah,pm,ah);wrap.add(fig);wrap.position.set(a.x,a.y-.5,a.z);fig.rotation.y=a.static?0:rnd()*6.28;if(a.scale&&!a.were)wrap.scale.setScalar(a.scale);scene.add(wrap);
     addLife({wrap,fig,x:a.x,z:a.z,y:a.y,b:a.b||[a.x-6,a.x+6,a.z-6,a.z+6],static:!!a.static,speed:a.speed||1,wait:rnd()*5,tgt:null,ph:rnd()*6,kind:a.kind,route:a.route||null,r:(BODYR[a.kind]||.36)*(a.scale||1)});an++}
   /* water birds: swans and ducks glide on the lake */
   const wb=[];for(let i=0;i<4;i++)wb.push({kind:'swan',r:{}});for(let i=0;i<8;i++)wb.push({kind:'duck',r:{m:i%2===0}});
@@ -2087,7 +2192,7 @@ function lifeStep(dt){if(!LIFE_ON)return;const cam=camera.position;const far=MOD
     if(!ok||e.side>2.5){e.tgt=null;e.side=0;e.wait=.4+rnd();continue}
     e.x=nx;e.z=nz;if(ny!==e.y){e.y=ny}const want=Math.atan2(tx,tz);let da=want-e.fig.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));e.fig.rotation.y+=da*Math.min(1,dt*6);
     e.wrap.position.x=e.x;e.wrap.position.z=e.z;const tyy=e.water?-.78:e.y-.5;e.wrap.position.y+=(tyy-e.wrap.position.y)*Math.min(1,dt*8);
-    e.ph+=dt*e.speed*(e.kind==='person'?6.5:7.5);if(ud.l1&&!e.seated){const s=Math.sin(e.ph)*.55;ud.l1.rotation.x=s;ud.l2.rotation.x=-s}if(e.water)e.fig.position.y=Math.sin(e.ph*.4)*.03}
+    e.ph+=dt*e.speed*(e.kind==='person'?6.5:7.5);if(ud.l1&&!e.seated){const s=Math.sin(e.ph)*.55;ud.l1.rotation.x=s;ud.l2.rotation.x=-s}else if(ud.st){const s=Math.sin(e.ph)>0;ud.st[0].visible=s;ud.st[1].visible=!s}if(e.water)e.fig.position.y=Math.sin(e.ph*.4)*.03}
   if(BIRDS){const f=BIRDS.userData.f;for(let i=0;i<f.length;i++){const b=f[i],a=tt*.09+b.a*.06,cx=Math.cos(a)*b.r,cz=Math.sin(a)*b.r;M4.makeRotationY(-a);const fl=Math.sin(tt*9+i)*.35;M4.multiply(new THREE.Matrix4().makeScale(1.1,1+fl,1.1));M4.setPosition(cx+b.ox,b.h+Math.sin(tt+i)*.8,cz+b.oz);BIRDS.setMatrixAt(i,M4)}BIRDS.instanceMatrix.needsUpdate=true}}
 /* window detail: frames, a mullion cross and a sill on every outward face of a window. v1.14: a bar is its two broad faces only, the work is cut into 64-block pieces, and a piece too far off to show a bar is not drawn */
 function buildWindowDetail(){const groups=new Map();const fr=lin('#e9dfc4').map(v=>v*255|0),si=lin('#c8bea5').map(v=>v*255|0);let n=0;
@@ -3058,6 +3163,380 @@ D('teaServiceFine','Tea service on a tray, double resolution','Fine detail: hero
 })(typeof PROPS!=='undefined'?PROPS:require('./props.js'));
 
 /* =========================================================
+   Euphrates Hall Parts Depot: props6.js (Depot v20, Nov 13, 2026): the parts the v20 room plans and the winter dress call for.
+   Load after props5.js. Same grid (unit .115, 8.7 cubes a block), front faces +z, wall pieces flat at their back.
+
+   For the room plans:   pegRail, pictureLandscape (o.scene 'park'|'sea'|'snow'|'moor', o.seed), pierGlass, wallMap
+   Winter dress, indoors: stockingRow, mantelGarland (o.len in blocks), wreath, christmasTree (o.lit false to put the candles out),
+                          presents, roastingSpit
+   Winter dress, outdoors: lightsTree (returns anchors and strings; o.lit), lightString (o.len, o.sag, o.white), bushLights (o.w, o.d), eaveGarland (o.len)
+   The park at night:     werewolf (o.step 0|1: the two halves of a prowling stride; o.coat 'grey'|'black'|'brown')
+   ========================================================= */
+(function(P){const{def,kit,colors:C}=P;
+const D=(n,label,room,act,fn,ex)=>def(n,Object.assign({label,room,act},ex||{}),o=>{const k=kit();const r=fn(k,o||{})||{};return Object.assign({V:k.V},r)});
+const h3=(x,y,z,s)=>{let n=(x*374761393+y*668265263+z*2147483647+(s||0)*1274126177)|0;n=(n^(n>>>13))*1274126177|0;return((n^(n>>>16))>>>0)/4294967296};
+const FIR='#1f4a2c',FIR2='#2c5f38',FIR3='#173a22',RED='#a3201f',BERRY='#c8312b',CORD='#6b4a2a',IRON='#2b2b2e',FLAME='#ffd98a',GOLD=C.gold||'#d4af37',GILT=C.gilt||'#c9a227',WH='#f1ede0';
+const ST='Servants and stores',CS='Corridors and state rooms',WN='Winter dress';
+
+/* ---- for the room plans ---- */
+D('pegRail','Peg rail with an apron and a cap',ST+': every servant\'s bedroom, sculleries, the Boot Room','hang up',(k,o)=>{
+  k.box(-9,6,0,9,8,0,C.oakL||'#8a6a45');for(const x of[-7,-3,0,4,7]){k.put(x,7,1,C.oak||'#5a4028');k.put(x,7,2,C.oak||'#5a4028')}
+  k.box(-9,3,1,-5,6,1,WH);k.box(-8,0,1,-6,2,1,WH);k.put(-7,7,1,WH);                      /* an apron on the first peg */
+  k.box(3,4,1,5,6,1,'#22242a');k.box(2,4,2,6,4,2,'#22242a');                             /* a cap on the fourth */
+  if(o.coat!==false){k.box(6,1,1,8,6,1,'#3a3a44');k.box(6,1,2,8,5,2,'#3a3a44')}          /* a coat on the last */
+  return{anchor:'wall'}},{wall:true});
+D('pictureLandscape','Gilt-framed landscape',CS+': bedrooms, passages, drawing rooms','look',(k,o)=>{const sc=o.scene||['park','sea','snow','moor'][((o.seed|0)%4+4)%4],s=(o.seed|0)+3;
+  k.box(-11,0,0,11,16,0,GILT);k.box(-12,-1,0,12,-1,0,GOLD);k.box(-12,17,0,12,17,0,GOLD);for(const x of[-12,12])k.box(x,0,0,x,16,0,GOLD);
+  const sky=sc==='snow'?'#c9d3dc':sc==='moor'?'#b9a98f':'#9fc3e0',far=sc==='sea'?'#3f6f8f':sc==='snow'?'#e6ebee':sc==='moor'?'#6b5a3f':'#5a8f3a',near=sc==='sea'?'#2f5a78':sc==='snow'?'#f4f6f7':sc==='moor'?'#54452f':'#7a9a4a';
+  for(let x=-10;x<=10;x++){const hz=7+Math.round(2*Math.sin((x+s)*.45)+1.2*Math.sin((x+s*2)*.9));for(let y=1;y<=15;y++)k.put(x,y,1,y>hz?sky:y>3+(sc==='sea'?0:Math.round(Math.sin((x-s)*.3))) ?far:near)}
+  if(sc==='sea'){k.box(3,6,1,3,10,1,'#3a2a1c');k.box(4,7,1,6,9,1,WH);k.box(1,5,1,6,5,1,'#3a2a1c')}else{const tx=-5+(s%4);k.box(tx,4,1,tx,8,1,'#3a2a1c');for(let y=8;y<=12;y++)k.box(tx-(y<11?2:1),y,1,tx+(y<11?2:1),y,1,sc==='snow'?'#dfe5e8':sc==='moor'?'#7a5a2a':'#2f5f33')}
+  k.put(7,13,1,sc==='moor'?'#e8b05a':'#fff4c8');k.put(8,13,1,sc==='moor'?'#e8b05a':'#fff4c8');return{anchor:'wall'}},{wall:true});
+D('pierGlass','Pier glass',CS+': between the windows of any state room, the head of a passage','look',k=>{
+  k.box(-7,0,0,6,24,0,GILT);k.box(-5,2,1,4,22,1,C.glass||'#bcd3dc');for(const y of[8,15])k.box(-5,y,1,4,y,1,GILT);
+  k.box(-5,25,0,4,25,0,GILT);k.box(-3,26,0,2,26,0,GOLD);k.box(-1,27,0,0,27,0,GOLD);k.put(-7,25,0,GOLD);k.put(6,25,0,GOLD);return{anchor:'wall'}},{wall:true});
+D('wallMap','Estate map on rollers',ST+': offices, the Map Room, the Schoolroom, the Agent\'s Room','read',k=>{
+  k.box(-12,16,0,12,17,1,C.oak||'#5a4028');k.box(-12,0,0,12,1,1,C.oak||'#5a4028');k.box(-11,2,0,11,15,0,'#e9dfc3');
+  for(let x=-10;x<=10;x++){const y=8+Math.round(2.4*Math.sin(x*.5));k.put(x,y,1,'#4f7fa8')}                 /* the river */
+  k.box(-2,10,1,1,12,1,'#8a4a3a');k.box(-7,4,1,-4,6,1,'#5a8f3a');k.box(4,11,1,8,13,1,'#5a8f3a');for(const[x,y]of[[6,5],[7,5],[8,6],[-8,12],[-9,12]])k.put(x,y,1,'#6b5a3f');
+  k.box(8,3,1,10,3,1,'#3a3a3a');k.put(9,4,1,RED);k.put(0,18,0,'#3a3a3a');return{anchor:'wall'}},{wall:true});
+
+/* ---- winter dress, indoors ---- */
+D('stockingRow','Stockings on the mantel',WN+': hang at the mantel shelf of any fireplace','look',k=>{
+  k.box(-11,7,0,11,7,0,CORD);const cs=[RED,'#f1ede0','#2f5f33',RED,'#c9a227'];for(let i=0;i<5;i++){const x=-9+i*4+(i>2?1:0),c=cs[i];k.box(x,2,1,x+1,6,1,c);k.box(x,0,1,x+2,1,1,c);k.box(x,6,1,x+1,6,1,i===1?RED:WH);k.put(x,7,1,CORD)}
+  return{anchor:'wall'}},{wall:true});
+D('mantelGarland','Fir garland with berries and bows',WN+': along a mantel shelf, over a door, down a stair rail','look',(k,o)=>{const n=Math.max(12,Math.round((o.len||3)/.115)),x0=-Math.floor(n/2);
+  for(let i=0;i<n;i++){const x=x0+i,u=i/(n-1),sag=Math.round(2.4*Math.sin(u*Math.PI*Math.max(1,Math.round(n/26)))**2);for(let dy=0;dy<2;dy++)for(let z=0;z<2;z++){if(h3(x,dy,z,7)<.12)continue;k.put(x,4-sag+dy,z,h3(x,dy,z,3)<.3?FIR2:h3(x,dy,z,5)<.25?FIR3:FIR)}
+    if(i%5===2)k.put(x,4-sag,2,BERRY);if(i%13===6){k.box(x-1,5-sag,2,x+1,5-sag,2,RED);k.put(x,4-sag,2,RED);k.put(x-1,3-sag,2,RED);k.put(x+1,3-sag,2,RED)}}
+  return{anchor:'wall'}},{wall:true,tile:[26,0]});
+D('wreath','Holly wreath with a red bow',WN+': over a mantel, on a door, in a window','look',k=>{
+  for(let x=-5;x<=5;x++)for(let y=-5;y<=5;y++){const d=Math.hypot(x,y);if(d<3||d>5.3)continue;for(let z=0;z<(d>3.6&&d<4.8?2:1);z++)k.put(x,y+6,z,h3(x,y,z,2)<.3?FIR2:FIR);if(h3(x,y,1,9)<.14)k.put(x,y+6,2,BERRY)}
+  k.box(-2,1,2,2,1,2,RED);k.put(0,2,2,RED);k.box(-2,-1,2,-1,0,2,RED);k.box(1,-1,2,2,0,2,RED);return{anchor:'wall'}},{wall:true});
+D('christmasTree','Christmas tree with candles',WN+': the Saloon, the Great Hall, the Entrance Hall, the Servants\' Hall, the Day Nursery','look',(k,o)=>{const lit=o.lit!==false;
+  k.box(-3,0,-3,3,3,3,'#7a1f2b');k.box(-3,3,-3,3,3,3,GILT);k.box(-1,4,-1,0,7,0,'#3a2a1c');
+  for(let y=6;y<=44;y++){const u=(y-6)/38,tier=(y-6)%8,r=Math.max(.8,(1-u)*10.2-tier*.42+1.2);for(let x=-11;x<=11;x++)for(let z=-11;z<=11;z++){const d=Math.hypot(x+.5,z+.5);if(d>r||d<r-2.6&&tier<7)continue;if(h3(x,y,z,1)<.1)continue;k.put(x,y,z,h3(x,y,z,4)<.28?FIR2:h3(x,y,z,6)<.2?FIR3:FIR)}
+    if(tier===0&&y<42){const rr=r-.4,n=Math.max(4,Math.round(rr*1.3));for(let i=0;i<n;i++){const a=i/n*Math.PI*2+y,x=Math.round(Math.cos(a)*rr-.5),z=Math.round(Math.sin(a)*rr-.5);if(i%2){k.put(x,y+1,z,WH);k.put(x,y+2,z,lit?FLAME:WH,lit?'flame':undefined)}else k.put(x,y-1,z,[RED,GOLD,'#2E5E9E','#c0c7cf'][(i+y)%4])}}}
+  k.box(-1,45,-1,0,46,0,GOLD,lit?'flame':undefined);k.box(-2,46,-1,1,46,0,GOLD);k.box(-1,47,-1,0,48,0,GOLD,lit?'flame':undefined);
+  return{glow:lit}},{light:true});
+D('presents','Presents under the tree',WN+': at the foot of the tree','open',k=>{
+  k.box(-4,0,-3,0,3,1,RED);k.box(-2,0,-3,-2,4,1,GOLD);k.box(-4,2,-1,0,2,-1,GOLD);k.box(1,0,-2,4,2,2,'#2E5E9E');k.box(1,1,0,4,1,0,WH);k.box(2,0,-2,2,3,2,WH);
+  k.box(-3,0,2,-1,1,4,'#2f5f33');k.put(-2,2,3,RED);k.box(-3,4,-2,-1,5,0,'#c9a227');k.put(-2,6,-1,RED)},{});
+D('roastingSpit','Roasting spit with a joint and a dripping pan',WN+': before the kitchen range or the Great Hall fire','turn the spit',k=>{
+  for(const x of[-8,8]){k.box(x,0,-2,x,0,2,IRON);k.box(x,1,0,x,9,0,IRON);k.put(x,10,0,IRON)}k.box(-9,9,0,9,9,0,'#5a5a60');k.box(9,8,0,10,10,0,IRON);k.put(11,9,0,'#5a4028');
+  for(let x=-4;x<=4;x++){const r=Math.abs(x)>3?1:2;for(let y=-r;y<=r;y++)for(let z=-r;z<=r;z++)if(Math.hypot(y,z)<=r+.4)k.put(x,9+y,z,h3(x,y,z,2)<.3?'#8a4a22':'#a85f2c')}
+  k.box(-6,1,-3,6,1,3,'#3a3a3e');k.box(-5,2,-2,5,2,2,'#c98a3a');for(const x of[-6,6])k.box(x,2,-3,x,2,3,'#3a3a3e');for(const z of[-3,3])k.box(-6,2,z,6,2,z,'#3a3a3e')},{});
+
+/* ---- winter dress, out of doors ---- */
+/* The evergreen built for lights (for x -50, z 125). Coarse cubes (unit .23) so a tree nine blocks tall stays light.
+   It returns anchors: a spiral of points just outside the boughs, in blocks from the foot of the trunk, top first, for the Estate to hang strings on;
+   and strings: the same points cut into six runs from the tip to the skirt. o.lit true hangs a bulb at every anchor and lights the star. */
+D('lightsTree','Evergreen built for lights',WN+': the great tree on the south lawn (x -50, z 125)','look',(k,o)=>{const U=.23,H=40,anchors=[],lit=!!o.lit;
+  k.box(-1,0,-1,0,5,0,'#3a2a1c');const rad=y=>{const u=(y-4)/(H-4),tier=(y-4)%6;return Math.max(.7,(1-u)*8.4-tier*.5+1.6)};
+  for(let y=4;y<=H;y++){const r=rad(y),tier=(y-4)%6;for(let x=-10;x<=10;x++)for(let z=-10;z<=10;z++){const d=Math.hypot(x+.5,z+.5);if(d>r||(d<r-2.2&&tier<5))continue;if(h3(x,y,z,1)<.08)continue;k.put(x,y,z,h3(x,y,z,4)<.28?FIR2:h3(x,y,z,6)<.2?FIR3:FIR)}}
+  const turns=7,N=84;for(let i=0;i<N;i++){const u=i/(N-1),y=H-1-u*(H-6),r=rad(Math.round(y))+.7,a=u*turns*Math.PI*2;anchors.push([+(Math.cos(a)*r*U).toFixed(2),+((y+.5)*U).toFixed(2),+(Math.sin(a)*r*U).toFixed(2)])}
+  if(lit)anchors.forEach((p,i)=>k.put(Math.round(p[0]/U-.5),Math.round(p[1]/U-.5),Math.round(p[2]/U-.5),['#ffd98a','#ff8a5a','#9fd0ff','#ffe9b0'][i%4],'flame'));
+  k.box(-1,H+1,-1,0,H+2,0,GOLD,lit?'flame':undefined);k.box(-2,H+2,-1,1,H+2,0,GOLD);k.box(-1,H+3,-1,0,H+3,0,GOLD,lit?'flame':undefined);
+  const strings=[];for(let s=0;s<6;s++)strings.push(anchors.slice(s*14,s*14+15));return{unit:U,anchors,strings,top:[0,+((H+3)*U).toFixed(2),0],glow:lit}},{light:true,outdoor:true});
+D('lightString','String of lights',WN+': along eaves and cornices, over bushes and hedges, between lamp posts','look',(k,o)=>{const n=Math.max(8,Math.round((o.len||3)/.115)),x0=-Math.floor(n/2),sag=o.sag==null?2:o.sag,cs=o.white?['#ffe9b0']:['#ffd98a','#ff8a5a','#9fd0ff','#b8ffb0'];
+  for(let i=0;i<n;i++){const x=x0+i,u=i/(n-1),y=3-Math.round(sag*Math.sin(u*Math.PI));k.put(x,y,0,'#2a2a2a');if(i%4===2)k.put(x,y-1,0,cs[(i>>2)%cs.length],'flame')}return{anchor:'wall',glow:true}},{wall:true,light:true,outdoor:true,tile:[26,0]});
+D('bushLights','Net of lights for a bush or a hedge',WN+': thrown over any bush, topiary or hedge top','look',(k,o)=>{const w=Math.max(4,Math.round((o.w||1.4)/.115/2)),d=Math.max(4,Math.round((o.d||1.4)/.115/2)),cs=['#ffd98a','#ffe9b0','#ff8a5a'];
+  for(let x=-w;x<=w;x++)for(let z=-d;z<=d;z++){if((x+z)%3!==0&&(x-z)%3!==0)continue;const y=Math.round(3*(1-(x*x)/(w*w+1))*(1-(z*z)/(d*d+1)));if((x*7+z*13)%5===0)k.put(x,y,z,cs[Math.abs(x+z)%3],'flame');else if(h3(x,y,z,3)<.35)k.put(x,y,z,'#2a2a2a')}return{glow:true}},{light:true,outdoor:true});
+D('eaveGarland','Fir garland with lights for an eave or a porch',WN+': under the eaves of the lodges and the village houses, round the portico','look',(k,o)=>{const n=Math.max(12,Math.round((o.len||4)/.115)),x0=-Math.floor(n/2);
+  for(let i=0;i<n;i++){const x=x0+i,u=i/(n-1),sag=Math.round(3*Math.sin(u*Math.PI*Math.max(1,Math.round(n/30)))**2);for(let dy=0;dy<2;dy++){if(h3(x,dy,0,7)<.1)continue;k.put(x,5-sag+dy,0,h3(x,dy,0,3)<.3?FIR2:FIR);if(dy===0&&h3(x,1,1,2)<.5)k.put(x,5-sag,1,FIR3)}if(i%6===3)k.put(x,4-sag,1,'#ffd98a','flame');if(i%15===7){k.put(x,5-sag,1,RED);k.put(x-1,4-sag,1,RED);k.put(x+1,4-sag,1,RED)}}
+  return{anchor:'wall',glow:true}},{wall:true,light:true,outdoor:true,tile:[30,0]});
+
+/* ---- the park at night ---- */
+D('werewolf','Werewolf, prowling','The park and the woods after dark; never indoors','none',(k,o)=>{const coat=o.coat||'grey',base=coat==='black'?['#1d1d22','#2a2a31','#121216']:coat==='brown'?['#4a3626','#5e4631','#35261a']:['#565a60','#6c7077','#3d4046'],st=o.step?1:0;
+  const fur=(x,y,z)=>{const h=h3(x,y,z,5);return h<.3?base[1]:h<.52?base[2]:base[0]},ell=(cx,cy,cz,rx,ry,rz)=>{for(let x=Math.floor(cx-rx);x<=Math.ceil(cx+rx);x++)for(let y=Math.floor(cy-ry);y<=Math.ceil(cy+ry);y++)for(let z=Math.floor(cz-rz);z<=Math.ceil(cz+rz);z++)if(((x-cx)/rx)**2+((y-cy)/ry)**2+((z-cz)/rz)**2<=1)k.put(x,y,z,fur(x,y,z))};
+  const leg=(x,z,top,len,fwd)=>{for(let i=0;i<len;i++){const y=top-i,zz=z+Math.round(fwd*(i/len)*3-(i>len*.55?fwd*1.2:0));k.put(x,y,zz,fur(x,y,zz));k.put(x+(x<0?1:-1),y,zz,fur(x+1,y,zz));if(i<len*.5)k.put(x,y,zz-1,fur(x,y,zz-1))}const pz=z+Math.round(fwd*3-fwd*1.2);k.box(x-(x<0?0:1),0,pz,x+(x<0?1:0),0,pz+2,base[2]);for(const dx of[0,1])k.put(x-(x<0?0:1)+dx,0,pz+3,'#e8e2d0')};
+  /* haunches high, shoulders hunched, the back sloping down to a low head: the walk of something hunting */
+  ell(0,12,-6,3.6,3.6,4.6);ell(0,12.5,0,3.2,3.2,5);ell(0,13.5,6,4.2,4.4,4.4);ell(0,15.5,7,3,2.4,3);                     /* rump, barrel, shoulders, the hump */
+  ell(0,11,11,2.4,2.4,2.6);ell(0,9.5,14.5,2.6,2.6,2.8);                                                                  /* neck slung low, the skull */
+  for(let z=17;z<=21;z++){const r=z<19?1:0;k.box(-1-r,8,z,r,9+(z<20?1:0),z,fur(0,8,z))}k.box(-1,7,17,0,7,20,base[2]);   /* the muzzle and jaw */
+  k.box(-1,9,21,0,9,21,'#16161a');for(const x of[-2,1]){k.put(x,11,16,'#f2c230','flame');k.put(x,13,13,base[2]);k.put(x,14,13,base[2]);k.put(x,15,12,base[2])}
+  for(const z of[18,20])for(const x of[-1,0])k.put(x,7-(z===18?1:0),z,'#f1ede0');                                         /* teeth */
+  for(let z=5;z<=10;z++)k.put(z%2?-1:0,17+(z<8?1:0),z,base[2]);                                                           /* hackles */
+  leg(-3,7,11,11,st?1:-1);leg(3,7,11,11,st?-1:1);leg(-3,-7,10,10,st?-1:1);leg(3,-7,10,10,st?1:-1);
+  for(let i=0;i<10;i++){const y=11-Math.round(i*.75),z=-11-i;for(const x of[-1,0])for(let dy=0;dy<(i<7?2:1);dy++)k.put(x,y+dy,z,fur(x,y+dy,z))}  /* the tail carried low */
+  return{glow:true}},{figure:true,light:true});
+})(typeof PROPS!=='undefined'?PROPS:require('./props.js'));
+
+/* v1.22: the Depot's room planner (v20), so the Estate can plan a room again from its own register */
+/* roomplan.js : Euphrates Hall, Parts Depot v20 (Kairos XI.1, Nov 13 2026). A furnishing plan for any room, by rule.
+   Plain script, no imports, no network, no randomness beyond a seed taken from the room's own name and place.
+
+   ROOMPLAN.plan(row, o) -> a plan in the Depot's plan format (as plans8.json): {key, name, building, floor, type, w, d, ceiling, items, runs, art, audit}
+      row   one row of the Estate's room-register.json: {building, floor, y, name, rect:[x0,z0,x1,z1], height, doors:[{wall,from,to}], windows:[{wall,from,to}], fire}
+      o.type     the kind of room (sitting, bedState, kitchen ...). Left out, it is read from the name.
+      o.holes    stairwells and voids, local [x0,z0,x1,z1], kept clear
+      o.fireAt   where the fire stands: the centre of the chimney breast in local blocks along its wall (left out, the middle of the clearest run)
+      o.oneDoor  n: plan to the nth door of the row only (the attic cells the wall moves re-cut)
+      o.variant  0..3 for a room of a repeated kind (guest rooms, maids' rooms): the same furniture, arranged differently
+   Local blocks: x from the west wall line, z from the north wall line; the inside runs .5 to w-.5. r: 0 faces +z, 90 faces +x.
+   items: {k,o,x,y,z,r,on?}. on = index in this room's items of the piece a small thing stands on.
+   art: every hung piece again as a rule {i, wall, centred, lower}, so a moved wall moves its pictures.
+   ROOMPLAN.audit(plan) re-checks the rules and returns {ok, fails:[...]}.
+   ROOMPLAN.passage(len, clear, o) -> the passage kit: a runner, a bench or console on one wall only, lamps at intervals. */
+const ROOMPLAN=(()=>{
+const SZ={"bed4":[2.4,3.6,4],"bedIron":[1.3,1.6,3.5],"chairDining":[0.8,2.3,0.8],"armchair":[1.3,2.4,1.3],"sofa":[3.33,1.8,1.3],"bisellium":[2.9,4.1,2.2],"pew":[3.79,1.7,1],"tableDining":[1.7,1.2,9.31],"deskWriting":[2.4,1.9,1.3],"mapTable":[2.9,1.5,2],"billiard":[2.6,1.4,4.7],"libraryTable":[1.9,2,1.9],"bookcase":[2.87,4.94,0.7],"cardCatalog":[1.7,2.1,0.9],"deedChest":[1.5,1.2,1],"strongbox":[1.2,1.6,1],"wardrobe":[2.3,4.3,1.3],"washstand":[1.3,2,0.8],"wineRack":[2.87,2.8,0.7],"bellBoard":[3.5,3.6,0.3],"kitchenRange":[3.79,4,1],"kitchenTable":[1.8,1.3,4.71],"menuSlate":[1.7,2.7,0.2],"chandelier":[2.2,3.6,2.2],"candelabra":[1,1.8,0.6],"lantern":[3.79,1.4,3.79],"fireplace":[3,5.5,0.6],"clockLong":[1.2,4.3,0.8],"grandPiano":[1.9,2.8,4.4],"globe":[1,2.1,1],"wireless":[2,3.6,1],"telescope":[1,3,2.5],"portrait":[1.72,2.41,0.1],"bellPull":[0.2,3.5,0.2],"gong":[1.7,2.6,0.2],"rug":[3.79,0.1,5.4],"panelling":[1.84,3.22,0.35],"dado":[1.84,8.16,0.46],"cornice":[1.84,0.69,0.81],"column":[1.73,7.01,1.73],"balustrade":[1.84,1.5,0.35],"doorDouble":[3.4,7.1,0.2],"sash":[2.8,7,0.3],"urn":[1.1,2.7,1.1],"palm":[2.1,2.5,2.1],"treeOak":[12,11,12],"treeCedar":[11,11,11],"treeBeech":[7,10,7],"treeYew":[4.7,7,4.7],"treePoplar":[3,13,3],"treeBirch":[4,10,4],"treeApple":[4.5,5,4.5],"hedge":[1,1.5,1],"topiary":[2,4,2],"bookStack":[0.6,0.92,0.8],"teaSet":[1.5,0.8,1],"letterTray":[1.2,0.8,0.7],"vaseFlowers":[0.8,1.6,0.8],"fruitBowl":[1,0.5,1],"gramophone":[1,2.3,1.5],"harp":[0.6,4,2],"suitArmor":[1.2,3.9,0.8],"banner":[1.7,4,0.2],"coatOfArms":[2.2,2.4,0.2],"antlers":[2.4,1.9,0.3],"tapestry":[3.56,5.06,0.2],"bust":[0.8,3.6,0.8],"birdcage":[1,3.1,1],"fern":[2,2.2,2],"screen":[2.8,2.9,0.5],"wardBed":[1.3,1.6,3.3],"labBench":[1.4,2.1,3.79],"microscope":[0.5,1.6,0.5],"rockingHorse":[0.9,2.2,2.2],"toyFort":[2,1.5,2.3],"sewingMachine":[1.7,2.1,1],"mangle":[2,2.4,1.2],"ironingTable":[1.3,1.4,3.3],"welshDresser":[2.9,4,0.9],"copperRack":[2.9,2.8,0.3],"stageCurtain":[7.8,6.6,0.3],"seatRow":[3.45,1.5,0.6],"musicStand":[1,2.2,0.9],"cardTable":[1.5,1.2,1.5],"lectern":[1.2,2.4,1],"candleStand":[1,2,1],"studyTable":[2.4,1.7,1.5],"stableStall":[3.3,3,5.2],"saddleRack":[2,3.4,0.8],"anvil":[0.9,1.3,1.4],"forgeHearth":[3.3,3.5,1.5],"waterTrough":[2.4,0.8,1],"carriage":[2.1,3.3,4],"cart":[2,1.9,3.9],"haystack":[2.8,2.6,2.8],"beehive":[1.2,2.2,1.2],"wheelbarrow":[1,1,2],"coldFrame":[2.4,0.6,1.2],"well":[1.6,2.9,1.6],"marketStall":[2.9,2.9,1.6],"innSign":[0.2,3,1.3],"fountain":[5.17,4,5.17],"statue":[1.2,5.3,1.2],"sundial":[1,1.4,1],"lampPost":[0.6,4.6,0.6],"gatePier":[1.6,5.9,1.6],"ironGate":[2.41,4,0.1],"bench":[2.9,1.9,0.9],"rowboat":[1.5,0.7,3.8],"jetty":[2.9,3.1,1.84],"boxParterre":[2.8,0.4,2.8],"rosePergola":[2.6,3.4,1.84],"lavender":[0.9,0.6,0.5],"vegetableBed":[2.8,1,1.2],"glasshouseBench":[1.3,1.6,3.3],"orangeTree":[1.7,3.9,1.7],"chairHall":[0.8,3.3,0.8],"fauteuil":[1.1,2.6,1.1],"settee":[2.6,2.2,1],"chaise":[1,2,2.8],"windsor":[1,2.2,1],"pedestalTable":[1.7,1.1,1.7],"consoleTable":[2.4,5.2,0.6],"sideboard":[3.8,2.2,0.8],"bureau":[1.7,5,0.8],"displayCabinet":[2,4.4,0.8],"commode":[2,2,1],"fourPosterOak":[2.4,3.9,4],"chandelierGilt":[2.6,3.6,2.6],"lanternPendant":[0.8,3.6,0.8],"sconce":[1,3.4,0.3],"standardLamp":[1.3,3.7,1.3],"ceilingRose":[2.2,0.2,2.2],"coffer":[2.76,0.4,2.76],"beam":[1.04,0.7,0.5],"hammerbeam":[11.61,3.6,0.4],"stairFlight":[1.95,11.38,10.34],"newelPost":[0.6,3.3,0.6],"boxBed":[1.7,1.7,3.3],"settle":[2.9,2.8,0.8],"inglenook":[3.3,3.1,0.9],"spinningWheel":[0.6,2.6,1.6],"ragRug":[2.4,0.1,1.7],"trestleTable":[2.4,1.3,4.25],"counter":[3.9,1.4,1],"shopShelves":[3.3,3.6,0.6],"grindstone":[1.5,2.4,1.9],"horseshoeRack":[2.6,2.4,0.3],"font":[1.3,2.7,1.3],"churchBell":[2.8,2.8,0.9],"altarTable":[3,2.3,1.3],"corniceIn":[0.81,0.69,0.81],"corniceOut":[0.81,0.69,0.81],"corniceEndL":[0.81,0.69,0.81],"corniceEndR":[0.81,0.69,0.81],"dadoIn":[0.46,8.16,0.46],"dadoOut":[0.46,8.16,0.46],"dadoEndL":[0.46,8.16,0.46],"dadoEndR":[0.46,8.16,0.46],"panellingIn":[0.35,3.22,0.35],"panellingOut":[0.35,3.22,0.35],"panellingEndL":[0.35,3.22,0.35],"panellingEndR":[0.35,3.22,0.35],"balustradePost":[0.8,1.95,0.8],"wingChair":[1.27,1.84,1.04],"ottoman":[1.04,0.69,0.81],"chesterfield":[3.1,1.27,1.04],"tallboy":[1.5,2.76,1.5],"dressingTable":[1.96,2.53,1.04],"nightTable":[0.81,1.04,1.5],"chevalMirror":[1.27,2.65,0.58],"blanketChest":[1.96,0.92,1.27],"coatStand":[1.04,2.88,0.81],"hallBench":[2.19,1.61,0.81],"curioCabinet":[1.27,2.99,1.5],"daybed":[1.27,1.27,3.1],"gamesTable":[1.27,1.27,1.27],"footstool":[0.81,0.46,0.81],"sideChair":[0.81,1.61,0.81],"bookTable":[1.04,1.84,1.04],"teaTable":[1.5,0.69,1.04],"writingTable":[1.96,1.38,1.04],"pianoUpright":[2.19,1.61,1.5],"pianoStool":[0.81,0.81,0.81],"seeingStone":[1.27,2.42,1.27],"wallCalendar":[1.73,3.1,0.35],"tickerMachine":[1.27,2.65,1.04],"registerStand":[1.27,1.96,0.81],"addressBook":[1.04,1.5,0.81],"bedsideJournal":[0.81,1.5,1.5],"holoGlobe":[1.96,2.76,1.96],"pigeonholes":[2.88,3.1,1.04],"editorsDesk":[2.42,1.84,1.27],"printingPress":[1.96,2.65,1.04],"workbenchTerminal":[2.42,2.19,1.04],"noticeBoard":[2.19,2.88,0.58],"despatchBox":[1.04,0.69,1.04],"ledgerDesk":[1.73,2.07,1.04],"oilLamp":[0.58,1.04,0.58],"torchere":[1.27,4.03,1.27],"fireBasket":[1.04,1.27,1.04],"chandelierIron":[2.19,2.88,2.19],"tableLamp":[0.81,0.92,0.35],"candlestick":[0.58,0.69,0.58],"stove":[1.27,3.56,1.27],"wallLantern":[0.58,2.42,1.5],"bootRack":[2.42,1.73,1.04],"lampShelf":[2.42,2.19,1.04],"coalHeap":[2.19,1.5,2.19],"coalScuttle":[0.81,0.81,0.58],"bathTub":[1.27,1.61,2.88],"washBasin":[1.04,1.5,0.81],"larderShelves":[2.88,3.1,1.27],"hamHooks":[2.88,0.12,0.35],"vaultDoor":[2.42,3.56,1.27],"silverShelves":[2.42,2.88,1.04],"linenPress":[1.96,3.22,1.73],"linenStack":[0.81,0.58,0.58],"cistern":[3.8,2.19,2.19],"clockMovement":[3.33,3.1,1.27],"flagLocker":[2.42,2.53,1.5],"stoneSink":[2.65,2.19,1.5],"plateRack":[2.42,2.88,0.81],"butcherBlock":[1.27,1.38,1.27],"barrel":[1.04,1.38,1.04],"barrelRack":[2.88,1.27,1.27],"crateStack":[1.27,1.96,1.27],"sackPile":[1.5,1.04,0.81],"mopBucket":[1.04,2.19,0.58],"keyCabinet":[1.5,2.88,0.81],"brushRack":[2.88,2.53,0.58],"dresserKitchen":[2.65,3.1,1.5],"breadOven":[2.65,2.88,2.42],"doughTrough":[2.19,1.38,1.04],"butterChurn":[1.96,2.42,0.81],"copperVat":[1.73,1.73,1.96],"workbench":[2.65,1.5,1.5],"toolWall":[2.88,3.1,0.35],"dryingRack":[2.88,0.12,0.81],"washCopper":[3.8,1.27,1.73],"trunkStack":[1.96,1.73,1.27],"dumbwaiter":[1.96,3.33,1.04],"inkstand":[0.81,0.69,0.35],"clockMantel":[0.81,1.04,0.58],"photoFrames":[1.04,0.58,0.35],"sewingBox":[1.04,0.58,0.58],"bookRow":[1.27,0.81,0.35],"mapRoll":[0.81,1.73,0.81],"hatBoxes":[1.04,1.04,1.04],"newspaper":[0.81,0.23,0.58],"potPlant":[0.81,1.5,0.81],"silverSalver":[1.04,0.35,0.81],"telephone":[0.58,1.15,0.58],"decanterWater":[0.81,0.69,0.58],"wastePaper":[0.81,0.92,0.81],"umbrellaStand":[0.81,1.96,0.81],"toyTrain":[1.96,0.58,0.58],"organ":[2.42,5.06,1.96],"prieDieu":[1.04,1.73,1.04],"hymnBoard":[1.04,3.22,0.35],"easel":[1.5,2.42,1.27],"dollsHouse":[1.73,2.3,1.04],"cot":[1.04,1.38,1.73],"blackboard":[2.19,2.65,0.81],"deskSchool":[1.5,1.15,1.5],"medicineCabinet":[1.73,3.1,1.04],"stretcher":[1.04,0.92,3.1],"ambulanceCart":[1.5,1.96,3.8],"vestmentPress":[2.19,2.65,1.73],"stageFlat":[2.88,4.03,0.58],"motorcar":[1.9,1.6,4.2],"bicycle":[0.58,1.61,2.65],"hayRack":[2.19,3.1,1.27],"feedBin":[1.73,1.5,1.27],"mountingBlock":[1.27,1.04,1.04],"milkChurns":[1.27,1.27,1.5],"plough":[0.81,1.61,2.88],"dogKennel":[1.5,1.5,2.19],"henCoop":[1.73,1.73,2.42],"woodPile":[2.65,1.5,1.04],"choppingBlock":[2.19,1.73,1.04],"sawHorse":[1.04,1.84,2.42],"tackWall":[2.88,2.76,0.81],"jumpPoles":[2.88,1.5,0.58],"postBox":[0.81,2.07,0.81],"pubTable":[2.42,1.38,2.42],"dartBoard":[1.27,2.88,0.12],"barBack":[3.33,3.1,1.04],"shopScales":[1.73,0.92,0.58],"villagePump":[1.73,2.19,2.19],"signPost":[2.42,3.22,0.58],"graveStones":[2.42,1.5,0.81],"marketBarrow":[1.73,1.38,3.33],"cottageRange":[1.73,2.99,1.73],"cottageDresser":[1.73,2.88,1.27],"cradle":[0.81,1.15,1.5],"birdBath":[1.27,1.27,1.27],"obelisk":[1.27,6.21,1.27],"gardenRoller":[1.5,1.04,2.88],"flowerBorder":[1.04,0.81,0.81],"deckChair":[1.04,1.15,1.27],"croquetSet":[1.73,1.15,2.88],"stoneVase":[1.04,2.3,1.04],"trellisArch":[2.19,3.22,0.81],"gardenTable":[2.65,1.38,1.27],"waterButt":[2.88,1.61,1.04],"pilaster":[1.27,7.02,0.81],"overmantelMirror":[2.42,3.1,0.35],"pictureRail":[1.96,2.88,0.35],"archway":[4.03,7.13,0.81],"stairRunner":[1.04,0.12,1.04],"skylight":[1.96,0.12,1.96],"wingChairFine":[1.2,1.9,1.15],"seeingStoneFine":[1.2,2.7,1.2],"teaServiceFine":[1.8,0.7,1.15],"pegRail":[2.19,1.04,0.58],"pictureLandscape":[2.88,2.07,0.35],"pierGlass":[1.73,3.22,0.35],"wallMap":[2.88,2.19,0.35],"stockingRow":[2.65,0.92,0.35],"mantelGarland":[3.1,0.69,0.58],"wreath":[1.27,1.38,0.58],"christmasTree":[2.65,5.64,2.65],"presents":[1.04,0.81,1.04],"roastingSpit":[2.65,1.38,0.81],"lightsTree":[4.83,10.12,4.83],"lightString":[3.1,0.46,0.12],"bushLights":[1.5,0.46,1.5],"eaveGarland":[4.03,0.81,0.35],"werewolf":[1.04,2.19,4.95]};
+const HY={"bellBoard":2,"menuSlate":2.4,"antlers":4.6,"coatOfArms":4.2,"overmantelMirror":5.7};
+const G=4,FACE={N:0,S:180,W:90,E:270},QT={N:0,E:1,S:2,W:3},OPP={N:'S',S:'N',E:'W',W:'E'},WN={north:'N',south:'S',east:'E',west:'W',N:'N',S:'S',E:'E',W:'W'};
+const set=s=>new Set(s.split(' '));
+const FLIP=set('bedIron fourPosterOak boxBed bed4 wardBed cot chaise ledgerDesk');
+const FLAT=set('rug ragRug stairRunner');
+const SEAT=set('chairDining armchair sofa bisellium pew chairHall fauteuil settee chaise windsor wingChair ottoman chesterfield daybed footstool sideChair pianoStool hallBench settle bench seatRow deckChair wingChairFine');
+const DESK=set('deskWriting writingTable dressingTable studyTable deskSchool ledgerDesk editorsDesk workbenchTerminal sewingMachine');
+const SMALL=set('bookStack teaSet letterTray vaseFlowers fruitBowl microscope inkstand clockMantel photoFrames sewingBox bookRow newspaper potPlant silverSalver telephone decanterWater candlestick tableLamp oilLamp candelabra despatchBox linenStack shopScales toyTrain teaServiceFine');
+const HUNG=set('portrait bellPull banner coatOfArms antlers tapestry copperRack stageCurtain saddleRack sconce horseshoeRack wallCalendar noticeBoard wallLantern plateRack keyCabinet brushRack toolWall hymnBoard medicineCabinet hayRack tackWall dartBoard overmantelMirror bellBoard menuSlate pegRail pictureLandscape pierGlass wallMap');
+const CEIL=set('chandelier chandelierGilt lanternPendant ceilingRose coffer beam hammerbeam chandelierIron hamHooks dryingRack skylight');
+const TOPS=set('teaTable pedestalTable bookTable nightTable commode consoleTable sideboard writingTable deskWriting dressingTable gamesTable cardTable libraryTable studyTable tableDining kitchenTable trestleTable washstand tallboy blanketChest pubTable counter workbench labBench ledgerDesk editorsDesk mapTable gardenTable deskSchool ironingTable butcherBlock cottageDresser welshDresser dresserKitchen sewingMachine');
+function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const r2=v=>Math.round(v*100)/100,q4=v=>Math.round(v*4)/4;
+const size=(k,o)=>{if(k==='rug'||k==='ragRug'){const d=SZ[k];return[o&&o.w?o.w*.2356:d[0],.1,o&&o.l?o.l*.243:d[2]]}if(k==='tableDining'&&o&&o.len)return[1.7,1.2,o.len*.115+.3];if(k==='bookcase'&&o&&o.w)return[o.w*.115,SZ[k][1],SZ[k][2]];return SZ[k]||[1,1,1]};
+const rugO=(w,l,ex)=>Object.assign({w:Math.max(6,Math.round(w/.2356)),l:Math.max(6,Math.round(l/.243))},ex||{});
+
+/* ---------- the room ---------- */
+function Room(row,o){o=o||{};const[x0,z0,x1,z1]=row.rect;this.row=row;this.W=x1-x0;this.D=z1-z0;this.H=row.height||6;this.name=row.name;this.type=o.type||guess(row.name);this.variant=o.variant||0;
+  this.seed=hash(row.building+'|'+row.floor+'|'+row.name+'|'+row.rect.join(','));this.rnd=rng(this.seed);this.items=[];this.boxes=[];this.art=[];this.groups=[];this.hung={N:[],S:[],E:[],W:[]};this.fails=[];this.notes=this.notes0||[];
+  const loc=(d)=>{const w=WN[d.wall],ns=w==='N'||w==='S',base=ns?x0:z0;return{wall:w,a:d.from-base-.5,b:d.to-base+.5}};
+  this.doors=(row.doors||[]).map(loc);this.notes0=[];if(o.oneDoor&&this.doors.length>1){this.notes0.push('as built it has '+this.doors.length+' doors: planned to one, the '+({N:'north',S:'south',E:'east',W:'west'})[this.doors[o.oneDoor-1>=this.doors.length?0:o.oneDoor-1].wall]+', as the v20 wall moves leave it');this.doors=[this.doors[o.oneDoor-1>=this.doors.length?0:o.oneDoor-1]]}this.wins=(row.windows||[]).map(loc);this.fireWall=row.fire?WN[typeof row.fire==='string'?row.fire:row.fire.wall]:null;this.holes=o.holes||[];this.fireAt=o.fireAt!=null?o.fireAt:(row.fire&&typeof row.fire==='object'&&row.fire.t!=null?row.fire.t:null);
+  this.nx=this.W*G;this.nz=this.D*G;this.solid=new Uint8Array(this.nx*this.nz);this.zone=new Uint8Array(this.nx*this.nz);
+  for(const d of this.doors)this.mark(this.wrect(d.wall,d.a-2,d.b+2,0,2),1);for(const w of this.wins)this.mark(this.wrect(w.wall,w.a,w.b,0,1.75),4);
+  for(const h of this.holes)this.mark({x0:h[0]-.5,z0:h[1]-.5,x1:h[2]+.5,z1:h[3]+.5},8)}
+const P=Room.prototype;
+P.len=function(w){return w==='N'||w==='S'?this.W:this.D};
+/* a rectangle against wall w: along a..b, from d0 to d1 out from the inside face */
+P.wrect=function(w,a,b,d0,d1){return w==='N'?{x0:a,z0:.5+d0,x1:b,z1:.5+d1}:w==='S'?{x0:a,z0:this.D-.5-d1,x1:b,z1:this.D-.5-d0}:w==='W'?{x0:.5+d0,z0:a,x1:.5+d1,z1:b}:{x0:this.W-.5-d1,z0:a,x1:this.W-.5-d0,z1:b}};
+P.wpt=function(w,t,dist){return w==='N'?[t,.5+dist]:w==='S'?[t,this.D-.5-dist]:w==='W'?[.5+dist,t]:[this.W-.5-dist,t]};
+P.cells=function(R,fn){const a0=Math.max(0,Math.floor(R.x0*G+.001)),a1=Math.min(this.nx,Math.ceil(R.x1*G-.001)),b0=Math.max(0,Math.floor(R.z0*G+.001)),b1=Math.min(this.nz,Math.ceil(R.z1*G-.001));for(let j=b0;j<b1;j++)for(let i=a0;i<a1;i++)if(fn(j*this.nx+i)===false)return false;return true};
+P.mark=function(R,bit){this.cells(R,c=>{this.zone[c]|=bit})};
+P.foot=function(k,x,z,r,o){const s=size(k,o),t=((r%360)+360)%360,fx=t%180===0?s[0]:s[2],fz=t%180===0?s[2]:s[0];return{x0:x-fx/2,z0:z-fz/2,x1:x+fx/2,z1:z+fz/2,h:s[1]}};
+/* may this piece stand here? f.lane lets it into a way through (rugs), f.m is the gap kept round it */
+P.can=function(k,x,z,r,o,f){f=f||{};const R=this.foot(k,x,z,r,o),m=f.m==null?.12:f.m,E={x0:R.x0-m,z0:R.z0-m,x1:R.x1+m,z1:R.z1+m};if(R.x0<.5-.01||R.z0<.5-.01||R.x1>this.W-.5+.01||R.z1>this.D-.5+.01)return false;
+  if(FLAT.has(k))return this.cells(R,c=>!(this.zone[c]&8));const low=R.h<=1.5||SEAT.has(k)||DESK.has(k);
+  return this.cells(E,c=>{if(this.solid[c])return false;const zn=this.zone[c];if(zn&9)return false;if((zn&2)&&!f.lane)return false;if((zn&4)&&!low)return false})};
+P.add=function(k,x,z,r,o,ex){ex=ex||{};const it={k,o:o||{},x:r2(x),y:r2(ex.y||0),z:r2(z),r:((r%360)+360)%360};if(ex.on!=null)it.on=ex.on;const i=this.items.length;this.items.push(it);
+  if(!FLAT.has(k)&&!ex.air&&ex.on==null){const R=this.foot(k,x,z,r,o);this.cells(R,c=>{this.solid[c]=1});this.boxes.push(Object.assign(R,{i,k}))}if(ex.g!=null)it.g=ex.g;return i};
+P.tryAdd=function(k,x,z,r,o,f,ex){x=q4(x);z=q4(z);return this.can(k,x,z,r,o,f)?this.add(k,x,z,r,o,ex):-1};
+/* against a wall, back to it, centred at t along it */
+P.wallAt=function(k,w,t,o,f,ex){const s=size(k,o),[x,z]=this.wpt(w,t,s[2]/2+((f&&f.off)||.03)),r=FACE[w]+(FLIP.has(k)?180:0);return this.can(k,x,z,r,o,f)?this.add(k,x,z,r,o,ex):-1};
+/* a hung piece: no floor taken, but two never share the same bit of wall */
+P.hang=function(k,w,t,y,o,rule){const s=size(k,o),a=t-s[0]/2,b=t+s[0]/2,L=this.len(w);if(a<.7||b>L-.7||y+s[1]>this.H-.2)return-1;for(const d of this.doors)if(d.wall===w&&a<d.b+.4&&b>d.a-.4&&y<5.6)return-1;for(const v of this.wins)if(v.wall===w&&a<v.b+.3&&b>v.a-.3)return-1;
+  for(const h of this.hung[w])if(a<h.b+.25&&b>h.a-.25&&y<h.y1+.2&&y+s[1]>h.y0-.2)return-1;const[x,z]=this.wpt(w,t,s[2]/2+.02),i=this.add(k,x,z,FACE[w],o,{y,air:true});this.hung[w].push({a,b,y0:y,y1:y+s[1]});this.art.push(Object.assign({i,k,wall:w},rule||{}));return i};
+P.onTop=function(k,pi,dx,dz){const p=this.items[pi];if(!p)return-1;const h=size(p.k,p.o)[1];return this.add(k,p.x+(dx||0),p.z+(dz||0),p.r,{}, {y:p.y+h,on:pi})};
+/* runs of wall where a piece of this depth could stand; tall pieces keep clear of windows */
+P.free=function(w,depth,tall,f){const L=this.len(w),ns=w==='N'||w==='S',out=[];let s=null,last=0;for(let t=.75;t<=L-.75+.001;t+=.25){const[x,z]=this.wpt(w,t,depth/2+.03),R={x0:x-(ns?.25:depth/2),z0:z-(ns?depth/2:.25),x1:x+(ns?.25:depth/2),z1:z+(ns?depth/2:.25)};
+    const ok=R.x0>=.49&&R.z0>=.49&&R.x1<=this.W-.49&&R.z1<=this.D-.49&&this.cells(R,c=>{if(this.solid[c])return false;const zn=this.zone[c];if(zn&9)return false;if((zn&2)&&!(f&&f.lane))return false;if((zn&4)&&tall)return false});
+    if(ok){if(s==null)s=t;last=t}else if(s!=null){out.push([s-.25,last+.25]);s=null}}if(s!=null)out.push([s-.25,last+.25]);return out.filter(v=>v[1]-v[0]>=.9)};
+/* a group in its own frame: forward is -z, turned q quarter turns. Core pieces must all fit, or none is placed. */
+P.group=function(name,cx,cz,q,parts,f){const T=(dx,dz)=>q===0?[dx,dz]:q===1?[-dz,dx]:q===2?[-dx,-dz]:[dz,-dx],gid=this.groups.length,out=[];
+  for(const p of parts){if(p.opt||p.on!=null)continue;const[ox,oz]=T(p.x,p.z);if(!this.can(p.k,q4(cx+ox),q4(cz+oz),p.r-90*q,p.o,Object.assign({},f,p.f)))return null}
+  for(const p of parts){const[ox,oz]=T(p.x||0,p.z||0);let i;if(p.on!=null){i=out[p.on]>=0?this.onTop(p.k,out[p.on],p.dx||0,p.dz||0):-1}else if(CEIL.has(p.k))i=this.add(p.k,cx+ox,cz+oz,0,p.o,{y:this.H-size(p.k)[1],air:true,g:gid});else i=this.tryAdd(p.k,cx+ox,cz+oz,p.r-90*q,p.o,Object.assign({},f,p.f),{g:gid});out.push(i)}
+  this.groups.push({name,x:cx,z:cz,q});return out};
+/* ways through: from every door to every other and to the focal point, 2 blocks clear. Marks them so later pieces keep out. */
+P.ways=function(targets){const S=2,nx=this.W*S,nz=this.D*S,pass=new Uint8Array(nx*nz),lane=new Uint8Array(nx*nz);
+  for(let j=0;j<nz;j++)for(let i=0;i<nx;i++){const x=(i+.5)/S,z=(j+.5)/S;if(x<1.5||z<1.5||x>this.W-1.5||z>this.D-1.5)continue;pass[j*nx+i]=this.cells({x0:x-1,z0:z-1,x1:x+1,z1:z+1},c=>!this.solid[c]&&!(this.zone[c]&8))?1:0}
+  const cl=(v,m)=>Math.min(m-1.75,Math.max(1.75,v)),inH=(x,z)=>this.holes.some(h=>x>h[0]-1&&x<h[2]+1&&z>h[1]-1&&z<h[3]+1),pts=this.doors.map(d=>{const[x,z]=this.wpt(d.wall,(d.a+d.b)/2,1.25);return[cl(x,this.W),cl(z,this.D)]}).filter(q=>!inH(q[0],q[1])).concat((targets||[]).filter(q=>!inH(q[0],q[1]))),ix=p=>{let i=Math.min(nx-1,Math.max(0,Math.floor(p[0]*S))),j=Math.min(nz-1,Math.max(0,Math.floor(p[1]*S)));if(!pass[j*nx+i]){let best=-1,bd=1e9;for(let b=Math.max(0,j-6);b<Math.min(nz,j+7);b++)for(let a=Math.max(0,i-6);a<Math.min(nx,i+7);a++)if(pass[b*nx+a]){const d=Math.abs(a-i)+Math.abs(b-j);if(d<bd){bd=d;best=b*nx+a}}return best}return j*nx+i};
+  let ok=true;const stamp=c=>{const i=c%nx,j=(c-i)/nx,x=(i+.5)/S,z=(j+.5)/S;this.mark({x0:x-1.05,z0:z-1.05,x1:x+1.05,z1:z+1.05},2);lane[c]=1};
+  if(pts.length<1)return true;const first=ix(pts[0]);const bad=m=>{(this.holes.length?this.notes:this.fails).push(m)};if(first<0){bad('no way in at the first door');return false}stamp(first);
+  for(let n=1;n<pts.length;n++){const src=ix(pts[n]);if(src<0){ok=false;bad('no way to point '+n);continue}const prev=new Int32Array(nx*nz).fill(-1),dist=new Float32Array(nx*nz).fill(1e9),Q=[src];dist[src]=0;let end=-1;
+    for(let h=0;h<Q.length;h++){const c=Q[h];if(lane[c]){end=c;break}const i=c%nx,j=(c-i)/nx;for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=i+di,b=j+dj;if(a<0||b<0||a>=nx||b>=nz)continue;const e=b*nx+a;if(!pass[e]||dist[e]<1e8)continue;dist[e]=dist[c]+1;prev[e]=c;Q.push(e)}}
+    if(end<0){ok=false;bad('no way through to point '+n);continue}for(let c=end;c>=0;c=prev[c])stamp(c)}
+  return ok};
+/* something to stand a small thing on, nearest first */
+P.tops=function(){return this.items.map((it,i)=>({it,i})).filter(e=>TOPS.has(e.it.k)&&!this.items.some(s=>s.on===e.i))};
+
+/* ---------- group recipes (forward is -z: the group looks north) ---------- */
+const pick=(R,a)=>a[Math.floor(R.rnd()*a.length)%a.length];
+const GR={
+ hearth(R){const sofa=pick(R,['sofa','chesterfield','settee']),ch=pick(R,['armchair','wingChair','fauteuil']),sw=size(sofa)[0];return[{k:'rug',x:0,z:4.4,r:0,o:rugO(7.5,5.6),f:{lane:true}},{k:sofa,x:0,z:6.7,r:180},{k:ch,x:-3.2,z:4.1,r:90},{k:ch,x:3.2,z:4.1,r:270},{k:'teaTable',x:0,z:4.3,r:0},
+   {k:'footstool',x:-1.9,z:3.1,r:0,opt:1},{k:'standardLamp',x:sw/2+1,z:6.8,r:0,opt:1},{k:'bookTable',x:-sw/2-.85,z:6.8,r:0,opt:1},{k:'coalScuttle',x:2.3,z:.9,r:0,opt:1},{k:pick(R,['teaSet','newspaper','bookStack']),on:4},{k:pick(R,['bookStack','photoFrames','decanterWater']),on:7}]},
+ hearthSmall(R){const ch=pick(R,['wingChair','armchair','fauteuil']);return[{k:'rug',x:0,z:3,r:0,o:rugO(5.6,3.6),f:{lane:true}},{k:ch,x:-2,z:3,r:90},{k:ch,x:2,z:3,r:270},{k:'teaTable',x:0,z:3,r:0},{k:'footstool',x:-2,z:4.3,r:0,opt:1},{k:pick(R,['candlestick','bookStack','teaSet']),on:3}]},
+ talk(R){const sf=pick(R,['settee','sofa','chesterfield']),ch=pick(R,['fauteuil','armchair','sideChair']);return[{k:'rug',x:0,z:0,r:0,o:rugO(6.4,5.8),f:{lane:true}},{k:sf,x:0,z:2,r:180},{k:ch,x:-1.25,z:-2,r:0},{k:ch,x:1.25,z:-2,r:0},{k:'pedestalTable',x:0,z:0,r:0},{k:'standardLamp',x:2.6,z:2.1,r:0,opt:1},{k:'footstool',x:-2.3,z:.2,r:0,opt:1},{k:pick(R,['teaSet','vaseFlowers','bookStack','newspaper']),on:4}]},
+ cards(R){const tb=pick(R,['gamesTable','cardTable']),d=size(tb)[0]/2+.66;return[{k:'rug',x:0,z:0,r:0,o:rugO(4.8,4.8),f:{lane:true}},{k:tb,x:0,z:0,r:0},{k:'sideChair',x:0,z:-d,r:0},{k:'sideChair',x:0,z:d,r:180},{k:'sideChair',x:-d,z:0,r:90},{k:'sideChair',x:d,z:0,r:270},{k:'candlestick',on:1},{k:'standardLamp',x:1.9,z:-1.9,r:0,opt:1}]},
+ read(R){return[{k:'ragRug',x:0,z:-.2,r:0,f:{lane:true}},{k:pick(R,['wingChair','armchair']),x:0,z:.3,r:180},{k:'bookTable',x:1.25,z:.4,r:0},{k:'standardLamp',x:-1.35,z:.6,r:0},{k:'footstool',x:0,z:-.95,r:0,opt:1},{k:pick(R,['bookStack','newspaper','decanterWater']),on:2}]},
+ centre(R){return[{k:'rug',x:0,z:0,r:0,o:rugO(5,5),f:{lane:true}},{k:'pedestalTable',x:0,z:0,r:0,f:{lane:true}},{k:pick(R,['vaseFlowers','bookStack','silverSalver']),on:1}]},
+ writing(R){return[{k:'ragRug',x:0,z:.2,r:0,f:{lane:true}},{k:'writingTable',x:0,z:-.3,r:0},{k:'sideChair',x:0,z:.75,r:180},{k:'inkstand',on:1,dx:.4},{k:pick(R,['letterTray','tableLamp','bookRow']),on:1,dx:-.45}]}};
+
+/* ---------- steps every program shares ---------- */
+function fire(R){if(!R.fireWall)return null;const w=R.fireWall,L=R.len(w),fr=R.free(w,.8,true);let best=null;for(const s of fr){if(s[1]-s[0]<3.4)continue;const c=Math.min(Math.max(L/2,s[0]+1.7),s[1]-1.7),sc=-Math.abs(c-L/2);if(!best||sc>best.sc)best={c:q4(c),sc}}
+  if(R.fireAt!=null)best={c:R.fireAt,sc:0};
+  if(!best){R.notes.push('no clear run for the fire on its wall: left as the Estate has it');return null}const i=R.wallAt('fireplace',w,best.c);if(i<0)return null;R.fire={w,t:best.c,i};if(R.H>=8.9)R.hang('overmantelMirror',w,best.c,5.7,{}, {centred:'the fire',lower:'on the mantel'});return R.fire}
+function hearth(R,small){if(!R.fire)return false;const{w,t}=R.fire,[x,z]=R.wpt(w,t,0),q=QT[w],parts=(small?GR.hearthSmall:GR.hearth)(R),ok=R.group('hearth',x,z,q,parts);
+  if(!ok&&!small)return hearth(R,true);if(ok){const d=small?5:8,[fx,fz]=R.wpt(w,t,d);R.focus=[Math.min(R.W-1.6,Math.max(1.6,fx)),Math.min(R.D-1.6,Math.max(1.6,fz))];for(const s of[-1,1])R.hang('sconce',w,t+s*2.6,3,{}, {centred:'beside the fire',lower:'third'})}return!!ok}
+/* dress the walls: case pieces centred on each free run, or paired; low pieces and seats under windows */
+function walls(R,pal,o){o=o||{};const tall=pal.tall||[],low=pal.low||[],pier=pal.pier||tall;let ti=Math.floor(R.rnd()*8),li=Math.floor(R.rnd()*8),n=0;const order=['N','S','E','W'].sort((a,b)=>R.len(b)-R.len(a));
+  for(const w of order){for(const s of R.free(w,1.3,true)){let a=s[0]+.3,b=s[1]-.3,L=b-a;if(L<1.2)continue;const cands=(L<3.2?pier:tall).filter(k=>size(k)[0]<=L&&size(k)[1]<=R.H-.3);if(!cands.length)continue;
+      const k=cands[ti++%cands.length],kw=size(k)[0],c=(a+b)/2;
+      if(L>=kw*2+2.2&&kw<=3){const off=Math.min(L/2-kw/2-.2,kw/2+1.2+(L-kw*2-2.2)*.25);const i1=R.wallAt(k,w,q4(c-off)),i2=R.wallAt(k,w,q4(c+off));n+=(i1>=0)+(i2>=0);if(L-2*kw>=3.4&&o.mid){const m=o.mid[ti%o.mid.length];if(R.wallAt(m,w,q4(c))>=0)n++}}
+      else{const i=R.wallAt(k,w,q4(c));if(i>=0){n++;if(L>=kw+3.4&&o.flank){const fk=o.flank[ti%o.flank.length],fo=kw/2+.55+size(fk)[0]/2;for(const sg of[-1,1])if(R.wallAt(fk,w,q4(c+sg*fo))>=0)n++}}}}
+    if(low.length)for(const v of R.wins.filter(v=>v.wall===w)){const k=low[li++%low.length];if(k==='-')continue;const c=(v.a+v.b)/2;if(k==='desk'){const i=R.wallAt('writingTable',w,q4(c));if(i>=0){const[x,z]=R.wpt(w,c,size('writingTable')[2]+.75);R.tryAdd('sideChair',x,z,FACE[w]+180);R.onTop(pick(R,['inkstand','letterTray','bookRow']),i,.3,0);n+=2}}else if(R.wallAt(k,w,q4(c))>=0)n++}}
+  return n}
+function corners(R,pal){let n=0,i=Math.floor(R.rnd()*4);for(const[x,z]of[[1.6,1.6],[R.W-1.6,1.6],[1.6,R.D-1.6],[R.W-1.6,R.D-1.6]]){const k=pal[i++%pal.length];if(R.tryAdd(k,x,z,(x<R.W/2?90:270),{},{m:.2})>=0)n++}return n}
+/* further groups in the largest open floor left, never the same recipe twice running */
+function fill(R,recipes,max){let n=0,last=R.lastFill||null,guard=0;while(n<max&&guard++<40){const S=1,nx=R.W,nz=R.D,ok=(i,j)=>R.cells({x0:i,z0:j,x1:i+1,z1:j+1},c=>!R.solid[c]&&!(R.zone[c]&11));let best=null;
+    const hgt=new Int32Array(nx);for(let j=1;j<nz-1;j++){for(let i=1;i<nx-1;i++)hgt[i]=ok(i,j)?hgt[i]+1:0;for(let i=1;i<nx-1;i++){if(!hgt[i])continue;let h=hgt[i];for(let k=i;k>=1&&hgt[k];k--){h=Math.min(h,hgt[k]);const w=i-k+1,sc=Math.min(w,h)*Math.min(w,h)+w*h*.02;if(Math.min(w,h)>=3.6&&(!best||sc>best.sc))best={sc,x0:k,z0:j-h+1,w,h}}}}
+    if(!best)break;const cx=best.x0+best.w/2,cz=best.z0+best.h/2,m=Math.min(best.w,best.h);let placed=false;const order=recipes.filter(r=>r!==last).concat(recipes.filter(r=>r===last));
+    for(const rc of order){const need=rc==='talk'?5.8:rc==='cards'?3.8:rc==='read'?3.6:rc==='centre'?4.4:rc==='writing'?3.6:6;if(m<need)continue;let q=best.w>=best.h?(R.rnd()<.5?1:3):(R.rnd()<.5?0:2);if(R.focus){const dx=R.focus[0]-cx,dz=R.focus[1]-cz;q=Math.abs(dx)>Math.abs(dz)?(dx>0?1:3):(dz>0?2:0)}
+      for(const qq of[q,(q+2)%4,(q+1)%4,(q+3)%4]){if(R.group(rc,q4(cx),q4(cz),qq,GR[rc](R))){placed=true;last=rc;R.lastFill=rc;n++;break}}if(placed)break}
+    if(!placed)R.mark({x0:best.x0,z0:best.z0,x1:best.x0+best.w,z1:best.z0+best.h},16),R.cells({x0:cx-1,z0:cz-1,x1:cx+1,z1:cz+1},c=>{R.zone[c]|=2})}return n}
+/* signs of use on whatever has a top, and a clock if the room has neither clock nor mirror */
+function smalls(R,pal,share){const tops=R.tops();let i=Math.floor(R.rnd()*pal.length);for(const t of tops){if(R.rnd()>(share||.7))continue;const s=size(t.it.k,t.it.o),k=pal[i++%pal.length];R.onTop(k,t.i,(R.rnd()-.5)*Math.max(0,Math.min(s[0],s[2])-1)*.5,0)}}
+function clock(R,pal){if(R.items.some(it=>/clock|Mirror|mirror/i.test(it.k)))return;for(const w of['N','S','E','W'])for(const s of R.free(w,.9,true)){if(s[1]-s[0]>=1.5&&R.wallAt('clockLong',w,q4((s[0]+s[1])/2))>=0)return}const t=R.tops()[0];if(t)R.onTop('clockMantel',t.i,0,0)}
+/* pictures by rule: over each wall piece that leaves room, and on bare runs of wall; lower edge above a third of the wall */
+function art(R,pal,o){o=o||{};let ai=Math.floor(R.rnd()*8);const third=Math.max(2.4,R.H/3);
+  for(const b of R.boxes.slice()){const it=R.items[b.i],s=size(it.k,it.o);let w=null;if(b.z0<.75)w='N';else if(b.z1>R.D-.75)w='S';else if(b.x0<.75)w='W';else if(b.x1>R.W-.75)w='E';if(!w||it.k==='fireplace')continue;const top=s[1],y=Math.max(third,top+.45),t=w==='N'||w==='S'?it.x:it.z;for(let n=0;n<pal.length;n++){const k=pal[(ai+n)%pal.length];if(y+size(k)[1]>R.H-.5)continue;if(R.hang(k,w,t,r2(y),{},{centred:'over the '+it.k,lower:top+.45>third?'above the piece':'third'})>=0){ai+=n+1;break}}}
+  if(o.bare!==false)for(const w of['N','S','E','W']){const L=R.len(w);for(let t=2.2;t<L-2.2;t+=o.every||5.5){for(let n=0;n<pal.length;n++){const k=pal[(ai+n)%pal.length];if(R.hang(k,w,q4(t),r2(third),{},{centred:'on the bare wall',lower:'third'})>=0){ai+=n+1;break}}}}}
+const GREAT=set('saloon greatHall entrance ballroom');
+function target(R){const a=(R.W-1)*(R.D-1);return a<100?6:a<400?Math.round(6+(a-100)*14/300):Math.round(20+(a-400)/40)}
+const MORE={bedServant:['windsor','blanketChest','washstand','tallboy'],bedGuest:['sideChair','commode','tallboy','coatStand','hatBoxes','chevalMirror'],bedState:['sideChair','commode','curioCabinet','torchere','bust','tallboy'],library:['bust','globe','sideChair','torchere'],office:['sideChair','pigeonholes','cardCatalog','strongbox','coatStand']};
+function topUp(R,t,stock){if(t==='passage'||t==='stair')return;const tg=target(R);let pal=MORE[t];if(!pal){if(PROG[t])pal=['sideChair','bust','torchere','consoleTable','commode','curioCabinet'];else{const st=[...new Set((stock||[]).filter(k=>!SMALL.has(k)&&!HUNG.has(k)&&!CEIL.has(k)&&!FLAT.has(k)&&size(k)[2]<=2.3&&size(k)[0]<=3.2))];pal=st.concat(['crateStack','barrel','sackPile']).slice(0,7)}}
+  const rec=PROG[t]?(t==='bedServant'?[]:['read','writing','cards','talk','centre']):[];
+  for(let pass=0;pass<4&&R.count()<tg;pass++){const before=R.count();walls(R,{tall:pal,pier:pal.filter(k=>size(k)[0]<=1.6).concat(pal),low:[]},pass?{}:{flank:[pal[0]]});if(R.count()<tg&&rec.length&&!GREAT.has(t))fill(R,rec,1);if(R.count()===before)break}}
+/* winter dress, by rule: a garland and stockings at every fire, a wreath over it where the wall is bare, a tree in the rooms where the house gathers, a joint on the spit at the kitchen range and the Great Hall fire */
+const TREEROOM=set('saloon greatHall entrance sitting mess nursery ballroom atticSitting');
+function winter(R,t){const n0=R.items.length,a0=R.art.length,FW={0:[0,1],90:[1,0],180:[0,-1],270:[-1,0]};
+  if(R.fire){const{w,t:ft}=R.fire,fs=size('fireplace'),[gx,gz]=R.wpt(w,ft,fs[2]-.32),[sx,sz]=R.wpt(w,ft,fs[2]+.2);R.add('mantelGarland',gx,gz,FACE[w],{len:Math.min(3.1,fs[0])},{y:r2(fs[1]),air:true});R.add('stockingRow',sx,sz,FACE[w],{},{y:r2(fs[1]-1),air:true});
+    if(!R.items.some(it=>it.k==='overmantelMirror'))R.hang('wreath',w,ft,r2(fs[1]+1.1),{},{centred:'the fire',lower:'above the garland'})}
+  if(TREEROOM.has(t)){let best=null;for(let x=2.25;x<=R.W-2.25;x+=.5)for(let z=2.25;z<=R.D-2.25;z+=.5){const edge=Math.min(x,z,R.W-x,R.D-z);if(edge>3.3||!R.can('christmasTree',x,z,0,{},{m:.25}))continue;let dd=99;for(const d of R.doors){const[dx,dz]=R.wpt(d.wall,(d.a+d.b)/2,0);dd=Math.min(dd,Math.hypot(dx-x,dz-z))}let dw=99;for(const v of R.wins){const[vx,vz]=R.wpt(v.wall,(v.a+v.b)/2,0);dw=Math.min(dw,Math.hypot(vx-x,vz-z))}const sc=Math.min(dd,12)-Math.min(dw,8)*.6-edge;if(!best||sc>best.sc)best={x,z,sc}}
+    if(best){R.add('christmasTree',best.x,best.z,0,{});const cx=best.x<R.W/2?1:-1;for(const[dx,dz]of[[cx*2.2,0],[0,best.z<R.D/2?2.2:-2.2],[-cx*2.2,0],[0,best.z<R.D/2?-2.2:2.2],[cx*1.8,1.8],[cx*1.8,-1.8],[-cx*1.8,1.8],[-cx*1.8,-1.8]])if(R.can('presents',best.x+dx,best.z+dz,0,{})){R.add('presents',best.x+dx,best.z+dz,0,{});break}}}
+  let hx=null;const kr=R.items.find(it=>it.k==='kitchenRange');if(kr){const f=FW[((kr.r%360)+360)%360]||[0,1],d=size('kitchenRange')[2]/2+1.1;hx=[kr.x+f[0]*d,kr.z+f[1]*d,kr.r]}else if(t==='greatHall'&&R.fire){const[x,z]=R.wpt(R.fire.w,R.fire.t,size('fireplace')[2]+.95);hx=[x,z,FACE[R.fire.w]]}
+  if(hx&&R.can('roastingSpit',hx[0],hx[1],hx[2],{}))R.add('roastingSpit',r2(hx[0]),r2(hx[1]),hx[2],{});
+  const out=R.items.splice(n0).map(it=>{const c=Object.assign({},it);delete c.g;return c});R.art.splice(a0);return out}
+function runs(R,list){R.runs=(list||[]).map(u=>{const L=R.len(u.wall==='ceiling'?'N':u.wall);return u.wall==='ceiling'?Object.assign({},u,{a:0,b:R.W}):Object.assign({},u,{a:.5,b:L-.5})})}
+P.count=function(){return this.items.filter(it=>!FLAT.has(it.k)&&it.on==null&&!HUNG.has(it.k)&&!CEIL.has(it.k)).length};
+
+/* ---------- programs by kind of room ---------- */
+const CASE=['displayCabinet','bureau','commode','bookcase','curioCabinet','tallboy'],PIER=['consoleTable','commode','bust','torchere','curioCabinet','clockLong'],ARTS=['portrait','pictureLandscape','portrait','pierGlass','pictureLandscape','coatOfArms'];
+const PROG={};
+PROG.sitting=R=>{fire(R);hearth(R);if(!R.fire){const q=R.W>=R.D?0:1;R.group('talk',q4(R.W/2),q4(R.D/2),q,GR.talk(R));R.focus=[R.W/2,R.D/2]}R.ways(R.focus?[R.focus]:[]);
+  fill(R,['talk','cards','read','writing','centre'],Math.max(1,Math.round(R.W*R.D/130)));walls(R,{tall:CASE,pier:PIER,low:['hallBench','desk','-','hallBench','blanketChest']},{flank:['sideChair','torchere'],mid:['consoleTable']});corners(R,['torchere','screen','bust','palm']);
+  if(R.H>=8.5){if(R.fire&&R.groups.some(g=>g.name==='hearth')){const[x,z]=R.wpt(R.fire.w,R.fire.t,4.4);R.add('chandelier',x,z,0,{},{y:R.H-3.6,air:true})}for(const g of R.groups.filter(g=>g.name==='talk').slice(0,1))R.add('chandelier',g.x,g.z,0,{},{y:R.H-3.6,air:true})}
+  smalls(R,['teaSet','newspaper','bookStack','photoFrames','sewingBox','decanterWater','vaseFlowers','tableLamp','candlestick'],.8);clock(R);art(R,ARTS)};
+function bedProgram(R,kit){const v=R.variant,bed=kit.bed,bs=size(bed),need=bs[0]+2.6;fire(R);
+  /* the bed head: a wall away from the door, never under a window */
+  const cands=[];for(const w of['N','S','E','W']){if(R.fire&&R.fire.w===w)continue;const doorHere=R.doors.some(d=>d.wall===w);for(const s of R.free(w,bs[2],true)){if(s[1]-s[0]<bs[0]+.4)continue;const L=R.len(w),c=Math.min(Math.max(L/2,s[0]+need/2),s[1]-need/2),ok=s[1]-s[0]>=need;const cc=ok?c:(s[0]+s[1])/2;cands.push({w,c:q4(cc),sc:(doorHere?-6:0)+(ok?3:0)-Math.abs(cc-L/2)*.15+(R.doors.some(d=>d.wall===OPP[w])?1:0)})}}
+  cands.sort((a,b)=>b.sc-a.sc);let placed=null;const top=cands.filter(c=>c.sc>=cands[0].sc-2.5);const order=top.slice(v%Math.max(1,top.length)).concat(top.slice(0,v%Math.max(1,top.length))).concat(cands);
+  for(const c of order){const i=R.wallAt(bed,c.w,c.c,kit.bedO);if(i>=0){placed={w:c.w,t:c.c,i};break}}
+  if(!placed){/* a small room with doors all round: the bed lies along a wall instead, its head to the corner */
+    for(const w of['N','S','E','W']){if(placed)break;const L=R.len(w);for(const t of[bs[2]/2+.75,L-bs[2]/2-.75,L/2]){const[x,z]=R.wpt(w,t,bs[0]/2+.03),r=FACE[w]+(t<L/2?90:270);if(R.can(bed,x,z,r,kit.bedO)){const i=R.add(bed,x,z,r,kit.bedO);placed={w,t,i,side:true};break}}}
+    if(placed){R.bed=placed;const[fx,fz]=R.wpt(placed.w,placed.t,bs[0]+1.3);R.focus=[Math.min(R.W-1.6,Math.max(1.6,fx)),Math.min(R.D-1.6,Math.max(1.6,fz))];const[rx,rz]=R.wpt(placed.w,placed.t,bs[0]+.75);R.tryAdd(kit.rug||'ragRug',rx,rz,(placed.w==='N'||placed.w==='S')?90:0,kit.rug==='ragRug'||!kit.rug?{}:rugO(1.9,3.4))}else R.fails.push('no wall for the bed')}
+  if(placed&&!placed.side){const{w,t}=placed;R.bed=placed;const[fx,fz]=R.wpt(w,t,bs[2]+1.4);R.focus=[Math.min(R.W-1.6,Math.max(1.6,fx)),Math.min(R.D-1.6,Math.max(1.6,fz))];
+    const nt=kit.night||'nightTable',off=bs[0]/2+.25+size(nt)[0]/2;const sides=kit.oneNight?[v%2?1:-1]:[-1,1];for(const sg of sides){const i=R.wallAt(nt,w,q4(t+sg*off));if(i>=0&&kit.nightLamp)R.onTop(kit.nightLamp,i,0,0)}
+    const side=v%2?1:-1,[rx,rz]=R.wpt(w,t+side*(bs[0]/2+1.1),bs[2]/2+.2);const ro=kit.rug==='ragRug'?{}:rugO(1.9,3.4);R.tryAdd(kit.rug||'rug',rx,rz,(w==='N'||w==='S')?0:90,ro);if(!kit.oneNight){const[sx,sz]=R.wpt(w,t-side*(bs[0]/2+1.1),bs[2]/2+.2);R.tryAdd(kit.rug||'rug',sx,sz,(w==='N'||w==='S')?0:90,ro)}
+    if(kit.foot){const[x,z]=R.wpt(w,t,bs[2]+.15+size(kit.foot)[2]/2);R.tryAdd(kit.foot,x,z,FACE[w]+180)}
+    if(kit.over)R.hang(kit.over,w,t,Math.max(R.H/3,bs[1]+.3)>R.H-2.6?R.H-2.7:Math.max(R.H/3,2.6),{},{centred:'over the bed',lower:'third'})}
+  placed=R.bed||null;
+  if(R.fire)hearth(R,true);R.ways(R.focus?[R.focus]:[]);
+  /* the dressing table or washstand takes a window; the rest of the set goes to the walls, in a different order for each variant */
+  const wl=R.wins.slice();if(wl.length&&kit.dress){const wv=wl[(v*2+1)%wl.length],c=(wv.a+wv.b)/2,i=R.wallAt(kit.dress,wv.wall,q4(c));if(i>=0){const[x,z]=R.wpt(wv.wall,c,size(kit.dress)[2]+.7);R.tryAdd(kit.dressSeat||'sideChair',x,z,FACE[wv.wall]+180);if(kit.dressSmall)R.onTop(kit.dressSmall,i,.4,0)}}
+  const setp=kit.set.slice(),rot=v%setp.length,setv=setp.slice(rot).concat(setp.slice(0,rot)),wallsO=['N','S','E','W'].sort((a,b)=>((hash(a+v)%7)-(hash(b+v)%7)));
+  for(const k of setv){let done=false;const tall=size(k)[1]>1.5&&!SEAT.has(k)&&!DESK.has(k);for(const w of wallsO){if(done)break;const fr=R.free(w,size(k)[2],tall).sort((a,b)=>(b[1]-b[0])-(a[1]-a[0]));for(const s of fr){if(s[1]-s[0]<size(k)[0]+.3)continue;if(R.wallAt(k,w,q4((s[0]+s[1])/2))>=0){done=true;break}}}}
+  if(kit.fill)fill(R,kit.fill,kit.fillMax||1);if(kit.corner)corners(R,kit.corner);if(kit.lamp&&R.H>=6.9&&R.W*R.D>200)R.add('lanternPendant',R.W/2,R.D/2,0,{},{y:R.H-3.6,air:true});
+  smalls(R,kit.smalls||['candlestick','bookStack','photoFrames'],kit.smallShare||.7);if(kit.clock!==false)clock(R);if(kit.art)art(R,kit.art,{every:6.5})}
+const COL={Gold:'#C9A227',Silver:'#C0C7CF',White:'#f1ede4',Copper:'#B87333',Blue:'#2E5E9E',Yellow:'#d9b53a',Green:'#3f7a4a',Violet:'#6a4c93',Pink:'#d98aa6',Orange:'#d9782e',Grey:'#8d9299',Grace:'#7a1f2b'};
+PROG.bedState=R=>{const c=Object.keys(COL).find(k=>R.name.includes(k)),o=c?{c:COL[c]}:{},grand=R.W*R.D>=380;bedProgram(R,{bed:grand||R.variant%2?'fourPosterOak':'bed4',bedO:o,nightLamp:'candlestick',foot:'blanketChest',over:'pictureLandscape',dress:'dressingTable',dressSmall:'photoFrames',
+  set:['wardrobe','tallboy','washstand','chevalMirror','commode','writingTable','chaise'],fill:['read','talk','cards'],fillMax:grand?2:1,corner:['screen','torchere','coatStand','hatBoxes'],lamp:true,smalls:['candlestick','bookStack','photoFrames','decanterWater','clockMantel','vaseFlowers'],art:ARTS})};
+PROG.bedGuest=R=>bedProgram(R,{bed:'bed4',bedO:{c:['#2E5E9E','#7a1f2b','#3f7a4a','#B87333'][R.variant%4]},nightLamp:'candlestick',foot:'blanketChest',over:'portrait',dress:'dressingTable',dressSmall:'photoFrames',set:['wardrobe','washstand','commode','chevalMirror','armchair','writingTable','tallboy','sideChair'],fill:['read','writing','cards'],fillMax:2,corner:['coatStand','hatBoxes','screen','umbrellaStand'],smalls:['candlestick','bookStack','decanterWater','clockMantel'],art:['pictureLandscape','portrait']});
+PROG.bedServant=R=>bedProgram(R,{bed:'bedIron',oneNight:true,night:'windsor',rug:'ragRug',dress:'washstand',dressSeat:null,set:['blanketChest','tallboy','windsor','washstand'],smalls:['candlestick'],smallShare:.6,clock:false,pegs:true});
+PROG.dining=R=>{fire(R);const long=R.D>=R.W,L=(long?R.D:R.W),len=Math.max(40,Math.round((Math.min(L-12,22))/.115)),tl=len*.115+.3,cx=R.W/2,cz=R.D/2,r=long?0:90;
+  R.tryAdd('rug',cx,cz,r,rugO(6.5,tl+3),{lane:true});const ti=R.tryAdd('tableDining',cx,cz,r,{len});const n=Math.floor((tl-1.2)/1.35);for(let i=0;i<n;i++){const t=-tl/2+.9+(tl-1.8)*(n>1?i/(n-1):.5);for(const s of[-1,1]){if(long)R.tryAdd('chairDining',cx+s*1.55,cz+t,s<0?90:270);else R.tryAdd('chairDining',cx+t,cz+s*1.55,s<0?0:180)}}
+  for(const s of[-1,1]){if(long)R.tryAdd('chairDining',cx,cz+s*(tl/2+.7),s<0?0:180);else R.tryAdd('chairDining',cx+s*(tl/2+.7),cz,s<0?90:270)}
+  if(ti>=0)for(const d of[-.3,0,.3])R.onTop(d===0?'fruitBowl':'candelabra',ti,long?0:d*tl,long?d*tl:0);R.focus=[cx,cz];if(R.fire)for(const s of[-1,1])R.hang('sconce',R.fire.w,R.fire.t+s*2.6,3,{},{centred:'beside the fire',lower:'third'});
+  R.ways([long?[cx+3.2,cz]:[cx,cz+3.2]]);for(const s of[-1,1])R.add('chandelier',long?cx:cx+s*tl/4,long?cz+s*tl/4:cz,0,{},{y:R.H-3.6,air:true});
+  walls(R,{tall:['sideboard','displayCabinet','sideboard','commode','clockLong'],pier:['consoleTable','torchere','bust'],low:['-','hallBench','-']},{flank:['chairDining','torchere'],mid:['consoleTable']});corners(R,['torchere','screen','palm','bust']);
+  smalls(R,['silverSalver','decanterWater','candelabra','fruitBowl'],.9);clock(R);art(R,['portrait','pictureLandscape','portrait','pierGlass'])};
+PROG.library=R=>{fire(R);hearth(R);R.ways(R.focus?[R.focus]:[]);
+  /* walls first: books on every run of wall that will take them */
+  for(const w of['N','S','E','W'])for(const s of R.free(w,.8,true)){let a=s[0]+.15,b=s[1]-.15;const n=Math.floor((b-a)/2.95);if(n<1)continue;const st=(b-a-n*2.87)/(n+1);for(let i=0;i<n;i++)R.wallAt('bookcase',w,q4(a+st+2.87/2+i*(2.87+st)))}
+  /* reading tables down the long axis */
+  const long=R.D>=R.W,L=long?R.D:R.W,n=Math.max(1,Math.floor(L/11));for(let i=0;i<n;i++){const t=L*(i+1)/(n+1),x=long?R.W/2:t,z=long?t:R.D/2;const g=R.group('table',q4(x),q4(z),long?0:1,[{k:'rug',x:0,z:0,r:0,o:rugO(5.4,5.4),f:{lane:true}},{k:i%2?'mapTable':'libraryTable',x:0,z:0,r:0},{k:'sideChair',x:-1.7,z:0,r:90},{k:'sideChair',x:1.7,z:0,r:270},{k:i%2?'mapRoll':'bookStack',on:1},{k:'tableLamp',on:1,dx:.4}]);if(!g)R.group('read',q4(x),q4(z),long?1:0,GR.read(R))}
+  fill(R,['read','cards','writing','read'],Math.round(R.W*R.D/170));walls(R,{tall:['globe','bust','torchere'],pier:['bust','globe'],low:['hallBench','desk','hallBench','-']});corners(R,['globe','torchere','bust','screen']);
+  for(const g of R.groups.slice(0,3))if(g.name!=='read')R.add('chandelier',g.x,g.z,0,{},{y:R.H-3.6,air:true});smalls(R,['bookStack','bookRow','newspaper','inkstand','tableLamp','letterTray'],.85);clock(R);art(R,['portrait','coatOfArms'],{bare:false})};
+PROG.office=R=>{fire(R);hearth(R,true);const wv=R.wins[0];let di=-1;const cx=R.W/2,cz=R.D/2;
+  const dg=R.group('desk',q4(cx),q4(cz),R.variant%4,[{k:'rug',x:0,z:0,r:0,o:rugO(5.2,4.4),f:{lane:true}},{k:'deskWriting',x:0,z:-.2,r:0},{k:'armchair',x:0,z:-1.6,r:0},{k:'sideChair',x:-.8,z:1.4,r:180},{k:'sideChair',x:.9,z:1.4,r:180},{k:'inkstand',on:1,dx:.5},{k:'letterTray',on:1,dx:-.5},{k:'standardLamp',x:2.1,z:-1.3,r:0,opt:1}]);R.focus=[cx,cz+2.6>R.D-1.6?cz:cz];
+  R.ways([[Math.min(R.W-1.6,cx+3.4),cz]]);walls(R,{tall:['bookcase','pigeonholes','cardCatalog','bureau','strongbox','deedChest','clockLong'],pier:['strongbox','cardCatalog','bust'],low:['hallBench','-','desk']},{flank:['sideChair']});fill(R,['read','cards'],1);corners(R,['globe','wastePaper','coatStand','umbrellaStand']);
+  smalls(R,['despatchBox','bookRow','telephone','letterTray','inkstand','tableLamp','newspaper'],.85);clock(R);art(R,['wallMap','portrait','wallCalendar','pictureLandscape'])};
+/* a great room: symmetric about its long axis; the middle open, or one great piece where people pass through */
+function great(R,o){fire(R);const long=R.W>=R.D,cx=R.W/2,cz=R.D/2;if(R.fire)hearth(R);
+  if(o.centre){R.tryAdd('rug',cx,cz,long?90:0,rugO(7,7),{lane:true});const i=R.tryAdd(o.centre,cx,cz,0,{},{lane:true,m:.2});if(i>=0&&o.centreOn)R.onTop(o.centreOn,i,0,0)}else R.tryAdd('rug',cx,cz,long?90:0,rugO(Math.min(13,R.D-9),Math.min(18,R.W-9)),{lane:true});
+  R.ways(R.focus?[R.focus]:[[cx,cz]]);const side=o.side||['talk'];let gi=0;
+  /* mirrored pairs of groups either side of the axis */
+  const span=long?R.W:R.D,dep=long?R.D:R.W,n=Math.max(1,Math.floor(span/10.5));for(let i=0;i<n;i++){const t=span*(i+.5)/n,rc=side[gi++%side.length];for(const s of[-1,1]){const off=dep/2-Math.min(5.2,dep/2-2.2),x=long?t:cx+s*(dep/2-off-.0),z=long?cz+s*(dep/2-off):t;const xx=long?t:(s<0?off:R.W-off),zz=long?(s<0?off:R.D-off):t;R.group(rc,q4(xx),q4(zz),long?(s<0?2:0):(s<0?1:3),GR[rc](R))}}
+  walls(R,{tall:o.tall||['consoleTable','bust','displayCabinet','torchere','suitArmor'],pier:o.pier||['bust','torchere','suitArmor','consoleTable'],low:['hallBench','-','hallBench']},{flank:['chairHall','torchere'],mid:['consoleTable']});corners(R,o.corner||['palm','torchere','statue','urn']);
+  const m=Math.max(1,Math.floor(span/16));for(let i=0;i<m;i++){const t=span*(i+.5)/m;R.add(R.H>=11?'chandelierGilt':'chandelier',long?t:cx,long?cz:t,0,{},{y:R.H-3.6,air:true})}
+  smalls(R,['vaseFlowers','bookStack','silverSalver','newspaper','photoFrames','candelabra'],.8);clock(R);art(R,o.art||['portrait','tapestry','pictureLandscape','pierGlass','coatOfArms'],{every:6})}
+PROG.saloon=R=>great(R,{side:['talk','cards','talk']});
+PROG.greatHall=R=>great(R,{side:['talk','read'],tall:['suitArmor','settle','bust','torchere','displayCabinet'],pier:['suitArmor','torchere','bust'],corner:['suitArmor','torchere','palm','urn'],art:['tapestry','coatOfArms','antlers','banner','portrait']});
+PROG.entrance=R=>great(R,{centre:'pedestalTable',centreOn:'vaseFlowers',side:['read'],tall:['hallBench','consoleTable','coatStand','suitArmor','bust','umbrellaStand'],pier:['chairHall','bust','umbrellaStand','torchere'],corner:['palm','suitArmor','torchere','urn']});
+PROG.ballroom=R=>{const long=R.W>=R.D;R.tryAdd('rug',1,1,0,rugO(1,1));R.items.pop();R.ways([[R.W/2,R.D/2]]);R.cells({x0:6,z0:5,x1:R.W-6,z1:R.D-5},c=>{R.zone[c]|=2});
+  const e=R.group('music',long?6.5:R.W/2,long?R.D/2:6.5,long?3:0,[{k:'grandPiano',x:0,z:0,r:0,f:{lane:true}},{k:'pianoStool',x:0,z:3,r:180,f:{lane:true}},{k:'musicStand',x:-2.4,z:1,r:180,f:{lane:true}},{k:'musicStand',x:2.4,z:1,r:180,f:{lane:true}},{k:'harp',x:-2.6,z:-1.4,r:0,f:{lane:true},opt:1}]);
+  walls(R,{tall:['settee','consoleTable','sideChair','torchere','sideChair','bust'],pier:['sideChair','torchere','consoleTable','bust'],low:['sideChair','hallBench','sideChair','-']},{flank:['sideChair','sideChair'],mid:['consoleTable']});corners(R,['palm','torchere','statue','palm']);
+  const span=long?R.W:R.D,m=Math.max(2,Math.floor(span/15));for(let i=0;i<m;i++){const t=span*(i+.5)/m;R.add('chandelierGilt',long?t:R.W/2,long?R.D/2:t,0,{},{y:R.H-3.6,air:true})}smalls(R,['vaseFlowers','candelabra','silverSalver'],.7);art(R,['pierGlass','portrait','pictureLandscape','tapestry'],{every:7})};
+/* a passage or gallery: a runner down the middle, furniture on one wall only, lamps at intervals */
+PROG.passage=R=>{const long=R.W>=R.D,L=long?R.W:R.D,Wd=long?R.D:R.W,cx=R.W/2,cz=R.D/2,hole=R.holes.length>0;
+  if(!hole){const n=Math.ceil((L-3)/40),rw=Wd<=6.5?1.6:Wd<=9?2.4:3.2;for(let i=0;i<n;i++){const t=L*(i+.5)/n;R.tryAdd('rug',long?t:cx,long?cz:t,long?90:0,rugO(rw,Math.min(36,(L-3)/n-1),{fringe:false}),{lane:true})}}
+  if(!R.ways([]))R.notes.push('the ways through could not all be proved here: look at it before placing');
+  /* furniture on one wall only: the wall with fewer windows. Round a void every walk has but one wall, so each outer wall is dressed. */
+  const cnt=w=>R.wins.filter(v=>v.wall===w).length+R.doors.filter(v=>v.wall===w).length*.5,side=long?(cnt('N')<=cnt('S')?'N':'S'):(cnt('W')<=cnt('E')?'W':'E'),sides=hole?['N','S','E','W']:[side];
+  const deep=Wd>=9&&!hole,ST=[['consoleTable','vaseFlowers'],['hallBench'],['bust'],['chairHall','chairHall'],['clockLong'],['displayCabinet'],['suitArmor'],['consoleTable','tableLamp'],['potPlant'],['hallBench'],['commode','photoFrames']].concat(deep?[['settee'],['curioCabinet']]:[]);let last=-1,clocks=0;
+  const dp=(Wd<=6.5||hole)?.85:1.05,STD=ST.filter(st=>size(st[0])[2]<=dp+.01);for(const sd of sides)for(const s of R.free(sd,dp,true)){const span=s[1]-s[0];if(span<2.6)continue;const n=Math.max(1,Math.round(span/7)),gap=span/n;for(let i=0;i<n;i++){const t=s[0]+gap*(i+.5);let j=Math.floor(R.rnd()*STD.length);for(let g=0;g<STD.length;g++,j=(j+1)%STD.length){const st=STD[j];if(j===last||(st[0]==='clockLong'&&clocks))continue;
+        if(st[0]==='chairHall'){const a=R.wallAt('chairHall',sd,q4(t-.9)),b=a>=0?R.wallAt('chairHall',sd,q4(t+.9)):-1;if(a>=0){last=j;break}continue}
+        const i1=R.wallAt(st[0],sd,q4(t));if(i1>=0){if(st[1])R.onTop(st[1],i1,0,0);if(st[0]==='clockLong')clocks++;last=j;break}}}}
+  /* lamps at intervals, never a grid: wall lights on the bare wall, staggered */
+  const lw=hole?['N','S','E','W']:[OPP[side]];for(const w of lw){const LL=R.len(w);for(let t=3.5+(w==='S'||w==='E'?4:0);t<LL-3;t+=8.5)R.hang('sconce',w,q4(t),Math.max(2.6,R.H/3),{},{centred:'at intervals of 8 or 9',lower:'third'})}
+  if(!hole)for(const v of R.wins.filter(v=>v.wall===OPP[side]).filter((v,i)=>i%2===0))R.wallAt(Wd>=6?'hallBench':'sideChair',OPP[side],q4((v.a+v.b)/2));
+  if(hole)for(const w of['N','S','E','W'])for(const v of R.wins.filter(v=>v.wall===w).filter((v,i)=>i%3===1))R.wallAt('hallBench',w,q4((v.a+v.b)/2));
+  if(Wd>=9){fill(R,['talk','read','cards','centre','writing'],Math.max(1,Math.round(L/18)));corners(R,['palm','torchere','urn','bust'])}
+  art(R,['portrait','pictureLandscape','portrait','tapestry','pierGlass','coatOfArms'],{every:5.5})};
+PROG.stair=R=>{if(!R.ways([])||R.holes.length){R.notes.push('a stair hall: the flights are not in the register, so pictures and wall lights only');for(const w of['N','S','E','W']){const LL=R.len(w);for(let t=LL/2-4.25;t<LL-2;t+=8.5)if(t>2)R.hang('sconce',w,q4(t),Math.max(2.6,R.H/3),{},{centred:'at intervals',lower:'third'})}art(R,['portrait','pictureLandscape','tapestry'],{every:5});return}walls(R,{tall:['consoleTable','hallBench','clockLong','bust'],pier:['chairHall','bust','torchere'],low:[]},{});smalls(R,['vaseFlowers','tableLamp'],.8);art(R,['portrait','pictureLandscape','tapestry'],{every:5})};
+/* a working room: its own stock, laid out by the same rules. Tables in the middle with seats, cases on the walls, stores in the corners. */
+function work(R,stock){const tables=stock.filter(k=>TOPS.has(k)&&size(k)[1]<=2.2&&!['nightTable','teaTable','bookTable'].includes(k)),seats=stock.filter(k=>SEAT.has(k)),wallp=stock.filter(k=>!TOPS.has(k)&&!SEAT.has(k)&&!SMALL.has(k)&&!HUNG.has(k)&&!CEIL.has(k)&&!FLAT.has(k)&&size(k)[2]<=2.3&&size(k)[1]>=1.2),big=stock.filter(k=>!TOPS.has(k)&&!SEAT.has(k)&&!SMALL.has(k)&&!HUNG.has(k)&&!CEIL.has(k)&&!FLAT.has(k)&&size(k)[2]>2.3),hung=stock.filter(k=>HUNG.has(k)),ceil=stock.filter(k=>CEIL.has(k)&&k!=='beam'&&k!=='coffer'&&k!=='ceilingRose'),small=stock.filter(k=>SMALL.has(k));
+  fire(R);const long=R.D>=R.W,L=long?R.D:R.W,Wd=long?R.W:R.D,cx=R.W/2,cz=R.D/2,ut=[...new Set(tables)],us=[...new Set(seats)],seat=us[0]||'windsor';
+  /* work tables down the long axis, each with its seats and its own light */
+  if(ut.length){const n=Math.max(1,Math.min(Math.floor(L/9),Math.round(R.W*R.D/150)+1));for(let i=0;i<n;i++){const k=ut[i%ut.length],s=size(k),t=L*(i+1)/(n+1),along=s[2]>s[0],r=along===long?0:90,x=long?cx:t,z=long?t:cz,fw=along===long?s[0]:s[2];
+      const ti=R.tryAdd(k,x,z,r,{},{m:.2});if(ti<0)continue;R.groups.push({name:'work',x,z,q:0});if(us.length&&!/Bench|bench|counter|butcher|ironing/.test(k)){for(const sg of[-1,1]){const o=fw/2+.65;R.tryAdd(us[(i+(sg>0))%us.length],long?x+sg*o:x,long?z:z+sg*o,long?(sg<0?90:270):(sg<0?0:180))}}
+      const lamp=R.H>=6.9?'lanternPendant':null;if(ceil.length)R.add(ceil[i%ceil.length],x,z,long?0:90,{},{y:R.H-size(ceil[i%ceil.length])[1],air:true});else if(lamp)R.add(lamp,x,z,0,{},{y:R.H-3.6,air:true});else R.onTop('oilLamp',ti,0,(i%2?.6:-.6))}R.focus=[cx,cz]}
+  R.ways(R.focus?[[Math.min(R.W-1.6,cx+(long?size(ut[0]||'kitchenTable')[0]/2+1.8:0)),Math.min(R.D-1.6,cz+(long?0:size(ut[0]||'kitchenTable')[0]/2+1.8))]]:[]);
+  const uw=[...new Set(wallp)];if(uw.length)walls(R,{tall:uw,pier:uw.filter(k=>size(k)[0]<=2).concat(uw),low:us.length?[us[0],'-']:[]},{flank:us.length?[seat]:null});
+  /* big stores stand in rows of two or three against a wall, never scattered */
+  let bi=0;for(const k of[...new Set(big)]){const cnt=Math.min(4,big.filter(b=>b===k).length);let put=0;for(const w of['N','S','E','W'].sort((a,b)=>R.len(a)-R.len(b))){if(put>=cnt)break;for(const s of R.free(w,size(k)[2],true)){const kw=size(k)[0];let t=s[0]+kw/2+.2;while(put<cnt&&t<=s[1]-kw/2-.1){if(R.wallAt(k,w,q4(t))>=0)put++;t+=kw+.35}if(put)break}}bi++}
+  corners(R,uw.filter(k=>size(k)[0]<=1.4&&size(k)[2]<=1.4).concat(['barrel','crateStack','sackPile','mopBucket']).slice(0,4));
+  for(const k of[...new Set(hung)]){const y=HY[k]||Math.max(2.4,R.H/3);let ok=false;for(const w of['N','S','E','W']){if(ok)break;const L2=R.len(w);for(const t of[L2/2,L2/3,L2*2/3,L2/4,L2*3/4])if(R.hang(k,w,q4(t),Math.min(y,R.H-size(k)[1]-.3),{},{centred:'on the bare wall',lower:'third'})>=0){ok=true;break}}}
+  smalls(R,small.length?[...new Set(small)]:['oilLamp','candlestick'],.8)}
+const WORK=set('trunk lumber linenStore atticSitting kitchen scullery larder upperServant cellar silver linen mess servery boot lamp brushing coal map muniment music billiard gun school lab ward sewing box cistern flag clock belvedere wireless observatory dorm orangery theatre card bake brew carpenter laundry drying crypt vestry church engine press stalls tack forge coach riding gate ambulance barn nursery dressing bath');
+function guess(n){const m=[[/Bedchamber|Bedroom/,'bedState'],[/Guest/,'bedGuest'],[/Maid|Footman|Lodging/,'bedServant'],[/Library/,'library'],[/Dining/,'dining'],[/Saloon/,'saloon'],[/Great Hall/,'greatHall'],[/Entrance/,'entrance'],[/Ballroom$/,'ballroom'],[/Gallery|Corridor|Lobby|Foyer|Passage|Porch/,'passage'],[/Stair/,'stair'],[/Office|Study|Registry|Calendar|Agent/,'office'],[/Drawing|Morning|Smoking|Withdrawing|Sitting/,'sitting']];for(const[re,t]of m)if(re.test(n))return t;return'work'}
+
+/* stock for the rooms the v20 wall moves make new, so the Estate can plan them by type alone */
+const STOCK={trunk:['trunkStack','trunkStack','trunkStack','hatBoxes','hatBoxes','blanketChest','crateStack','coatStand','workbench','windsor','oilLamp','candlestick'],lumber:['crateStack','crateStack','screen','easel','rockingHorse','dollsHouse','cradle','barrel','sackPile','sawHorse','trestleTable','windsor','blanketChest','birdcage','oilLamp'],linenStore:['linenPress','linenPress','linenPress','ironingTable','windsor','dryingRack','blanketChest','sewingMachine','linenStack','linenStack','oilLamp','candlestick'],atticSitting:['trestleTable','windsor','windsor','settle','welshDresser','stove','pianoUpright','bookTable','rockingHorse','sewingMachine','teaSet','newspaper','oilLamp','sewingBox','noticeBoard','clockMantel']};
+function plan(row,o){o=o||{};const R=new Room(row,o),t=R.type,stock=o.stock&&o.stock.length?o.stock:STOCK[t]||[];
+  if(PROG[t])PROG[t](R);else if(WORK.has(t)||t==='work'){if(stock.length)work(R,stock);else work(R,['kitchenTable','windsor','welshDresser','crateStack','barrel'])}else PROG.sitting(R);
+  topUp(R,t,stock);const late=R.tops().filter(x=>!R.items.some(it=>it.on===x.i));if(late.length){const sp=PROG[t]?['candlestick','bookStack','photoFrames','vaseFlowers','newspaper']:['oilLamp','candlestick'];let si=R.seed%sp.length;for(const x of late)if(R.rnd()<.6)R.onTop(sp[si++%sp.length],x.i,0,0)}
+  if(t==='bedServant')R.hang('pegRail',R.bed?OPP[R.bed.w]:'N',q4(R.len(R.bed?OPP[R.bed.w]:'N')/2+(R.variant%2?1.6:-1.6)),3.2,{},{centred:'on the bare wall',lower:'third'});
+  runs(R,o.runs);const wd=winter(R,t);const out={winter:wd,key:row.building+' / '+row.floor+' / '+row.name+(o.n?' #'+o.n:''),name:row.name,building:row.building,floor:row.floor,type:t,variant:R.variant,box:row.rect,y:row.y,w:R.W,d:R.D,ceiling:R.H,inset:.5,
+    notes:R.notes,doors:R.doors.map(d=>[d.wall,d.a,d.b]),windows:R.wins.map(d=>[d.wall,d.a,d.b]),holes:R.holes,fire:R.fire?{wall:R.fire.w,t:R.fire.t}:null,focal:R.bed?'the bed':R.fire&&R.groups.some(g=>g.name==='hearth')?'the fire':R.groups[0]?R.groups[0].name:'the walls',items:R.items.map(it=>{const c=Object.assign({},it);delete c.g;return c}),runs:R.runs||[],art:R.art,pieces:R.count()};
+  out.audit=audit(out,R.fails);return out}
+
+/* ---------- the rules, checked again on the finished plan ---------- */
+function audit(p,carry){const fails=(carry||[]).slice(),W=p.w,D=p.d,solid=[];const fp=it=>{const s=size(it.k,it.o),t=it.r%180===0,fx=t?s[0]:s[2],fz=t?s[2]:s[0];return{x0:it.x-fx/2,z0:it.z-fz/2,x1:it.x+fx/2,z1:it.z+fz/2,h:s[1],k:it.k}};
+  p.items.forEach((it,i)=>{if(FLAT.has(it.k)||it.on!=null||it.y>.2)return;const b=fp(it);b.i=i;if(b.x0<.44||b.z0<.44||b.x1>W-.44||b.z1>D-.44)fails.push(it.k+' stands in a wall');solid.push(b)});
+  for(let a=0;a<solid.length;a++)for(let b=a+1;b<solid.length;b++){const A=solid[a],B=solid[b];if(A.x0<B.x1-.02&&A.x1>B.x0+.02&&A.z0<B.z1-.02&&A.z1>B.z0+.02)fails.push(A.k+' overlaps '+B.k)}
+  const wr=(w,a,b,d)=>w==='N'?{x0:a,z0:.5,x1:b,z1:.5+d}:w==='S'?{x0:a,z0:D-.5-d,x1:b,z1:D-.5}:w==='W'?{x0:.5,z0:a,x1:.5+d,z1:b}:{x0:W-.5-d,z0:a,x1:W-.5,z1:b},hit=(A,B)=>A.x0<B.x1-.02&&A.x1>B.x0+.02&&A.z0<B.z1-.02&&A.z1>B.z0+.02;
+  for(const d of p.doors){const Z=wr(d[0],d[1]-2,d[2]+2,2);for(const s of solid)if(hit(s,Z))fails.push(s.k+' within 2 of a door')}
+  for(const v of p.windows){const Z=wr(v[0],v[1],v[2],1.5);for(const s of solid)if(hit(s,Z)&&s.h>1.5&&!SEAT.has(s.k)&&!DESK.has(s.k))fails.push(s.k+' taller than the sill before a window')}
+  /* ways through, 2 clear, on a half-block grid */
+  const S=2,nx=W*S,nz=D*S,pass=new Uint8Array(nx*nz);for(let j=0;j<nz;j++)for(let i=0;i<nx;i++){const x=(i+.5)/S,z=(j+.5)/S;if(x<1.5||z<1.5||x>W-1.5||z>D-1.5)continue;const Z={x0:x-.98,z0:z-.98,x1:x+.98,z1:z+.98};pass[j*nx+i]=solid.some(s=>hit(s,Z))?0:1}
+  const pt=d=>{const cl=(v,m)=>Math.min(m-1.75,Math.max(1.75,v)),t=(d[1]+d[2])/2,x=cl(d[0]==='N'||d[0]==='S'?t:d[0]==='W'?1.75:W-1.75,W),z=cl(d[0]==='N'?1.75:d[0]==='S'?D-1.75:t,D);return Math.min(nz-1,Math.max(0,Math.floor(z*S)))*nx+Math.min(nx-1,Math.max(0,Math.floor(x*S)))};
+  const inH=d=>{const cl=(v,m)=>Math.min(m-1.75,Math.max(1.75,v)),t=(d[1]+d[2])/2,x=cl(d[0]==='N'||d[0]==='S'?t:d[0]==='W'?1.75:W-1.75,W),z=cl(d[0]==='N'?1.75:d[0]==='S'?D-1.75:t,D);return(p.holes||[]).some(h=>x>h[0]-1&&x<h[2]+1&&z>h[1]-1&&z<h[3]+1)},drs=p.doors.filter(d=>!inH(d));for(const h of p.holes||[])for(let j=0;j<nz;j++)for(let i=0;i<nx;i++){const x=(i+.5)/S,z=(j+.5)/S;if(x>h[0]-.9&&x<h[2]+.9&&z>h[1]-.9&&z<h[3]+.9)pass[j*nx+i]=0}
+  if(drs.length>1){const seen=new Uint8Array(nx*nz),Q=[pt(drs[0])];seen[Q[0]]=1;for(let h=0;h<Q.length;h++){const c=Q[h],i=c%nx,j=(c-i)/nx;for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=i+di,b=j+dj;if(a<0||b<0||a>=nx||b>=nz)continue;const e=b*nx+a;if(seen[e]||!pass[e])continue;seen[e]=1;Q.push(e)}}
+    drs.forEach((d,n)=>{if(n&&!seen[pt(d)])fails.push('no way 2 clear from door 1 to door '+(n+1))})}
+  const beds=p.items.filter(it=>/^bed|Bed$|fourPoster/.test(it.k));for(const b of beds){const f=fp(b);for(const v of p.windows){const Z=wr(v[0],v[1],v[2],1.2);if(hit(f,Z))fails.push('the bed head is under a window')}}
+  return{ok:fails.length===0,fails:[...new Set(fails)],pieces:p.pieces}}
+function passage(len,clear,o){o=o||{};const row={building:'kit',floor:'kit',name:'Passage '+clear+' clear',y:0,rect:[0,0,len+1,clear+1],height:o.height||7,doors:o.doors||[{wall:'west',from:Math.floor(clear/2),to:Math.floor(clear/2)+1},{wall:'east',from:Math.floor(clear/2),to:Math.floor(clear/2)+1}],windows:[]};return plan(row,{type:'passage'})}
+return{plan,audit,passage,size,guess,target,STOCK,TYPES:Object.keys(PROG).concat([...WORK]),GR:Object.keys(GR),version:'20'}})();
+if(typeof module!=='undefined')module.exports=ROOMPLAN;
+
+/* =========================================================
    v1.3 Furniture: the Parts Depot's props, greedy-meshed and placed room by room
    ========================================================= */
 const PROPC=new Map(),PQ=[],PROOMS=[];let FXGLOW=null;
@@ -3937,7 +4416,7 @@ function genLamps(){for(let x=16;x<=136;x+=20){placeLamp(x,55);placeLamp(-x,55)}
    for(const[x,z]of[[-128,-84],[-112,-84],[122,-54],[108,-58],[-150,144],[-128,140],[13,178],[20,170]])gl(x,z);SETTLE.lampsNew=LAMPS.length-n0}
   for(let z=95;z<=185;z+=18)for(const x of[-4,4])LAMPS.push([x,.56,z]);
   /* specimen trees from the Depot: cedars on the south lawn, copper beeches by the lake walk, yews at the chapel, poplars on the west road */
-  const hero=(k,x0,z0,seed)=>{x0=Math.round(x0);z0=Math.round(z0);if(KIT){const m={treeCedar:['cedar',1.1],treeBeech:['oak',1],treeOak:['oak',1.05],treeYew:['cypress',.8],treePoplar:['cypress',1.15]}[k];for(let r=0;r<=14;r+=2)for(let i=0;i<(r?8:1);i++){const x=x0+Math.round(Math.cos(i*.785)*r),z=z0+Math.round(Math.sin(i*.785)*r);if(onRoad(x,z)||topAt(x,z)!==0)continue;if(plantTree(m[0],x,z,m[1],TRAD[m[0]]*m[1]+2))return}return}for(let r=0;r<=14;r+=2)for(let i=0;i<(r?8:1);i++){const x=x0+Math.round(Math.cos(i*.785)*r),z=z0+Math.round(Math.sin(i*.785)*r);let ok=!onRoad(x,z);for(let a=-3;a<=3&&ok;a++)for(let b=-3;b<=3;b++)if(topAt(x+a,z+b)!==0||onRoad(x+a,z+b)){ok=false;break}if(!ok)continue;queueProp(k,{seed},x,.5,z,0,0,-1,false);CUR=0;for(let y=1;y<=4;y++)S(x,y,z,C.inv);return}};
+  const hero=(k,x0,z0,seed)=>{x0=Math.round(x0);z0=Math.round(z0);if(KIT){const m={treeCedar:['greatCedar',1],treeBeech:['greatBeech',1],treeOak:['greatOak',1],treeYew:['cypress',.8],treePoplar:['cypress',1.15]}[k];for(let r=0;r<=14;r+=2)for(let i=0;i<(r?8:1);i++){const x=x0+Math.round(Math.cos(i*.785)*r),z=z0+Math.round(Math.sin(i*.785)*r);if(onRoad(x,z)||topAt(x,z)!==0)continue;if(plantTree(m[0],x,z,m[1],TRAD[m[0]]*m[1]*.8+2))return}return}for(let r=0;r<=14;r+=2)for(let i=0;i<(r?8:1);i++){const x=x0+Math.round(Math.cos(i*.785)*r),z=z0+Math.round(Math.sin(i*.785)*r);let ok=!onRoad(x,z);for(let a=-3;a<=3&&ok;a++)for(let b=-3;b<=3;b++)if(topAt(x+a,z+b)!==0||onRoad(x+a,z+b)){ok=false;break}if(!ok)continue;queueProp(k,{seed},x,.5,z,0,0,-1,false);CUR=0;for(let y=1;y<=4;y++)S(x,y,z,C.inv);return}};
   hero('treeCedar',-52,84,3);hero('treeCedar',52,84,7);hero('treeBeech',-84,70,2);hero('treeBeech',84,112,5);hero('treeOak',-70,132,4);
   for(const[x,z]of[[-150,-72],[-160,-72],[-170,-72],[-136,-98]])hero('treeYew',x,z,x&7);for(let z=-60;z<=40;z+=14)hero('treePoplar',-148,z+7,z&7);for(let z=-40;z<=40;z+=16)hero('treePoplar',148,z,z&7)}
 function fxLightInit(){const LK=new Set(['chandelier','chandelierGilt','chandelierIron','lanternPendant','standardLamp','sconce','fireplace','candelabra','torchere','inglenook','kitchenRange','forgeHearth','wallLantern','stove','tableDining']);
@@ -4524,7 +5003,7 @@ const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start
   try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');await Y();const WIN=LIVE?buildWindowDetail():0;mark('windows');await Y();const PRB=buildProps();mark('props');await Y();TM.stairq=buildStairs();mark('stairs');await Y();const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
   window.__vx={LDAY,FULL,GROVE,IMP,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
   TM.wall=Math.round(performance.now()-t0);frame();setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
-function styleUI(){$('#brandS').textContent='Euphrates Hall v1.21 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
+function styleUI(){$('#brandS').textContent='Euphrates Hall v1.22 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
   $('#styleList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>pickStyle(b.dataset.st));$('#bStyle').onclick=()=>{$('#stylebox').hidden=!$('#stylebox').hidden};
   if(ISO){for(const[id,dd]of[['#bRotL',-1],['#bRotR',1]]){const b=$(id);b.hidden=false;b.onclick=()=>{if(ISOV.rot)return;const a=ISOV.yaw;ISOV.rot={t0:performance.now(),a,b:a+dd*Math.PI/2};if(MODE==='walk'){ISOV.yaw=a+dd*Math.PI/2;ISOV.rot=null}}}}}
 $('#load').innerHTML='Raising Euphrates Hall<i>The '+ST.n+' Estate. Raising the mansion, about ten seconds.</i>';

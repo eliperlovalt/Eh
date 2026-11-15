@@ -80,3 +80,9 @@ Since v1.21 (full detail at every distance; the owner's order of 14 November 202
 - Tools: `lookdiff.py BASE NEW OUTDIR` (screenshots against a noise floor).
 
 Run the walk test, the reach test and the audit test before every push.
+
+Since v1.22 (Depot v20 fitted, first part):
+- `KITS()` now embeds `depot/seasons.js` v2, `trees.js` v2, `flowers.js` v2, `ornament.js` and `contours.js` v20, whole (the `module.exports` line is left off the first three, as before). `props6.js` and `roomplan.js` follow `props5.js`. To take a newer Depot file, swap its block for the file.
+- The glazing cross is on every dressed window (contours v20). The Hall is 74,326 triangles near.
+- Hero trees: `TVAR` and `TRAD` know greatOak, greatCedar, greatBeech; the specimen trees on the lawns are those (clearance 0.8 of their radius), and the Great Cedar at x -50, z 125 is the Depot's greatCedar at 1.25. The west cedar at x -52, z 84 finds no room, as in v1.21.
+- The werewolf is the Depot's (`wereFig`, props6 `werewolf`, steps 0 and 1 swapped by `lifeStep` as he walks), on the old route and body.
