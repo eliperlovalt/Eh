@@ -179,3 +179,9 @@ Since v1.41 (the look pass, first batch: His Grace's order of 16 Nov, the house 
 - `stairTreads` dresses the Hall's block stairs too (the Red Stair, the Red Staircase, the Wireless Room's).
 - The forge chimney (x 132 to 133) stands against the north wall (z -111 to -110), a chimney breast in the Forge and Lodging VI, not a pillar mid-floor.
 - Below stairs, the 1-wide strips by the Women's Stair and the Still Room are 4 clear: the Women's Stair room starts at z -33, the Still Room ends at z -41.
+
+Since v1.42 (the look pass, second batch; the Ideas Board's section 9):
+- Work rooms keep the planner's filler (crates, sacks, barrels, mop buckets) only if they are stores or working rooms (`STORE20`); the Billiard Room, Schoolroom, Night Nursery, Wireless Room and the rest lose it. Two of a big piece at most in a work room, eight of a seat.
+- `belvCeil`: His Grace's Belvedere was open to the sky above its walls; a ceiling at the wall top, which takes its painted finish.
+- Checked: every bedroom has its bed (KAIROS's views did not show some).
+- The Ideas Board, section 9: the Houses take His Grace's British names (`HOUSES`: the House of the Crown, the Exchequer, the Chapel Royal, the Rolls Office, the Admiralty, the Royal Society, the Engine House, the Revels Office, the Board of Ordnance, the Horse Guards, the Drill Hall (Charcoal, was Obsidian), Below Stairs, the Drawing Room, the Yeomanry), in the room cards, the files and Find. The Schoolroom Annexe is the Genizah Writing Room (Green), its writing table the Genizah's object; the Pantry Book is on the Kitchen dresser; the commonplace book (his Notes) on the desk in His Grace's Study. The three pages are not live yet, so each object says so (GOLEM's rule 4). `src/golem-registry.json` follows.

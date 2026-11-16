@@ -1,5 +1,5 @@
 {
-"version": "golem-registry-v1.1",
+"version": "golem-registry-v1.1+ideas9",
 "approved": "2026-11-15",
 "houses": {
 "gold": [
@@ -349,7 +349,13 @@
 "The Hall",
 "brown",
 0,
-[]
+[
+[
+"The Pantry Book: the grounds, a meal plan and a prep guide",
+"book",
+"pantry"
+]
+]
 ],
 [
 "The Scullery",
@@ -391,13 +397,7 @@
 "The Hall",
 "brown",
 0,
-[
-[
-"The pantry book: grounds records",
-"book",
-"pantry"
-]
-]
+[]
 ],
 [
 "The Silver Safe",
@@ -817,7 +817,7 @@
 "globe"
 ],
 [
-"The desk: his Notes",
+"The commonplace book: his Notes",
 "desk",
 "notes"
 ],
@@ -869,15 +869,15 @@
 ]
 ],
 [
-"The Schoolroom Annexe",
+"The Genizah Writing Room",
 "The Hall",
-"gold",
+"green",
 0,
 [
 [
-"The globe",
-"globe",
-"globe"
+"The writing table: the Genizah",
+"desk",
+"genizah"
 ]
 ]
 ],
@@ -1362,5 +1362,21 @@
 []
 ]
 ],
-"issued": "2026-11-16"
+"issued": "2026-11-16",
+"houseNames": {
+"gold": "The House of the Crown",
+"silver": "The Exchequer",
+"white": "The Chapel Royal",
+"copper": "The Rolls Office",
+"blue": "The Admiralty",
+"yellow": "The Royal Society",
+"green": "The Engine House",
+"violet": "The Revels Office",
+"orange": "The Board of Ordnance",
+"grey": "The Horse Guards",
+"charcoal": "The Drill Hall",
+"brown": "Below Stairs",
+"pink": "The Drawing Room",
+"red": "The Yeomanry"
+}
 }
