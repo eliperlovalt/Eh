@@ -118,227 +118,227 @@
 "suite": "#D4AF37",
 "pages": {
 "golem": [
-"GOLEM: the whole system",
+null,
 "live"
 ],
 "golem.ledger": [
-"The Ledger",
+null,
 "live"
 ],
 "golem.orders": [
-"Today's Orders",
+null,
 "live"
 ],
 "golem.library": [
-"Reading List and Quotes",
+null,
 "live"
 ],
 "golem.rules": [
-"The Rules",
+null,
 "live"
 ],
 "golem.summit": [
-"The Ascent: the Road to the Summit",
+null,
 "live"
 ],
 "golem.thoughtweb": [
-"The Thought Web",
+null,
 "live"
 ],
 "golem.circle": [
-"The Circle",
+null,
 "live"
 ],
 "golem.roster": [
-"The roll of GOLEM's agents",
+null,
 "live"
 ],
 "datahub.brief": [
-"Brief and In-Tray",
+null,
 "live"
 ],
 "datahub.figures": [
-"Public Figures: the Thought Web",
+null,
 "live"
 ],
 "datahub.edition": [
-"The Edition",
+null,
 "live"
 ],
 "datahub.desks": [
-"Desks and Alerts",
+null,
 "live"
 ],
 "datahub.ai": [
-"AI Mastery: Ten Practices",
+null,
 "live"
 ],
 "globe": [
-"The Globe",
+null,
 "live"
 ],
 "kairos": [
-"KAIROS in Claude Code: Start Here",
+null,
 "live"
 ],
 "tree": [
-"The Great Tree: Nepsis",
+null,
 "live"
 ],
 "greatmen": [
-"The Great Men: dossiers",
+null,
 "live"
 ],
 "homoaureus": [
-"Homo Aureus",
+null,
 "live"
 ],
 "roadmap": [
-"The Counter-Elite: the Roadmap",
+null,
 "live"
 ],
 "empire": [
-"The Empire: everything built",
+null,
 "live"
 ],
 "register": [
-"The Register: every project",
+null,
 "live"
 ],
 "wager": [
-"The Wager Desk: the method",
+null,
 "live"
 ],
 "plan10k": [
-"The $10k Plan",
+null,
 "live"
 ],
 "deadlines": [
-"Orders to December 31",
+null,
 "live"
 ],
 "policyresume": [
-"Policy Resume",
+null,
 "live"
 ],
 "pardes": [
-"Pardes: the Orchard",
+null,
 "live"
 ],
 "wordhidden": [
-"The Word and the Hidden",
+null,
 "live"
 ],
 "israelledger": [
-"The Israel Ledger",
+null,
 "live"
 ],
 "abrahamic": [
-"Abrahamic Family Tree",
+null,
 "live"
 ],
 "telegram": [
-"Long Telegram: the foreign desk",
+null,
 "live"
 ],
 "world2036": [
-"The World in 2036",
+null,
 "live"
 ],
 "osint": [
-"OSINT Toolkit",
+null,
 "live"
 ],
 "position": [
-"The Position",
+null,
 "live"
 ],
 "jewishstudies": [
-"Jewish Studies: study guide",
+null,
 "live"
 ],
 "china": [
-"China Since 1949",
+null,
 "live"
 ],
 "generalissimo": [
-"The Generalissimo",
+null,
 "live"
 ],
 "greenprimer": [
-"Green Primer: the Grid",
+null,
 "live"
 ],
 "greensweep": [
-"Green Sweep, Nov 12",
+null,
 "live"
 ],
 "kitezh": [
-"Ghost on Kitezh",
+null,
 "live"
 ],
 "pchalf": [
-"The PC Half",
+null,
 "live"
 ],
 "genizah": [
-"The Genizah",
+null,
 "build"
 ],
 "rollout": [
-"Marginalia: the Rollout Kit",
+null,
 "live"
 ],
 "brandbook": [
-"Marginalia Brand Book",
+null,
 "live"
 ],
 "launch": [
-"The Launch Plan",
+null,
 "live"
 ],
 "gamedoc": [
-"GOLEM: The Game, design doc",
+null,
 "live"
 ],
 "signalkit": [
-"The Signal Kit",
+null,
 "live"
 ],
 "greyprimer": [
-"Grey Primer: the Watch",
+null,
 "live"
 ],
 "domovoi": [
-"Domovoi: keeper of the house",
+null,
 "live"
 ],
 "manual": [
-"The Manual",
+null,
 "live"
 ],
 "measure": [
-"The Measure: Six Voices",
+null,
 "live"
 ],
 "pantry": [
-"The Pantry: grounds records",
+null,
 "build"
 ],
 "notes": [
-"His Notes, with Kairos's synthesis",
+null,
 "build"
 ],
 "privateshelf": [
-"The Private Shelf",
+null,
 "live"
 ],
 "weekreview": [
-"The Week",
+null,
 "live"
 ],
 "books": [
-"The Library: His Grace's Books",
+null,
 "live"
 ]
 },
@@ -1378,5 +1378,6 @@
 "brown": "Below Stairs",
 "pink": "The Drawing Room",
 "red": "The Yeomanry"
-}
+},
+"note": "Page titles and links are kept off the public repo (GOLEM rule 5); page ids and status only."
 }
