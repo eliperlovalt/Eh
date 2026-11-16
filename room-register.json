@@ -1,6 +1,6 @@
 {
 "issued": "2026-11-16",
-"estate": "v1.38",
+"estate": "v1.39",
 "note": "Rect is [x0,z0,x1,z1] on the wall lines; w and d are the clear floor inside. Doors and windows give the wall and the run of blocks along it. North is -z, east is +x. plan is the Depot v20 room type each room was planned as.",
 "rooms": [
 {
@@ -112,12 +112,15 @@
 }
 ],
 "fire": null,
-"pieces": 31,
+"pieces": 34,
 "kinds": {
 "kitchenTable": 3,
-"crateStack": 8,
-"windsor": 11,
-"barrel": 9
+"kitchenRange": 2,
+"crateStack": 3,
+"sackPile": 4,
+"windsor": 18,
+"barrel": 3,
+"copperRack": 1
 },
 "plan": "kitchen"
 },
@@ -174,12 +177,13 @@
 }
 ],
 "fire": null,
-"pieces": 13,
+"pieces": 10,
 "kinds": {
 "kitchenTable": 1,
-"crateStack": 4,
-"windsor": 3,
-"barrel": 5
+"crateStack": 2,
+"milkChurns": 2,
+"butterChurn": 1,
+"barrel": 4
 },
 "plan": "scullery"
 },
@@ -229,9 +233,10 @@
 "pieces": 10,
 "kinds": {
 "kitchenTable": 1,
-"crateStack": 4,
-"windsor": 2,
-"barrel": 3
+"stoneSink": 1,
+"crateStack": 2,
+"barrel": 2,
+"mopBucket": 4
 },
 "plan": "scullery"
 },
@@ -273,36 +278,6 @@
 "windows": [
 {
 "wall": "north",
-"from": -13,
-"to": -12
-},
-{
-"wall": "north",
-"from": -8,
-"to": -7
-},
-{
-"wall": "north",
-"from": -3,
-"to": -2
-},
-{
-"wall": "north",
-"from": 2,
-"to": 3
-},
-{
-"wall": "north",
-"from": 7,
-"to": 8
-},
-{
-"wall": "north",
-"from": 12,
-"to": 13
-},
-{
-"wall": "north",
 "from": 17,
 "to": 18
 },
@@ -313,12 +288,12 @@
 }
 ],
 "fire": null,
-"pieces": 30,
+"pieces": 24,
 "kinds": {
-"kitchenTable": 4,
+"butcherBlock": 6,
+"milkChurns": 7,
 "crateStack": 6,
-"windsor": 12,
-"barrel": 8
+"barrel": 5
 },
 "plan": "larder"
 },
@@ -380,13 +355,13 @@
 }
 ],
 "fire": null,
-"pieces": 21,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 9,
-"sackPile": 1,
-"barrel": 7,
-"windsor": 2
+"deskWriting": 2,
+"bookcase": 3,
+"bureau": 8,
+"crateStack": 3,
+"barrel": 4
 },
 "plan": "upperServant"
 },
@@ -467,12 +442,12 @@
 }
 ],
 "fire": null,
-"pieces": 21,
+"pieces": 14,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"barrel": 7,
-"windsor": 4
+"wineRack": 5,
+"crateStack": 3,
+"sackPile": 3,
+"barrel": 3
 },
 "plan": "cellar"
 },
@@ -535,13 +510,12 @@
 }
 ],
 "fire": null,
-"pieces": 21,
+"pieces": 15,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"sackPile": 1,
-"windsor": 5,
-"barrel": 5
+"sideboard": 2,
+"bookcase": 5,
+"strongbox": 7,
+"crateStack": 1
 },
 "plan": "upperServant"
 },
@@ -582,12 +556,13 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 12,
+"pieces": 15,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 4,
-"windsor": 2,
-"barrel": 4
+"studyTable": 2,
+"deedChest": 3,
+"strongbox": 4,
+"silverShelves": 2,
+"sideChair": 4
 },
 "plan": "silver"
 },
@@ -630,11 +605,12 @@
 "fire": null,
 "pieces": 27,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"sackPile": 3,
-"windsor": 4,
-"barrel": 10
+"deskWriting": 3,
+"bureau": 7,
+"armchair": 5,
+"crateStack": 2,
+"clockLong": 9,
+"sackPile": 1
 },
 "plan": "upperServant"
 },
@@ -705,12 +681,15 @@
 }
 ],
 "fire": null,
-"pieces": 24,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"windsor": 7,
-"barrel": 7
+"ironingTable": 1,
+"mangle": 2,
+"trunkStack": 3,
+"linenPress": 3,
+"sewingMachine": 1,
+"windsor": 5,
+"barrel": 5
 },
 "plan": "linen"
 },
@@ -803,13 +782,16 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 52,
+"pieces": 46,
 "kinds": {
-"kitchenTable": 4,
-"crateStack": 19,
-"sackPile": 5,
-"windsor": 8,
-"barrel": 16
+"tableDining": 2,
+"trestleTable": 2,
+"welshDresser": 1,
+"crateStack": 2,
+"clockLong": 18,
+"sackPile": 1,
+"windsor": 14,
+"barrel": 6
 },
 "plan": "mess"
 },
@@ -948,13 +930,12 @@
 }
 ],
 "fire": null,
-"pieces": 43,
+"pieces": 32,
 "kinds": {
-"kitchenTable": 5,
-"crateStack": 16,
+"wineRack": 12,
+"crateStack": 7,
 "sackPile": 4,
-"barrel": 14,
-"windsor": 4
+"barrel": 9
 },
 "plan": "cellar"
 },
@@ -1004,8 +985,8 @@
 "pieces": 5,
 "kinds": {
 "kitchenTable": 1,
-"crateStack": 2,
-"barrel": 2
+"crateStack": 3,
+"dumbwaiter": 1
 },
 "plan": "servery"
 },
@@ -1059,20 +1040,18 @@
 "wall": "south",
 "from": -28,
 "to": -27
-},
-{
-"wall": "south",
-"from": -23,
-"to": -22
 }
 ],
 "fire": null,
-"pieces": 18,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 7,
-"barrel": 7,
-"windsor": 2
+"workbench": 2,
+"hallBench": 1,
+"crateStack": 6,
+"bootRack": 2,
+"coatStand": 4,
+"umbrellaStand": 2,
+"mopBucket": 3
 },
 "plan": "boot"
 },
@@ -1111,31 +1090,16 @@
 "width": 2
 }
 ],
-"windows": [
-{
-"wall": "south",
-"from": -18,
-"to": -17
-},
-{
-"wall": "south",
-"from": -13,
-"to": -12
-},
-{
-"wall": "south",
-"from": -8,
-"to": -7
-}
-],
+"windows": [],
 "fire": null,
-"pieces": 17,
+"pieces": 15,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"sackPile": 1,
-"barrel": 7,
-"windsor": 1
+"workbench": 2,
+"crateStack": 2,
+"lampShelf": 3,
+"windsor": 2,
+"barrel": 3,
+"mopBucket": 3
 },
 "plan": "lamp"
 },
@@ -1174,30 +1138,17 @@
 "width": 2
 }
 ],
-"windows": [
-{
-"wall": "south",
-"from": -3,
-"to": -2
-},
-{
-"wall": "south",
-"from": 2,
-"to": 3
-},
-{
-"wall": "south",
-"from": 7,
-"to": 8
-}
-],
+"windows": [],
 "fire": null,
-"pieces": 15,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"barrel": 5,
-"windsor": 2
+"ironingTable": 2,
+"wardrobe": 1,
+"trunkStack": 3,
+"linenPress": 2,
+"bootRack": 1,
+"sackPile": 3,
+"coatStand": 8
 },
 "plan": "brushing"
 },
@@ -1239,32 +1190,17 @@
 "windows": [
 {
 "wall": "south",
-"from": 13,
-"to": 13
-},
-{
-"wall": "south",
-"from": 17,
-"to": 18
-},
-{
-"wall": "south",
-"from": 22,
-"to": 23
-},
-{
-"wall": "south",
 "from": 27,
 "to": 27
 }
 ],
 "fire": null,
-"pieces": 16,
+"pieces": 15,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 4,
-"barrel": 8,
-"windsor": 2
+"woodPile": 4,
+"crateStack": 5,
+"barrel": 3,
+"mopBucket": 3
 },
 "plan": "coal"
 },
@@ -1616,13 +1552,16 @@
 }
 ],
 "fire": null,
-"pieces": 22,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"sackPile": 2,
-"barrel": 8,
-"windsor": 2
+"mapTable": 1,
+"libraryTable": 1,
+"fern": 6,
+"bookcase": 3,
+"armchair": 1,
+"crateStack": 2,
+"sackPile": 1,
+"globe": 5
 },
 "plan": "map"
 },
@@ -1705,11 +1644,13 @@
 "fire": null,
 "pieces": 23,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 9,
-"sackPile": 1,
-"barrel": 7,
-"windsor": 4
+"fern": 4,
+"pedestalTable": 2,
+"chaise": 5,
+"bookcase": 3,
+"deedChest": 6,
+"fauteuil": 2,
+"barrel": 1
 },
 "plan": "muniment"
 },
@@ -1833,13 +1774,13 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 25,
+"pieces": 17,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 12,
-"sackPile": 1,
-"windsor": 4,
-"barrel": 6
+"libraryTable": 4,
+"fern": 10,
+"crateStack": 1,
+"barrel": 1,
+"mopBucket": 1
 },
 "plan": "servery"
 },
@@ -1961,12 +1902,13 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 16,
+"pieces": 12,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"sackPile": 2,
-"barrel": 6
+"billiard": 1,
+"crateStack": 4,
+"sackPile": 3,
+"fauteuil": 2,
+"barrel": 2
 },
 "plan": "billiard"
 },
@@ -2170,15 +2112,14 @@
 }
 ],
 "windows": [],
-"fire": "west",
-"pieces": 15,
+"fire": "south",
+"pieces": 12,
 "kinds": {
-"kitchenTable": 1,
-"fireplace": 1,
-"crateStack": 5,
-"sackPile": 1,
-"windsor": 2,
-"barrel": 4,
+"libraryTable": 2,
+"chaise": 2,
+"fireplace": 2,
+"deedChest": 2,
+"suitArmor": 3,
 "overmantelMirror": 1
 },
 "plan": "gun"
@@ -2450,13 +2391,16 @@
 }
 ],
 "fire": null,
-"pieces": 27,
+"pieces": 24,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 10,
-"sackPile": 2,
-"barrel": 10,
-"windsor": 3
+"grandPiano": 1,
+"fern": 3,
+"pedestalTable": 3,
+"gramophone": 3,
+"displayCabinet": 3,
+"harp": 4,
+"fauteuil": 2,
+"musicStand": 5
 },
 "plan": "music"
 },
@@ -3819,12 +3763,16 @@
 }
 ],
 "fire": null,
-"pieces": 21,
+"pieces": 19,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"windsor": 6,
-"barrel": 7
+"fern": 3,
+"deskWriting": 1,
+"pedestalTable": 2,
+"chaise": 1,
+"standardLamp": 3,
+"screen": 2,
+"fauteuil": 2,
+"globe": 5
 },
 "plan": "school"
 },
@@ -4165,12 +4113,13 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 11,
+"pieces": 8,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 4,
-"windsor": 2,
-"barrel": 3
+"wardrobe": 2,
+"crateStack": 1,
+"screen": 2,
+"washstand": 2,
+"mopBucket": 1
 },
 "plan": "dressing"
 },
@@ -4199,12 +4148,13 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 16,
+"pieces": 13,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 5,
-"windsor": 4,
-"barrel": 5
+"stove": 4,
+"sackPile": 2,
+"washBasin": 3,
+"ottoman": 1,
+"chevalMirror": 3
 },
 "plan": "bath"
 },
@@ -4466,12 +4416,14 @@
 }
 ],
 "fire": null,
-"pieces": 25,
+"pieces": 16,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"windsor": 8,
-"barrel": 9
+"toyFort": 5,
+"bedIron": 1,
+"rockingHorse": 5,
+"crateStack": 1,
+"screen": 3,
+"sackPile": 1
 },
 "plan": "nursery"
 },
@@ -4538,12 +4490,14 @@
 }
 ],
 "fire": null,
-"pieces": 22,
+"pieces": 17,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 7,
-"windsor": 6,
-"barrel": 7
+"toyFort": 4,
+"bedIron": 1,
+"rockingHorse": 7,
+"crateStack": 1,
+"screen": 3,
+"barrel": 1
 },
 "plan": "nursery"
 },
@@ -4651,12 +4605,12 @@
 }
 ],
 "fire": null,
-"pieces": 12,
+"pieces": 15,
 "kinds": {
-"kitchenTable": 1,
-"crateStack": 4,
-"barrel": 6,
-"windsor": 1
+"deskWriting": 2,
+"bookcase": 3,
+"crateStack": 3,
+"globe": 7
 },
 "plan": "school"
 },
@@ -4711,12 +4665,13 @@
 }
 ],
 "fire": null,
-"pieces": 21,
+"pieces": 23,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"windsor": 7,
-"barrel": 6
+"labBench": 2,
+"bookcase": 5,
+"sackPile": 2,
+"globe": 9,
+"barrel": 5
 },
 "plan": "lab"
 },
@@ -4806,13 +4761,14 @@
 }
 ],
 "fire": null,
-"pieces": 35,
+"pieces": 28,
 "kinds": {
-"kitchenTable": 3,
-"crateStack": 12,
-"sackPile": 3,
-"barrel": 11,
-"windsor": 6
+"wardBed": 2,
+"fern": 12,
+"deskWriting": 3,
+"screen": 4,
+"sackPile": 2,
+"barrel": 5
 },
 "plan": "ward"
 },
@@ -4852,12 +4808,14 @@
 }
 ],
 "fire": null,
-"pieces": 15,
+"pieces": 18,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 4,
-"windsor": 5,
-"barrel": 4
+"ironingTable": 1,
+"wardrobe": 8,
+"sewingMachine": 4,
+"crateStack": 2,
+"sackPile": 1,
+"barrel": 2
 },
 "plan": "sewing"
 },
@@ -4903,12 +4861,13 @@
 }
 ],
 "fire": null,
-"pieces": 14,
+"pieces": 16,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 3,
-"windsor": 4,
-"barrel": 5
+"ironingTable": 1,
+"wardrobe": 8,
+"sewingMachine": 1,
+"crateStack": 4,
+"barrel": 2
 },
 "plan": "linen"
 },
@@ -6909,12 +6868,12 @@
 }
 ],
 "fire": null,
-"pieces": 21,
+"pieces": 16,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 7,
-"windsor": 7,
-"barrel": 5
+"wardrobe": 5,
+"deedChest": 8,
+"sackPile": 1,
+"barrel": 2
 },
 "plan": "box"
 },
@@ -6975,12 +6934,11 @@
 }
 ],
 "fire": null,
-"pieces": 21,
+"pieces": 16,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 7,
-"windsor": 6,
-"barrel": 6
+"wardrobe": 5,
+"deedChest": 8,
+"barrel": 3
 },
 "plan": "cistern"
 },
@@ -7085,10 +7043,13 @@
 "fire": null,
 "pieces": 21,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 5,
-"barrel": 7,
-"windsor": 7
+"studyTable": 2,
+"trunkStack": 2,
+"deedChest": 2,
+"hallBench": 8,
+"crateStack": 2,
+"barrel": 3,
+"mapRoll": 2
 },
 "plan": "flag"
 },
@@ -7193,10 +7154,12 @@
 "fire": null,
 "pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"barrel": 6,
-"windsor": 6
+"workbench": 2,
+"crateStack": 2,
+"clockLong": 3,
+"barrel": 4,
+"windsor": 6,
+"mopBucket": 3
 },
 "plan": "clock"
 },
@@ -7299,12 +7262,12 @@
 }
 ],
 "fire": null,
-"pieces": 19,
+"pieces": 14,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 5,
-"barrel": 6,
-"windsor": 6
+"workbench": 2,
+"crateStack": 4,
+"barrel": 4,
+"mopBucket": 4
 },
 "plan": "cistern"
 },
@@ -7407,12 +7370,14 @@
 }
 ],
 "fire": null,
-"pieces": 20,
+"pieces": 15,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"barrel": 6,
-"windsor": 5,
+"libraryTable": 3,
+"telescope": 1,
+"armchair": 2,
+"crateStack": 4,
+"sackPile": 2,
+"barrel": 2,
 "seeingStoneFine": 1
 },
 "plan": "belvedere"
@@ -7563,12 +7528,13 @@
 }
 ],
 "fire": null,
-"pieces": 23,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"barrel": 8,
-"windsor": 5
+"mapTable": 1,
+"deskWriting": 1,
+"clockLong": 16,
+"sackPile": 1,
+"barrel": 1
 },
 "plan": "wireless"
 },
@@ -7711,12 +7677,11 @@
 }
 ],
 "fire": null,
-"pieces": 25,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"barrel": 10,
-"windsor": 5
+"deskWriting": 2,
+"globe": 17,
+"barrel": 1
 },
 "plan": "observatory"
 },
@@ -7922,13 +7887,13 @@
 }
 ],
 "fire": null,
-"pieces": 75,
+"pieces": 63,
 "kinds": {
-"kitchenTable": 7,
-"crateStack": 18,
-"sackPile": 2,
-"windsor": 30,
-"barrel": 18
+"blanketChest": 9,
+"hallBench": 29,
+"barrel": 3,
+"washBasin": 11,
+"coatStand": 11
 },
 "plan": "dorm"
 },
@@ -8159,12 +8124,14 @@
 }
 ],
 "fire": null,
-"pieces": 32,
+"pieces": 24,
 "kinds": {
-"kitchenTable": 4,
-"crateStack": 7,
-"windsor": 12,
-"barrel": 9
+"glasshouseBench": 1,
+"orangeTree": 6,
+"crateStack": 1,
+"sackPile": 2,
+"birdcage": 12,
+"barrel": 2
 },
 "plan": "orangery"
 },
@@ -8335,12 +8302,11 @@
 }
 ],
 "fire": null,
-"pieces": 38,
+"pieces": 31,
 "kinds": {
-"kitchenTable": 4,
-"crateStack": 9,
-"windsor": 14,
-"barrel": 11
+"crateStack": 11,
+"sackPile": 8,
+"barrel": 12
 },
 "plan": "theatre"
 },
@@ -8504,14 +8470,15 @@
 "to": -67
 }
 ],
-"fire": "north",
-"pieces": 22,
+"fire": "west",
+"pieces": 27,
 "kinds": {
-"kitchenTable": 2,
-"fireplace": 1,
-"crateStack": 6,
-"windsor": 6,
-"barrel": 7
+"cardTable": 4,
+"fireplace": 7,
+"crateStack": 4,
+"sackPile": 1,
+"barrel": 2,
+"chairHall": 9
 },
 "plan": "card"
 },
@@ -8654,12 +8621,13 @@
 }
 ],
 "fire": null,
-"pieces": 16,
+"pieces": 11,
 "kinds": {
 "kitchenTable": 1,
-"crateStack": 5,
-"barrel": 7,
-"windsor": 3
+"kitchenRange": 3,
+"crateStack": 2,
+"sackPile": 3,
+"barrel": 2
 },
 "plan": "bake"
 },
@@ -8721,12 +8689,13 @@
 }
 ],
 "fire": null,
-"pieces": 15,
+"pieces": 12,
 "kinds": {
 "kitchenTable": 1,
-"crateStack": 5,
-"barrel": 7,
-"windsor": 2
+"kitchenRange": 2,
+"crateStack": 3,
+"sackPile": 3,
+"barrel": 3
 },
 "plan": "scullery"
 },
@@ -8794,12 +8763,14 @@
 }
 ],
 "fire": null,
-"pieces": 11,
+"pieces": 10,
 "kinds": {
 "kitchenTable": 1,
-"crateStack": 5,
-"barrel": 4,
-"windsor": 1
+"kitchenRange": 1,
+"crateStack": 2,
+"sackPile": 3,
+"barrel": 2,
+"mopBucket": 1
 },
 "plan": "brew"
 },
@@ -8875,12 +8846,14 @@
 }
 ],
 "fire": null,
-"pieces": 15,
+"pieces": 16,
 "kinds": {
-"kitchenTable": 1,
-"crateStack": 5,
+"workbench": 1,
+"crateStack": 3,
+"lampShelf": 1,
 "barrel": 5,
-"windsor": 4
+"windsor": 4,
+"mopBucket": 2
 },
 "plan": "lamp"
 },
@@ -8946,12 +8919,12 @@
 }
 ],
 "fire": null,
-"pieces": 17,
+"pieces": 16,
 "kinds": {
 "kitchenTable": 2,
-"crateStack": 6,
-"barrel": 6,
-"windsor": 3
+"anvil": 12,
+"sackPile": 1,
+"saddleRack": 1
 },
 "plan": "carpenter"
 },
@@ -9078,12 +9051,14 @@
 }
 ],
 "fire": null,
-"pieces": 42,
+"pieces": 35,
 "kinds": {
-"kitchenTable": 5,
-"crateStack": 10,
-"windsor": 16,
-"barrel": 11
+"kitchenRange": 2,
+"ironingTable": 5,
+"mangle": 15,
+"crateStack": 4,
+"sackPile": 5,
+"barrel": 4
 },
 "plan": "laundry"
 },
@@ -9367,12 +9342,15 @@
 }
 ],
 "fire": null,
-"pieces": 46,
+"pieces": 37,
 "kinds": {
-"kitchenTable": 5,
-"crateStack": 11,
-"windsor": 18,
-"barrel": 12
+"ironingTable": 5,
+"mangle": 6,
+"trunkStack": 3,
+"linenPress": 5,
+"crateStack": 8,
+"barrel": 5,
+"mopBucket": 5
 },
 "plan": "drying"
 },
@@ -9403,10 +9381,13 @@
 "fire": null,
 "pieces": 14,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 5,
-"windsor": 4,
-"barrel": 3
+"studyTable": 2,
+"deedChest": 2,
+"wingChair": 2,
+"lectern": 1,
+"barrel": 3,
+"candleStand": 2,
+"sideChair": 2
 },
 "plan": "crypt"
 },
@@ -9435,10 +9416,12 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 3,
+"pieces": 4,
 "kinds": {
+"deskWriting": 1,
 "crateStack": 1,
-"barrel": 2
+"sideChair": 1,
+"mopBucket": 1
 },
 "plan": "vestry"
 },
@@ -9554,12 +9537,10 @@
 }
 ],
 "fire": null,
-"pieces": 15,
+"pieces": 5,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 2,
-"windsor": 9,
-"barrel": 2
+"lectern": 3,
+"candleStand": 2
 },
 "plan": "church"
 },
@@ -9660,11 +9641,15 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 14,
+"pieces": 13,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"barrel": 6
+"workbench": 2,
+"copperVat": 2,
+"waterButt": 1,
+"stove": 2,
+"crateStack": 2,
+"barrel": 2,
+"mopBucket": 2
 },
 "plan": "engine"
 },
@@ -9705,12 +9690,14 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 22,
+"pieces": 20,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 8,
-"sackPile": 3,
-"barrel": 9
+"glasshouseBench": 2,
+"fern": 8,
+"orangeTree": 6,
+"crateStack": 1,
+"sackPile": 1,
+"barrel": 2
 },
 "plan": "lab"
 },
@@ -9739,11 +9726,17 @@
 ],
 "windows": [],
 "fire": null,
-"pieces": 12,
+"pieces": 15,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"barrel": 4
+"workbench": 1,
+"editorsDesk": 1,
+"bookcase": 1,
+"cardCatalog": 2,
+"printingPress": 2,
+"pigeonholes": 2,
+"crateStack": 2,
+"coatStand": 2,
+"sideChair": 2
 },
 "plan": "press"
 },
@@ -9884,12 +9877,14 @@
 }
 ],
 "fire": null,
-"pieces": 39,
+"pieces": 24,
 "kinds": {
-"kitchenTable": 4,
-"crateStack": 9,
-"windsor": 16,
-"barrel": 10
+"wheelbarrow": 8,
+"waterTrough": 1,
+"crateStack": 3,
+"sackPile": 5,
+"barrel": 6,
+"saddleRack": 1
 },
 "plan": "stalls"
 },
@@ -9958,9 +9953,7 @@
 "fire": null,
 "pieces": 7,
 "kinds": {
-"kitchenTable": 1,
-"crateStack": 2,
-"barrel": 2,
+"deedChest": 5,
 "windsor": 2
 },
 "plan": "tack"
@@ -10040,10 +10033,9 @@
 "fire": null,
 "pieces": 6,
 "kinds": {
-"kitchenTable": 1,
-"crateStack": 2,
-"barrel": 2,
-"windsor": 1
+"grindstone": 1,
+"anvil": 4,
+"horseshoeRack": 1
 },
 "plan": "forge"
 },
@@ -10149,12 +10141,14 @@
 }
 ],
 "fire": null,
-"pieces": 20,
+"pieces": 14,
 "kinds": {
-"kitchenTable": 2,
-"crateStack": 6,
-"barrel": 7,
-"windsor": 5
+"carriage": 1,
+"cart": 1,
+"crateStack": 4,
+"sackPile": 4,
+"barrel": 3,
+"saddleRack": 1
 },
 "plan": "coach"
 },
@@ -10225,12 +10219,13 @@
 }
 ],
 "fire": null,
-"pieces": 12,
+"pieces": 10,
 "kinds": {
-"kitchenTable": 1,
-"crateStack": 3,
-"windsor": 4,
-"barrel": 4
+"trestleTable": 1,
+"settle": 1,
+"hallBench": 1,
+"pianoUpright": 1,
+"barrel": 6
 },
 "plan": "mess"
 },
@@ -10396,12 +10391,12 @@
 }
 ],
 "fire": null,
-"pieces": 42,
+"pieces": 27,
 "kinds": {
-"kitchenTable": 3,
-"crateStack": 12,
-"windsor": 17,
-"barrel": 10
+"feedBin": 6,
+"hallBench": 3,
+"fireBasket": 9,
+"barrel": 9
 },
 "plan": "riding"
 },
@@ -11167,12 +11162,13 @@
 }
 ],
 "fire": null,
-"pieces": 7,
+"pieces": 8,
 "kinds": {
-"kitchenTable": 1,
-"crateStack": 2,
+"bicycle": 2,
+"crateStack": 1,
 "windsor": 3,
-"barrel": 1
+"fireBasket": 1,
+"coatStand": 1
 },
 "plan": "gate"
 },
@@ -11269,10 +11265,11 @@
 "fire": null,
 "pieces": 8,
 "kinds": {
-"kitchenTable": 1,
+"workbench": 1,
 "crateStack": 1,
-"barrel": 2,
-"windsor": 4
+"windsor": 4,
+"washBasin": 1,
+"mopBucket": 1
 },
 "plan": "ambulance"
 },
@@ -11453,11 +11450,14 @@
 }
 ],
 "fire": null,
-"pieces": 9,
+"pieces": 10,
 "kinds": {
-"crateStack": 2,
-"barrel": 3,
-"windsor": 4
+"stove": 1,
+"bicycle": 1,
+"windsor": 5,
+"barrel": 1,
+"coatStand": 1,
+"umbrellaStand": 1
 },
 "plan": "gate"
 },
@@ -11562,12 +11562,17 @@
 }
 ],
 "fire": null,
-"pieces": 17,
+"pieces": 10,
 "kinds": {
-"kitchenTable": 1,
-"crateStack": 3,
-"windsor": 8,
-"barrel": 5
+"deskWriting": 1,
+"hallBench": 2,
+"stove": 1,
+"bicycle": 1,
+"crateStack": 1,
+"windsor": 1,
+"fireBasket": 1,
+"coatStand": 1,
+"umbrellaStand": 1
 },
 "plan": "gate"
 },
@@ -11723,12 +11728,11 @@
 }
 ],
 "fire": null,
-"pieces": 27,
+"pieces": 17,
 "kinds": {
-"kitchenTable": 2,
+"workbench": 2,
 "crateStack": 7,
-"windsor": 11,
-"barrel": 7
+"barrel": 8
 },
 "plan": "barn"
 },

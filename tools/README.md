@@ -156,3 +156,8 @@ Since v1.38 (A3, A6 and A7: the Depot v20 plan for every room; the data re-issue
 - Every room named in `T20` is furnished by plan (`k` 'P'), so the five new attic rooms and the two attic passages are planned too.
 - `tools/tests/issue.py FOLDER VERSION` re-issues `room-register.json`, `windows.json` and `src/estate-plan.json` from the page (`__vx.regRow`, `__vx.holesOf`, `__vx.windows`). The register now gives each room's Depot plan type. 156 rooms, 1,010 windows and outside doors (the two balcony doors among them).
 - Frame time against v1.37: level (draws 2 to 6 percent fewer, triangles up to 5 percent more).
+
+Since v1.39 (batch A closed):
+- `plan20` passes each work room its stock, as the Depot did for rooms20.json: the floor pieces of its old plan, or, where the old plan has fewer than 3 (31 rooms, His Grace's Bath among them, whose old plan was empty), the Depot's own pieces for it (`STOCK20`, 7 KB). With no stock the planner falls back to a kitchen table, crates and barrels; the Bath and the Steward's Room had that in v1.38.
+- `terraceSeal` (after `sealBlind`): the Hall's basement panes behind the south and north terraces (96 cells, z 30 for x -26 to 26 and z -66 for x -14 to 14, y 1 to 7) become wall before furnishing, so there is no navy pane and no curtain there (KAIROS r004, r017 to r019; the choice the hand-off left: no window, no curtain).
+- Checked and left: the curtains in His Grace's Study are the standard dressing (each 2-wide window's curtains reach onto the 3-block pier); His Grace's Bath has no outside window since v1.34.
