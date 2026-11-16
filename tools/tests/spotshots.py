@@ -21,7 +21,7 @@ def main():
     with serve(folder) as base, sync_playwright() as p:
         b, pg, err = open_estate(p, base, w=w, h=h)
         pg.add_style_tag(content='#top,#walk,#bFind,#bStats,#rail,#where,#act,#card,#lvbar,#labels,#toast,#turn{visibility:hidden!important}')
-        pg.evaluate("()=>{__vx.GOV.off=true;__vx.govSet(0);__vx.pickSeason('autumn',true);__vx.setMode('walk');__vx.setFP(true);__vx.setFly(1,1)}")
+        pg.evaluate("()=>{__vx.GOV.off=true;__vx.govSet(0);__vx.pickSeason('"+os.environ.get('SEASON','autumn')+"',true);__vx.setMode('walk');__vx.setFP(true);__vx.setFly(1,1)}")
         pg.wait_for_timeout(14000)
         for name, pose, tod in spots:
             pg.evaluate("(t)=>{__vx.pickTime(t)}", tod)

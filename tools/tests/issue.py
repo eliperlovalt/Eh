@@ -9,7 +9,7 @@ folder = sys.argv[1]; ver = sys.argv[2] if len(sys.argv) > 2 else ''
 JS = r"""()=>{const V=__vx,SK=/^(cornice|dado|panelling|beamRun|lanternPendant|chandelier|chandelierGilt|chandelierIron|coffer|ceilingRose|hammerbeam|skylight|corniceIn|candle|sash|wallLantern|portrait|sconce|pictureRail|tapestry|banner|bellPull|antlers|coatOfArms|doorDouble|archway|rug|ragRug|stairRunner)$/;
  const reg=[],plan=[],W1={north:'N',south:'S',west:'W',east:'E'};
  for(let b=1;b<V.BLD.length;b++){const B=V.BLD[b],rooms=[];for(const R of B.rooms){const row=V.regRow(R);
-   const its=V.pq.filter(p=>p.bid===b&&!p.v&&p.x>R.x0&&p.x<R.x1&&p.z>R.z0&&p.z<R.z1&&p.y>=R.y&&p.y<R.y+1.3&&!SK.test(p.r.kind));const kinds={};for(const p of its)kinds[p.r.kind]=(kinds[p.r.kind]||0)+1;
+   const its=V.pq.filter(p=>p.bid===b&&!p.v&&!p.wint&&p.x>R.x0&&p.x<R.x1&&p.z>R.z0&&p.z<R.z1&&p.y>=R.y&&p.y<R.y+1.3&&!SK.test(p.r.kind));const kinds={};for(const p of its)kinds[p.r.kind]=(kinds[p.r.kind]||0)+1;
    let fire=null;for(const p of its)if(p.r.kind==='fireplace'){const dd={north:p.z-R.z0,south:R.z1-p.z,west:p.x-R.x0,east:R.x1-p.x};fire=Object.keys(dd).sort((a,c)=>dd[a]-dd[c])[0]}
    reg.push({building:B.name,bid:b,floor:row.floor,y:R.y,name:R.n,rect:row.rect,w:R.x1-R.x0-1,d:R.z1-R.z0-1,height:row.height,doors:row.doors.map(x=>Object.assign(x,{width:x.to-x.from+1})),windows:row.windows,fire,pieces:its.length,kinds,plan:R.plan20||null});
    const ns=w=>w==='north'||w==='south',loc=x=>[W1[x.wall],(x.from-(ns(x.wall)?R.x0:R.z0))-.5,(x.to-(ns(x.wall)?R.x0:R.z0))+.5];
