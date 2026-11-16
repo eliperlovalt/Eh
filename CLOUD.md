@@ -7,8 +7,8 @@ Never use em dashes. Short sentences, answer first.
 
 VOXEL II, the cloud session that took the Estate over from VOXEL at v1.36, is
 the only writer of this repo (Kairos's order, recorded in "Kairos: Where We
-Stand, 16 Nov 2026": https://claude.ai/artifact/BqW9S3s2XAnqUVEFp7dFYZ).
-VOXEL's hand-off to VOXEL II: https://claude.ai/artifact/1ufjtXt4cFG3Su6UJJauav
+Stand, 16 Nov 2026": [private link: kept off the public repo]).
+VOXEL's hand-off to VOXEL II: [private link: kept off the public repo]
 
 - **If you are VOXEL II:** read your halt note (STATUS_HALT.md, or the end of
   BACKLOG.md), then resume batch A: wall moves 6 to 10, 18, 22, 23, the

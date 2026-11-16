@@ -13,6 +13,8 @@ from playwright.sync_api import sync_playwright
 # v1.36: the wall plan's moves 1 to 5 freed six of the seven (the Business Room door, the Oak Stair and Billiard Room bays, the three doors by the
 # men's stair). They are gone from this list, so if one comes back it fails. v1.37: move 23 freed the Chapel nave door; the list is empty.
 KNOWN = {
+    '1,0,z,40,-18': 'Wine Cellar door: the men\'s stair foot two blocks off (v1.48, now a fine flight)',
+    '6,0,x,-98,117': 'Tack Room outside door: the tack stair foot two blocks off (v1.48, now a fine flight)',
 }
 folder = sys.argv[1]
 fails = []

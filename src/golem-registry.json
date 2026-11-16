@@ -209,7 +209,7 @@ null,
 null,
 "live"
 ],
-"plan10k": [
+"plan.money": [
 null,
 "live"
 ],
@@ -498,9 +498,9 @@ null,
 "wager"
 ],
 [
-"The Money Desks: the $10k Plan",
+"The Money Desks",
 "c",
-"plan10k"
+"plan.money"
 ]
 ]
 ],

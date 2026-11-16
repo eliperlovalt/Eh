@@ -1399,7 +1399,9 @@ function building(spec){const bid=BLD.length;spec.bid=bid;BLD.push(spec);CUR=bid
     for(const o of R.o){const p=an[o[2]]||an.c||[cx,R.y+1,cz];OBJ.push({n:o[0],a:o[1],k:o[2],x:p[0],y:p[1],z:p[2],bid,l:R.l,room:R})}}
   CUR=0;return spec}
 /* a real staircase: one straight flight, one block a step, the floor above opened over it and railed */
-function flight(bid,axis,lane0,lane1,start,dir,base,R,mat){CUR=bid;const at=(p,l)=>axis==='z'?[l,p]:[p,l];const m=mat||C.stone;
+function flight(bid,axis,lane0,lane1,start,dir,base,R,mat){if(FLIGHT_FINE){const at=(p,l)=>axis==='z'?[l,p]:[p,l];CUR=bid;for(let i=0;i<R-1;i++){const p=start+dir*i;for(let l=lane0;l<=lane1;l++){const[x,z]=at(p,l);for(let y=base+R;y<=base+R+2;y++)S(x,y,z,0)}}CUR=0;   /* headroom over the lanes only, as before: a wider cut went through walls */
+    const r=flight2({bid,axis,l0:lane0,l1:lane1,start,dir,base,R,len:R-1,mat:mat||C.stone,sty:mat===C.stone||mat===C.trim||mat===C.chapel?'stone':'oak',open:0});FLIGHTS[FLIGHTS.length-1].lesser=1;return r}   /* v1.48: every stair is a fine flight (treads, risers, strings, rail), not block steps (His Grace's fault 4) */
+  CUR=bid;const at=(p,l)=>axis==='z'?[l,p]:[p,l];const m=mat||C.stone;
   for(let i=0;i<R-1;i++){const p=start+dir*i,top=base+1+i;for(let l=lane0;l<=lane1;l++){const[x,z]=at(p,l);for(let y=base+1;y<=top;y++)S(x,y,z,m)}}
   for(let i=0;i<R-1;i++){const p=start+dir*i;for(let l=lane0;l<=lane1;l++){const[x,z]=at(p,l);for(let y=base+R;y<=base+R+2;y++)S(x,y,z,0)}}
   const pa=start+dir*(R-1);for(let l=lane0;l<=lane1;l++){const[x,z]=at(pa,l);S(x,base+R+1,z,0);S(x,base+R+2,z,0);if(!G(x,base+R,z))S(x,base+R,z,m)}
@@ -1408,7 +1410,7 @@ function flight(bid,axis,lane0,lane1,start,dir,base,R,mat){CUR=bid;const at=(p,l
   for(let l=lane0-1;l<=lane1+1;l++){const[x,z]=at(start-dir,l);bal(x,z)}
   CUR=0}
 /* v1.14: a grand flight is climbed on unseen one-block steps and drawn as a fine stair (buildStairs): quarter-block risers, strings, turned balusters, a handrail and newels. The stairwell above takes the strings as well, so the balustrade can rise through it */
-const FLIGHTS=[],BALRUNS=[];
+const FLIGHTS=[],BALRUNS=[];const FLIGHT_FINE=true;
 function flight2(o){const{bid,axis,l0,l1,start,dir,base,R}=o,len=o.len||(R-1)*(o.run||1),open=o.open||0;CUR=bid;const at=(p,l)=>axis==='z'?[l,p]:[p,l];
   const stepOf=c=>Math.min(R-2,Math.floor(c*(R-1)/len)),put=(x,y,z)=>{if(!G(x,y,z))S(x,y,z,C.inv)},pa=start+dir*len;let c0=-1;
   if(open)for(let c=0;c<len;c++){if(base+1+stepOf(c)<base+R-open)continue;if(c0<0)c0=c;const p=start+dir*c;for(let l=l0-1;l<=l1+1;l++){const[x,z]=at(p,l);for(let y=base+R;y<=base+R+2;y++)S(x,y,z,0)}}
@@ -3672,7 +3674,7 @@ function buildProps(){const groups=new Map();let quads=0,n=0;const fr=new Map();
     const c=Math.cos(it.th),s=Math.sin(it.th),u=it.r.unit;n++;
     for(const q of it.r.q){const fb=q.f?g.fl:g.fb;if(fb.n===fb.cap)fb.grow();const o=fb.n*12;const col=lin(q.c);const cb=q.f?[1,.85,.45]:col;
       const nx=q.n[0]*c+q.n[2]*s,nz=-q.n[0]*s+q.n[2]*c;
-      for(let k=0;k<4;k++){const P=q.p[k],lx=P[0]*u,ly=P[1]*u,lz=P[2]*u,j=o+k*3;fb.p[j]=it.x+lx*c+lz*s;fb.p[j+1]=it.y+ly;fb.p[j+2]=it.z-lx*s+lz*c;
+      for(let k=0;k<4;k++){const P=q.p[k],lx=P[0]*u*(it.sx||1),ly=P[1]*u,lz=P[2]*u,j=o+k*3;fb.p[j]=it.x+lx*c+lz*s;fb.p[j+1]=it.y+ly;fb.p[j+2]=it.z-lx*s+lz*c;
         fb.nm[j]=nx*127;fb.nm[j+1]=q.n[1]*127;fb.nm[j+2]=nz*127;fb.c[j]=Math.min(255,cb[0]*255);fb.c[j+1]=Math.min(255,cb[1]*255);fb.c[j+2]=Math.min(255,cb[2]*255)}fb.n++;quads++}}
   /* v1.11: rugs that share a pattern share one mesh and one material a floor */
   {const RG=new Map();for(const it of PQ){if(!it.r.rtex)continue;const r=it.r,cx=Math.floor(it.x/64),cz=Math.floor(it.z/64),k=it.bid+'_'+it.band+'_'+r.rtex.uuid+(it.bid?'':(it.v?'v':'o')+cx+'_'+cz);let g=RG.get(k);if(!g)RG.set(k,g={bid:it.bid,band:it.band,tex:r.rtex,p:[],uv:[],d:it.bid?1:it.v?2:3,x:(cx+.5)*64,z:(cz+.5)*64});
@@ -3725,7 +3727,7 @@ function RK(R){const L=BLD[R.bid];const y=R.y+.5,band=L.band[R.y+OY],occ=new Set
     spot(width,depth,sides,win){for(const side of sides||['n','e','s','w']){const[s0,s1]=K.span(side);const len=s1-s0;
       for(const f of[.5,.3,.7,.15,.85,.4,.6,.22,.78]){const a=Math.round(s0+len*f);const h=width/2;if(a-h<s0||a+h>s1)continue;
         if(K.wallOK(side,a-h,a+h,1,4,win)&&K.floorFree(side,a-h,a+h,2))return{side,a}}}return null},
-    tile(kind,o,opt={}){const r=propGet(kind,o);const tw=(r.b.x1-r.b.x0+1)*r.unit;let n=0;
+    tile(kind,o,opt={}){const r=propGet(kind,o);const tw=(r.b.x1-r.b.x0+1)*r.unit;let n=0;const q0=PQ.length;try{
       for(const side of opt.sides||['n','e','s','w']){const[s0,s1]=K.span(side);
         if(!opt.test){/* v1.15: whole bays from the start of each unbroken stretch of wall, and a cut bay to finish it */
           const ok=a=>K.wallOK(side,a,a,opt.h0||1,opt.h1||5,!!opt.win)&&(!opt.need||K.wallOK(side,a,a,opt.need,opt.need,true)),po={dy:opt.dy,proud:opt.proud,band:opt.band};
@@ -3736,7 +3738,7 @@ function RK(R){const L=BLD[R.bid];const y=R.y+.5,band=L.band[R.y+OY],occ=new Set
         if(opt.test&&!opt.test(side,a,tw))continue;if(!K.wallOK(side,a-tw/2+.1,a+tw/2-.1,opt.h0||1,opt.h1||5,!!opt.win))continue;
         if(opt.need&&!K.wallOK(side,a-tw/2+.3,a+tw/2-.3,opt.need,opt.need,true))continue;K.atWall(kind,o,side,a,{dy:opt.dy,proud:opt.proud,band:opt.band});n++}
         {const nb=Math.floor((s1-s0+1)/tw+1e-6),e0=s0-.5+nb*tw,rem=s1+.5-e0,nv=Math.round(rem/r.unit);if(nv>=2&&!opt.test){const c=e0+rem/2;
-          if(K.wallOK(side,e0+.3,s1+.2,opt.h0||1,opt.h1||5,!!opt.win)&&(!opt.need||K.wallOK(side,e0+.3,s1+.2,opt.need,opt.need,true))){const o2=Object.assign({},o,{_crop:nv});K.atWall(kind,o2,side,c,{dy:opt.dy,proud:opt.proud,band:opt.band});n++}}}}return n},
+          if(K.wallOK(side,e0+.3,s1+.2,opt.h0||1,opt.h1||5,!!opt.win)&&(!opt.need||K.wallOK(side,e0+.3,s1+.2,opt.need,opt.need,true))){const o2=Object.assign({},o,{_crop:nv});K.atWall(kind,o2,side,c,{dy:opt.dy,proud:opt.proud,band:opt.band});n++}}}}}finally{for(let i=q0;i<PQ.length;i++)PQ[i].sx=1.04}return n},   /* v1.48: tiled bays drawn 4 percent wider, so neighbours overlap; edge to edge they left hairline seams of light (His Grace's fault 2) */
     windows(kind,o,opt={}){const out=[];for(const side of['n','e','s','w']){const[s0,s1]=K.span(side);let run=[];
       let bl=0;const flush=()=>{if(run.length){const a=(run[0]+run[run.length-1])/2;out.push([side,a,bl===run.length,run.length]);run=[];bl=0}};
       for(let a=s0;a<=s1;a++){const p=K.wallCell(side,a,2),g=G(p[0],p[1],p[2]);if(isPane(g)){run.push(a);if(g===C.winB)bl++}else flush()}flush()}
@@ -4549,7 +4551,7 @@ function lampMapBuild(){if(!LAMPS.length)return;let x0=1e9,x1=-1e9,z0=1e9,z1=-1e
   const D=new Uint8Array(W*H*4);let roofed=0;for(let z=0;z<H;z++)for(let x=0;x<W;x++){const i=z*W+x;if(!acc[i])continue;const t=topAt(x+x0,z+z0);if(t!=null&&t>by[i]+6){roofed++;continue}D[i*4]=Math.min(255,Math.sqrt(Math.min(1,acc[i]))*255);D[i*4+1]=Math.max(0,Math.min(255,(by[i]+16)/64*255));D[i*4+3]=255}
   const tx=new THREE.DataTexture(D,W,H,THREE.RGBAFormat);tx.minFilter=tx.magFilter=THREE.LinearFilter;tx.needsUpdate=true;
   LMAP.u.uLM.value=tx;LMAP.u.uLMb.value.set(x0-.5,z0-.5,1/W,1/H);LMAP.W=W;LMAP.H=H;LMAP.roofed=roofed}
-function fxLight(ts){if(!fxPoolO)return;const k=TODK,walk=MODE==='walk',fl=.94+.06*Math.sin(ts*7.3);LMAP.u.uLk.value=(k==='night'?1.15:k==='dusk'?.6:0)*(.97+.03*Math.sin(ts*5.1));const o=k==='night'?.34:k==='dusk'?.2:0;fxPoolO.visible=o>0;fxPoolO.material.opacity=o*fl;
+function fxLight(ts){if(!fxPoolO)return;const k=TODK,walk=MODE==='walk',fl=.94+.06*Math.sin(ts*7.3);LMAP.u.uLk.value=(k==='night'?.85:k==='dusk'?.45:0)*(.97+.03*Math.sin(ts*5.1));const o=k==='night'?.34:k==='dusk'?.2:0;fxPoolO.visible=o>0;fxPoolO.material.opacity=o*fl;
   const oi=walk?(k==='night'?.3:k==='dusk'?.2:.07):0;fxPoolI.visible=oi>0;fxPoolI.material.opacity=oi*fl;
   if(walk){fxLantern.position.set(PL.x,PL.y+2.2,PL.z);fxLantern.intensity=(k==='night'?38:k==='dusk'?16:0)*fl}else fxLantern.intensity=0;
   /* v1.20: a light at nothing is still worked out for every pixel. Out of doors by day, and over the estate, the lantern is out of the scene: 13 to 20 percent of the frame */
@@ -4705,7 +4707,7 @@ function makeExtras(){smokeM=new THREE.InstancedMesh(unit,new THREE.MeshLambertM
 const TOD={day:{sky:'linear-gradient(#6fa6e6,#b9d6f3 55%,#e9eef0)',fog:'#e9eef0',sun:['#fff3d6',1.9,[120,190,90]],hemi:['#dfeaff','#6a7a50',.95],win:'#3b4a66',cloud:'#ffffff',holo:.6},
  dusk:{sky:'linear-gradient(#34407e,#b8708e 50%,#f0a868)',fog:'#e09a7c',sun:['#ffb27a',1.45,[-200,70,80]],hemi:['#c9a0c8','#5a4a40',.72],win:'#ffcf73',cloud:'#ffd2bc',holo:.9},
  night:{sky:'linear-gradient(#050a1a,#0d1a38 60%,#1a2a52)',fog:'#1a2a52',sun:['#9fb4ee',.6,[-90,170,-140]],hemi:['#4a5fa0','#141b30',.9],win:'#ffd98a',cloud:'#4a5a88',holo:1}};
-let TODK='day';
+let TODK='day';const INLIGHT={day:['#fff4e2','#a08060'],dusk:['#ffd9a8','#8a6448'],night:['#c8b7a0','#4a3a2c']};
 if(SK==='toon'){TOD.day.sky='linear-gradient(#3f8fe8,#8fc6f5 60%,#d8eefa)';TOD.day.sun[1]=2.6;TOD.day.hemi[2]=.8}
 if(SK==='clay'){TOD.day.sky='linear-gradient(#8fb8de,#cfe0ea 55%,#f2ead8)';TOD.day.sun=['#ffe9cc',2.2,[110,170,120]];TOD.day.hemi=['#e9eefa','#7a6a50',1.15]}
 if(SK==='lowpoly'){TOD.day.sky='linear-gradient(#7fb3e8,#c9e0f2 55%,#f3ecdf)';TOD.day.sun=['#fff1dc',2.0,[140,180,60]];TOD.day.hemi=['#e6efff','#7d8a60',1.05]}
@@ -4743,7 +4745,7 @@ let FLY=null;function fly(p,dist){const tgt=new THREE.Vector3(...p);if(ISO){cons
 const actBtn=(o,i)=>`<button class="b${o.a[0]==='cat'?'':' on'}" data-a="${i}">${esc(o.n)}</button>`;
 let CARD_ACTS=[];
 function showRoomCard(R){const hs=HOUSES[R.h];const acts=OBJ.filter(o=>o.room===R).map(o=>({n:o.n,a:o.a}));if(hs&&!TEMPLATE){for(const d of HOUSEDOCS[R.h]||[])acts.push({n:d[0],a:['doc',d[1]]});acts.push({n:'The '+hs[0]+' toolkits',a:['cat',R.h]})}CARD_ACTS=acts;
-  const c=$('#card');c.style.setProperty('--c',hs?hs[2]:'#D4AF37');c.innerHTML=`<button class="x" aria-label="Close">&times;</button><h2>${esc(R.n)}</h2><div class="h">${esc(BLD[R.bid].short||BLD[R.bid].name)} . ${esc(BLD[R.bid].levels[R.l].n)}${hs?' . '+esc(hs[0]+', '+hs[1]):''}</div>${R.w?`<p>${esc(R.w)}</p>`:''}<div class="acts">${acts.map(actBtn).join('')||'<span class="meta">Nothing to open here yet.</span>'}</div>`;
+  const c=$('#card');c.style.setProperty('--c',hs?hs[2]:'#D4AF37');c.innerHTML=`<button class="x" aria-label="Close">&times;</button><h2>${esc(R.n)}${hs&&hs[1]===R.n?' (main room)':''}</h2><div class="h">${esc(BLD[R.bid].short||BLD[R.bid].name)} . ${esc(BLD[R.bid].levels[R.l].n)}${hs?' . '+esc(hs[0]+', '+hs[1]):''}</div>${R.w?`<p>${esc(R.w)}</p>`:''}<div class="acts">${acts.map(actBtn).join('')||'<span class="meta">Nothing to open here yet.</span>'}</div>`;
   c.hidden=false;c.querySelector('.x').onclick=()=>c.hidden=true;c.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>run(CARD_ACTS[+b.dataset.a].a))}
 function showObjCard(o){if(!o)return;CARD_ACTS=[{n:o.n,a:o.a}];const c=$('#card');c.style.setProperty('--c','#D4AF37');c.innerHTML=`<button class="x">&times;</button><h2>${esc(o.out||o.n)}</h2><div class="acts">${actBtn(o,0)}</div>`;c.hidden=false;c.querySelector('.x').onclick=()=>c.hidden=true;c.querySelector('[data-a]').onclick=()=>run(o.a)}
 /* labels */
@@ -4753,8 +4755,12 @@ function buildLabels(){LBL.innerHTML='';labelEls=[];if(MODE!=='over')return;
     for(const o of OUT){const e=document.createElement('div');e.className='lab';e.style.setProperty('--c','#3fa34d');e.textContent=o.n;e.onclick=()=>{fly(o.p,48);if(o.obj===0)showObjCard(OBJ.find(x=>x.out))};LBL.appendChild(e);labelEls.push({e,p:o.p})}}
   else{const B=BLD[OPEN_B];const seen=new Set();for(const R of B.rooms.filter(r=>r.l===OPEN_L)){if(seen.has(R.n))continue;seen.add(R.n);const e=document.createElement('div');e.className='lab room';const hs=HOUSES[R.h];e.style.setProperty('--c',hs?hs[2]:'#D4AF37');e.textContent=R.n;e.onclick=()=>showRoomCard(R);LBL.appendChild(e);labelEls.push({e,p:[R.c[0],R.y+4,R.c[2]]})}}}
 let lblKey='';
+const LBLSZ=new Map();   /* a label's size, measured once by its text: measuring every frame forced the page to lay itself out again */
 function placeLabels(){const k=MODE+'|'+OPEN_B+'|'+OPEN_L;if(k!==lblKey){lblKey=k;buildLabels()}const w=innerWidth,h=innerHeight,far=OPEN_B==null?720:260;
-  for(const L of labelEls){V3.set(...L.p);const d=V3.distanceTo(camera.position);V3.project(camera);if(V3.z>1||d>far){L.e.style.display='none';continue}L.e.style.display='';L.e.style.left=((V3.x+1)/2*w)+'px';L.e.style.top=((1-V3.y)/2*h)+'px'}}
+  const vis=[];for(const L of labelEls){V3.set(...L.p);const d=V3.distanceTo(camera.position);V3.project(camera);if(V3.z>1||d>far){L.e.style.display='none';continue}L.sx=(V3.x+1)/2*w;L.sy=(1-V3.y)/2*h;L.d=d;vis.push(L)}
+  /* v1.48: labels that would overlap give way to the nearer one (KAIROS: The Hall over The Chapel over The State Wing) */
+  vis.sort((a,b)=>a.d-b.d);const kept=[];for(const L of vis){if(!L.bw){const key=L.e.className+'|'+L.e.textContent,c=LBLSZ.get(key);if(c){L.bw=c[0];L.bh=c[1];L.ox=c[2];L.oy=c[3]}else{L.e.style.display='';L.e.style.left=L.sx+'px';L.e.style.top=L.sy+'px';const r=L.e.getBoundingClientRect();L.bw=r.width||80;L.bh=r.height||18;L.ox=r.left-L.sx;L.oy=r.top-L.sy;LBLSZ.set(key,[L.bw,L.bh,L.ox,L.oy])}}
+    const x0=L.sx+L.ox-3,y0=L.sy+L.oy-2,x1=x0+L.bw+6,y1=y0+L.bh+4;if(kept.some(k=>x0<k[2]&&x1>k[0]&&y0<k[3]&&y1>k[1])){L.e.style.display='none';continue}kept.push([x0,y0,x1,y1]);L.e.style.display='';L.e.style.left=L.sx+'px';L.e.style.top=L.sy+'px'}}
 
 /* taps in the overview */
 let down=null;
@@ -4783,7 +4789,7 @@ function run(a){if(!a)return;const[t,v]=a;if(t==='doc'&&!v){toast('Not yet linke
   else if(t==='kz')konetz()}
 const TITLE={'people':'The Circle','datahub:fig':'Public Figures','datahub:bridge':'Brief and In-Tray','nepsis':'The Road to the Summit','datahub:desk':'Desks and Alerts','library':'The Library shelves','ledger':'The Ledger','wager':'The Wager Desk','orders':'The Day','rules':'The Rules','datahub:edition':'The Edition','datahub:globe':'The Holo Globe','datahub:ai':'The AI Frontier','pardes':'The Pardes','tree':'The Great Tree','v23:kairos':'The Spire','v23:carving':'The focus tree','v23:people':'The Thought Web','v23:orders':'Orders by Color','roster':'The Registry roll'};
 function konetz(){toast('Konetz acknowledged. Standing down.');return;const b=$('#bKz');if(kz){kz=0;b.textContent='Konetz';toast('Konetz acknowledged. Standing down.')}else{kz=1;b.textContent='Tap again to stand down';setTimeout(()=>{kz=0;b.textContent='Konetz'},4000)}}
-$('#bTabs').hidden=true;tourInit();kchatInit();goalInit();
+$('#bTabs').hidden=true;tourInit();kchatInit();goalInit();if(!PRIV.urls&&!/[?&]stats/.test(location.search))$('#bStats').hidden=true;   /* v1.48: Stats is a tool for His Grace's device (or ?stats), not for visitors */
 /* the catalog */
 let KJ=null,CATS=[];
 async function catalog(h){$('#cat').classList.add('on');SHEET=true;CATS=[];if(!KJ){$('#catBody').innerHTML='<p class="meta">Opening the drawers...</p>';try{KJ=await (await fetch('kits.json')).json()}catch(e){$('#catBody').innerHTML='<p>The catalog could not be read on this connection.</p>';return}}
@@ -4871,6 +4877,8 @@ function walkStep(dt){{let b=null,bd=2.4;if(!PL.sit)for(const s of SEATS){const 
   /* auto lift the floors above */
   const b=bidUnder();WB=b&&BLD[b]?b:null;WL=WB?BLD[WB].band[Math.round(PL.y-.5)+OY]:0;if(OPEN_B!=null){OPEN_B=null;applyVis()}
   hemi.intensity=TOD[TODK].hemi[2]*(WB?(TODK==="night"?2.1:TODK==="dusk"?1.6:1.35*LDAY.k):(TODK==="night"?1.3:1));
+  /* v1.48: indoors the room light is warm and true (His Grace: dusk tinted rooms pink-violet, day rooms read flat grey): golden at dusk, warm white by day, lamp-warm at night; out of doors the sky colours stand */
+  {const I=WB?INLIGHT[TODK]:null,t=TOD[TODK].hemi;hemi.color.set(I?I[0]:t[0]);hemi.groundColor.set(I?I[1]:t[1])}
   /* camera */
   const head=new THREE.Vector3(PL.x,py+2,PL.z);const inside=WB!=null;const want=inside?Math.min(PL.dist,4.2):PL.dist;const pt=inside?Math.min(PL.pitch,.32):PL.pitch;
   const PAD=[[0,0,0],[.3,0,0],[-.3,0,0],[0,0,.3],[0,0,-.3],[0,.3,0],[0,-.3,0]];const hit=p=>{for(const q of PAD){const xi=Math.round(p.x+q[0]),yi=Math.round(p.y+q[1]),zi=Math.round(p.z+q[2]);if(inb(xi,yi,zi)){const i=I(xi,yi,zi);if(VOX[i]&&(VOX[i]===C.win||!(PF[VOX[i]]&(TR|WA|IV)))&&visibleCell(TAG[i],yi))return true}}return false};
@@ -4916,13 +4924,13 @@ function shadowPass(){if(!renderer.shadowMap.needsUpdate||!GROVE.n)return;groveA
 /* v1.27: the portraits begin at 100 blocks on a phone too (His Grace, 15 Nov, after his iPhone held 59 fps). v1.23 had 50 on phones */
 const IMP={T:96,AZ:12,EL:3,D:100,on:true,v:0,sig:''},IUP=new THREE.Vector3(0,1,0),IPV=new THREE.Vector3(),IM4=new THREE.Matrix4(),IS3=new THREE.Vector3();let IBS=null;
 function impScene(){if(IBS)return IBS;const s=new THREE.Scene(),h=new THREE.HemisphereLight(),d=new THREE.DirectionalLight();s.add(h,d,d.target);const m=new THREE.Mesh(new THREE.BufferGeometry(),PMAT());m.frustumCulled=false;s.add(m);return IBS={s,h,d,m,c:new THREE.OrthographicCamera(-1,1,1,-1,.1,100)}}
-function impLightSig(){return[TODK,sun.color.getHexString(),sun.intensity.toFixed(2),sun.position.x.toFixed(0),sun.position.y.toFixed(0),sun.position.z.toFixed(0),hemi.color.getHexString(),hemi.groundColor.getHexString()].join(',')}
+function impLightSig(){return[TODK,sun.color.getHexString(),sun.intensity.toFixed(2),sun.position.x.toFixed(0),sun.position.y.toFixed(0),sun.position.z.toFixed(0),TOD[TODK].hemi[0],TOD[TODK].hemi[1]].join(',')}   /* v1.48: the trees are lit by the sky out of doors; the indoor tint must not make them re-photograph */
 function impBake(b){const geo=b.hero&&b.hero.geometry;if(!geo)return;if(!geo.boundingSphere)geo.computeBoundingSphere();const BS=geo.boundingSphere,R=BS.radius*1.02,T=IMP.T,W=T*IMP.AZ,H=T*IMP.EL;let I=b.imp;
   if(!I){const rt=new THREE.WebGLRenderTarget(W,H,{generateMipmaps:true,minFilter:THREE.LinearMipmapLinearFilter,magFilter:THREE.LinearFilter,colorSpace:THREE.SRGBColorSpace});
     const g=new THREE.PlaneGeometry(1,1),tile=new THREE.InstancedBufferAttribute(new Float32Array(b.items.length*2),2);tile.setUsage(THREE.DynamicDrawUsage);g.setAttribute('aTile',tile);
     const mat=new THREE.MeshBasicMaterial({map:rt.texture,alphaTest:.45});mat.onBeforeCompile=sh=>{sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nattribute vec2 aTile;').replace('#include <uv_vertex>','#include <uv_vertex>\nvMapUv=(vMapUv+aTile)*vec2('+(1/IMP.AZ).toFixed(8)+','+(1/IMP.EL).toFixed(8)+');')};mat.customProgramCacheKey=()=>'imp';
     const mesh=new THREE.InstancedMesh(g,mat,b.items.length);mesh.count=0;mesh.frustumCulled=false;mesh.matrixAutoUpdate=false;mesh.userData={k:'treeImp'};scene.add(mesh);I=b.imp={rt,mesh,tile,ready:0,geo:null,sig:''}}
-  I.R=R;I.c=BS.center.clone();const{s,h,d,m,c}=impScene();m.geometry=geo;h.color.copy(hemi.color);h.groundColor.copy(hemi.groundColor);h.intensity=TOD[TODK].hemi[2]*(TODK==='night'?1.3:1);
+  I.R=R;I.c=BS.center.clone();const{s,h,d,m,c}=impScene();m.geometry=geo;h.color.set(TOD[TODK].hemi[0]);h.groundColor.set(TOD[TODK].hemi[1]);h.intensity=TOD[TODK].hemi[2]*(TODK==='night'?1.3:1);
   d.color.copy(sun.color);d.intensity=sun.intensity;IPV.copy(sun.position).sub(sun.target.position).normalize();d.target.position.copy(I.c);d.position.copy(I.c).addScaledVector(IPV,50);d.target.updateMatrixWorld();
   c.left=-R;c.right=R;c.top=R;c.bottom=-R;c.near=.1;c.far=R*4;c.updateProjectionMatrix();
   const was=renderer.getRenderTarget(),cc=new THREE.Color();renderer.getClearColor(cc);const ca=renderer.getClearAlpha(),nu=renderer.shadowMap.needsUpdate;renderer.shadowMap.needsUpdate=false;renderer.setClearColor(0x1d2a17,0);I.rt.scissorTest=true;
@@ -5258,6 +5266,8 @@ function tidy(){const out={pend:0,fill:0,lamp:0,ws:0,low:0,door:0,small:0},drop=
     for(let i=0;i<sm.length;i++)for(let j=i+1;j<sm.length;j++){const A=sm[i],B=sm[j];if(drop.has(A.it)||drop.has(B.it))continue;const ix=Math.min(A.b.x1,B.b.x1)-Math.max(A.b.x0,B.b.x0),iz=Math.min(A.b.z1,B.b.z1)-Math.max(A.b.z0,B.b.z0),iy=Math.min(A.b.y1,B.b.y1)-Math.max(A.b.y0,B.b.y0);if(ix>.05&&iz>.05&&iy>.05){const va=(A.b.x1-A.b.x0)*(A.b.z1-A.b.z0)*(A.b.y1-A.b.y0),vb=(B.b.x1-B.b.x0)*(B.b.z1-B.b.z0)*(B.b.y1-B.b.y0);drop.add(va<vb?A.it:B.it);out.small++}}}
   if(drop.size){for(const it of drop){if(!(INF[it.r.kind]||{}).wall&&!/Pendant|chandelier|wallLantern/.test(it.r.kind)){const b=bx(it),yb=Math.round(it.y+.5);CUR=it.bid;for(let x=Math.round(b.x0+.35);x<=Math.round(b.x1-.35);x++)for(let z=Math.round(b.z0+.35);z<=Math.round(b.z1-.35);z++)for(let k=0;k<3;k++){const g=G(x,yb+k,z);if(g&&isInv(g))S(x,yb+k,z,0)}CUR=0}}
     for(let i=PQ.length-1;i>=0;i--)if(drop.has(PQ[i]))PQ.splice(i,1)}
+  /* v1.48: the Great Hall's tall-backed chairs between the hall and Kairos's bisellium hid him below the shoulders (IG); the ones in his line of sight go */
+  {const H=BLD[1]&&BLD[1].rooms.find(r=>r.n==='The Great Hall'),bs=PQ.find(it=>it.bid===1&&it.r.kind==='bisellium');if(H&&bs){let n=0;for(let i=PQ.length-1;i>=0;i--){const it=PQ[i];if(it.bid===1&&/^chair(Hall|Dining)$/.test(it.r.kind)&&it.x>H.x0&&it.x<H.x1&&it.z>H.z0&&it.z<H.z1&&Math.abs(it.x-bs.x)<3&&it.z>bs.z+1){PQ.splice(i,1);n++}}out.kchairs=n}}
   return out}
 function unclip(){const SK=/^(rug|ragRug|stairRunner|dado|cornice|corniceIn|panelling|pictureRail|beamRun|coffer|ceilingRose|hammerbeam|skylight|doorDouble|archway|sash|balustrade|balPost|lanternPendant|chandelier|chandelierGilt|chandelierIron|candle)$/,INF=PROPS.info||{},HG=/^(portrait|tapestry|sconce|antlers|banner|coatOfArms|wallLantern|pictureRail)$/,KEEP=/^(fireplace|inglenook|kitchenRange|forgeHearth|stove|bed4|fourPosterOak|bisellium|tableDining|billiard|altar)$/;
   const bx=it=>{const B=pbox(it.r),c=Math.cos(it.th),s=Math.sin(it.th);let x0=1e9,x1=-1e9,z0=1e9,z1=-1e9;for(const lx of[B.x0,B.x1])for(const lz of[B.z0,B.z1]){const x=it.x+lx*c+lz*s,z=it.z-lx*s+lz*c;x0=Math.min(x0,x);x1=Math.max(x1,x);z0=Math.min(z0,z);z1=Math.max(z1,z)}return{x0,x1,z0,z1,y0:it.y+B.y0,y1:it.y+B.y1}};
@@ -5299,6 +5309,10 @@ function glazeInside(){let n=0;const mats=new Map();
    bedchamber only), 14 (no door from bedroom to bedroom on the first floor), 15 (Guest Bedrooms I to VIII), 16 (the nursery suite keeps its own), 17 (the Schoolroom Annexe,
    Laboratory, Ward, Sewing and Linen Rooms), 21 (the Box and Cistern Rooms' side doors). A door from room to room is walled up when the rule says so and both rooms keep
    another way out; doors onto passages, galleries, landings and stairs stay. TM.walled lists them */
+/* v1.48: the lesser stairs are fine flights now, whose side strings (unseen blocks up each side) stood in or beside doorways; clear them within 2 of a door, at foot height */
+function stringClear(){let n=0,sealed=0;for(const f of FLIGHTS){if(!f.lesser)continue;const B=BLD[f.bid];if(!B)continue;for(const y of[Math.round(f.base),Math.round(f.base+f.R)]){const onWall=(x,z)=>B.rooms.some(R=>R.y===y&&(((x===R.x0||x===R.x1)&&z>R.z0&&z<R.z1)||((z===R.z0||z===R.z1)&&x>R.x0&&x<R.x1))),outDoor=(x,z)=>(B.doors||[]).some(d=>x>=d[0]&&x<=d[3]&&z>=d[2]&&z<=d[5]&&y+1>=d[1]-1&&y+1<=d[4]),fr=g=>!g||isInv(g),door=(x,z)=>(onWall(x,z)&&fr(G(x,y+1,z))&&fr(G(x,y+2,z))&&G(x,y,z))||outDoor(x,z);
+    const zx=f.axis==='z',start=Math.round(f.e0+f.dir*.5);CUR=f.bid;for(let c=-1;c<=f.L;c++){const pp=start+f.dir*c;for(const l of[f.l0-1,f.l1+1]){const x=zx?l:pp,z=zx?pp:l;if(onWall(x,z)&&!outDoor(x,z)&&fr(G(x,y+1,z))&&fr(G(x,y+2,z))){for(let k=1;k<=5;k++){const g=G(x,y+k,z);if(!g||isInv(g))S(x,y+k,z,B.part||C.cream)}sealed++;continue}   /* a door that opened onto the side of a stair is walled up, as the house rule has it */
+      let near=false;for(let dx=-2;dx<=2&&!near;dx++)for(let dz=-2;dz<=2;dz++)if(door(x+dx,z+dz)){near=true;break}if(!near)continue;for(let k=1;k<=3;k++){const g=G(x,y+k,z);if(g&&isInv(g)){S(x,y+k,z,0);n++}}}}CUR=0}}return{cleared:n,sealed}}
 function wallPlanDoors(){const B=BLD[1];if(!B)return[];CUR=1;const out=[];const wall=B.part||C.cream;
   const HG=/^His Grace's (Dressing Room|Bath|Study)$/,BED=/Bedroom|^His Grace's/,NURS=/Day Nursery|Night Nursery|Governess/,WARDS=/Schoolroom Annexe|Genizah Writing Room|Laboratory|Convalescent Ward|Sewing Room|Upper Linen Room/,BOX=/^The (Box|Cistern) Room$/;
   const shut=(a,b2)=>{const A=a.n,Bn=b2.n,y=a.y;
@@ -5329,7 +5343,7 @@ function wallPlanDoors(){const B=BLD[1];if(!B)return[];CUR=1;const out=[];const 
     if((ways.get(r.R)||0)<2||(ways.get(r.other)||0)<2){out.push([r.R.n,r.other.n,'kept: the only other way']);continue}
     for(const[x,z]of r.cells){let y=r.f;while(!G(x,y,z)&&y<r.R.yt){S(x,y,z,wall);y++}}done.add(key);ways.set(r.R,ways.get(r.R)-1);ways.set(r.other,ways.get(r.other)-1);out.push([r.R.n,r.other.n])}
   CUR=0;return out}
-const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start=Math.round(t0);const mark=k=>{const n=performance.now();TM[k]=Math.round(n-tm);tm=n};const Y=async()=>{await new Promise(r=>setTimeout(r,0));tm=performance.now()};genGround();mark('ground');await Y();const hall=genBuildings();chapelCeil();TM.blind=blindPanes();TM.sealed=sealBlind();TM.terrace=terraceSeal();TM.belv=belvCeil();TM.chapelDress=chapelDress();TM.gunScreen=gunScreen();TM.walled=wallPlanDoors();mark('buildings');await Y();const PRO=genProps2();TM.treads=stairTreads();TM.doorsMoved=doorsOffStairs();TM.casings=doorCasings();TM.boards=passageBoards();mark('rooms');await Y();genGrounds();mark('grounds');try{fitContours()}catch(e){}const PRS=genSets();mark('sets');await Y();genTrees();mark('trees');genFlowers();mark('flowers');settle();TM.unclip=unclip();TM.trusses=dropTrusses();TM.tidy=tidy();mark('settle');await Y();TM.blind+=blindPanes();const t1=performance.now();
+const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start=Math.round(t0);const mark=k=>{const n=performance.now();TM[k]=Math.round(n-tm);tm=n};const Y=async()=>{await new Promise(r=>setTimeout(r,0));tm=performance.now()};genGround();mark('ground');await Y();const hall=genBuildings();chapelCeil();TM.blind=blindPanes();TM.sealed=sealBlind();TM.terrace=terraceSeal();TM.belv=belvCeil();TM.chapelDress=chapelDress();TM.gunScreen=gunScreen();TM.walled=wallPlanDoors();TM.strings=stringClear();mark('buildings');await Y();const PRO=genProps2();TM.treads=stairTreads();TM.doorsMoved=doorsOffStairs();TM.casings=doorCasings();TM.boards=passageBoards();mark('rooms');await Y();genGrounds();mark('grounds');try{fitContours()}catch(e){}const PRS=genSets();mark('sets');await Y();genTrees();mark('trees');genFlowers();mark('flowers');settle();TM.unclip=unclip();TM.trusses=dropTrusses();TM.tidy=tidy();mark('settle');await Y();TM.blind+=blindPanes();const t1=performance.now();
   const groups=ST.net?netMesh():mesh();const t2=performance.now();await Y();let quads=0;
   for(const g of groups.values()){const obj=new THREE.Group();
     for(const k of['sg','glg']){const geo=g[k];if(!geo)continue;quads+=geo.index.count/6;const m=new THREE.Mesh(geo,k==='sg'?MATS.s:MATS.gl);if(k==='sg'){m.castShadow=true;m.receiveShadow=true}m.matrixAutoUpdate=false;m.updateMatrix();obj.add(m)}
@@ -5337,7 +5351,7 @@ const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start
   try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');await Y();const WIN=LIVE?buildWindowDetail():0;mark('windows');await Y();wdOutdoor();const PRB=buildProps();wdApply();mark('props');await Y();TM.stairq=buildStairs();TM.chapel=chapelGlass();TM.bars=glazeInside();mark('stairs');await Y();const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
   window.__vx={GOAL,goalOpen,URLS,WDRESS,wdApply,regRow,holesOf,T20,LMAP,LAMPS,LDAY,FULL,GROVE,IMP,BENCH,benchUI,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
   TM.wall=Math.round(performance.now()-t0);frame();BENCH.first=performance.now();if(BENCH.on)setTimeout(benchUI,800);$('#bStats').onclick=()=>{const b=$('#bench');if(b)b.remove();else benchUI()};setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
-function styleUI(){$('#brandS').textContent='Euphrates Hall v1.47 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
+function styleUI(){$('#brandS').textContent='Euphrates Hall v1.48 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
   $('#styleList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>pickStyle(b.dataset.st));$('#bStyle').onclick=()=>{$('#stylebox').hidden=!$('#stylebox').hidden};
   if(ISO){for(const[id,dd]of[['#bRotL',-1],['#bRotR',1]]){const b=$(id);b.hidden=false;b.onclick=()=>{if(ISOV.rot)return;const a=ISOV.yaw;ISOV.rot={t0:performance.now(),a,b:a+dd*Math.PI/2};if(MODE==='walk'){ISOV.yaw=a+dd*Math.PI/2;ISOV.rot=null}}}}}
 $('#load').innerHTML='Raising Euphrates Hall<i>The '+ST.n+' Estate. Raising the mansion, about ten seconds.</i>';

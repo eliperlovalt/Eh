@@ -1,7 +1,7 @@
 {
  "version": "1.0",
  "made": "2026-11-12",
- "source": "Euphrates Hall: The Mansion Plan (https://claude.ai/artifact/NpK2xoafAPvXi3PTw9nrMs)",
+ "source": "Euphrates Hall: The Mansion Plan ([private link: kept off the public repo])",
  "coords": "rect is in blocks inside the 128 x 96 main block: x from the west wall, z from the north wall; the front faces south (+z). floorY is blocks above the terrace.",
  "rooms": [
   {

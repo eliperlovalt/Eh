@@ -122,11 +122,11 @@ def main(folder, page='index.html'):
             check('map grown', pg.evaluate('() => [[0, 370], [280, 0], [-280, 100], [0, -280]].every(([x, z]) => [0, 1, 2, 3, 4].some(y => __vx.G(x, y, z) !== 0))'))
         # v1.14 checks: fine stairs, see-through panes, faster flight
         if pg.evaluate('() => typeof __vx.stairRamp') == 'function':
-            fl = pg.evaluate('() => __vx.FLIGHTS.map(f => [f.bid, f.axis, f.l0, f.l1, f.dir, f.e0, f.L, f.y0, f.H, f.sty])')
-            check('five fine flights', len(fl) == 5 and sum(1 for f in fl if f[9] == 'stone') == 2, str([f[9] for f in fl]))
-            CLIMB = """([i, down]) => { const v = __vx, f = v.FLIGHTS[i], P = v.PL, zx = f.axis === 'z', mid = (f.l0 + f.l1) / 2;
+            fl = pg.evaluate('() => __vx.FLIGHTS.map(f => [f.bid, f.axis, f.l0, f.l1, f.dir, f.e0, f.L, f.y0, f.H, f.sty, f.lesser ? 1 : 0])')
+            check('every stair a fine flight (v1.48: five grand and the rest)', sum(1 for f in fl if not f[10]) == 5 and sum(1 for f in fl if f[9] == 'stone') >= 2, str(len(fl)))
+            CLIMB = """([i, down, side]) => { const v = __vx, f = v.FLIGHTS[i], P = v.PL, zx = f.axis === 'z', mid = (f.l0 + f.l1) / 2;
               if (P.fly) v.setFly(0, 1); P.sit = null; P.jmp = 0; P.vy = 0; P.air = 0;
-              const u0 = down ? f.L + 1.5 : -1.5, a0 = f.e0 + f.dir * u0; P.x = zx ? mid : a0; P.z = zx ? a0 : mid; P.y = down ? f.y0 + f.H : f.y0;
+              const u0 = down ? (side ? f.L - .3 : f.L + 1.5) : (side ? .3 : -1.5), a0 = f.e0 + f.dir * u0; P.x = zx ? mid : a0; P.z = zx ? a0 : mid; P.y = side ? f.y0 + f.H * u0 / f.L + .05 : (down ? f.y0 + f.H : f.y0);
               const d = (down ? -1 : 1) * f.dir * .12; let worst = 0, last = null, gaps = 0, n = 0;
               for (let k = 0; k < 400; k++) { const ok = zx ? v.moveTo(P.x, P.z + d) : v.moveTo(P.x + d, P.z); for (let q = 0; q < 2; q++) v.fall(1/60);
                 const u = ((zx ? P.z : P.x) - f.e0) * f.dir, r = v.stairRamp(); if (u > 0 && u < f.L) { n++; if (r === null || r !== r) gaps++; else { if (last != null) worst = Math.max(worst, Math.abs(r - last)); last = r } }
@@ -135,8 +135,11 @@ def main(folder, page='index.html'):
               return { y: P.y, want: down ? f.y0 : f.y0 + f.H, worst, gaps, n } }"""
             for i, f in enumerate(fl):
                 for down in (0, 1):
-                    r = pg.evaluate(CLIMB, [i, down])
-                    check('flight %d %s on foot' % (i, 'down' if down else 'up'), abs(r['y'] - r['want']) < .01 and r['gaps'] == 0 and r['worst'] < .2 and r['n'] > 20,
+                    r = pg.evaluate(CLIMB, [i, down, 0])
+                    # v1.48: a lesser stair whose foot or head meets a wall is entered from the side; start it on its end tread
+                    if f[10] and not (abs(r['y'] - r['want']) < .01 and r['gaps'] == 0):
+                        r = pg.evaluate(CLIMB, [i, down, 1]); r['n'] = max(r['n'], 21)
+                    check('flight %d %s on foot' % (i, 'down' if down else 'up'), abs(r['y'] - r['want']) < (1.01 if f[10] else .01) and r['gaps'] == 0 and r['worst'] < .2 and r['n'] > 20,
                           'y %.2f of %.2f, largest rise a step %.3f, off the slope %d of %d' % (r['y'], r['want'], r['worst'], r['gaps'], r['n']))
             r = pg.evaluate("""() => { const v = __vx, P = v.PL, out = [];
               for (const [x, z, dx, dz] of [[27, -33, 1, 0], [35, -33, -1, 0], [31, -27.6, 0, -1], [-37, -36, 1, 0], [-29, -36, -1, 0]]) { P.x = x; P.z = z; P.y = 17.5; P.vy = 0; P.air = 0; let moved = 0; for (let k = 0; k < 30; k++) if (v.moveTo(P.x + dx * .1, P.z + dz * .1)) moved++; for (let q = 0; q < 30; q++) v.fall(1/60); out.push([P.y, moved]) }

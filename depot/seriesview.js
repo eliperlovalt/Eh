@@ -1,7 +1,7 @@
 /* Euphrates Hall, Parts Depot: series parts 3 and 4.
    mountDinner: "Dinner at eight" in the State Dining Room: candles lit one by one, the gong, the household walks in and sits, the gramophone plays.
    mountStone:  the Seeing Stone in His Grace's Belvedere: it glows, and a touch opens GOLEM. */
-const GOLEM_URL='https://claude.ai/artifact/6SFTwh8yGpyKLJdzTnnkUq';
+const GOLEM_URL='[private link: kept off the public repo]';
 function kit(ctx){const{THREE,R,lights}=ctx;const vmat=new THREE.MeshLambertMaterial({vertexColors:true,side:THREE.DoubleSide});
   const geo=(V,u)=>{const f=PROPS.faces({V,unit:u});const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(f.pos,3));g.setAttribute('color',new THREE.BufferAttribute(f.col,3));g.setAttribute('normal',new THREE.BufferAttribute(f.nor,3));return g};
   const meshOf=(V,u)=>V.size?new THREE.Mesh(geo(V,u),vmat):new THREE.Group();
