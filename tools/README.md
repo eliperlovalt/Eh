@@ -185,3 +185,11 @@ Since v1.42 (the look pass, second batch; the Ideas Board's section 9):
 - `belvCeil`: His Grace's Belvedere was open to the sky above its walls; a ceiling at the wall top, which takes its painted finish.
 - Checked: every bedroom has its bed (KAIROS's views did not show some).
 - The Ideas Board, section 9: the Houses take His Grace's British names (`HOUSES`: the House of the Crown, the Exchequer, the Chapel Royal, the Rolls Office, the Admiralty, the Royal Society, the Engine House, the Revels Office, the Board of Ordnance, the Horse Guards, the Drill Hall (Charcoal, was Obsidian), Below Stairs, the Drawing Room, the Yeomanry), in the room cards, the files and Find. The Schoolroom Annexe is the Genizah Writing Room (Green), its writing table the Genizah's object; the Pantry Book is on the Kitchen dresser; the commonplace book (his Notes) on the desk in His Grace's Study. The three pages are not live yet, so each object says so (GOLEM's rule 4). `src/golem-registry.json` follows.
+
+Since v1.43 (the look pass, third batch; KAIROS's re-sweep of v1.42):
+- `dropTrusses`: the Great Hall's seven hammerbeam trusses go; since move 10 they rose through the Long Gallery's walk as a brown spire on the rail (KAIROS r039a).
+- `unclip` checks standing wall pieces too (consoles, side tables, dressers); hung ones are left out.
+- Every planned room: one oil lamp and one table lamp at most (the blue-shaded lamp was the first thing in every view below stairs); no pendant or chandelier under a ceiling under 7 blocks (they hung at head height in the service rooms).
+- The planner's filler (crates, sacks, barrels, mop buckets) stays only in true stores (`STORE20`: cellars, larders, coal store, box, trunk and lumber rooms, the barn, the brewhouse, the cistern room).
+- No sash on a window one block wide (the Service Wing: stone either side of the glass); 411 windows go without.
+- His Grace's Belvedere takes a plaster ceiling: its painted sky read as open sky.
