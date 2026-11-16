@@ -1492,7 +1492,7 @@ function genBuildings(){
   const hall=building({name:'Euphrates Hall',short:'The Hall',lab:[0,72,-20],main:1,levels:LM,floor0:C.stone,part:C.cream,
     boxes:[{x0:-64,z0:-66,x1:64,z1:30,roofY:38,roof:'flat',winEvery:5,winW:2,roofC:LEAD},TW(-64,-66),TW(44,-66),TW(-64,10),TW(44,10),
       {x0:-12,z0:-32,x1:12,z1:-8,yb:38,roofY:54,roof:'dome',winEvery:4,winW:2}],
-    doors:[[-1,8,30,1,13,30],[-12,8,-66,-10,13,-66],[-64,1,-53,-64,5,-52],[-1,39,-32,1,43,-32]],
+    doors:[[-1,8,30,1,13,30],[-12,8,-66,-10,13,-66],[-64,1,-53,-64,5,-52],[-1,39,-32,1,43,-32],[-8,18,30,-7,22,30],[7,18,30,8,22,30]],   /* v1.37: wall plan moves 11 and 12 (A4), glazed doors from the Orange and Grey Bedrooms onto the south balcony; the Depot's contours dress them as balcony door cases */
     rooms:[
      /* below stairs */
      ['The Kitchen','brown','kitchen',0,-64,-66,-32,-38,'The Household Staff'],['The Scullery','brown','empty',0,-32,-66,-16,-52,''],['The Still Room','brown','empty',0,-32,-52,-16,-38,''],
@@ -1532,7 +1532,8 @@ function genBuildings(){
      ['The Laboratory','yellow','lab',3,16,-66,40,-46,'The Laboratory'],['The Convalescent Ward','yellow','ward',3,40,-66,64,-34,'The Medicae'],['The Sewing Room','brown','empty',3,40,-34,64,-22,''],['The Upper Linen Room','brown','empty',3,40,-22,64,-10,''],
      ['The Red Staircase',null,'empty',3,-40,-28,-25,-12,''],['The Bachelors\' Corridor',null,'empty',3,-64,6,64,14,''],...guests,
      /* the attics */
-     ...maids,...men,['The Box Room','brown','empty',4,-24,14,0,30,''],['The Cistern Room','brown','empty',4,0,14,24,30,''],
+     ...maids,...men,['The Trunk Room','brown','empty',4,-64,-36,-34,-3,''],['The Linen Store','brown','empty',4,-64,-3,-45,30,''],['The Maids\' Sitting Room','brown','empty',4,-45,-3,-25,30,''],['The Lumber Room','brown','empty',4,25,-36,64,-3,''],['The Footmen\' Sitting Room','brown','empty',4,25,-3,64,30,''],   /* v1.37: wall plan move 22, the open attic divided; the passage 4 clear round the light court, the stair hall to the north and the hall before the Box and Cistern Rooms stay open */
+     ['The Box Room','brown','empty',4,-24,14,0,30,''],['The Cistern Room','brown','empty',4,0,14,24,30,''],
      /* the towers */
      ['The Flag Room','gold','empty',5,-64,-66,-44,-46,''],['The Clock Room','copper','empty',5,44,-66,64,-46,''],['The Water Tower','orange','empty',5,-64,10,-44,30,''],['His Grace\'s Belvedere',null,'empty',5,44,10,64,30,''],
      ['The Wireless Room','blue','wireless',5,-12,-32,12,-8,'The Bridge',[['The wireless set: the Edition',V('datahub:edition'),'set'],['The alert desk: Desks and Alerts',V('datahub:desk'),'desk']]],
@@ -1554,6 +1555,8 @@ function genBuildings(){
   CUR=B1;fill(-23,17,-59,23,24,-43,0);   /* v1.37: wall plan move 10, the Long Gallery's walk over the Great Hall 5 clear (the well and its rail 2 south) */
   for(let y=18;y<=24;y++){for(let z=-61;z<=-42;z++){S(-24,y,z,C.cream);S(24,y,z,C.cream)}for(let x=-24;x<=24;x++)S(x,y,-42,C.cream)}
   for(let x=-23;x<=23;x++){S(x,18,-60,C.trim);S(x,19,-60,C.inv)}
+  /* v1.37: the south balcony is the Depot's stonework, not blocks; an unseen floor and rail let a walker step out of the two balcony doors */
+  for(let x=-12;x<=12;x++){S(x,17,31,C.inv);S(x,17,32,C.inv);S(x,18,33,C.inv);S(x,19,33,C.inv)}for(const x of[-13,13])for(let y=18;y<=19;y++){S(x,y,31,C.inv);S(x,y,32,C.inv)}
   for(const x of[-35,-34,34,35])for(let y=18;y<=22;y++)S(x,y,-52,0);   /* v1.37: moves 8 and 9, the passages to the stair landings 5 clear (the Long Gallery's south wall from z -50 to -52) */
   /* real staircases on every floor */
   flight(B1,'z',-27,-25,-24,-1,0,7,C.stone);    /* the women's stair, below stairs to the state floor */
@@ -1611,7 +1614,7 @@ function genBuildings(){
      ========================================================= */
   const chp=building({name:'The Chapel',lab:[-158,22,-88],levels:[{n:'The crypt',y:-5},{n:'The nave',y:0}],floor0:P('#7d7468'),floorN:P('#b8b0a2'),part:C.chapel,
     boxes:[{x0:-176,z0:-91,x1:-168,z1:-85,roofY:24,roof:'spire',wall:C.chapel,roofC:C.chapelRoof,trim:P('#e9e4d8')},{x0:-168,z0:-94,x1:-142,z1:-82,roofY:14,roof:'gableX',ov:[0,1,1,1],wall:C.chapel,roofC:C.chapelRoof,trim:P('#e9e4d8'),winRows:[2,9],winEvery:4}],
-    doors:[[-176,1,-89,-176,4,-87],[-168,1,-89,-168,4,-87],[-156,1,-82,-154,5,-82]],
+    doors:[[-176,1,-89,-176,4,-87],[-168,1,-88,-168,4,-86],[-156,1,-82,-154,5,-82]],   /* v1.37: wall plan move 23, the nave door one south, clear of the porch stair */
     rooms:[['Pardes, the crypt study','white','crypt',0,-168,-94,-142,-82,'Pardes',[['The study table: the Pardes',V('pardes'),'table']]],['The Vestry','white','empty',0,-176,-91,-168,-85,'The Chapel'],
            ['The Nave','white','nave',1,-168,-94,-142,-82,'The Chapel',[['The altar',INFO('A quiet place. Kairos keeps no sermons here.'),'altar']]],['The Tower Porch','white','porch',1,-176,-91,-168,-85,'The Chapel']]});
   building({name:'The Greenhouse',lab:[168,18,-33],levels:[{n:'The Greenhouse',y:0}],part:C.white,
@@ -1628,7 +1631,7 @@ function genBuildings(){
      ['The Coach House','orange','coach',0,72,-98,86,-76,'The Forge Floor'],['The Grooms\' Mess','obsidian','empty',0,72,-76,86,-64,''],
      ['The Riding School','obsidian','riding',0,137,-112,169,-84,'The Training Ground'],...lodg]});
   flight(st.bid,'x',-101,-100,114,1,0,9,C.woodD);   /* the tack room stair up to the grooms' lodgings */
-  flight(chp.bid,'x',-90,-89,-170,-1,-5,5,C.chapel);   /* the porch stair down to the vestry and the crypt */
+  flight(chp.bid,'x',-90,-90,-170,-1,-5,5,C.chapel);   /* the porch stair down to the vestry and the crypt */
   DOORCUT.push([-169,-4,-88,-166,-2,-87]);fill(78,10,-98,79,12,-98,0);   /* the vestry door into the crypt; the door joining the two ranges of lodgings */
   CUR=st.bid|128;fill(132,1,-110,133,24,-109,C.brick);SMOKE.push([132,25,-110]);CUR=0;
   const gate=building({name:'The Gatehouse',lab:[0,22,200],levels:[{n:'Ground',y:0},{n:'Upper',y:7}],part:C.greyStone,
@@ -5141,7 +5144,7 @@ function wallPlanDoors(){const B=BLD[1];if(!B)return[];CUR=1;const out=[];const 
   const shut=(a,b2)=>{const A=a.n,Bn=b2.n,y=a.y;
     if(y===17){if(/Bedchamber/.test(A)&&HG.test(Bn)||/Bedchamber/.test(Bn)&&HG.test(A))return false;if(HG.test(A)&&HG.test(Bn))return true;if(BED.test(A)&&BED.test(Bn))return true;return false}
     if(y===25){if(NURS.test(A)&&NURS.test(Bn))return false;if(/Guest Bedroom/.test(A)&&/Guest Bedroom/.test(Bn))return true;if(WARDS.test(A)||WARDS.test(Bn))return !(/Corridor|Stair/.test(A+Bn));return false}
-    if(y===32)return (BOX.test(A)&&BOX.test(Bn))||(/Maid's Room|Footman's Room/.test(A)&&/Maid's Room|Footman's Room/.test(Bn));return false};
+    if(y===32){const SV=/Maid's Room|Footman's Room/,AT=/Trunk Room|Lumber Room|Sitting Room|Linen Store/;return (BOX.test(A)&&BOX.test(Bn))||(SV.test(A)&&SV.test(Bn))||(SV.test(A)&&AT.test(Bn))||(AT.test(A)&&SV.test(Bn))}return false};
   const rooms=B.rooms.filter(r=>r.y===17||r.y===25||r.y===32);const roomAtXZ=(x,z,y)=>rooms.find(r=>r.y===y&&x>r.x0&&x<r.x1&&z>r.z0&&z<r.z1);
   /* first, the doors the plan needs and the house lacks (A2): every bedroom and every guest or ward room a door onto a passage, His Grace's dressing room, bath and study a door
      from his bedchamber. Cut 2 wide and 5 tall where the wall is solid and both sides are clear; never in an outer wall */

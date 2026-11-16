@@ -139,3 +139,14 @@ Since v1.35 (the v20 wall plan, moves 19 and 20; A2 done but for two corner bedr
 Since v1.36 (the v20 wall plan, moves 1 to 5):
 - In `gunScreen`: the Gun Room screen's narrow east bay (x 38 to 39) and the Gun Room's east door into the Double Library (x 40, z -18 to -17) are walled up; the Double Library has a new west door from the Grand Stair hall (x 40, z -31 to -30). The Oak Stair arch into the Saloon is z -25 to -23, centred between two of the Saloon's columns (they stand at z -34, -27, -20, -13, -6); the Billiard Room arch moved one bay south to z -18 to -16; the Business Room's south door moved 4 east to x -26 to -25, off the Oak Stair's steps.
 - `audit_test.py` KNOWN keeps only the Chapel nave door (move 23); the six freed doors now fail the test if they come back.
+
+Since v1.37 (the v20 wall plan finished: moves 6 to 12, 18, 22, 23; A4 done):
+- Move 6: the Entrance Hall's north wall from z 0 to z 6, so the cross gallery runs the width of the state floor, 9 clear at the middle.
+- Move 7: the Saloon Gallery's box starts at z -42, taking in the 1-wide strip by the Great Hall's upper wall.
+- Moves 8 and 9: the Long Gallery's box ends at z -52, not -50; the passages to the Oak and Grand Stair landings are 5 clear (the door cuts by them moved with it).
+- Move 10: the Great Hall's open well starts at z -59 and its rail stands at z -60 (three places: the build, the Long Gallery's two dressings). The walk over the hall is 5 clear.
+- Move 18: the Red Staircase room on the second floor ends at x -25; the passage beside it is 4 clear.
+- Move 22: the open attic has five rooms (`The Trunk Room`, `The Linen Store`, `The Maids' Sitting Room`, `The Lumber Room`, `The Footmen's Sitting Room`) off a passage 4 clear round the light court. The stair hall to the north and the hall before the Box and Cistern Rooms stay open, and so does the head of the Red Staircase (x -31 to -27): the Trunk Room stops at x -34 to keep its door clear of that rail. `wallPlanDoors` walls any door from these rooms into a maid's or footman's room.
+- Move 23: the porch stair down to the crypt is one lane (z -90) against the north wall; the nave door is at z -88 to -86. `audit_test.py` KNOWN is empty.
+- Moves 11 and 12 (A4): two glazed doors onto the south balcony, x -8 to -7 (the Orange Bedroom) and x 7 to 8 (the Grey Bedroom), y 18 to 22, given in the Hall's `doors`, so the Depot's `contours.js` v20 dresses them as balcony door cases. The balcony is stonework, not blocks: an unseen floor (y 17, z 31 to 32, x -12 to 12) and rail (z 33, and the two ends) let a walker step out. The rail stands 3 out so it does not crowd the doors.
+- `ftime3.py` finds the harness beside itself.
