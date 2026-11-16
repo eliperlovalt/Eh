@@ -210,3 +210,11 @@ Since v1.48 (the look pass from His Grace's brief of 16 Nov, first part):
 - The Great Hall: the tall-backed chairs in the line between the hall and the bisellium go (4), so Kairos is not hidden below the shoulders.
 - Private links taken out of CLOUD.md, depot/HANDOFF.md, depot/rooms.json, depot/seriesview.js, depot/worldview.js; the registry's "$10k Plan" object name trimmed. History is not rewritten.
 - Frame time level with v1.47.
+
+Since v1.49 (the look pass, second part):
+- The Chapel cloister (His Grace's fault 5) rebuilt: matched piers on both sides every 4 blocks, none where the two walks meet, none at the chapel door, none against the chapel wall; white caps; a white soffit under a separate roof layer (y 6 soffit, y 7 roof), trim on both eaves. (The palette's trim is an olive tone; it is the olive KAIROS sees on lintels. Not used for new work.)
+- Candles: the torchere, candelabra and sconce carry ivory candles (#efe0b8) on brass cups, the torchere's taller, so no flame floats over a candle the colour of the wall (fault 6). Changed in depot/props.js, props3.js, props5.js too.
+- The Great Hall: armchairs in the line between the hall and the bisellium go too (the gilt one glowed at night as a tall bar, KAIROS r022a).
+- Figures (people, Kairos, the player) are drawn with their own material (`FMAT`) that takes a third of the lamplight, so a face under the forecourt lamps sits in the same light as the coat.
+- The forge chimney breast runs on to the corner (no 2-block pocket). Walls-only scan for strips under 3 blocks: one left, the outdoor slot between the Home Farm's two boxes (x -133, z 121 to 127), which boxes that do not move make; the barn's side door opens into it.
+- Frame time level with v1.48.

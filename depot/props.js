@@ -134,7 +134,7 @@ def('chandelier',{label:'Crystal chandelier',room:'Saloon, State Dining Room, Ba
   for(let a=0;a<6;a++){const t=a/6*Math.PI*2;for(let s=1;s<R;s++)k.put(Math.round(Math.cos(t)*s),10+Math.round(s/R*2),Math.round(Math.sin(t)*s),C.gilt)}
   return{V:k.V,size:[2.2,3.6,2.2],anchor:'top'}});
 def('candelabra',{label:'Candelabra',room:'Mantels, dining table, piano',act:'light'},o=>{const k=kit();
-  k.disc(0,0,0,2,C.brass);k.box(0,1,0,0,8,0,C.brass);k.box(-4,8,0,4,8,0,C.brass);for(const x of[-4,0,4]){k.box(x,9,0,x,9,0,C.brass);k.box(x,10,0,x,12,0,C.white);k.put(x,13,0,C.flame,'flame')}k.box(0,13,0,0,14,0,C.white);k.put(0,15,0,C.flame,'flame');return{V:k.V,size:[1,1.8,.6]}});
+  k.disc(0,0,0,2,C.brass);k.box(0,1,0,0,8,0,C.brass);k.box(-4,8,0,4,8,0,C.brass);for(const x of[-4,0,4]){k.box(x,9,0,x,9,0,C.brass);k.box(x,10,0,x,12,0,'#efe0b8');k.put(x,13,0,C.flame,'flame')}k.box(0,13,0,0,14,0,'#efe0b8');k.put(0,15,0,C.flame,'flame');return{V:k.V,size:[1,1.8,.6]}});
 def('lantern',{label:'Saloon glass lantern (one bay)',room:'The Saloon roof',act:'look up',hang:true},o=>{const k=kit(),W=o.w||16;
   for(let x=-W;x<=W;x++)for(let z=-W;z<=W;z++){const edge=Math.abs(x)===W||Math.abs(z)===W||x%8===0||z%8===0;k.put(x,0,z,edge?C.iron:C.glass)}
   for(let h=1;h<=8;h++){const w=W-h*2;if(w<1)break;for(let x=-w;x<=w;x++)for(let z=-w;z<=w;z++){if(Math.abs(x)!==w&&Math.abs(z)!==w)continue;k.put(x,h,z,(x+z)%4===0||Math.abs(x)===Math.abs(z)?C.iron:C.glass)}}
