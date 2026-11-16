@@ -32,7 +32,7 @@ echo "gate: build matches root copy"
 
 fail=0
 for f in src .; do
-  for t in walk reach audit; do
+  for t in walk reach audit goal; do
     s=$(date +%s)
     if python3 tools/tests/${t}_test.py "$f" > "$tmp/$t.log" 2>&1; then
       echo "gate: ok   ${t}_test $f ($(( $(date +%s) - s ))s)"

@@ -89,6 +89,23 @@ body.photo #walk .b{opacity:0;pointer-events:none}body.photo #walk .cb,body.phot
 @media (max-height:460px){#card{bottom:calc(max(8px,env(safe-area-inset-bottom)) + 84px);max-height:52vh}.brand span{display:none}}
 </style>
 <style>#bFind{position:fixed;left:max(16px,env(safe-area-inset-left));top:calc(env(safe-area-inset-top,0px) + 112px);z-index:30}
+#bGoal{position:fixed;left:max(16px,env(safe-area-inset-left));top:calc(env(safe-area-inset-top,0px) + 178px);z-index:30}
+#nextAct{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 50px);z-index:30;max-width:min(80vw,560px);padding:7px 14px;border-radius:999px;background:rgba(11,21,48,.88);color:#f1e7c8;font:15px/1.3 'EB Garamond',Georgia,serif;text-align:center;cursor:pointer}
+#goal{position:fixed;inset:0;z-index:64;background:rgba(10,12,15,.6);display:flex;align-items:center;justify-content:center;padding:12px}
+#goal[hidden]{display:none}
+#goal .gp{background:#fbf7ee;color:#1d1f27;border-radius:14px;max-width:440px;width:100%;max-height:92vh;overflow:auto;padding:18px 18px 14px;font:16px/1.45 system-ui,sans-serif;box-shadow:0 10px 40px #0006}
+#goal h2{font:600 21px/1.25 Georgia,serif;margin:0 0 6px}#goal .sub{color:#5b5d68;margin:0 0 12px;font-size:14px}
+#goal input[type=text]{width:100%;box-sizing:border-box;font:16px system-ui,sans-serif;padding:10px 11px;border:1px solid #cfc7b5;border-radius:9px;background:#fff;color:#1d1f27}
+#goal .row{display:flex;gap:6px;align-items:center;margin:0 0 8px}#goal .row input{flex:1}
+#goal .ib{width:34px;height:38px;border:1px solid #cfc7b5;border-radius:8px;background:#fff;font:16px system-ui;cursor:pointer;color:#1d1f27}
+#goal .go{display:block;width:100%;margin:12px 0 4px;padding:11px;border:0;border-radius:10px;background:#1d2f6b;color:#fff;font:600 16px system-ui;cursor:pointer}
+#goal .go:disabled,#goal .ib:disabled,#goal .add:disabled{opacity:.4;cursor:default}
+#goal .add{border:1px dashed #9a927f;background:none;border-radius:9px;padding:8px 10px;width:100%;font:15px system-ui;color:#1d1f27;cursor:pointer}
+#goal .warn{color:#a3261d;font-size:13px;margin:2px 0 8px}#goal .note{color:#5b5d68;font-size:13px;margin:6px 0}
+#goal .na{border:2px solid #1d2f6b;border-radius:12px;padding:12px;margin:10px 0}#goal .na b{display:block;font-size:13px;color:#1d2f6b;letter-spacing:.04em;text-transform:uppercase}#goal .na p{font-size:19px;margin:4px 0 10px}
+#goal ul{list-style:none;padding:0;margin:8px 0}#goal li{display:flex;gap:9px;align-items:flex-start;padding:5px 0}#goal li.d span{color:#9a9ca8;text-decoration:line-through}
+#goal .lk{display:flex;gap:16px;justify-content:space-between;margin-top:10px}#goal .lk button{background:none;border:0;color:#1d2f6b;text-decoration:underline;font:15px system-ui;cursor:pointer;padding:6px 0}
+#goal .x{position:sticky;top:0;float:right;background:none;border:0;font:22px system-ui;cursor:pointer;color:#5b5d68}
 #bStats{position:fixed;left:max(16px,env(safe-area-inset-left));top:calc(env(safe-area-inset-top,0px) + 145px);z-index:30}
 /* v1.26: Find and Stats a little smaller, one above the other, the same width; each keeps a margin of 5px that still takes a tap */
 #bFind,#bStats{font-size:9.5px;padding:6px 8px;min-width:58px}#bFind::before,#bStats::before{content:'';position:absolute;inset:-5px}
@@ -123,9 +140,11 @@ body.photo #walk .b{opacity:0;pointer-events:none}body.photo #walk .cb,body.phot
 </div>
 <div id="lvbar" hidden></div>
 <div id="rail"></div>
-<div id="copy" style="position:fixed;left:max(8px,env(safe-area-inset-left));bottom:max(4px,env(safe-area-inset-bottom));z-index:5;font:10px/1.2 system-ui,sans-serif;color:#f1e7c8;opacity:.6;pointer-events:none;text-shadow:0 1px 2px #0008">© 2026 Euphrates Hall. All rights reserved.</div>
+<div id="nextAct" hidden></div>
+<div id="goal" hidden><div class="gp" id="goalP"></div></div>
+<div id="copy" style="position:fixed;left:max(14px,env(safe-area-inset-left));top:calc(env(safe-area-inset-top,0px) + 36px);z-index:5;font:10px/1.2 system-ui,sans-serif;color:#f1e7c8;opacity:.6;pointer-events:none;text-shadow:0 1px 2px #0008">© 2026 Euphrates Hall. All rights reserved.</div>
 <div id="card" hidden></div>
-<button class="b" id="bFind">Find</button><button class="b" id="bStats" title="The phone test: load, frame times, memory">Stats</button>
+<button class="b" id="bFind">Find</button><button class="b" id="bStats" title="The phone test: load, frame times, memory">Stats</button><button class="b" id="bGoal">Set a goal</button>
 <div id="kchat" hidden><div id="kchead"><b>Kairos</b><span><button class="b" id="kcvoice">Voice off</button><button class="b" id="kcfull">Full chat</button><button class="b" id="kcx">Close</button></span></div><div id="kcbody"></div><div id="kcform"><textarea id="kcin" rows="2" placeholder="Speak, Your Grace"></textarea><button class="b on" id="kcsend">Send</button></div><button id="kcreset">Disconnect this device</button></div>
 <div id="tourbar" hidden><div id="tourtxt"></div><div id="tourbtn"><button class="b" id="tprev">Back</button><button class="b on" id="tnext">Next</button><button class="b" id="tend">End</button></div></div>
 <div id="findsheet" hidden><div id="findhead"><b>Find anything</b><button class="b" id="findx">Close</button></div><button class="b on" id="findtour">Take the tour with Kairos</button><div id="findlist"></div></div>
@@ -1525,7 +1544,7 @@ function genBuildings(){
      ['The Saloon Gallery','gold','P',2,-24,-42,24,0,'The Forum',[],{tall:1}],['The Grand Stair Landing',null,'empty',2,24,-46,40,-22,''],['The Green Bedroom',null,'P',2,24,-22,40,0,''],
      ['The Calendar Room','copper','P',2,40,-46,64,-28,'The Calendar',[['The wall calendar: the Day and Deadlines',V('orders'),'cal'],['Orders by Color',V23('orders'),'c']]],
      ['The Registry','copper','P',2,40,-28,64,-12,'The Registry',[['The bound register: the roster',V('roster'),'book']]],
-     ['The Schoolroom','gold','P',2,40,-12,64,6,'The Institute',[['The reading list',V('library'),'c']]],
+     ['The Schoolroom','gold','P',2,40,-12,64,6,'The Institute',[['The slate: set a goal',['goal'],'slate'],['The reading list',V('library'),'c']]],
      ['The Violet Bedroom',null,'P',2,-64,6,-40,30,''],['The Pink Bedroom',null,'P',2,-40,6,-18,30,''],['The Orange Bedroom',null,'P',2,-18,6,0,30,''],['The Grey Bedroom',null,'P',2,0,6,16,30,''],
      ['His Grace\'s Dressing Room',null,'P',2,16,6,34,14,''],['His Grace\'s Bath',null,'P',2,16,14,34,22,''],['His Grace\'s Study',null,'P',2,16,22,34,30,'',[['The commonplace book: his Notes',INFO('His Notes. Empty for now: Kairos fills it at the PC.'),'desk']]],
      ['His Grace\'s Bedchamber',null,'P',2,34,6,64,30,'',[['The bedside journal: the Day and the Night Watch',V('orders'),'journal']]],
@@ -2158,6 +2177,42 @@ async function kcSend(){const i=$('#kcin'),t=i.value.trim();if(!t||KC.busy||!KC.
     if(KC.speak&&window.speechSynthesis){try{speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(d.text))}catch(e){}}}
   catch(e){KC.msgs.pop();i.value=t;toast('Kairos could not be reached: '+e.message)}
   KC.busy=false;kcPaint()}
+/* v1.47: the student goal path (GOLEM's spec; His Grace's choice of 16 Nov: free, on the device). One goal, up to five steps, the first unfinished step is the Next action. Saved in this browser only ('eh-goal'); nothing leaves it. The Schoolroom's slate opens it, and so does "Set a goal" on the overview */
+const GOAL={k:'eh-goal',d:null,draft:null,scr:null,ask:false};
+const gEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function goalLoad(){try{GOAL.d=JSON.parse(localStorage.getItem(GOAL.k)||'null')}catch(e){GOAL.d=null}if(GOAL.d&&!(GOAL.d.steps&&GOAL.d.steps.length))GOAL.d=null}
+function goalStore(){try{if(GOAL.d)localStorage.setItem(GOAL.k,JSON.stringify(GOAL.d));else localStorage.removeItem(GOAL.k)}catch(e){}goalLine()}
+function goalNext(){return GOAL.d?GOAL.d.steps.findIndex(s=>!s.done):-1}
+function goalLine(){const e=$('#nextAct');if(!e)return;const i=goalNext();const on=!!(GOAL.d&&i>=0)&&MODE!=='walk';e.textContent=on?'Next action: '+GOAL.d.steps[i].t:'';e.hidden=!on}
+function goalOpen(){goalLoad();GOAL.ask=false;GOAL.scr=GOAL.d?'path':'goal';GOAL.draft={goal:GOAL.d?GOAL.d.goal:'',steps:GOAL.d?GOAL.d.steps.map(s=>s.t):['']};SHEET=true;$('#goal').hidden=false;goalPaint()}
+function goalClose(){$('#goal').hidden=true;SHEET=false;goalLine()}
+function goalPaint(){const P=$('#goalP'),D=GOAL.draft,X='<button class="x" data-g="close" aria-label="Close">&times;</button>';let h='';
+  if(GOAL.scr==='goal'){h=X+'<h2>What do you want to get done?</h2><p class="sub">One goal. Make it something you could finish in a few weeks.</p><input type="text" id="gGoal" maxlength="80" placeholder="Pass my history midterm" value="'+gEsc(D.goal)+'"><button class="go" data-g="next"'+(D.goal.trim()?'':' disabled')+'>Next</button>'}
+  else if(GOAL.scr==='steps'){h=X+'<h2>Break it into steps.</h2><p class="sub">Up to five. Put them in the order you will do them.</p>';
+    D.steps.forEach((t,i)=>{h+='<div class="row"><input type="text" data-i="'+i+'" maxlength="120" placeholder="'+(i===0?'Find the exam date and topics':'Step '+(i+1))+'" value="'+gEsc(t)+'"><button class="ib" data-g="up" data-i="'+i+'"'+(i?'':' disabled')+' aria-label="Move up">&uarr;</button><button class="ib" data-g="down" data-i="'+i+'"'+(i<D.steps.length-1?'':' disabled')+' aria-label="Move down">&darr;</button><button class="ib" data-g="del" data-i="'+i+'" aria-label="Remove">&times;</button></div>'+(t.length>80?'<p class="warn">Make it smaller: something you can start today.</p>':'')});
+    const full=D.steps.length>=5;h+='<button class="add" data-g="add"'+(full?' disabled':'')+'>Add a step</button>'+(full?'<p class="note">Five is the limit. Finish one or make a step bigger.</p>':'');
+    const ok=D.goal.trim()&&D.steps.some(t=>t.trim())&&!D.steps.some(t=>t.length>80);h+='<button class="go" data-g="save"'+(ok?'':' disabled')+'>Save my path</button>'}
+  else{const d=GOAL.d,i=goalNext();if(i<0){h=X+'<h2>Goal done.</h2><p class="sub">You finished all your steps.</p><button class="go" data-g="new">Set a new goal</button>'}
+    else{h=X+'<p class="note">'+gEsc(d.goal)+'</p><div class="na"><b>Next action:</b><p>'+gEsc(d.steps[i].t)+'</p><button class="go" data-g="done">Done</button></div><ul>'+d.steps.map((st,j)=>'<li class="'+(st.done?'d':'')+'"><input type="checkbox" data-g="tick" data-i="'+j+'"'+(st.done?' checked':'')+' aria-label="Done"><span>'+gEsc(st.t)+'</span></li>').join('')+'</ul>'+
+      (GOAL.ask?'<p>Clear this goal and its steps?</p><div class="lk"><button data-g="clear">Yes, clear it</button><button data-g="keep">Keep it</button></div>':'<div class="lk"><button data-g="edit">Edit steps</button><button data-g="over">Start over</button></div>')}}
+  P.innerHTML=h;const f=P.querySelector('input[type=text]');if(f&&GOAL.scr==='goal'){f.focus();f.setSelectionRange(f.value.length,f.value.length)}}
+function goalInit(){const G=$('#goal');if(!G)return;G.addEventListener('keydown',e=>e.stopPropagation());G.addEventListener('keyup',e=>e.stopPropagation());
+  G.addEventListener('input',e=>{const t=e.target,D=GOAL.draft;if(t.id==='gGoal'){D.goal=t.value;const b=G.querySelector('[data-g=next]');if(b)b.disabled=!t.value.trim()}else if(t.dataset.i!=null&&GOAL.scr==='steps'){const was=D.steps[+t.dataset.i].length>80;D.steps[+t.dataset.i]=t.value;const now=t.value.length>80;if(was!==now){const pos=t.selectionStart;goalPaint();const n=G.querySelector('input[data-i="'+t.dataset.i+'"]');if(n){n.focus();n.setSelectionRange(pos,pos)}}else{const b=G.querySelector('[data-g=save]');if(b)b.disabled=!(D.goal.trim()&&D.steps.some(x=>x.trim())&&!D.steps.some(x=>x.length>80))}}});
+  G.addEventListener('click',e=>{if(e.target===G){goalClose();return}const b=e.target.closest('[data-g]');if(!b)return;const g=b.dataset.g,i=+b.dataset.i,D=GOAL.draft;
+    if(g==='close')return goalClose();
+    if(g==='next'){if(!D.goal.trim())return;D.goal=D.goal.trim().slice(0,80);GOAL.scr='steps'}
+    else if(g==='add'){if(D.steps.length<5)D.steps.push('')}
+    else if(g==='del'){D.steps.splice(i,1);if(!D.steps.length)D.steps.push('')}
+    else if(g==='up'&&i>0){[D.steps[i-1],D.steps[i]]=[D.steps[i],D.steps[i-1]]}
+    else if(g==='down'&&i<D.steps.length-1){[D.steps[i+1],D.steps[i]]=[D.steps[i],D.steps[i+1]]}
+    else if(g==='save'){const old=GOAL.d&&GOAL.d.goal===D.goal?GOAL.d.steps:[];const st=D.steps.map(t=>t.trim()).filter(Boolean).slice(0,5);if(!st.length||st.some(t=>t.length>80))return;GOAL.d={goal:D.goal.trim(),steps:st.map(t=>({t,done:!!(old.find(o=>o.t===t)||{}).done}))};goalStore();GOAL.scr='path'}
+    else if(g==='done'){const n=goalNext();if(n>=0){GOAL.d.steps[n].done=true;goalStore()}}
+    else if(g==='tick'){GOAL.d.steps[i].done=b.checked;goalStore()}
+    else if(g==='edit'){D.goal=GOAL.d.goal;D.steps=GOAL.d.steps.map(s=>s.t);GOAL.scr='steps'}
+    else if(g==='over')GOAL.ask=true;else if(g==='keep')GOAL.ask=false;
+    else if(g==='clear'||g==='new'){GOAL.d=null;goalStore();GOAL.ask=false;GOAL.draft={goal:'',steps:['']};GOAL.scr='goal'}
+    goalPaint()});
+  $('#bGoal').onclick=goalOpen;$('#nextAct').onclick=goalOpen;goalLoad();goalLine()}
 function kchatOpen(){kcLoad();SHEET=true;$('#kchat').hidden=false;kcPaint()}
 function kchatClose(){$('#kchat').hidden=true;SHEET=false;try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
 function kchatInit(){$('#kcx').onclick=kchatClose;$('#kcsend').onclick=kcSend;$('#kcin').addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();kcSend()}});
@@ -3868,7 +3923,7 @@ const RSKIP={'The Saloon':new Set(['column','lantern','chandelier','ceilingRose'
 /* the record objects find their furniture by kind; #n is the nth of that kind */
 const AKIND={ledger:['deskWriting','bureau'],box:['strongbox'],ticker:['deskWriting'],kairos:['bisellium'],table:['tableDining','trestleTable','studyTable'],globe:['globe','telescope'],
  chest2:['deedChest#2','deedChest'],catalog:['cardCatalog'],files:['bookcase'],shelves:['bookcase#4','bookcase#2','bookcase'],manual:['libraryTable','pedestalTable'],portraits:['portrait','tapestry'],
- book:['deskWriting','bureau','lectern'],cal:['clockLong'],journal:['bed4','fourPosterOak'],desk:['deskWriting','writingTable','studyTable','bureau'],pantry:['dresserKitchen','welshDresser','kitchenTable'],set:['wireless'],altar:['altarTable','lectern'],bench:['glasshouseBench','labBench'],anvil:['anvil'],
+ book:['deskWriting','bureau','lectern'],cal:['clockLong'],journal:['bed4','fourPosterOak'],desk:['deskWriting','writingTable','studyTable','bureau'],slate:['blackboard','deskSchool','deskWriting','writingTable'],pantry:['dresserKitchen','welshDresser','kitchenTable'],set:['wireless'],altar:['altarTable','lectern'],bench:['glasshouseBench','labBench'],anvil:['anvil'],
  c:['mapTable','deedChest','bureau','tableDining','deskWriting','libraryTable','pedestalTable','kitchenTable','trestleTable','labBench','telescope','billiard','grandPiano','altarTable','cardTable','wardBed','bed4','fourPosterOak','bedIron']};
 for(const k of['banner','tapestry','coatOfArms','stageCurtain','copperRack','horseshoeRack','saddleRack','shopShelves','innSign','menuSlate','bellBoard'])WALLK.add(k);
 
@@ -4722,12 +4777,13 @@ function run(a){if(!a)return;const[t,v]=a;if(t==='doc'&&!v){toast('Not yet linke
   else if(t==='room')showRoomCard(v);
   else if(t==='cat')catalog(v);
   else if(t==='kchat')kchatOpen();
+  else if(t==='goal')goalOpen();
   else if(t==='doc'){const a2=document.createElement('a');a2.href=v;a2.target='_blank';a2.rel='noopener';document.body.appendChild(a2);a2.click();a2.remove()}
   else if(t==='info')toast(v);
   else if(t==='kz')konetz()}
 const TITLE={'people':'The Circle','datahub:fig':'Public Figures','datahub:bridge':'Brief and In-Tray','nepsis':'The Road to the Summit','datahub:desk':'Desks and Alerts','library':'The Library shelves','ledger':'The Ledger','wager':'The Wager Desk','orders':'The Day','rules':'The Rules','datahub:edition':'The Edition','datahub:globe':'The Holo Globe','datahub:ai':'The AI Frontier','pardes':'The Pardes','tree':'The Great Tree','v23:kairos':'The Spire','v23:carving':'The focus tree','v23:people':'The Thought Web','v23:orders':'Orders by Color','roster':'The Registry roll'};
 function konetz(){toast('Konetz acknowledged. Standing down.');return;const b=$('#bKz');if(kz){kz=0;b.textContent='Konetz';toast('Konetz acknowledged. Standing down.')}else{kz=1;b.textContent='Tap again to stand down';setTimeout(()=>{kz=0;b.textContent='Konetz'},4000)}}
-$('#bTabs').hidden=true;tourInit();kchatInit();
+$('#bTabs').hidden=true;tourInit();kchatInit();goalInit();
 /* the catalog */
 let KJ=null,CATS=[];
 async function catalog(h){$('#cat').classList.add('on');SHEET=true;CATS=[];if(!KJ){$('#catBody').innerHTML='<p class="meta">Opening the drawers...</p>';try{KJ=await (await fetch('kits.json')).json()}catch(e){$('#catBody').innerHTML='<p>The catalog could not be read on this connection.</p>';return}}
@@ -4791,7 +4847,7 @@ look.addEventListener('wheel',e=>{PL.dist=Math.max(2.5,Math.min(16,PL.dist+e.del
 let LOOKS=.72;{const names=['Slow','Steady','Quick'],vals=[.45,.72,1];let i=1;try{const s=localStorage.getItem('euph_look');if(s!==null&&vals[+s])i=+s}catch(e){}const lb=$('#bLook'),set=()=>{LOOKS=vals[i];lb.textContent='Look: '+names[i]};set();lb.onclick=()=>{i=(i+1)%3;set();try{localStorage.setItem('euph_look',String(i))}catch(e){}}}
 const KEYS={};addEventListener('keydown',e=>{KEYS[e.key.toLowerCase()]=1;if(MODE==='walk'){if(e.key===' '&&!/^(INPUT|TEXTAREA)$/.test(e.target.tagName||''))e.preventDefault();if(e.key==='e'||e.key==='E')$('#act').click();if(e.key==='r')goStairs(1);if(e.key==='f')goStairs(-1);if(e.key==='Escape'){if(PHOTO){photo(false);return}setMode('over')}if(e.key===' '&&!e.repeat)tapJump();if((e.key==='w'||e.key==='W')&&!e.repeat){const n=performance.now();if(PL.fly&&n-(PL.wtap||0)<320){PL.ffast=1;toast('Fast flight.')}PL.wtap=n}}});addEventListener('keyup',e=>{KEYS[e.key.toLowerCase()]=0;if(e.key==='w'||e.key==='W')PL.ffast=0;if(MODE==='walk'&&e.key===' '&&!/^(INPUT|TEXTAREA)$/.test(e.target.tagName||''))e.preventDefault()});addEventListener('blur',()=>{for(const k in KEYS)KEYS[k]=0});
 let NEAR=null;$('#act').onclick=()=>{if(NEAR)run(NEAR.a)};
-function setMode(m){MODE=m;if(PL.fly)setFly(0,1);$('#walk').classList.toggle('on',m==='walk');$('#rail').hidden=m==='walk';if($('#copy'))$('#copy').hidden=m==='walk';$('#bWalk').textContent=m==='walk'?'Overview':'Walk';$('#bWalk').classList.toggle('on',m==='walk');$('#bFP').hidden=m!=='walk';$('#bLook').hidden=m!=='walk';if(m!=='walk'){PL.auto=0;PL.sprint=0;$('#bAuto').classList.remove('on');$('#bSprint').classList.remove('on')}$('#card').hidden=true;
+function setMode(m){MODE=m;if(PL.fly)setFly(0,1);$('#walk').classList.toggle('on',m==='walk');$('#rail').hidden=m==='walk';if($('#copy'))$('#copy').hidden=m==='walk';if($('#bGoal'))$('#bGoal').hidden=m==='walk';goalLine();$('#bWalk').textContent=m==='walk'?'Overview':'Walk';$('#bWalk').classList.toggle('on',m==='walk');$('#bFP').hidden=m!=='walk';$('#bLook').hidden=m!=='walk';if(m!=='walk'){PL.auto=0;PL.sprint=0;$('#bAuto').classList.remove('on');$('#bSprint').classList.remove('on')}$('#card').hidden=true;
   controls.enabled=m==='over';player.visible=m==='walk';
   if(m==='walk'){if(OPEN_B!=null){const B=BLD[OPEN_B];const R=B.rooms.find(r=>r.l===OPEN_L);if(R){PL.x=R.c[0];PL.z=R.c[2]+1;PL.y=R.y+.5;let ok=false;for(let r=0;r<8&&!ok;r++)for(let dx=-r;dx<=r&&!ok;dx++)for(let dz=-r;dz<=r&&!ok;dz++){const x=R.c[0]+dx,z=R.c[2]+dz;if(!solidAt(x,R.y+1,z)&&!solidAt(x,R.y+2,z)){PL.x=x;PL.z=z;ok=true}}}}else{PL.x=0;PL.z=58;PL.y=.5}PL.yaw=0;OPEN_B=null}
   else{OPEN_B=null;hemi.intensity=TOD[TODK].hemi[2];applyVis();controls.target.set(PL.x,PL.y+2,PL.z);if(ISO){camera.position.copy(controls.target).addScaledVector(isoOff(ISOV.yaw,ISOV.el),ISOV.R);camera.zoom=3;camera.updateProjectionMatrix()}else camera.position.set(PL.x+30,PL.y+38,PL.z+48)}
@@ -5279,9 +5335,9 @@ const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start
     for(const k of['sg','glg']){const geo=g[k];if(!geo)continue;quads+=geo.index.count/6;const m=new THREE.Mesh(geo,k==='sg'?MATS.s:MATS.gl);if(k==='sg'){m.castShadow=true;m.receiveShadow=true}m.matrixAutoUpdate=false;m.updateMatrix();obj.add(m)}
     let wn=null;for(const k of['s','gl','wn','w','gs']){const gb=g[k];if(!gb||!gb.n)continue;quads+=gb.n;const m=new THREE.Mesh(gb.geo(),k==='wn'?MATS.gl:MATS[k]);m.scale.setScalar(.5);if(k==='wn')wn=m;if(k==='s'){m.castShadow=true;m.receiveShadow=true;if(g.gq)GRQ.push({m,q:g.gq})}else if(k==='w')m.receiveShadow=true;m.matrixAutoUpdate=false;m.updateMatrix();obj.add(m)}obj.matrixAutoUpdate=false;obj.updateMatrix();scene.add(obj);GROUPS.push({obj,bid:g.bid,band:g.band,si:g.si||0,vh:g.vh||0,x:g.x,z:g.z,wn})}
   try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');await Y();const WIN=LIVE?buildWindowDetail():0;mark('windows');await Y();wdOutdoor();const PRB=buildProps();wdApply();mark('props');await Y();TM.stairq=buildStairs();TM.chapel=chapelGlass();TM.bars=glazeInside();mark('stairs');await Y();const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
-  window.__vx={URLS,WDRESS,wdApply,regRow,holesOf,T20,LMAP,LAMPS,LDAY,FULL,GROVE,IMP,BENCH,benchUI,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
+  window.__vx={GOAL,goalOpen,URLS,WDRESS,wdApply,regRow,holesOf,T20,LMAP,LAMPS,LDAY,FULL,GROVE,IMP,BENCH,benchUI,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
   TM.wall=Math.round(performance.now()-t0);frame();BENCH.first=performance.now();if(BENCH.on)setTimeout(benchUI,800);$('#bStats').onclick=()=>{const b=$('#bench');if(b)b.remove();else benchUI()};setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
-function styleUI(){$('#brandS').textContent='Euphrates Hall v1.46 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
+function styleUI(){$('#brandS').textContent='Euphrates Hall v1.47 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
   $('#styleList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>pickStyle(b.dataset.st));$('#bStyle').onclick=()=>{$('#stylebox').hidden=!$('#stylebox').hidden};
   if(ISO){for(const[id,dd]of[['#bRotL',-1],['#bRotR',1]]){const b=$(id);b.hidden=false;b.onclick=()=>{if(ISOV.rot)return;const a=ISOV.yaw;ISOV.rot={t0:performance.now(),a,b:a+dd*Math.PI/2};if(MODE==='walk'){ISOV.yaw=a+dd*Math.PI/2;ISOV.rot=null}}}}}
 $('#load').innerHTML='Raising Euphrates Hall<i>The '+ST.n+' Estate. Raising the mansion, about ten seconds.</i>';
