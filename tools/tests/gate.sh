@@ -29,6 +29,7 @@ if ! cmp -s "$tmp/built.html" index.html; then
   exit 1
 fi
 echo "gate: build matches root copy"
+cmp -s src/kits.json kits.json || { echo "gate: FAIL kits.json beside the root page is missing or stale (the Catalog reads it); rebuild"; exit 1; }
 
 fail=0
 for f in src .; do
@@ -40,6 +41,14 @@ for f in src .; do
       echo "gate: FAIL ${t}_test $f"; tail -20 "$tmp/$t.log"; fail=1
     fi
   done
+done
+for f in src .; do
+  s=$(date +%s)
+  if ZF_STRICT=0 python3 tools/tests/surface_test.py "$f" > "$tmp/sf.log" 2>&1; then
+    echo "gate: ok   surface_test $f ($(( $(date +%s) - s ))s) $(grep -o 'z-fight scan.*' "$tmp/sf.log")"
+  else
+    echo "gate: FAIL surface_test $f"; tail -20 "$tmp/sf.log"; fail=1
+  fi
 done
 for f in src .; do
   s=$(date +%s)

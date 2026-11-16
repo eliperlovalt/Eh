@@ -53,3 +53,9 @@ if __name__ == '__main__':
     src = open(sys.argv[1], encoding='utf8').read()
     open(sys.argv[2], 'w', encoding='utf8', newline='\n').write(build(src))
     print('built', sys.argv[2], os.path.getsize(sys.argv[2]), 'bytes')
+    # v1.51: the Catalog reads kits.json from beside the page, so the live copy carries one (it failed on every device without it)
+    k = os.path.join(os.path.dirname(os.path.abspath(sys.argv[1])), 'kits.json')
+    if os.path.exists(k):
+        d = os.path.join(os.path.dirname(os.path.abspath(sys.argv[2])), 'kits.json')
+        if os.path.abspath(k) != d:
+            import shutil; shutil.copyfile(k, d); print('copied kits.json beside', sys.argv[2])
