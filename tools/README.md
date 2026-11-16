@@ -193,3 +193,5 @@ Since v1.43 (the look pass, third batch; KAIROS's re-sweep of v1.42):
 - The planner's filler (crates, sacks, barrels, mop buckets) stays only in true stores (`STORE20`: cellars, larders, coal store, box, trunk and lumber rooms, the barn, the brewhouse, the cistern room).
 - No sash on a window one block wide (the Service Wing: stone either side of the glass); 411 windows go without.
 - His Grace's Belvedere takes a plaster ceiling: its painted sky read as open sky.
+
+Since v1.44: the copyright, His Grace's choice of 16 Nov (held as Euphrates Hall): `LICENSE` (all rights reserved, no licence granted, not open source), `README.md`, a comment at the top of `src/index.html` (kept in the built copy), and "© 2026 Euphrates Hall. All rights reserved." small at the bottom left of the overview (`#copy`), hidden on foot.
