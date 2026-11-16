@@ -1495,10 +1495,10 @@ function genBuildings(){
     doors:[[-1,8,30,1,13,30],[-12,8,-66,-10,13,-66],[-64,1,-53,-64,5,-52],[-1,39,-32,1,43,-32],[-8,18,30,-7,22,30],[7,18,30,8,22,30]],   /* v1.37: wall plan moves 11 and 12 (A4), glazed doors from the Orange and Grey Bedrooms onto the south balcony; the Depot's contours dress them as balcony door cases */
     rooms:[
      /* below stairs */
-     ['The Kitchen','brown','kitchen',0,-64,-66,-32,-38,'The Household Staff'],['The Scullery','brown','empty',0,-32,-66,-16,-52,''],['The Still Room','brown','empty',0,-32,-52,-16,-38,''],
+     ['The Kitchen','brown','kitchen',0,-64,-66,-32,-38,'The Household Staff'],['The Scullery','brown','empty',0,-32,-66,-16,-52,''],['The Still Room','brown','empty',0,-32,-52,-16,-41,''],
      ['The Larders','brown','empty',0,-16,-66,26,-52,''],['The Steward\'s Room','brown','empty',0,26,-66,44,-42,''],['The Beer Cellar','brown','empty',0,44,-66,64,-42,''],
      ['The Butler\'s Pantry','brown','pantry',0,-64,-38,-40,-18,'The Household Staff'],['The Silver Safe','brown','empty',0,-64,-18,-40,-8,''],['The Housekeeper\'s Room','brown','office',0,-64,-8,-40,10,'The Household Staff'],
-     ['The Linen Room','brown','empty',0,-64,10,-40,30,''],['The Women\'s Stair',null,'empty',0,-40,-36,-24,-22,''],['The Servants\' Hall','brown','servants',0,-20,-36,20,-4,'The Household Staff'],
+     ['The Linen Room','brown','empty',0,-64,10,-40,30,''],['The Women\'s Stair',null,'empty',0,-40,-33,-24,-22,''],['The Servants\' Hall','brown','servants',0,-20,-36,20,-4,'The Household Staff'],
      ['The Men\'s Stair',null,'empty',0,24,-36,40,-22,''],['The Wine Cellar','brown','cellar',0,40,-42,64,6,'The Household Staff'],['The Lift to the Servery',null,'empty',0,-40,-8,-26,4,''],
      ['The Boot Room','brown','bootroom',0,-40,10,-20,30,'The Household Staff'],['The Lamp Room','brown','empty',0,-20,10,-4,30,''],['The Brushing Room','brown','empty',0,-4,10,12,30,''],['The Coal Store','brown','empty',0,12,10,28,30,''],
      /* the state floor */
@@ -1633,7 +1633,7 @@ function genBuildings(){
   flight(st.bid,'x',-101,-100,114,1,0,9,C.woodD);   /* the tack room stair up to the grooms' lodgings */
   flight(chp.bid,'x',-90,-90,-170,-1,-5,5,C.chapel);   /* the porch stair down to the vestry and the crypt */
   DOORCUT.push([-169,-4,-88,-166,-2,-87]);fill(78,10,-98,79,12,-98,0);   /* the vestry door into the crypt; the door joining the two ranges of lodgings */
-  CUR=st.bid|128;fill(132,1,-110,133,24,-109,C.brick);SMOKE.push([132,25,-110]);CUR=0;
+  CUR=st.bid|128;fill(132,1,-111,133,24,-110,C.brick);SMOKE.push([132,25,-111]);CUR=0;   /* v1.41: the forge chimney against the north wall, a chimney breast in the Forge and Lodging VI, not a pillar mid-floor */
   const gate=building({name:'The Gatehouse',lab:[0,22,200],levels:[{n:'Ground',y:0},{n:'Upper',y:7}],part:C.greyStone,
     boxes:[{x0:-16,z0:194,x1:-6,z1:206,roofY:14,roof:'flat',wall:C.greyStone,roofC:C.greyStone},{x0:6,z0:194,x1:16,z1:206,roofY:14,roof:'flat',wall:C.greyStone,roofC:C.greyStone}],
     doors:[[-6,1,199,-6,5,201],[6,1,199,6,5,201]],
@@ -3686,6 +3686,7 @@ function RK(R){const L=BLD[R.bid];const y=R.y+.5,band=L.band[R.y+OY],occ=new Set
       /* v1.15: a door within the curtains' reach: the frame alone. A door within the frame's reach: no sash */
       const gap=(side,a0,a1)=>{for(let a=Math.round(a0);a<=Math.round(a1);a++){const[s0,s1]=K.span(side);if(a<s0||a>s1)continue;const p=K.wallCell(side,a,1),q=K.wallCell(side,a,2),g1=G(p[0],p[1],p[2]),g2=G(q[0],q[1],q[2]);if((!g1||PF[g1]&IV)&&(!g2||PF[g2]&IV))return true}return false};
       let n=0;for(const[side,a,blind]of out){const o2=blind?Object.assign({},o,{blind:1}):o;if(gap(side,a-.9,a+.9)){SETTLE.sashOut=(SETTLE.sashOut||0)+1;continue}
+        {let h=0;for(let dy=1;dy<=9;dy++){const p=K.wallCell(side,Math.round(a),dy);if(isPane(G(p[0],p[1],p[2])))h++}if(h<4){SETTLE.sashShort=(SETTLE.sashShort||0)+1;continue}}   /* v1.41: the sash is near five blocks tall; on a window of two or three it hung over stone (the Gatehouse, the Lodge, the Service Wing, the lodgings). Short windows stay plain glazed panes */
         if(gap(side,a-1.45,a+1.45)){SETTLE.sashBare=(SETTLE.sashBare||0)+1;K.atWall(kind,Object.assign({},o2,{_bare:1}),side,a,{proud:.05})}else K.atWall(kind,o2,side,a,{proud:.05});n++}return n},
     fire(sides){for(const side of sides||['n','w','e','s']){const[s0,s1]=K.span(side);const mid=(s0+s1)/2;for(const d of[0,3,-3,6,-6]){const a=Math.round(mid+d);
       if(a-2<s0||a+2>s1)continue;if(K.wallOK(side,a-2,a+2,1,6,false)&&K.floorFree(side,a-2,a+2,3)){const p=K.atWall('fireplace',{},side,a,{solid:true});K.reserve(...K.inCell(side,a-2,1),...K.inCell(side,a+2,3));return{side,a,p}}}}return null},
@@ -3841,12 +3842,16 @@ function holesOf(R){const out=[],y=R.y,W=R.x1-R.x0+1,D=R.z1-R.z0+1,blk=new Uint8
   for(let zz=1;zz<D-1;zz++){let st=null;for(let xx=1;xx<=W-1;xx++){const b=xx<W-1&&(blk[zz*W+xx]||near[zz*W+xx]);if(b&&st==null)st=xx;if(!b&&st!=null){out.push([st,zz,xx-1,zz]);st=null}}}return out}
 const PV20={};
 function plan20(R,D0){if(typeof ROOMPLAN==='undefined')return D0;const t=T20[R.n],st=SETTLE.plan20||(SETTLE.plan20={n:0,items:0,fails:0,err:[],kept:[]});
+  /* v1.41: a show room whose walls never moved keeps the Depot's own hand plan (the Great Hall's bisellium is where Kairos sits; the Nave's pews and altar; the dining table) */
+  if(D0&&D0.items&&D0.items.length>=8&&/^(greatHall|dining|church|saloon|library|ballroom|theatre|billiard|gun|music)$/.test((t&&t[0])||'')&&Math.abs((D0.w||0)-(R.x1-R.x0))<=(/church|dining/.test(t[0])?6:1)&&Math.abs((D0.d||0)-(R.z1-R.z0))<=(/church|dining/.test(t[0])?6:1)){st.kept.push(R.n);return D0}
   const type=(t&&t[0])||(D0&&D0.type)||undefined;let variant=t?t[2]||0:0;if(/Maid's Room|Footman's Room|Guest Bedroom|Lodging/.test(R.n)){const c=PV20[type]=(PV20[type]||0)+1;variant=c%4}
   const row=regRow(R);if(t&&t[1])row.fire=t[1];let P;
-  let stock=D0&&D0.items?D0.items.filter(i=>!(i.on>=0)&&!(i.y>.05)&&!/^(rug|ragRug|stairRunner)$/.test(i.k)).map(i=>i.k):[];if(stock.length<3&&STOCK20[R.n])stock=STOCK20[R.n];   /* a work room is stocked from its own pieces, as the Depot did for rooms20; with no stock the planner falls back to a kitchen table, crates and barrels */
+  let stock=D0&&D0.items?D0.items.filter(i=>!(i.on>=0)&&!(i.y>.05)&&!/^(rug|ragRug|stairRunner)$/.test(i.k)).map(i=>i.k):[];if(stock.length<3&&STOCK20[R.n])stock=STOCK20[R.n];{const c={};stock=stock.filter(k=>{c[k]=(c[k]||0)+1;return c[k]<=(/chair|windsor|bench|stool|settle|pew/i.test(k)?6:2)})}   /* v1.41: no room of identical machines, crates or stoves: two of a big piece at most, six of a seat */   /* a work room is stocked from its own pieces, as the Depot did for rooms20; with no stock the planner falls back to a kitchen table, crates and barrels */
   try{P=ROOMPLAN.plan(row,{type,holes:holesOf(R),variant,stock})}catch(e){st.err.push(R.n+': '+(e&&e.message));return D0}
   if(!P||!P.items||!P.items.length){st.kept.push(R.n);return D0}
   if(D0){if(P.house==null)P.house=D0.house;if(!P.floor&&D0.floor)P.floor=D0.floor;if(!P.ceilingFinish&&D0.ceilingFinish)P.ceilingFinish=D0.ceilingFinish}
+  if(!/^(library|greatHall|saloon|dining|ballroom|bedState|bedGuest|bedServant|sitting|office|passage|stair|entrance|church|theatre)$/.test(type||'')){const c={},drop=new Set();P.items.forEach((it,i)=>{if(it.on>=0||it.y>.05)return;const cap=/chair|windsor|bench|stool|settle|pew|sofa/i.test(it.k)?8:3;c[it.k]=(c[it.k]||0)+1;if(c[it.k]>cap)drop.add(i)});
+    P.items.forEach((it,i)=>{if(it.on>=0&&drop.has(it.on))drop.add(i)});if(drop.size){const map=new Map(),out=[];P.items.forEach((it,i)=>{if(!drop.has(i)){map.set(i,out.length);out.push(it)}});for(const it of out)if(it.on>=0)it.on=map.get(it.on);P.items=out;st.capped=(st.capped||0)+drop.size}}   /* v1.41: a work room tops itself up with its stock over and over; three of a piece at most */
   st.n++;st.items+=P.items.length;if(P.audit&&P.audit.fails)st.fails+=P.audit.fails.length;R.plan20=type;return P}
 for(const n of['I','II','III','IV','V','VI','VII','VIII'])DMAP['Guest Bedroom '+n]='bachelors';
 for(const n of['I','II','III','IV','V','VI','VII','VIII','IX','X'])DMAP['Lodging '+n]='grooms';
@@ -3991,7 +3996,7 @@ function floorsFor(R,fl,ce,bid){if(!fl&&!ce)return;const L=bid?BLD[bid]:null;con
 function buildFloors(){let quads=0;for(const g of FQ.values()){const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(g.p,3));geo.setAttribute('uv',new THREE.Float32BufferAttribute(g.uv,2));geo.computeVertexNormals();
   const me=new THREE.Mesh(geo,g.m.mat);me.receiveShadow=true;me.matrixAutoUpdate=false;me.updateMatrix();scene.add(me);GROUPS.push({obj:me,bid:g.bid,band:g.band,d:g.bid?1:0});quads+=g.p.length/18}return{floorQuads:quads,floorMeshes:FQ.size}}
 const FDEF=(R,bid)=>{const n=R.n||'';if(/Pardes|Vestry/.test(n))return[{name:'flagstone'},{name:'vaulted'}];if(/Stalls|Coach|Riding|Forge|Tack|Mess/.test(n))return[{name:'cobbles'},{name:'beamed'}];
-  if(/Lodging|Lodge|Gate|Watch|Ambulance|Farm|Barn/.test(n))return[{name:'boards'},{name:'beamed'}];if(bid===1&&R.y===0)return[{name:'flagstone'},{name:'beamed'}];if(R.y>=32)return[{name:'boards',c:'#8a6a4a'},{name:'beamed'}];
+  if(/Lodging|Lodge|Gate|Watch|Ambulance|Farm|Barn/.test(n))return[{name:'boards'},{name:'beamed'}];if(bid===1&&R.y===0)return[{name:'flagstone'},{name:'beamed'}];if(R.y>=32||/Drying Loft|Cellars/.test(n))return[{name:'boards',c:'#8a6a4a'},{name:'beamed'}];
   if(/Engine|Genizah/.test(n))return[{name:'flagstone'},{name:'plaster'}];return[{name:'boards'},{name:'plaster'}]};
 
 /* a rail between two points: whole bays, a cut bay to finish, so it always meets its posts */
@@ -4019,7 +4024,7 @@ const RPOST={
 function genProps2(){const t0=performance.now();let rooms=0;const DONEF=new Set();for(const b of DOORFIX)DSTAT.sealed=(DSTAT.sealed||0)+sealDoors(b);for(const d of DOORCUT)fill(d[0],d[1],d[2],d[3],d[4],d[5],0);
   for(const R of PROOMS){const id=DMAP[R.n]||'v20',D=plan20(R,DMAP[R.n]&&DROOM[DMAP[R.n]]);const K=RK(R);
     if(!D){const fn=LAYOUT[R.n];if(!fn)continue;fn(K);rooms++;for(const o of OBJ)if(o.room===R&&K.anchors[o.k]){const p=K.anchors[o.k];o.x=p[0];o.y=p[1];o.z=p[2]}continue}
-    DONEF.add(R);const fd=FLOORS.ROOM[id];const fl=D.floor||(fd?{name:fd[0]}:null),ce=D.ceilingFinish||(fd&&fd[1]?{name:fd[1]}:null);floorsFor(R,fl,ce,R.bid);
+    DONEF.add(R);const fd=FLOORS.ROOM[id],fdf=FDEF(R,R.bid);const fl=D.floor||(fd?{name:fd[0]}:null)||fdf[0],ce=D.ceilingFinish||(fd&&fd[1]?{name:fd[1]}:null)||fdf[1];   /* v1.41: a planned room with no finish of its own takes the default (the attic rooms, the Drying Loft, the Ballroom Cellars showed the bare roof as flat green) */floorsFor(R,fl,ce,R.bid);
     if(RPRE[R.n])RPRE[R.n](K);
     /* what PRE put down is taken: mark it so the plan works round it */
     const Q=furnishFrom(R,D,{K,skip:RSKIP[R.n]});
@@ -5167,8 +5172,22 @@ function gunScreen(){const B=BLD[1];if(!B)return 0;const R=B.rooms.find(r=>r.n==
      column (z -18 to -16); the Business Room's south door 4 east (x -26 to -25), off the Oak Stair's steps and onto the landing */
   const sw=G(-20,9,-28)||wall;for(let y=8;y<=13;y++){S(-20,y,-26,sw);for(const z of[-21,-20,-19])S(-20,y,z,sw);for(const z of[-18,-17,-16])S(-20,y,z,0)}
   const bw=G(-32,9,-42)||wall;for(let y=8;y<=12;y++){for(const x of[-30,-29])S(x,y,-42,bw);for(const x of[-26,-25])S(x,y,-42,0)}CUR=0;return n}
+/* v1.41: the look pass. Two standing pieces in one another (a chair in a bed, a bench in a washstand): the smaller goes, and the unseen blocks it held are freed. A piece standing on another is not a clash */
+function unclip(){const SK=/^(rug|ragRug|stairRunner|dado|cornice|corniceIn|panelling|pictureRail|beamRun|coffer|ceilingRose|hammerbeam|skylight|doorDouble|archway|sash|balustrade|balPost|lanternPendant|chandelier|chandelierGilt|chandelierIron|candle)$/,INF=PROPS.info||{},HG=/^(portrait|tapestry|sconce|antlers|banner|coatOfArms|wallLantern|pictureRail)$/,KEEP=/^(fireplace|inglenook|kitchenRange|forgeHearth|stove|bed4|fourPosterOak|bisellium|tableDining|billiard|altar)$/;
+  const bx=it=>{const B=pbox(it.r),c=Math.cos(it.th),s=Math.sin(it.th);let x0=1e9,x1=-1e9,z0=1e9,z1=-1e9;for(const lx of[B.x0,B.x1])for(const lz of[B.z0,B.z1]){const x=it.x+lx*c+lz*s,z=it.z-lx*s+lz*c;x0=Math.min(x0,x);x1=Math.max(x1,x);z0=Math.min(z0,z);z1=Math.max(z1,z)}return{x0,x1,z0,z1,y0:it.y+B.y0,y1:it.y+B.y1}};
+  const its=[];for(const it of PQ)if(it.bid&&!it.v&&!it.wint&&!SK.test(it.r.kind)&&!(INF[it.r.kind]||{}).wall&&!HG.test(it.r.kind))its.push({it,b:bx(it)});
+  const M=new Map();its.forEach((e,i)=>{for(let cx=Math.floor(e.b.x0/8);cx<=Math.floor(e.b.x1/8);cx++)for(let cz=Math.floor(e.b.z0/8);cz<=Math.floor(e.b.z1/8);cz++){const k=cx+','+cz;let a=M.get(k);if(!a)M.set(k,a=[]);a.push(i)}});
+  const vol=b=>(b.x1-b.x0)*(b.z1-b.z0)*(b.y1-b.y0),seen=new Set(),log=[];
+  for(const a of M.values())for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){const p=a[i],q=a[j],k=p<q?p+'_'+q:q+'_'+p;if(seen.has(k))continue;seen.add(k);const E=its[p],F=its[q];if(E.drop||F.drop||E.it.bid!==F.it.bid)continue;
+    const ix=Math.min(E.b.x1,F.b.x1)-Math.max(E.b.x0,F.b.x0),iz=Math.min(E.b.z1,F.b.z1)-Math.max(E.b.z0,F.b.z0),iy=Math.min(E.b.y1,F.b.y1)-Math.max(E.b.y0,F.b.y0);
+    if(ix<.12||iz<.12||iy<.25||Math.abs(E.b.y0-F.b.y1)<.2||Math.abs(F.b.y0-E.b.y1)<.2)continue;
+    let d=vol(E.b)<vol(F.b)?E:F;if(KEEP.test(d.it.r.kind))d=d===E?F:E;if(KEEP.test(d.it.r.kind))continue;d.drop=1;log.push(d.it.r.kind+'@'+Math.round(d.it.x)+','+Math.round(d.it.z))}
+  const gone=new Set(its.filter(e=>e.drop).map(e=>e.it));if(!gone.size)return{n:0};for(let i=PQ.length-1;i>=0;i--)if(gone.has(PQ[i]))PQ.splice(i,1);
+  const keep=its.filter(e=>!e.drop),inside=(x,y,z)=>keep.some(e=>x>e.b.x0-.5&&x<e.b.x1+.5&&z>e.b.z0-.5&&z<e.b.z1+.5&&y>=Math.floor(e.b.y0)&&y<=e.b.y1);let freed=0;
+  for(const e of its){if(!e.drop)continue;CUR=e.it.bid;const yb=Math.round(e.it.y+.5);for(let x=Math.round(e.b.x0+.35);x<=Math.round(e.b.x1-.35);x++)for(let z=Math.round(e.b.z0+.35);z<=Math.round(e.b.z1-.35);z++)for(let k=0;k<3;k++){const g=G(x,yb+k,z);if(g&&isInv(g)&&!inside(x,yb+k,z)){S(x,yb+k,z,0);freed++}}}CUR=0;
+  return{n:gone.size,freed,log:log.slice(0,80)}}
 function stairTreads(){let n=0;const tr=P('#a57a4e'),bd=P('#76523a'),bd2=P('#6a4934');
-  for(let b=1;b<BLD.length;b++){const B=BLD[b];if(!B||!SVCB.test(B.name||''))continue;
+  for(let b=1;b<BLD.length;b++){const B=BLD[b];if(!B||!(SVCB.test(B.name||'')||B.main))continue;   /* v1.41: the Hall's block stairs too (the Red Stair, the Red Staircase, the Wireless Room's), not flat coloured masses */
     for(const R of B.rooms){const f=R.y+1,hAt=(x,z)=>{let h=0;while(f+h<R.yt-1&&G(x,f+h,z)&&!isPane(G(x,f+h,z))&&!isInv(G(x,f+h,z)))h++;return(f+h<R.yt-1&&!G(x,f+h,z))?h:0};
       for(let x=R.x0+1;x<R.x1;x++)for(let z=R.z0+1;z<R.z1;z++){const h=hAt(x,z);if(h<1)continue;
         const step=[[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dz])=>{const k=hAt(x+dx,z+dz);return k===h+1||k===h-1});if(!step)continue;
@@ -5224,7 +5243,7 @@ function wallPlanDoors(){const B=BLD[1];if(!B)return[];CUR=1;const out=[];const 
     if((ways.get(r.R)||0)<2||(ways.get(r.other)||0)<2){out.push([r.R.n,r.other.n,'kept: the only other way']);continue}
     for(const[x,z]of r.cells){let y=r.f;while(!G(x,y,z)&&y<r.R.yt){S(x,y,z,wall);y++}}done.add(key);ways.set(r.R,ways.get(r.R)-1);ways.set(r.other,ways.get(r.other)-1);out.push([r.R.n,r.other.n])}
   CUR=0;return out}
-const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start=Math.round(t0);const mark=k=>{const n=performance.now();TM[k]=Math.round(n-tm);tm=n};const Y=async()=>{await new Promise(r=>setTimeout(r,0));tm=performance.now()};genGround();mark('ground');await Y();const hall=genBuildings();chapelCeil();TM.blind=blindPanes();TM.sealed=sealBlind();TM.terrace=terraceSeal();TM.chapelDress=chapelDress();TM.gunScreen=gunScreen();TM.walled=wallPlanDoors();mark('buildings');await Y();const PRO=genProps2();TM.treads=stairTreads();TM.doorsMoved=doorsOffStairs();TM.casings=doorCasings();TM.boards=passageBoards();mark('rooms');await Y();genGrounds();mark('grounds');try{fitContours()}catch(e){}const PRS=genSets();mark('sets');await Y();genTrees();mark('trees');genFlowers();mark('flowers');settle();mark('settle');await Y();TM.blind+=blindPanes();const t1=performance.now();
+const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start=Math.round(t0);const mark=k=>{const n=performance.now();TM[k]=Math.round(n-tm);tm=n};const Y=async()=>{await new Promise(r=>setTimeout(r,0));tm=performance.now()};genGround();mark('ground');await Y();const hall=genBuildings();chapelCeil();TM.blind=blindPanes();TM.sealed=sealBlind();TM.terrace=terraceSeal();TM.chapelDress=chapelDress();TM.gunScreen=gunScreen();TM.walled=wallPlanDoors();mark('buildings');await Y();const PRO=genProps2();TM.treads=stairTreads();TM.doorsMoved=doorsOffStairs();TM.casings=doorCasings();TM.boards=passageBoards();mark('rooms');await Y();genGrounds();mark('grounds');try{fitContours()}catch(e){}const PRS=genSets();mark('sets');await Y();genTrees();mark('trees');genFlowers();mark('flowers');settle();TM.unclip=unclip();mark('settle');await Y();TM.blind+=blindPanes();const t1=performance.now();
   const groups=ST.net?netMesh():mesh();const t2=performance.now();await Y();let quads=0;
   for(const g of groups.values()){const obj=new THREE.Group();
     for(const k of['sg','glg']){const geo=g[k];if(!geo)continue;quads+=geo.index.count/6;const m=new THREE.Mesh(geo,k==='sg'?MATS.s:MATS.gl);if(k==='sg'){m.castShadow=true;m.receiveShadow=true}m.matrixAutoUpdate=false;m.updateMatrix();obj.add(m)}
@@ -5232,7 +5251,7 @@ const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start
   try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');await Y();const WIN=LIVE?buildWindowDetail():0;mark('windows');await Y();wdOutdoor();const PRB=buildProps();wdApply();mark('props');await Y();TM.stairq=buildStairs();TM.chapel=chapelGlass();TM.bars=glazeInside();mark('stairs');await Y();const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
   window.__vx={WDRESS,wdApply,regRow,holesOf,T20,LMAP,LAMPS,LDAY,FULL,GROVE,IMP,BENCH,benchUI,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
   TM.wall=Math.round(performance.now()-t0);frame();BENCH.first=performance.now();if(BENCH.on)setTimeout(benchUI,800);$('#bStats').onclick=()=>{const b=$('#bench');if(b)b.remove();else benchUI()};setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
-function styleUI(){$('#brandS').textContent='Euphrates Hall v1.40 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
+function styleUI(){$('#brandS').textContent='Euphrates Hall v1.41 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
   $('#styleList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>pickStyle(b.dataset.st));$('#bStyle').onclick=()=>{$('#stylebox').hidden=!$('#stylebox').hidden};
   if(ISO){for(const[id,dd]of[['#bRotL',-1],['#bRotR',1]]){const b=$(id);b.hidden=false;b.onclick=()=>{if(ISOV.rot)return;const a=ISOV.yaw;ISOV.rot={t0:performance.now(),a,b:a+dd*Math.PI/2};if(MODE==='walk'){ISOV.yaw=a+dd*Math.PI/2;ISOV.rot=null}}}}}
 $('#load').innerHTML='Raising Euphrates Hall<i>The '+ST.n+' Estate. Raising the mansion, about ten seconds.</i>';
