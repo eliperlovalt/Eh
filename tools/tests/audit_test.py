@@ -11,9 +11,8 @@ from playwright.sync_api import sync_playwright
 
 # doors crowded by the building itself, not by furniture. They wait for the floor plan (v1.15 primer, order 5).
 # v1.36: the wall plan's moves 1 to 5 freed six of the seven (the Business Room door, the Oak Stair and Billiard Room bays, the three doors by the
-# men's stair). They are gone from this list, so if one comes back it fails. The Chapel waits on move 23.
+# men's stair). They are gone from this list, so if one comes back it fails. v1.37: move 23 freed the Chapel nave door; the list is empty.
 KNOWN = {
-    '4,0,z,-168,-89': 'Chapel Nave door at the porch stair',
 }
 folder = sys.argv[1]
 fails = []

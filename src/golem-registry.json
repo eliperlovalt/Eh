@@ -1,0 +1,1382 @@
+{
+"version": "golem-registry-v1.1+ideas9",
+"approved": "2026-11-15",
+"houses": {
+"gold": [
+"Gold",
+"The Conquering House",
+"#C9A227",
+"Crown",
+"The Map Room",
+"Command, schooling, strategy and the Library"
+],
+"silver": [
+"Silver",
+"The Exchequer",
+"#C0C7CF",
+"Crown",
+"The Business Room",
+"Money-making: markets, ventures, products"
+],
+"white": [
+"White",
+"The Sanctuary",
+"#F4F1EA",
+"Crown",
+"The Nave",
+"Faith, sacred study and sealed records"
+],
+"copper": [
+"Copper",
+"The Bureau",
+"#B87333",
+"Crown",
+"The Estate Office",
+"Time, records, rules and the Ledger"
+],
+"blue": [
+"Blue",
+"The Midnight School",
+"#2E5E9E",
+"Court",
+"The Observatory",
+"The news datastream and every journey"
+],
+"yellow": [
+"Yellow",
+"The Lyceum",
+"#E3B23C",
+"Court",
+"The Laboratory",
+"Research: the Laboratory and the clinic"
+],
+"green": [
+"Green",
+"The Grid",
+"#3FA34D",
+"Court",
+"The Orangery Laboratory",
+"Code, AI and systems"
+],
+"violet": [
+"Violet",
+"The Grove",
+"#7B4FA0",
+"Court",
+"The Long Gallery",
+"Everything made to be seen or heard"
+],
+"orange": [
+"Orange",
+"The Forgeworks",
+"#E07A1F",
+"Court",
+"The Forge",
+"Hardware, machines, repairs and gear"
+],
+"grey": [
+"Grey",
+"The Watch",
+"#7D8287",
+"Court",
+"The Watch Room",
+"Defence, the kill switch, the field"
+],
+"charcoal": [
+"Charcoal",
+"The Longhouse",
+"#2B2B2F",
+"Hearth",
+"The Ballroom Cellars",
+"Strength and training, forged by fire"
+],
+"brown": [
+"Brown",
+"The Service Wing",
+"#7A5230",
+"Hearth",
+"The Servants' Hall",
+"The house running itself"
+],
+"pink": [
+"Pink",
+"The Garden",
+"#E8A0B4",
+"Hearth",
+"The Drawing Room",
+"People: family, friends and the network"
+],
+"red": [
+"Red",
+"The Yeomanry",
+"#A4161A",
+"Hearth",
+"The Farm Office",
+"The daily work, the hours, the why"
+]
+},
+"suite": "#D4AF37",
+"pages": {
+"golem": [
+"GOLEM: the whole system",
+"live"
+],
+"golem.ledger": [
+"The Ledger",
+"live"
+],
+"golem.orders": [
+"Today's Orders",
+"live"
+],
+"golem.library": [
+"Reading List and Quotes",
+"live"
+],
+"golem.rules": [
+"The Rules",
+"live"
+],
+"golem.summit": [
+"The Ascent: the Road to the Summit",
+"live"
+],
+"golem.thoughtweb": [
+"The Thought Web",
+"live"
+],
+"golem.circle": [
+"The Circle",
+"live"
+],
+"golem.roster": [
+"The roll of GOLEM's agents",
+"live"
+],
+"datahub.brief": [
+"Brief and In-Tray",
+"live"
+],
+"datahub.figures": [
+"Public Figures: the Thought Web",
+"live"
+],
+"datahub.edition": [
+"The Edition",
+"live"
+],
+"datahub.desks": [
+"Desks and Alerts",
+"live"
+],
+"datahub.ai": [
+"AI Mastery: Ten Practices",
+"live"
+],
+"globe": [
+"The Globe",
+"live"
+],
+"kairos": [
+"KAIROS in Claude Code: Start Here",
+"live"
+],
+"tree": [
+"The Great Tree: Nepsis",
+"live"
+],
+"greatmen": [
+"The Great Men: dossiers",
+"live"
+],
+"homoaureus": [
+"Homo Aureus",
+"live"
+],
+"roadmap": [
+"The Counter-Elite: the Roadmap",
+"live"
+],
+"empire": [
+"The Empire: everything built",
+"live"
+],
+"register": [
+"The Register: every project",
+"live"
+],
+"wager": [
+"The Wager Desk: the method",
+"live"
+],
+"plan10k": [
+"The $10k Plan",
+"live"
+],
+"deadlines": [
+"Orders to December 31",
+"live"
+],
+"policyresume": [
+"Policy Resume",
+"live"
+],
+"pardes": [
+"Pardes: the Orchard",
+"live"
+],
+"wordhidden": [
+"The Word and the Hidden",
+"live"
+],
+"israelledger": [
+"The Israel Ledger",
+"live"
+],
+"abrahamic": [
+"Abrahamic Family Tree",
+"live"
+],
+"telegram": [
+"Long Telegram: the foreign desk",
+"live"
+],
+"world2036": [
+"The World in 2036",
+"live"
+],
+"osint": [
+"OSINT Toolkit",
+"live"
+],
+"position": [
+"The Position",
+"live"
+],
+"jewishstudies": [
+"Jewish Studies: study guide",
+"live"
+],
+"china": [
+"China Since 1949",
+"live"
+],
+"generalissimo": [
+"The Generalissimo",
+"live"
+],
+"greenprimer": [
+"Green Primer: the Grid",
+"live"
+],
+"greensweep": [
+"Green Sweep, Nov 12",
+"live"
+],
+"kitezh": [
+"Ghost on Kitezh",
+"live"
+],
+"pchalf": [
+"The PC Half",
+"live"
+],
+"genizah": [
+"The Genizah",
+"build"
+],
+"rollout": [
+"Marginalia: the Rollout Kit",
+"live"
+],
+"brandbook": [
+"Marginalia Brand Book",
+"live"
+],
+"launch": [
+"The Launch Plan",
+"live"
+],
+"gamedoc": [
+"GOLEM: The Game, design doc",
+"live"
+],
+"signalkit": [
+"The Signal Kit",
+"live"
+],
+"greyprimer": [
+"Grey Primer: the Watch",
+"live"
+],
+"domovoi": [
+"Domovoi: keeper of the house",
+"live"
+],
+"manual": [
+"The Manual",
+"live"
+],
+"measure": [
+"The Measure: Six Voices",
+"live"
+],
+"pantry": [
+"The Pantry: grounds records",
+"build"
+],
+"notes": [
+"His Notes, with Kairos's synthesis",
+"build"
+],
+"privateshelf": [
+"The Private Shelf",
+"live"
+],
+"weekreview": [
+"The Week",
+"live"
+],
+"books": [
+"The Library: His Grace's Books",
+"live"
+]
+},
+"landing": "landing.<key>: The <Name> House, live",
+"rooms": [
+[
+"The Kitchen",
+"The Hall",
+"brown",
+0,
+[
+[
+"The Pantry Book: the grounds, a meal plan and a prep guide",
+"book",
+"pantry"
+]
+]
+],
+[
+"The Scullery",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Still Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Larders",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Steward's Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Beer Cellar",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Butler's Pantry",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Silver Safe",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Housekeeper's Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Linen Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Servants' Hall",
+"The Hall",
+"brown",
+1,
+[
+[
+"The bell board: Domovoi",
+"bells",
+"domovoi"
+],
+[
+"The Manual",
+"manual",
+"manual"
+]
+]
+],
+[
+"The Wine Cellar",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Boot Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Lamp Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Brushing Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Coal Store",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Estate Office",
+"The Hall",
+"copper",
+1,
+[
+[
+"The ledger book",
+"ledger",
+"golem.ledger"
+]
+]
+],
+[
+"The Business Room",
+"The Hall",
+"silver",
+1,
+[
+[
+"The ticker desk: the Wager Desk",
+"ticker",
+"wager"
+],
+[
+"The Money Desks: the $10k Plan",
+"c",
+"plan10k"
+]
+]
+],
+[
+"The Great Hall",
+"The Hall",
+"gold",
+0,
+[
+[
+"Kairos",
+"kairos",
+"@kchat"
+],
+[
+"The long table: Brief and In-Tray",
+"table",
+"datahub.brief"
+]
+]
+],
+[
+"The Map Room",
+"The Hall",
+"gold",
+1,
+[
+[
+"The map table: the Road to the Summit",
+"c",
+"golem.summit"
+],
+[
+"The globe",
+"globe",
+"globe"
+],
+[
+"The campaign chest: the Roadmap",
+"chest",
+"roadmap"
+],
+[
+"The dossier case: the Great Men",
+"case",
+"greatmen"
+]
+]
+],
+[
+"The Muniment Room",
+"The Hall",
+"white",
+0,
+[
+[
+"The deed chests: the Rules",
+"c",
+"golem.rules"
+],
+[
+"The sealed chests",
+"chest2",
+"@info:The vault lives on Kitezh only. Nothing sealed is kept in the cloud."
+]
+]
+],
+[
+"The Saloon",
+"The Hall",
+"gold",
+0,
+[
+[
+"The week in review",
+"c",
+"weekreview"
+]
+]
+],
+[
+"The Double Library",
+"The Hall",
+"gold",
+0,
+[
+[
+"The shelves: his books by genre",
+"shelves",
+"books"
+],
+[
+"The reading stand: Reading List and Quotes",
+"stand",
+"golem.library"
+],
+[
+"The card catalog: every toolkit",
+"catalog",
+"@cat:*"
+],
+[
+"The Genizah desk",
+"desk",
+"genizah"
+],
+[
+"The globe",
+"globe",
+"globe"
+]
+]
+],
+[
+"The Drawing Room",
+"The Hall",
+"pink",
+1,
+[
+[
+"The portrait wall: Public Figures",
+"portraits",
+"datahub.figures"
+],
+[
+"The music stand: the Measure",
+"stand",
+"measure"
+]
+]
+],
+[
+"The Morning Room",
+"The Hall",
+"pink",
+0,
+[
+[
+"The address book: the Circle",
+"book",
+"golem.circle"
+]
+]
+],
+[
+"The Gold Bedroom",
+"The Hall",
+"gold",
+0,
+[]
+],
+[
+"The Long Gallery",
+"The Hall",
+"violet",
+1,
+[
+[
+"The writing desk: Marginalia",
+"desk",
+"rollout"
+],
+[
+"The pattern book: the Brand Book",
+"book",
+"brandbook"
+]
+]
+],
+[
+"The Silver Bedroom",
+"The Hall",
+"silver",
+0,
+[]
+],
+[
+"The White Bedroom",
+"The Hall",
+"white",
+0,
+[]
+],
+[
+"The Copper Bedroom",
+"The Hall",
+"copper",
+0,
+[]
+],
+[
+"The Blue Bedroom",
+"The Hall",
+"blue",
+0,
+[]
+],
+[
+"The Yellow Bedroom",
+"The Hall",
+"yellow",
+0,
+[]
+],
+[
+"The Saloon Gallery",
+"The Hall",
+"gold",
+0,
+[]
+],
+[
+"The Green Bedroom",
+"The Hall",
+"green",
+0,
+[]
+],
+[
+"The Calendar Room",
+"The Hall",
+"copper",
+0,
+[
+[
+"The wall calendar: deadlines",
+"cal",
+"deadlines"
+]
+]
+],
+[
+"The Registry",
+"The Hall",
+"copper",
+0,
+[
+[
+"The bound register: the roll of agents",
+"book",
+"golem.roster"
+],
+[
+"The project register",
+"book2",
+"register"
+]
+]
+],
+[
+"The Schoolroom",
+"The Hall",
+"gold",
+0,
+[
+[
+"The globe",
+"globe",
+"globe"
+]
+]
+],
+[
+"The Violet Bedroom",
+"The Hall",
+"violet",
+0,
+[]
+],
+[
+"The Pink Bedroom",
+"The Hall",
+"pink",
+0,
+[]
+],
+[
+"The Orange Bedroom",
+"The Hall",
+"orange",
+0,
+[]
+],
+[
+"The Grey Bedroom",
+"The Hall",
+"grey",
+0,
+[]
+],
+[
+"His Grace's Dressing Room",
+"The Hall",
+"suite",
+0,
+[]
+],
+[
+"His Grace's Bath",
+"The Hall",
+"suite",
+0,
+[]
+],
+[
+"His Grace's Study",
+"The Hall",
+"suite",
+0,
+[
+[
+"The globe",
+"globe",
+"globe"
+],
+[
+"The commonplace book: his Notes",
+"desk",
+"notes"
+],
+[
+"The private shelf",
+"shelf",
+"privateshelf"
+]
+]
+],
+[
+"His Grace's Bedchamber",
+"The Hall",
+"suite",
+0,
+[
+[
+"The bedside journal: today's Orders",
+"journal",
+"golem.orders"
+]
+]
+],
+[
+"The Day Nursery",
+"The Hall",
+"pink",
+0,
+[]
+],
+[
+"The Night Nursery",
+"The Hall",
+"pink",
+0,
+[]
+],
+[
+"The Governess's Room",
+"The Hall",
+"gold",
+0,
+[
+[
+"The globe",
+"globe",
+"globe"
+]
+]
+],
+[
+"The Genizah Writing Room",
+"The Hall",
+"green",
+0,
+[
+[
+"The writing table: the Genizah",
+"desk",
+"genizah"
+]
+]
+],
+[
+"The Laboratory",
+"The Hall",
+"yellow",
+1,
+[
+[
+"The globe",
+"globe",
+"globe"
+],
+[
+"The research bench: Jewish Studies",
+"bench",
+"jewishstudies"
+]
+]
+],
+[
+"The Convalescent Ward",
+"The Hall",
+"yellow",
+0,
+[]
+],
+[
+"The Sewing Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Upper Linen Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"A Maid's Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Maids' Passage",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"A Footman's Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Footmen's Passage",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Box Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Cistern Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Flag Room",
+"The Hall",
+"gold",
+0,
+[]
+],
+[
+"The Clock Room",
+"The Hall",
+"copper",
+0,
+[]
+],
+[
+"The Water Tower",
+"The Hall",
+"orange",
+0,
+[]
+],
+[
+"His Grace's Belvedere",
+"The Hall",
+"suite",
+0,
+[
+[
+"The Seeing Stone: the whole of GOLEM",
+"stone",
+"golem"
+]
+]
+],
+[
+"The Wireless Room",
+"The Hall",
+"blue",
+0,
+[
+[
+"The wireless set: the Edition",
+"set",
+"datahub.edition"
+],
+[
+"The alert desk: Desks and Alerts",
+"desk",
+"datahub.desks"
+]
+]
+],
+[
+"The Observatory",
+"The Hall",
+"blue",
+1,
+[
+[
+"The holo globe",
+"globe",
+"globe"
+],
+[
+"The telescope: the World in 2036",
+"scope",
+"world2036"
+],
+[
+"The chart table: the Long Telegram",
+"table",
+"telegram"
+]
+]
+],
+[
+"The Ballroom Cellars",
+"The State Wing",
+"charcoal",
+1,
+[]
+],
+[
+"The Ballroom",
+"The State Wing",
+"violet",
+0,
+[]
+],
+[
+"The Orangery Link",
+"The State Wing",
+"green",
+0,
+[]
+],
+[
+"The Private Theatre",
+"The State Wing",
+"violet",
+0,
+[]
+],
+[
+"The Card Room",
+"The State Wing",
+"pink",
+0,
+[]
+],
+[
+"The Ladies' Withdrawing Room",
+"The State Wing",
+"pink",
+0,
+[]
+],
+[
+"The Bakehouse",
+"The Service Wing",
+"brown",
+0,
+[]
+],
+[
+"The Dairy",
+"The Service Wing",
+"brown",
+0,
+[]
+],
+[
+"The Brewhouse",
+"The Service Wing",
+"brown",
+0,
+[]
+],
+[
+"The Lamp Room",
+"The Service Wing",
+"orange",
+0,
+[]
+],
+[
+"The Estate Carpenter",
+"The Service Wing",
+"orange",
+0,
+[]
+],
+[
+"The Laundry",
+"The Service Wing",
+"brown",
+0,
+[]
+],
+[
+"The Steward's Office",
+"The Service Wing",
+"silver",
+0,
+[]
+],
+[
+"The Agent's Room",
+"The Service Wing",
+"silver",
+0,
+[]
+],
+[
+"The Drying Loft",
+"The Service Wing",
+"brown",
+0,
+[]
+],
+[
+"Pardes, the crypt study",
+"The Chapel",
+"white",
+0,
+[
+[
+"The study table: Pardes",
+"table",
+"pardes"
+]
+]
+],
+[
+"The Vestry",
+"The Chapel",
+"white",
+0,
+[
+[
+"The vestry press: the Israel Ledger",
+"press",
+"israelledger"
+]
+]
+],
+[
+"The Nave",
+"The Chapel",
+"white",
+1,
+[
+[
+"The altar",
+"altar",
+"@info:A quiet place. Kairos keeps no sermons here."
+],
+[
+"The lectern: the Word and the Hidden",
+"lectern",
+"wordhidden"
+],
+[
+"The family window: the Abrahamic tree",
+"window",
+"abrahamic"
+]
+]
+],
+[
+"The Tower Porch",
+"The Chapel",
+"white",
+0,
+[]
+],
+[
+"The Engine Room",
+"The Greenhouse",
+"green",
+0,
+[
+[
+"The engine: Ghost on Kitezh",
+"engine",
+"kitezh"
+]
+]
+],
+[
+"The Orangery Laboratory",
+"The Greenhouse",
+"green",
+1,
+[
+[
+"The workbench terminal: AI Mastery",
+"bench",
+"datahub.ai"
+],
+[
+"The plan chest: the Green Primer",
+"chest",
+"greenprimer"
+]
+]
+],
+[
+"The Genizah",
+"The Greenhouse",
+"green",
+0,
+[]
+],
+[
+"The Forge",
+"The Stables",
+"orange",
+1,
+[
+[
+"The anvil: the Orange toolkits",
+"anvil",
+"@cat:orange"
+],
+[
+"The workbench: the Launch Plan",
+"bench",
+"launch"
+],
+[
+"The pattern board: GOLEM, the Game",
+"board",
+"gamedoc"
+]
+]
+],
+[
+"The Coach House",
+"The Stables",
+"orange",
+0,
+[]
+],
+[
+"The Gate",
+"The Gatehouse",
+"grey",
+0,
+[]
+],
+[
+"The Ambulance Bay",
+"The Gatehouse",
+"grey",
+0,
+[]
+],
+[
+"The Tenth Man's Tower Room",
+"The Gatehouse",
+"grey",
+0,
+[]
+],
+[
+"The Watch Room",
+"The Gatehouse",
+"grey",
+1,
+[
+[
+"The signal lamp: the Signal Kit",
+"lamp",
+"signalkit"
+],
+[
+"The duty book: the Grey Primer",
+"book",
+"greyprimer"
+]
+]
+],
+[
+"The Lodge",
+"The Lodge",
+"grey",
+0,
+[]
+],
+[
+"The Woodyard Barn",
+"The Home Farm",
+"red",
+0,
+[]
+],
+[
+"The Farm Office",
+"The Home Farm",
+"red",
+1,
+[]
+],
+[
+"The Trunk Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Linen Store",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Maids' Sitting Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Lumber Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Footmen's Sitting Room",
+"The Hall",
+"brown",
+0,
+[]
+]
+],
+"issued": "2026-11-16",
+"houseNames": {
+"gold": "The House of the Crown",
+"silver": "The Exchequer",
+"white": "The Chapel Royal",
+"copper": "The Rolls Office",
+"blue": "The Admiralty",
+"yellow": "The Royal Society",
+"green": "The Engine House",
+"violet": "The Revels Office",
+"orange": "The Board of Ordnance",
+"grey": "The Horse Guards",
+"charcoal": "The Drill Hall",
+"brown": "Below Stairs",
+"pink": "The Drawing Room",
+"red": "The Yeomanry"
+}
+}
