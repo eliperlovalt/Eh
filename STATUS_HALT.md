@@ -1,36 +1,22 @@
-# Status at halt (VOXEL II, 16 Nov 2026)
+# Status (VOXEL II, 16 Nov 2026; resumed after the halt)
 
-Halted on His Grace's order, relayed by KAIROS: usage nearly spent, away about four days. Nothing half-done is in the page.
+## Where things stand
+- Live on `main` (GitHub Pages): still v1.36. Everything below is on the branch `claude/artifact-link-reference-lrp3gp`; it goes live when His Grace merges it into `main` (or gives leave to push to `main`).
+- Branch head: v1.40 (commit 495501d). Every gate passes on both copies at every version.
+- v1.37: the rest of the v20 wall plan (moves 6 to 12, 18, 22, 23) and the balcony doors (A4). A1 and A4 done.
+- v1.38 and v1.39: every room re-planned by the Depot's planner (A3, A6), the register, windows and estate plan re-issued (A7, `tools/tests/issue.py`), the basement panes behind the terraces walled, the winter dress (B4). Batch A and batch B closed. KAIROS has v1.39 for its re-sweep.
+- v1.40: the walking view out to 760 blocks (was 290), and soft lamplight. Costs 15 to 39 percent outdoors in software GL with the governor off; on a slow device the governor now steps the view back to 290. Wants His Grace's phone Stats test before it goes live.
 
-## Live
-- v1.36, commit 4df5d3f on `main`: https://eliperlovalt.github.io/Eh/
-- All six gate tests pass on v1.36 (re-run by VOXEL II on 16 Nov).
-- This chat's work is on the branch `claude/artifact-link-reference-lrp3gp`, not on `main`. It changes no page.
-
-## Batch A
-- Shipped (by VOXEL): wall plan moves 1 to 5, 13 to 17, 19 to 21 (v1.34 to v1.36), A2 except the Blue and Violet Bedrooms (accepted).
-- Left: wall moves 6, 7, 8, 9, 10, 18, 22, 23 (23 needs the Tower Porch stair moved; then drop the Chapel nave door from `audit_test.py` KNOWN); A4 balcony doors (moves 11, 12); A3 and A6 room plans from `depot/rooms20.json`, with the deferred faults (Stable lodgings' frames, the Hall's basement row behind the terraces, the pier piece in His Grace's Study and Bath); A7 re-issue `room-register.json`, `windows.json`, `src/estate-plan.json`, then send KAIROS the version.
-- Then batch B: only B4 (winter dress) is left.
-
-## Started, not finished: `tools/wip/v137-walk-distance-and-lamplight.patch`
-His Grace's new goals (16 Nov): full detail at distance while walking, softer lamplight at dusk and night, and the Estate picture perfect with KAIROS. The patch applies to v1.36's `src/index.html` with `git apply`. It holds:
-1. Walk view distance 290 to 760 blocks (`FULL.far`), mist starting at 42 percent of it, not 24. Screenshots showed the chapel tower and far trees where there was white mist. Frame time NOT yet measured: run `ftime3.py` before shipping.
-2. Lamplight: the outdoor lamps' flat yellow discs replaced by a light map over the estate (`LMAP`, `lampify` on every `SMAT` material and the ground), with a soft falloff and no edge, none under roofs. Indoor pools get a soft radial texture. NOT yet looked at in a screenshot or tested.
-Next step: apply the patch, shoot dusk and night (`spotshots.py`, poses in `tools/FAULTS-kairos.md` style), tune, run `ftime3.py` and the gate, ship as v1.37.
-
-## Received from the other chats (saved here)
-- `tools/FAULTS-kairos.md`: KAIROS's 31 open structure faults and the room-contents rows, with poses.
-- `src/golem-registry.json`: GOLEM's approved registry v1 (Houses, rooms, objects, page ids and status). The page URLs are not in the public repo: registry rule 5 says no link of His Grace's ships in the public page. GOLEM holds them (`C:\Users\Elijah\Jarvis\Golem\registry.json`). Landing pages moved with GOLEM v0.26 (ids unchanged).
+## Next
+1. KAIROS's re-sweep of v1.39 and fixes, in tested batches.
+2. Batch C (people and animals), then D (the GOLEM wiring: `src/golem-registry.json` holds GOLEM's approved registry without his links), E, F, G, as `BACKLOG.md` orders.
+3. The copyright notice task from KAIROS (see below), when His Grace confirms the name.
 
 ## Waiting on His Grace
-1. Going live: this chat may only push to its branch. Merge it to `main`, or give leave to push to `main`.
-2. The registry's links: how should his private links reach the page if the public page ships blank (a private file on his PC, a link only he holds, or ship them public as now)?
-3. His photos of good shots and of problems, to hand to KAIROS and VOXEL.
+1. Merge the branch to `main`, or leave to push to `main`.
+2. v1.40: keep the 760-block walking view, or a shorter one (520, 400), after a Stats test on the phone.
+3. Copyright: the LICENSE would carry his full legal name in a public repository; is that the name he wants, or "Euphrates Hall"?
+4. His private links for the registry: the public page ships blank by GOLEM's rule 5. Where do his links come from?
 
-## First task on resume (from KAIROS, 16 Nov, on His Grace's behalf)
-Copyright and ownership notices; not started.
-1. `LICENSE` at the repo root: "Copyright (c) 2026 <owner's full name>. All rights reserved." and a plain statement that no licence is granted to use, copy, modify, publish or distribute the code, art or content without written permission. Not open source.
-2. In the page: "© 2026 Euphrates Hall. All rights reserved." as a small line in the settings or about panel and the overview, never over the walking view.
-3. The same notice as a comment at the top of `src/index.html` and in the README.
-4. Gate, tests and a version bump as usual; report the version to KAIROS.
-To confirm with His Grace first: the LICENSE names him in full in a public repository. Is that the name he wants public?
+## The copyright task (from KAIROS, 16 Nov; not started)
+LICENSE at the root ("Copyright (c) 2026 <name>. All rights reserved." and no licence granted without written permission); "© 2026 Euphrates Hall. All rights reserved." in the settings or about panel and the overview, never over the walking view; the same at the top of `src/index.html` and in the README; gate, tests and a version bump; report the version to KAIROS.
