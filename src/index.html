@@ -1513,14 +1513,14 @@ function genBuildings(){
      ['The Grand Stair',null,'empty',1,20,-42,40,-18,''],['The Gun Room',null,'P',1,20,-18,40,0,''],
      ['The Double Library','copper','P',1,40,-42,64,6,'The Scriptorium',[['The card catalog: every toolkit',CAT(null),'catalog'],['The house files',CAT('*'),'files'],['The shelves: Reading List and Quotes',V('library'),'shelves'],['The Manual',['doc','https://claude.ai/artifact/AjYgYB7WWYYBeHW9viknfp'],'manual']]],
      ['The Drawing Room','pink','P',1,-64,6,-34,30,'The Court',[['The portrait wall: Public Figures',V('datahub:fig'),'portraits'],['The Thought Web',V23('people'),'c']]],
-     ['The Music Room',null,'P',1,-34,6,-12,30,''],['The Entrance Hall',null,'P',1,-12,0,12,30,'',[],{dd:1}],['The Smoking Room',null,'P',1,12,6,34,30,''],
+     ['The Music Room',null,'P',1,-34,6,-12,30,''],['The Entrance Hall',null,'P',1,-12,6,12,30,'',[],{dd:1}],['The Smoking Room',null,'P',1,12,6,34,30,''],
      ['The Morning Room','pink','P',1,34,6,64,30,'The Heart',[['The address book: the Circle',V('people'),'book']]],
      /* the first floor */
      ['The Gold Bedroom',null,'P',2,-64,-66,-44,-46,''],
-     ['The Long Gallery','violet','P',2,-44,-66,44,-50,'The Margin, The Press, The Atelier',[['The writing desk: Marginalia',V('library'),'desk']]],
+     ['The Long Gallery','violet','P',2,-44,-66,44,-52,'The Margin, The Press, The Atelier',[['The writing desk: Marginalia',V('library'),'desk']]],
      ['The Silver Bedroom',null,'P',2,44,-66,64,-46,''],['The White Bedroom',null,'P',2,-64,-46,-40,-28,''],['The Copper Bedroom',null,'P',2,-64,-28,-40,-11,''],
      ['The Blue Bedroom',null,'P',2,-64,-11,-40,6,''],['The Oak Stair Landing',null,'empty',2,-40,-46,-24,-28,''],['The Red Stair',null,'empty',2,-40,-28,-24,-12,''],['The Yellow Bedroom',null,'P',2,-40,-12,-24,6,''],
-     ['The Saloon Gallery','gold','P',2,-24,-40,24,0,'The Forum',[],{tall:1}],['The Grand Stair Landing',null,'empty',2,24,-46,40,-22,''],['The Green Bedroom',null,'P',2,24,-22,40,0,''],
+     ['The Saloon Gallery','gold','P',2,-24,-42,24,0,'The Forum',[],{tall:1}],['The Grand Stair Landing',null,'empty',2,24,-46,40,-22,''],['The Green Bedroom',null,'P',2,24,-22,40,0,''],
      ['The Calendar Room','copper','P',2,40,-46,64,-28,'The Calendar',[['The wall calendar: the Day and Deadlines',V('orders'),'cal'],['Orders by Color',V23('orders'),'c']]],
      ['The Registry','copper','P',2,40,-28,64,-12,'The Registry',[['The bound register: the roster',V('roster'),'book']]],
      ['The Schoolroom','gold','P',2,40,-12,64,6,'The Institute',[['The reading list',V('library'),'c']]],
@@ -1530,7 +1530,7 @@ function genBuildings(){
      /* the second floor */
      ['The Day Nursery','pink','empty',3,-64,-66,-40,-46,''],['The Night Nursery','pink','empty',3,-40,-66,-16,-46,''],['The Governess\'s Room','gold','empty',3,-16,-66,0,-50,''],['The Schoolroom Annexe','gold','empty',3,0,-66,16,-50,''],
      ['The Laboratory','yellow','lab',3,16,-66,40,-46,'The Laboratory'],['The Convalescent Ward','yellow','ward',3,40,-66,64,-34,'The Medicae'],['The Sewing Room','brown','empty',3,40,-34,64,-22,''],['The Upper Linen Room','brown','empty',3,40,-22,64,-10,''],
-     ['The Red Staircase',null,'empty',3,-40,-28,-24,-12,''],['The Bachelors\' Corridor',null,'empty',3,-64,6,64,14,''],...guests,
+     ['The Red Staircase',null,'empty',3,-40,-28,-25,-12,''],['The Bachelors\' Corridor',null,'empty',3,-64,6,64,14,''],...guests,
      /* the attics */
      ...maids,...men,['The Box Room','brown','empty',4,-24,14,0,30,''],['The Cistern Room','brown','empty',4,0,14,24,30,''],
      /* the towers */
@@ -1551,10 +1551,10 @@ function genBuildings(){
   CUR=B1|128;for(let x=-19;x<=19;x++)for(let z=-35;z<=-5;z++)if(x<-12||x>12||z<-32||z>-8)S(x,38,z,((x+19)%5===0||(z+35)%5===0)?C.white:C.glass);
   for(let x=-20;x<=20;x+=2){S(x,39,-36,C.stone);S(x,39,-4,C.stone)}for(let z=-36;z<=-4;z+=2){S(-20,39,z,C.stone);S(20,39,z,C.stone)}
   /* the Great Hall: two storeys; the Long Gallery crosses it as a railed balcony on the north wall */
-  CUR=B1;fill(-23,17,-61,23,24,-43,0);
+  CUR=B1;fill(-23,17,-59,23,24,-43,0);   /* v1.37: wall plan move 10, the Long Gallery's walk over the Great Hall 5 clear (the well and its rail 2 south) */
   for(let y=18;y<=24;y++){for(let z=-61;z<=-42;z++){S(-24,y,z,C.cream);S(24,y,z,C.cream)}for(let x=-24;x<=24;x++)S(x,y,-42,C.cream)}
-  for(let x=-23;x<=23;x++){S(x,18,-62,C.trim);S(x,19,-62,C.inv)}
-  for(const x of[-35,-34,34,35])for(let y=18;y<=22;y++)S(x,y,-50,0);
+  for(let x=-23;x<=23;x++){S(x,18,-60,C.trim);S(x,19,-60,C.inv)}
+  for(const x of[-35,-34,34,35])for(let y=18;y<=22;y++)S(x,y,-52,0);   /* v1.37: moves 8 and 9, the passages to the stair landings 5 clear (the Long Gallery's south wall from z -50 to -52) */
   /* real staircases on every floor */
   flight(B1,'z',-27,-25,-24,-1,0,7,C.stone);    /* the women's stair, below stairs to the state floor */
   flight(B1,'z',36,38,-17,1,0,7,C.stone);       /* the men's stair, up into the Gun Room */
@@ -3728,7 +3728,7 @@ const LAYOUT={
  'The Gun Room':K=>{K.rug(.3);for(let i=0;i<2;i++){const s=K.spot(1.6,1,['w','e']);if(s)K.atWall('deedChest',{},s.side,s.a,{solid:true})}K.fire(['e','w']);K.tile('panelling',{});K.windows('sash',{c:'#2f5a3a'});K.chand(1)},
  /* the first floor */
  'The Long Gallery':K=>{const R=K.R;let p=0;K.tile('portrait',{w:7,h:10,seed:23},{sides:['n','s','w','e'],dy:1.6,proud:.3,test:()=>(p++%2===0)});K.anchors.desk=K.at('deskWriting',{},R.x1-4,K.inner.cz,-HP,{solid:true});
-   CUR=R.bid;for(let x=-23;x<=23;x++){S(x,18,-62,C.inv);S(x,19,-62,C.inv)}CUR=0;for(let x=-23+.92;x<=23;x+=1.84)queueProp('balustrade',{c:'#6b4226'},x,17.5,-62,0,R.bid,K.band,false);
+   CUR=R.bid;for(let x=-23;x<=23;x++){S(x,18,-60,C.inv);S(x,19,-60,C.inv)}CUR=0;for(let x=-23+.92;x<=23;x+=1.84)queueProp('balustrade',{c:'#6b4226'},x,17.5,-60,0,R.bid,K.band,false);
    for(const x of[-34,34])K.at('chandelier',{},x,-58,0,{dy:K.ceil-K.y-3.6})},
  'The Saloon Gallery':K=>{let p=0;K.tile('portrait',{seed:29},{dy:1.6,proud:.3,test:()=>(p++%2===0)})},
  'The Calendar Room':K=>{K.rug(.3);const s=K.spot(1.4,1,['n','w','e']);if(s)K.anchors.cal=K.atWall('clockLong',{},s.side,s.a,{solid:true});K.anchors.c=K.at('deskWriting',{},K.inner.cx,K.inner.cz,0,{solid:true});K.tile('dado',{c:'#b87333'});K.windows('sash',{});K.chand(1);K.people(1)},
@@ -3967,7 +3967,7 @@ const RPRE={
    for(const[x,z]of[[-15,-31],[15,-31],[-15,-9],[15,-9]])K.at('palm',{},x,z,0,{solid:true});const r=propGet('chandelier',{r:14});K.at('chandelier',{r:14},K.inner.cx,K.inner.cz,0,{dy:24.4-K.y-(r.b.y1+1)*r.unit});
    const B=BLD[R.bid];CUR=R.bid;for(let x=-17;x<=17;x++)for(const z of[-33,-7]){S(x,18,z,C.inv);S(x,19,z,C.inv)}for(let z=-33;z<=-7;z++)for(const x of[-17,17]){S(x,18,z,C.inv);S(x,19,z,C.inv)}CUR=0;
    const b2=B.band[17+OY];balRing({c:'#e9e4d8',posts:[[-17,-33],[17,-33],[-17,-7],[17,-7]]},-17,-33,17,-7,17.5,R.bid,b2,['n','s','w','e'])},
- 'The Long Gallery':K=>{const R=K.R;CUR=R.bid;for(let x=-23;x<=23;x++){S(x,18,-62,C.inv);S(x,19,-62,C.inv)}CUR=0;balRing({c:'#6b4226',posts:[[-23,-62],[23,-62]]},-24,-62,24,-62,17.5,R.bid,K.band,['n'])}};
+ 'The Long Gallery':K=>{const R=K.R;CUR=R.bid;for(let x=-23;x<=23;x++){S(x,18,-60,C.inv);S(x,19,-60,C.inv)}CUR=0;balRing({c:'#6b4226',posts:[[-23,-60],[23,-60]]},-24,-60,24,-60,17.5,R.bid,K.band,['n'])}};
 const RPOST={
  'The Great Hall':(K,Q)=>{const b=Q.placed.find(p=>p.k==='bisellium');const R=K.R;if(b){const fx=Math.round(b.x+Math.sin(b.th)*1.6),fz=Math.round(b.z+Math.cos(b.th)*1.6);CUR=R.bid;
    if(fig(fx,R.y+1,fz,{role:'kairos',cx:K.inner.cx,cz:K.inner.cz}))K.anchors.kairos=[fx,R.y+1,fz];else K.anchors.kairos=[Math.round(b.x),R.y+1,Math.round(b.z)];CUR=0}},
@@ -5174,7 +5174,7 @@ const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start
   try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');await Y();const WIN=LIVE?buildWindowDetail():0;mark('windows');await Y();const PRB=buildProps();mark('props');await Y();TM.stairq=buildStairs();TM.chapel=chapelGlass();TM.bars=glazeInside();mark('stairs');await Y();const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
   window.__vx={LDAY,FULL,GROVE,IMP,BENCH,benchUI,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
   TM.wall=Math.round(performance.now()-t0);frame();BENCH.first=performance.now();if(BENCH.on)setTimeout(benchUI,800);$('#bStats').onclick=()=>{const b=$('#bench');if(b)b.remove();else benchUI()};setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
-function styleUI(){$('#brandS').textContent='Euphrates Hall v1.36 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
+function styleUI(){$('#brandS').textContent='Euphrates Hall v1.37 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
   $('#styleList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>pickStyle(b.dataset.st));$('#bStyle').onclick=()=>{$('#stylebox').hidden=!$('#stylebox').hidden};
   if(ISO){for(const[id,dd]of[['#bRotL',-1],['#bRotR',1]]){const b=$(id);b.hidden=false;b.onclick=()=>{if(ISOV.rot)return;const a=ISOV.yaw;ISOV.rot={t0:performance.now(),a,b:a+dd*Math.PI/2};if(MODE==='walk'){ISOV.yaw=a+dd*Math.PI/2;ISOV.rot=null}}}}}
 $('#load').innerHTML='Raising Euphrates Hall<i>The '+ST.n+' Estate. Raising the mansion, about ten seconds.</i>';
