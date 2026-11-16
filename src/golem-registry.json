@@ -1,5 +1,5 @@
 {
-"version": "golem-registry-v1",
+"version": "golem-registry-v1.1",
 "approved": "2026-11-15",
 "houses": {
 "gold": [
@@ -1325,6 +1325,42 @@
 "red",
 1,
 []
+],
+[
+"The Trunk Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Linen Store",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Maids' Sitting Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Lumber Room",
+"The Hall",
+"brown",
+0,
+[]
+],
+[
+"The Footmen's Sitting Room",
+"The Hall",
+"brown",
+0,
+[]
 ]
-]
+],
+"issued": "2026-11-16"
 }
