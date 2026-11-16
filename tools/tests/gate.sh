@@ -41,6 +41,14 @@ for f in src .; do
     fi
   done
 done
+for f in src .; do
+  s=$(date +%s)
+  if python3 tools/tests/kairos_turntable.py "$f" > "$tmp/kt.log" 2>&1; then
+    echo "gate: ok   kairos_turntable $f ($(( $(date +%s) - s ))s)"
+  else
+    echo "gate: FAIL kairos_turntable $f"; tail -20 "$tmp/kt.log"; fail=1
+  fi
+done
 [ $fail = 0 ] || { rm -f .git/eh-gate-ok; exit 1; }
 
 sha256sum src/index.html index.html > .git/eh-gate-ok

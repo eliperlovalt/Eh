@@ -218,3 +218,9 @@ Since v1.49 (the look pass, second part):
 - Figures (people, Kairos, the player) are drawn with their own material (`FMAT`) that takes a third of the lamplight, so a face under the forecourt lamps sits in the same light as the coat.
 - The forge chimney breast runs on to the corner (no 2-block pocket). Walls-only scan for strips under 3 blocks: one left, the outdoor slot between the Home Farm's two boxes (x -133, z 121 to 127), which boxes that do not move make; the barn's side door opens into it.
 - Frame time level with v1.48.
+
+Since v1.50 (Estate Final, batch A: Kairos):
+- His head (`kairosHead`) warmed: skin #e6bf98 with a shaded chin and back, dark brown hair over the crown, the back and the sides above the ears, ears with a darker inner, lips with corners, blue irises, nose with nostrils, cheeks. The circlet stays above the brow only. His outfit's skin matches the head.
+- His arms are their own limbs (`figMesh(..., arms)`; `emitPerson` part 'B' is the body without legs or arms), pivoted at the shoulder and swung against the legs in `lifeStep` (0.75 of the leg swing); seated, they rest forward.
+- `tools/tests/kairos_turntable.py FOLDER [OUTDIR]`: Kairos on open ground at 8 sides x day, dusk and night, and on a grand stair: head built, feet on the floor (within 0.12), legs meet body, arms meet body, foot on the tread, no page errors. In `gate.sh` for both copies.
+- `__vx.KH` exported for the test.
