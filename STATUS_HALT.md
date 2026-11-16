@@ -26,3 +26,11 @@ Next step: apply the patch, shoot dusk and night (`spotshots.py`, poses in `tool
 1. Going live: this chat may only push to its branch. Merge it to `main`, or give leave to push to `main`.
 2. The registry's links: how should his private links reach the page if the public page ships blank (a private file on his PC, a link only he holds, or ship them public as now)?
 3. His photos of good shots and of problems, to hand to KAIROS and VOXEL.
+
+## First task on resume (from KAIROS, 16 Nov, on His Grace's behalf)
+Copyright and ownership notices; not started.
+1. `LICENSE` at the repo root: "Copyright (c) 2026 <owner's full name>. All rights reserved." and a plain statement that no licence is granted to use, copy, modify, publish or distribute the code, art or content without written permission. Not open source.
+2. In the page: "© 2026 Euphrates Hall. All rights reserved." as a small line in the settings or about panel and the overview, never over the walking view.
+3. The same notice as a comment at the top of `src/index.html` and in the README.
+4. Gate, tests and a version bump as usual; report the version to KAIROS.
+To confirm with His Grace first: the LICENSE names him in full in a public repository. Is that the name he wants public?
