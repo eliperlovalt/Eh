@@ -209,10 +209,6 @@ null,
 null,
 "live"
 ],
-"plan.money": [
-null,
-"live"
-],
 "deadlines": [
 null,
 "live"
@@ -338,6 +334,10 @@ null,
 "live"
 ],
 "books": [
+null,
+"live"
+],
+"plan10k": [
 null,
 "live"
 ]
@@ -500,7 +500,7 @@ null,
 [
 "The Money Desks",
 "c",
-"plan.money"
+"plan10k"
 ]
 ]
 ],
@@ -601,11 +601,6 @@ null,
 "The card catalog: every toolkit",
 "catalog",
 "@cat:*"
-],
-[
-"The Genizah desk",
-"desk",
-"genizah"
 ],
 [
 "The globe",
@@ -878,6 +873,11 @@ null,
 "The writing table: the Genizah",
 "desk",
 "genizah"
+],
+[
+"The globe",
+"globe",
+"globe"
 ]
 ]
 ],

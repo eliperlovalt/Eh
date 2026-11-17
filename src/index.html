@@ -1518,7 +1518,7 @@ function genBuildings(){
     doors:[[-1,8,30,1,13,30],[-12,8,-66,-10,13,-66],[-64,1,-53,-64,5,-52],[-1,39,-32,1,43,-32],[-8,18,30,-7,22,30],[7,18,30,8,22,30]],   /* v1.37: wall plan moves 11 and 12 (A4), glazed doors from the Orange and Grey Bedrooms onto the south balcony; the Depot's contours dress them as balcony door cases */
     rooms:[
      /* below stairs */
-     ['The Kitchen','brown','kitchen',0,-64,-66,-32,-38,'The Household Staff',[['The Pantry Book: the grounds, a meal plan and a prep guide',INFO('The Pantry Book is being compiled. Not yet linked.'),'pantry']]],['The Scullery','brown','empty',0,-32,-66,-16,-52,''],['The Still Room','brown','empty',0,-32,-52,-16,-41,''],
+     ['The Kitchen','brown','kitchen',0,-64,-66,-32,-38,'The Household Staff',[['The Pantry Book: the grounds, a meal plan and a prep guide',V('pantry'),'pantry']]],['The Scullery','brown','empty',0,-32,-66,-16,-52,''],['The Still Room','brown','empty',0,-32,-52,-16,-41,''],
      ['The Larders','brown','empty',0,-16,-66,26,-52,''],['The Steward\'s Room','brown','empty',0,26,-66,44,-42,''],['The Beer Cellar','brown','empty',0,44,-66,64,-42,''],
      ['The Butler\'s Pantry','brown','pantry',0,-64,-38,-40,-18,'The Household Staff'],['The Silver Safe','brown','empty',0,-64,-18,-40,-8,''],['The Housekeeper\'s Room','brown','office',0,-64,-8,-40,10,'The Household Staff'],
      ['The Linen Room','brown','empty',0,-64,10,-40,30,''],['The Women\'s Stair',null,'empty',0,-40,-33,-24,-22,''],['The Servants\' Hall','brown','servants',0,-20,-36,20,-4,'The Household Staff'],
@@ -1548,10 +1548,10 @@ function genBuildings(){
      ['The Registry','copper','P',2,40,-28,64,-12,'The Registry',[['The bound register: the roster',V('roster'),'book']]],
      ['The Schoolroom','gold','P',2,40,-12,64,6,'The Institute',[['The slate: set a goal',['goal'],'slate'],['The reading list',V('library'),'c']]],
      ['The Violet Bedroom',null,'P',2,-64,6,-40,30,''],['The Pink Bedroom',null,'P',2,-40,6,-18,30,''],['The Orange Bedroom',null,'P',2,-18,6,0,30,''],['The Grey Bedroom',null,'P',2,0,6,16,30,''],
-     ['His Grace\'s Dressing Room',null,'P',2,16,6,34,14,''],['His Grace\'s Bath',null,'P',2,16,14,34,22,''],['His Grace\'s Study',null,'P',2,16,22,34,30,'',[['The commonplace book: his Notes',INFO('His Notes. Empty for now: Kairos fills it at the PC.'),'desk']]],
+     ['His Grace\'s Dressing Room',null,'P',2,16,6,34,14,''],['His Grace\'s Bath',null,'P',2,16,14,34,22,''],['His Grace\'s Study',null,'P',2,16,22,34,30,'',[['The commonplace book: his Notes',V('notes'),'desk']]],
      ['His Grace\'s Bedchamber',null,'P',2,34,6,64,30,'',[['The bedside journal: the Day and the Night Watch',V('orders'),'journal']]],
      /* the second floor */
-     ['The Day Nursery','pink','empty',3,-64,-66,-40,-46,''],['The Night Nursery','pink','empty',3,-40,-66,-16,-46,''],['The Governess\'s Room','gold','empty',3,-16,-66,0,-50,''],['The Genizah Writing Room','green','empty',3,0,-66,16,-50,'',[['The writing table: the Genizah',INFO('The Genizah is being written. Not yet linked.'),'desk']]],
+     ['The Day Nursery','pink','empty',3,-64,-66,-40,-46,''],['The Night Nursery','pink','empty',3,-40,-66,-16,-46,''],['The Governess\'s Room','gold','empty',3,-16,-66,0,-50,''],['The Genizah Writing Room','green','empty',3,0,-66,16,-50,'',[['The writing table: the Genizah',V('genizah'),'desk']]],
      ['The Laboratory','yellow','lab',3,16,-66,40,-46,'The Laboratory'],['The Convalescent Ward','yellow','ward',3,40,-66,64,-34,'The Medicae'],['The Sewing Room','brown','empty',3,40,-34,64,-22,''],['The Upper Linen Room','brown','empty',3,40,-22,64,-10,''],
      ['The Red Staircase',null,'empty',3,-40,-28,-25,-12,''],['The Bachelors\' Corridor',null,'empty',3,-64,6,64,14,''],...guests,
      /* the attics */
@@ -2127,77 +2127,88 @@ function spawnAnimals(){const A=[];const rectSpawn=(kind,n,R,opt={})=>{for(let i
   A.push({kind:'horse',x:-1,y:1,z:105,static:true,c:'#6b4226',m:'#4a2d1a'});return A}
 /* ---------- v1.7: Kairos's face, the tour, a gentler overview ---------- */
 let KH=null;
-/* v1.51: Kairos in his metal form. His Grace's brief of 16 Nov: a squarer head with an angular jaw, a tall heroic body, broad shoulders, thick metal muscle, all metal, one and a half times a person's height.
-   Built on a grid half a figure voxel fine (RU); parts are separate maps (b body, ll lr legs, al ar arms) so the legs and arms swing from the hip and the shoulder */
-const KRU=PS/2,KHIPV=34,KSHV=52,KNECK=61;
+/* v1.52: Kairos in his metal form, in a tuxedo. His Grace's briefs of 16 and 17 Nov: all metal; a squarer head with an angular jaw; a broad, heavy frame; a tuxedo made of plating (black jacket with satin lapels and tails, a white shirt-front plate, a black bow tie, white cuffs with gold links, dark trousers with a side stripe, black polished shoes); machined elbows and shoulders that are one with the arm; gloved hands with a thumb and grouped fingers; and a size that only just passes a standard doorway (KSC, set from the measured door: his crown 0.25 of a block under the lintel).
+   Built on a grid half a figure voxel fine (KRU); parts are separate maps (b body, ll lr legs with a coat tail each, al ar arms) so the legs and arms swing from the hip and the shoulder */
+const KRU=PS/2,KHIPV=34,KKNEE=17,KSHV=52,KELB=36,KNECK=61,KHS=1.2,KDOOR=[5,2],KSC=(KDOOR[0]-.25)/(KNECK*KRU+22*KRU/2*KHS);   /* the standard interior doorway is 5 blocks high and 2 wide (301 of 359 doors, measured); he stands 4.75 and is 1.8 across the shoulders */
 function kairosBot(){const P={b:new Map(),ll:new Map(),lr:new Map(),al:new Map(),ar:new Map()};
   const put=(m,x,y,z,c)=>P[m].set(x+','+y+','+z,[x,y,z,c,'b']);
   const lerp=(T,y)=>{for(let i=0;i<T.length-1;i++){const[a,va]=T[i],[b,vb]=T[i+1];if(y>=a&&y<=b)return va+(vb-va)*(y-a)/(b-a)}return y<T[0][0]?T[0][1]:T[T.length-1][1]};
-  const ring=(m,cx,cz,y,rx,rz,n,c,zf)=>{for(let x=Math.floor(cx-rx-1);x<=Math.ceil(cx+rx+1);x++)for(let z=Math.floor(cz-rz-1);z<=Math.ceil(cz+rz+1+(zf||0));z++){const dx=Math.abs(x+.5-cx)/rx,dz=Math.abs(z+.5-cz-(zf&&z+.5>cz?0:0))/(z+.5>cz&&zf?rz+zf:rz);if(dx**n+dz**n<=1)put(m,x,y,z,c)}};
-  const ST='#9aa3ad',DK='#3a3f46',JT='#2c3036',PL='#b4bcc5',BR='#b8924a';
-  /* legs: a boot, a shin plate, a knee cap, a thick thigh */
-  for(const[m,cx]of[['ll',-5],['lr',5]]){
-    for(let y=0;y<=33;y++){const rx=lerp([[3,2.5],[5,2.7],[11,3.6],[15,3.1],[17,3],[19,3.6],[26,4.4],[33,4.5]],y),rz=lerp([[3,2.6],[5,2.8],[11,3.7],[15,3.1],[17,3.2],[19,3.7],[26,4.3],[33,4.2]],y);
-      ring(m,cx,0,y,rx,rz,3,(y>=3&&y<=4)||(y>=15&&y<=16)?JT:ST)}
-    for(let x=cx-3;x<cx+3;x++)for(let z=-3;z<=6;z++)for(let y=0;y<=2;y++)if(!(y===2&&z>4))put(m,x,y,z,y===0?DK:PL);   /* the boot */
-    for(let y=16;y<=19;y++)for(let x=cx-2;x<cx+2;x++)put(m,x,y,4,PL);   /* the knee cap */
-    for(let y=5;y<=13;y++)for(let x=cx-1;x<cx+1;x++)put(m,x,y,3,PL)}   /* the shin ridge */
-  /* pelvis, waist, chest, back: a superellipse section that widens to the shoulders */
-  for(let y=34;y<=58;y++){const rx=lerp([[34,8.6],[38,7.6],[41,8],[45,10.4],[49,12.6],[52,13.6],[56,13.2],[57,11],[58,7]],y),rz=lerp([[34,5],[40,4.6],[46,5.6],[51,6.6],[56,6],[58,4.8]],y);
-    ring('b',0,0,y,rx,rz,3,ST)}
-  for(let y=47;y<=56;y++)for(let x=-11;x<11;x++){const ax=Math.abs(x+.5);if(ax<1.5||ax>10.5)continue;const b=1-Math.abs(y-52)/6;if(b>0)for(let z=5;z<=Math.round(6+b*1.3);z++)put('b',x,y,z,PL)}   /* the pectoral plates */
-  for(let y=59;y<=60;y++)ring('b',0,0,y,3.2,3,2.5,JT);   /* the neck */
-  for(const s of[-1,1])for(let y=50;y<=60;y++)for(let x=9;x<=21;x++)for(let z=-6;z<=6;z++){const dx=(x-15)/6,dy=(y-55)/5.4,dz=z/5.8;if(dx*dx+dy*dy*1.2+dz*dz<=1&&y>=51)put('b',s<0?-x-1:x,y,z,y<=51?BR:'#aab2bb')}   /* the pauldrons */
-  /* arms: a bulging upper arm, a dark elbow, a forearm plate, a hand */
-  for(const[m,cx]of[['al',-17],['ar',17]]){
-    for(let y=17;y<=50;y++){if(y<23){continue}const rx=lerp([[23,2.7],[26,3.3],[31,3.7],[34,3.2],[36,2.9],[38,3.6],[44,4.3],[50,4]],y),rz=lerp([[23,2.8],[31,3.6],[36,3],[44,4.4],[50,4.1]],y);
-      ring(m,cx,0,y,rx,rz,3,(y>=35&&y<=37)||(y===23)?JT:ST)}
-    for(let y=27;y<=33;y++)for(let z=-1;z<=1;z++)put(m,cx+(cx<0?-4:3),y,z,PL);   /* the forearm plate */
-    for(let y=17;y<=22;y++)for(let x=cx-2;x<cx+3;x++)for(let z=-2;z<=2;z++){if(y<=18&&(x+z)%2)continue;put(m,x,y,z,y<=19?DK:'#7d858f')}}   /* the hand */
-  /* shading: tops catch the light, undersides fall dark; seams cut the plates */
-  for(const m in P){const V=P[m];for(const v of V.values()){const[x,y,z]=v;if(v[3]!==ST&&v[3]!=='#aab2bb')continue;
-      const up=!V.has(x+','+(y+1)+','+z),dn=!V.has(x+','+(y-1)+','+z);if(up)v[3]=v[3]==='#aab2bb'?'#d4dbe2':'#c8cfd7';else if(dn)v[3]='#6c747d'}}
-  for(const v of P.b.values()){const[x,y,z]=v;if(v[3]===JT||v[3]===BR)continue;const front=!P.b.has(x+','+y+','+(z+1));
-    if(front&&(x===0||x===-1)&&y>=36&&y<=56)v[3]=DK;   /* the centre seam */
-    if(front&&y===46&&Math.abs(x+.5)<=10)v[3]=DK;   /* under the chest plates */
-    if(front&&(y===39||y===42)&&Math.abs(x+.5)<=4.5)v[3]=DK;   /* the abdominal plates */
-    if(y>=34&&y<=35)v[3]=front&&Math.abs(x+.5)<=1.5?BR:DK}   /* the belt and its buckle */
-  for(let y=52;y<=54;y++)for(let x=-2;x<2;x++){let z=12;while(z>0&&!P.b.has(x+','+y+','+z))z--;P.b.set(x+','+y+','+(z+1),[x,y,z+1,'#bfe3ff','b'])}   /* the chest core */
+  const ring=(m,cx,cz,y,rx,rz,n,c)=>{for(let x=Math.floor(cx-rx-1);x<=Math.ceil(cx+rx+1);x++)for(let z=Math.floor(cz-rz-1);z<=Math.ceil(cz+rz+1);z++){const dx=Math.abs(x+.5-cx)/rx,dz=Math.abs(z+.5-cz)/rz;if(dx**n+dz**n<=1)put(m,x,y,z,c)}};
+  const TUX='#15161a',SAT='#3d4049',WC='#23252b',WH='#eceef1',WH2='#d9dde2',GD='#c9a24c',STL='#7c8793',STD='#565f6a',SOLE='#060607',SHOE='#0e0f12',TOE='#2b2e35',CORE='#bfe3ff';
+  /* legs: a black dress shoe, a steel ankle, a trouser plate with a satin stripe down the outside, a knee plate */
+  for(const[m,cx]of[['ll',-3.3],['lr',3.3]]){const out=cx<0?-1:1,L=cx<0;
+    for(let y=3;y<=33;y++){const rx=lerp([[3,2],[5,2.3],[11,2.9],[15,2.6],[17,2.6],[19,2.9],[26,3.3],[33,3.3]],y),rz=lerp([[3,2.1],[5,2.4],[11,3],[15,2.7],[17,2.8],[19,3.1],[26,3.5],[33,3.5]],y);ring(m,cx,0,y,rx,rz,3,y<=4?STL:TUX)}
+    for(let x=L?-5:0;x<=(L?-1:4);x++)for(let z=-3;z<=6;z++)for(let y=0;y<=2;y++){if(y===2&&z>4)continue;if(z===6&&(x===(L?-5:0)||x===(L?-1:4)))continue;put(m,x,y,z,y===0?SOLE:z>=4?TOE:SHOE)}   /* the shoe: a sole, a polished upper, a toe cap */
+    for(let y=16;y<=18;y++)for(let x=L?-5:1;x<=(L?-2:4);x++)put(m,x,y,3,SAT);   /* the knee plate */
+    for(const v of[...P[m].values()]){const[x,y,z]=v;if(v[3]===TUX&&y>=5&&(z===0||z===-1)&&!P[m].has((x+out)+','+y+','+z))v[3]=SAT}   /* the stripe */
+    /* a coat tail hangs behind each thigh and swings with it */
+    for(let y=17;y<=33;y++){const w=Math.round(lerp([[17,2],[24,4],[33,6]],y));for(let k=0;k<w;k++){const x=L?-1-k:k;for(const z of[-5,-4])put(m,x,y,z,z===-5&&(k===w-1||y===17)?SAT:TUX)}}}
+  /* pelvis, waist, chest and back: the jacket */
+  for(let y=34;y<=58;y++){const rx=lerp([[34,6.2],[38,5.7],[41,6],[45,7.4],[49,8.7],[52,9.3],[56,9.1],[57,7.8],[58,5.6]],y),rz=lerp([[34,4.4],[40,4.1],[46,4.9],[51,5.6],[56,5.2],[58,4.3]],y);ring('b',0,0,y,rx,rz,3,TUX)}
+  for(let y=47;y<=56;y++)for(let x=-8;x<8;x++){const b=1-Math.abs(y-52)/6;if(b>0)for(let z=4;z<=Math.round(5+b*1.1);z++)put('b',x,y,z,TUX)}   /* the chest, full under the jacket */
+  for(let y=59;y<=60;y++)ring('b',0,0,y,2.8,2.6,2.5,STL);ring('b',0,0,58,3.8,3.5,2.5,WH);ring('b',0,0,59,3.5,3.2,2.5,WH);ring('b',0,0,60,2.8,2.6,2.5,STL);   /* the neck, in a white wing collar */
+  /* the front: a white shirt plate in the jacket's V, satin lapels, a waistcoat with gold buttons, the core as the top stud */
+  const fz=new Map();for(const v of P.b.values()){const k=v[0]+','+v[1];if(!fz.has(k)||fz.get(k)<v[2])fz.set(k,v[2])}
+  const sw=y=>y>=44?Math.min(4.6,(y-43)/11*4.6):0,ww=y=>y>=36&&y<=46?1.5+(y-36)/10*3:0;
+  for(let y=36;y<=57;y++)for(let x=-10;x<10;x++){const z=fz.get(x+','+y);if(z==null||z<3)continue;const ax=Math.abs(x+.5),v=P.b.get(x+','+y+','+z),S=sw(y);
+    if(S&&ax<=S)v[3]=(x===0||x===-1)&&(y===49||y===46)?GD:WH;
+    else if(S&&ax<=S+2){v[3]=SAT;put('b',x,y,z+1,SAT)}   /* the lapel, raised */
+    else if(ax<=ww(y))v[3]=(x===0||x===-1)&&(y===38||y===41||y===44)?GD:WC}
+  for(let y=52;y<=53;y++)for(let x=-1;x<=0;x++){const z=fz.get(x+','+y);P.b.set(x+','+y+','+z,[x,y,z,CORE,'b'])}   /* the core */
+  {const z=fz.get('0,57')+1;for(let x=-4;x<4;x++){const ax=Math.abs(x+.5),h=ax<2?0:1;for(let y=57-h;y<=58+h;y++)for(const dz of[0,1])put('b',x,y,z+dz,ax<1?SAT:TUX)}}   /* the bow tie */
+  /* arms: a sleeve, a machined elbow with a gold pin, a white cuff with a gold link, a gloved hand */
+  for(const[m,cx]of[['al',-11.5],['ar',11.5]]){const out=cx<0?-1:1,ix=Math.round(cx-.5);
+    for(let y=27;y<=50;y++){const el=y>=35&&y<=37,rx=el?2.9:lerp([[27,2.2],[31,2.7],[34,2.6],[38,2.7],[44,2.9],[50,2.8]],y),rz=el?3:lerp([[27,2.3],[31,2.8],[34,2.7],[38,2.8],[44,3],[50,2.9]],y);ring(m,cx,0,y,rx,rz,el?2.4:3,el?(y===36?STL:STD):y===47?GD:TUX)}
+    for(let y=51;y<=54;y++){const f=Math.sqrt(Math.max(0,1-((y+.5-51)/4.3)**2));ring(m,cx,0,y,2.9*f,3*f,2.4,TUX)}   /* the shoulder is the rounded head of the arm: it sits against the chest and turns with the arm, so nothing parts when he moves (His Grace, 17 Nov: the shoulders stood apart from the arms) */
+    for(const v of[...P[m].values()]){const[x,y,z]=v;if(y===36&&z===0&&!P[m].has((x+out)+','+y+','+z))v[3]=GD}   /* the elbow pin */
+    for(let y=24;y<=26;y++)ring(m,cx,0,y,2.6,2.7,3,WH);for(const v of[...P[m].values()]){const[x,y,z]=v;if(y===25&&z===0&&!P[m].has((x+out)+','+y+','+z))v[3]=GD}   /* the cuff and its link */
+    for(let y=20;y<=23;y++)for(let x=ix-1;x<=ix+1;x++)for(let z=-2;z<=2;z++)put(m,x,y,z,y===23?WH2:WH);   /* the palm */
+    for(let z=-2;z<=1;z++){const tip=z===-2||z===1?17:16;for(let y=tip;y<=19;y++)for(let x=ix-1;x<=ix+1;x++)put(m,x,y,z,(z+2)%2?WH2:WH)}   /* four fingers, grouped */
+    for(let y=19;y<=22;y++)for(let x=ix-1;x<=ix;x++)put(m,x,y,3,y===19?WH2:WH);put(m,ix-1,18,3,WH2);put(m,ix,18,3,WH2)}   /* the thumb */
+  /* the knee: each leg below it is its own part (sl, sr), hung from the thigh, so he bends his knees to sit and to walk */
+  for(const[m,n,cut]of[['ll','sl',KKNEE],['lr','sr',KKNEE],['al','fl',KELB],['ar','fr',KELB]]){P[n]=new Map();for(const[k,v]of[...P[m]])if(v[1]<cut){P[n].set(k,v);P[m].delete(k)}}   /* and the elbow: the forearm (fl, fr) hangs from the upper arm, so his forearms lie along the chair when he sits */
+  /* light: plates catch it on top and fall dark beneath, so black still reads as polished metal */
+  for(const m in P){const V=P[m];for(const v of V.values()){const[x,y,z]=v;if(v[3]!==TUX||V.has(x+','+y+','+(z+1)))continue;const d=((x*2+y*3)%46+46)%46;if(d<3)v[3]=d===1?'#4a4e58':'#30333b'}}   /* a glint runs across the black plates: polished, not cloth */
+  const UP={[TUX]:'#2a2c33',[STL]:'#aab4bf',[WH]:'#ffffff',[SHOE]:'#2b2e35'},DN={[TUX]:'#0c0d10',[STL]:'#4a525c',[WH]:'#c3c8ce'};
+  for(const m in P){const V=P[m];for(const v of V.values()){const[x,y,z]=v,c=v[3];if(!V.has(x+','+(y+1)+','+z)&&UP[c])v[3]=UP[c];else if(!V.has(x+','+(y-1)+','+z)&&DN[c])v[3]=DN[c]}}
   return P}
 function kairosHeadVox(){const V=new Map(),front=new Map(),HH=22;
   const hw=y=>(y<9?8-(9-y)/9*3.4:8)+(y>=9&&y<=11?.6:0),hd=y=>y<9?8-(9-y)/9*1.4:8,zc=y=>y<9?(9-y)/9*1.1:0;
   const inside=(x,y,z)=>{if(y<0||y>=HH)return false;const a=Math.abs(x+.5)/hw(y),b=Math.abs(z+.5-zc(y))/hd(y),c=Math.abs(y+.5-11)/11;return a**6+b**6+c**8<=1};
-  for(let x=-10;x<=10;x++)for(let y=0;y<HH;y++)for(let z=-10;z<=10;z++)if(inside(x,y,z)){let c='#a9b1bb';if(y<9)c='#8f97a1';else if(z<-3)c='#959da7';if(y>=19)c='#c4cbd3';V.set(x+','+y+','+z,[x,y,z,c,'b']);const k=x+','+y;if(!front.has(k)||front.get(k)<z)front.set(k,z)}
+  for(let x=-10;x<=10;x++)for(let y=0;y<HH;y++)for(let z=-10;z<=10;z++)if(inside(x,y,z)){let c='#8791a0';if(y<9)c='#737d8a';else if(z<-3)c='#7b8592';if(y>=19)c='#a9b3c0';V.set(x+','+y+','+z,[x,y,z,c,'b']);const k=x+','+y;if(!front.has(k)||front.get(k)<z)front.set(k,z)}
   const paint=(x,y,c)=>{const z=front.get(x+','+y);if(z!=null)V.set(x+','+y+','+z,[x,y,z,c,'b'])};
   const add=(x,y,c)=>{const z=front.get(x+','+y);if(z!=null)V.set(x+','+y+','+(z+1),[x,y,z+1,c,'b'])};
-  for(const v of V.values())if(v[1]===16&&(!inside(v[0]+1,16,v[2])||!inside(v[0]-1,16,v[2])||!inside(v[0],16,v[2]+1)||!inside(v[0],16,v[2]-1)))v[3]='#b8924a';   /* the circlet */
+  for(const v of V.values()){const[x,y,z]=v;if(front.get(x+','+y)!==z)continue;if(x===-6||x===-5)v[3]=y>=9?'#b4bfcb':'#99a4b0';else if(x>=5)v[3]=y>=9?'#77818e':'#646e7a'}   /* steel: a bright run down one side of the face, shade on the other */
+  for(const v of V.values())if(v[1]===16&&(!inside(v[0]+1,16,v[2])||!inside(v[0]-1,16,v[2])||!inside(v[0],16,v[2]+1)||!inside(v[0],16,v[2]-1)))v[3]='#c9a24c';   /* the circlet */
   for(const y of[15,16,17])for(const x of[-1,0])paint(x,y,'#8cc2ff');   /* the gnomon mark */
-  for(let x=-7;x<=6;x++)if(x<-1||x>0)add(x,13,'#4a5058');   /* the brow ridge */
+  for(let x=-7;x<=6;x++)if(x<-1||x>0)add(x,13,'#3c434c');   /* the brow ridge */
   for(const y of[11,12])for(const x of[-6,-5,-4,-3,2,3,4,5])paint(x,y,'#bfe3ff');   /* the eyes */
-  for(let y=7;y<=11;y++)for(const x of[-1,0])add(x,y,'#b7bec7');paint(-1,6,'#2a2e34');paint(0,6,'#2a2e34');   /* the nose */
-  for(let x=-3;x<=2;x++){paint(x,4,'#2a2e34');paint(x,5,'#7f8791');paint(x,3,'#7f8791')}   /* the mouth */
-  for(let x=-4;x<=3;x++)for(const y of[0,1])paint(x,y,'#bcc3cc');   /* the chin */
-  for(const v of V.values()){const[x,y,z]=v;if(y>=1&&y<=9&&Math.abs(Math.abs(x+.5)-hw(y))<.9&&z>-2)v[3]='#5c636c'}   /* the jaw line */
-  for(let y=9;y<=12;y++)for(let z=-1;z<=1;z++)for(const s of[-1,1]){const x=s<0?-10:9,c=(y===10||y===11)&&z===0?'#2a2e34':'#b8924a';V.set(x+','+y+','+z,[x,y,z,c,'b'])}   /* the ears: brass discs */
+  for(let y=7;y<=11;y++)for(const x of[-1,0])add(x,y,'#98a2ae');paint(-1,6,'#23272d');paint(0,6,'#23272d');   /* the nose */
+  for(let x=-3;x<=2;x++){paint(x,4,'#23272d');paint(x,5,'#687280');paint(x,3,'#687280')}   /* the mouth */
+  for(let x=-4;x<=3;x++)for(const y of[0,1])paint(x,y,'#9ea8b4');   /* the chin */
+  for(const v of V.values()){const[x,y,z]=v;if(y>=1&&y<=9&&Math.abs(Math.abs(x+.5)-hw(y))<.9&&z>-2)v[3]='#4d5560'}   /* the jaw line */
+  for(let y=9;y<=12;y++)for(let z=-1;z<=1;z++)for(const s of[-1,1]){const x=s<0?-10:9,c=(y===10||y===11)&&z===0?'#23272d':'#c9a24c';V.set(x+','+y+','+z,[x,y,z,c,'b'])}   /* the ears: gold discs */
   return{V,front}}
-let KMAT_=null;const KMAT=()=>KMAT_||(KMAT_=lampify(new THREE.MeshPhongMaterial({vertexColors:true,shininess:28,specular:'#2e343c'}),.33),KMAT_.userData.fig=1,KMAT_);
+/* a shiny material lights a whole flat voxel face at once and washed the black plates grey at dusk and night, so his sheen is painted: glint lines, bright tops, a lit side to the face */
+let KMAT_=null;const KMAT=()=>KMAT_||(KMAT_=lampify(new THREE.MeshLambertMaterial({vertexColors:true}),.33),KMAT_.userData.fig=1,KMAT_);
 const KGLOW=()=>KGLOW.m||(KGLOW.m=new THREE.MeshBasicMaterial({color:'#a9dcff'}));
 function kairosFig(mat){const P=kairosBot(),g=new THREE.Group(),k=KRU/PS;
   const mk=(V,pv)=>{const fb=new FB();emitPerson(V,fb,0,0,0,0,null,pv*PS);const m=new THREE.Mesh(fb.geo(),mat);m.scale.setScalar(k);m.position.y=pv*KRU;m.castShadow=true;g.add(m);return m};
   const body=mk(P.b,0),l1=mk(P.ll,KHIPV),l2=mk(P.lr,KHIPV),a1=mk(P.al,KSHV),a2=mk(P.ar,KSHV);
-  let fz=0;for(const v of P.b.values())if(v[3]==='#bfe3ff')fz=Math.max(fz,v[2]);const core=new THREE.Mesh(new THREE.PlaneGeometry(4*KRU,3*KRU),KGLOW());core.position.set(0,53.5*KRU,(fz+1)*KRU+.003);body.add(core);core.position.multiplyScalar(1/k);core.scale.setScalar(1/k);
-  g.userData={l1,l2,a1,a2};return g}
+  const hang=(V,th,cut,top)=>{const m=mk(V,cut);g.remove(m);m.scale.setScalar(1);m.position.y=(cut-top)*PS;th.add(m);return m},s1=hang(P.sl,l1,KKNEE,KHIPV),s2=hang(P.sr,l2,KKNEE,KHIPV),f1=hang(P.fl,a1,KELB,KSHV),f2=hang(P.fr,a2,KELB,KSHV);
+  let fz=0;for(const v of P.b.values())if(v[3]==='#bfe3ff')fz=Math.max(fz,v[2]);const core=new THREE.Mesh(new THREE.PlaneGeometry(2*KRU,2*KRU),KGLOW());core.position.set(0,53*KRU,(fz+1)*KRU+.003);body.add(core);core.position.multiplyScalar(1/k);core.scale.setScalar(1/k);
+  g.scale.setScalar(KSC);g.userData={l1,l2,a1,a2,s1,s2,f1,f2};return g}
 function kairosHead(fig,pm){const u=KRU/2,{V,front}=kairosHeadVox();const fb=new FB();emitPerson(V,fb,0,0,0,0,null,0);const m=new THREE.Mesh(fb.geo(),pm);m.scale.setScalar(u/PS);m.castShadow=true;
-  const piv=new THREE.Group();piv.position.set(0,KNECK*KRU,0);piv.scale.setScalar(1.35);piv.add(m);fig.add(piv);
+  const piv=new THREE.Group();piv.position.set(0,KNECK*KRU,0);piv.scale.setScalar(KHS);piv.add(m);fig.add(piv);
   const fz=(front.get('-4,11')+1)*u+.003,gl=new THREE.Group(),lm=new THREE.MeshLambertMaterial({color:'#3a3f46'});lm.userData.fig=1;
   for(const cx of[-4,4]){const e=new THREE.Mesh(new THREE.PlaneGeometry(4*u,2*u),KGLOW());e.position.set(cx*u,12*u,fz);gl.add(e)}piv.add(gl);
   const lid=cx=>{const b=new THREE.Mesh(new THREE.BoxGeometry(4.2*u,2.2*u,.5*u),lm);b.position.set(cx*u,12*u,fz);b.visible=false;piv.add(b);return b};
-  KH={piv,gl,lidL:lid(-4),lidR:lid(4),body:fig.children[0],bs:fig.children[0].scale.y,py:KNECK*KRU,eye:KNECK*KRU+12*u*1.35,t:2,bl:0}}
+  KH={piv,gl,lidL:lid(-4),lidR:lid(4),body:fig.children[0],bs:fig.children[0].scale.y,py:KNECK*KRU,eye:(KNECK*KRU+12*u*KHS)*KSC,t:2,bl:0}}
 function kairosStep(e,dt){const k=KH;if(!k)return;k.t-=dt;if(k.t<=0){k.bl=.14;k.t=2.4+Math.random()*4}const shut=k.bl>0;if(shut)k.bl-=dt;k.lidL.visible=k.lidR.visible=shut;k.gl.visible=!shut;
   let ty=0,tp=0;const w=MODE==='walk',px=w?PL.x:camera.position.x,pz=w?PL.z:camera.position.z,py=w?PL.y+2.3:camera.position.y;const dx=px-e.x,dz=pz-e.z,d=Math.hypot(dx,dz);
   if(d<18&&d>.4){let a=Math.atan2(dx,dz)-e.fig.rotation.y;a=Math.atan2(Math.sin(a),Math.cos(a));ty=Math.max(-1.15,Math.min(1.15,a));tp=Math.max(-.3,Math.min(.35,-Math.atan2(py-(e.y-.5+k.eye),d)))}
   const f=Math.min(1,dt*4);k.piv.rotation.y+=(ty-k.piv.rotation.y)*f;k.piv.rotation.x+=(tp-k.piv.rotation.x)*f;
-  const br=1+Math.sin(tt*1.3)*.008;if(k.body)k.body.scale.y=k.bs*br;k.piv.position.y=k.py*br}
+  const br=1+Math.sin(tt*1.3)*.006;if(k.body)k.body.scale.y=k.bs*br;k.piv.position.y=k.py*br}
 /* the tour: Kairos walks His Grace to every object that opens a record */
 let TOUR=null;
 function stopsList(){const seen=new Set(),L=[];for(const o of OBJ){if(!o.a||o.a[0]==='info'||seen.has(o.n))continue;seen.add(o.n);L.push(o)}
@@ -2282,7 +2293,7 @@ function buildLife(){const pm=FMAT();const hip=9*PS;let n=0;
     if(p.role==='villager')villagerOutfit(o,r);else if(p.role)staffOutfit(p.role,o);
     const K=p.role==='kairos',wrap=new THREE.Group();const fig=K?kairosFig(KMAT()):figMesh(personVox(o),hip,pm,hip);if(K)kairosHead(fig,KMAT());wrap.add(fig);if(p.child)fig.scale.setScalar(.68);wrap.position.set(p.x,p.y-.5,p.z);fig.rotation.y=Math.atan2(p.tx||0,p.tz||1);scene.add(wrap);
     const bid=p.bid||0,band=bid?BLD[bid].band[p.y+OY]:-1;if(bid)GROUPS.push({obj:wrap,bid,band});
-    const B=p.b||[p.x-6,p.x+6,p.z-6,p.z+6];const E={wrap,fig,x:p.x+0,z:p.z+0,y:p.y,indoor:!!bid,b:B,static:p.role==='kairos',speed:p.child?1.5:1.05,wait:rnd()*4,tgt:null,ph:rnd()*6,kind:'person'};if(p.role==='kairos'&&KSEAT){E.seated=true;E.x=KSEAT.x;E.z=KSEAT.z;E.y=KSEAT.y-KHIPV*KRU+.58;wrap.position.set(E.x,E.y-.5,E.z);fig.rotation.y=KSEAT.yaw;const ud=fig.userData;if(ud.l1){ud.l1.rotation.x=-1.45;ud.l2.rotation.x=-1.45}if(ud.a1){ud.a1.rotation.x=-.35;ud.a2.rotation.x=-.35}}if(p.role==='kairos')E.kh=true;addLife(E);n++};
+    const B=p.b||[p.x-6,p.x+6,p.z-6,p.z+6];const E={wrap,fig,x:p.x+0,z:p.z+0,y:p.y,indoor:!!bid,b:B,static:p.role==='kairos',speed:p.child?1.5:1.05,wait:rnd()*4,tgt:null,ph:rnd()*6,kind:'person'};if(p.role==='kairos'&&KSEAT){E.seated=true;E.x=KSEAT.x;E.z=KSEAT.z;E.y=KSEAT.y-KHIPV*KRU*KSC+.58;wrap.position.set(E.x,E.y-.5,E.z);fig.rotation.y=KSEAT.yaw;const ud=fig.userData;if(ud.l1){ud.l1.rotation.x=-1.45;ud.l2.rotation.x=-1.45}if(ud.a1){ud.a1.rotation.x=-.35;ud.a2.rotation.x=-.35}if(ud.s1){ud.l1.rotation.x=ud.l2.rotation.x=-1.6;ud.s1.rotation.x=ud.s2.rotation.x=1.6;ud.a1.rotation.x=ud.a2.rotation.x=-.22;ud.f1.rotation.x=ud.f2.rotation.x=-1.25}}if(p.role==='kairos')E.kh=true;addLife(E);n++};
   for(const p of PEOPLE)mkPerson(p);
   for(const p of spawnOutdoorPeople())mkPerson(Object.assign(p,{bid:0}));
   let an=0;for(const a of spawnAnimals()){const{V,hip:ah}=animalVox(a.kind,a);const wrap=new THREE.Group();const fig=a.were?wereFig(pm):figMesh(V,ah,pm,ah);wrap.add(fig);wrap.position.set(a.x,a.y-.5,a.z);fig.rotation.y=a.static?0:rnd()*6.28;if(a.scale&&!a.were)wrap.scale.setScalar(a.scale);scene.add(wrap);
@@ -2310,7 +2321,7 @@ function lifeStep(dt){if(!LIFE_ON)return;const cam=camera.position;const far=MOD
     if(!ok||e.side>2.5){e.tgt=null;e.side=0;e.wait=.4+rnd();continue}
     e.x=nx;e.z=nz;if(ny!==e.y){e.y=ny}const want=Math.atan2(tx,tz);let da=want-e.fig.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));e.fig.rotation.y+=da*Math.min(1,dt*6);
     e.wrap.position.x=e.x;e.wrap.position.z=e.z;const tyy=e.water?-.78:e.y-.5;e.wrap.position.y+=(tyy-e.wrap.position.y)*Math.min(1,dt*8);
-    e.ph+=dt*e.speed*(e.kind==='person'?6.5:7.5);if(ud.l1&&!e.seated){const s=Math.sin(e.ph)*.55;ud.l1.rotation.x=s;ud.l2.rotation.x=-s;if(ud.a1){ud.a1.rotation.x=-s*.75;ud.a2.rotation.x=s*.75}}else if(ud.st){const s=Math.sin(e.ph)>0;ud.st[0].visible=s;ud.st[1].visible=!s}if(e.water)e.fig.position.y=Math.sin(e.ph*.4)*.03}
+    e.ph+=dt*e.speed*(e.kind==='person'?6.5:7.5);if(ud.l1&&!e.seated){const s=Math.sin(e.ph)*.55;ud.l1.rotation.x=s;ud.l2.rotation.x=-s;if(ud.a1){ud.a1.rotation.x=-s*.75;ud.a2.rotation.x=s*.75}if(ud.s1){const c=Math.cos(e.ph);ud.s1.rotation.x=Math.max(0,-c)*.6;ud.s2.rotation.x=Math.max(0,c)*.6;ud.f1.rotation.x=-.15-Math.max(0,s)*.4;ud.f2.rotation.x=-.15-Math.max(0,-s)*.4}}else if(ud.st){const s=Math.sin(e.ph)>0;ud.st[0].visible=s;ud.st[1].visible=!s}if(e.water)e.fig.position.y=Math.sin(e.ph*.4)*.03}
   if(BIRDS){const f=BIRDS.userData.f;for(let i=0;i<f.length;i++){const b=f[i],a=tt*.09+b.a*.06,cx=Math.cos(a)*b.r,cz=Math.sin(a)*b.r;M4.makeRotationY(-a);const fl=Math.sin(tt*9+i)*.35;M4.multiply(new THREE.Matrix4().makeScale(1.1,1+fl,1.1));M4.setPosition(cx+b.ox,b.h+Math.sin(tt+i)*.8,cz+b.oz);BIRDS.setMatrixAt(i,M4)}BIRDS.instanceMatrix.needsUpdate=true}}
 /* window detail: frames, a mullion cross and a sill on every outward face of a window. v1.14: a bar is its two broad faces only, the work is cut into 64-block pieces, and a piece too far off to show a bar is not drawn */
 function buildWindowDetail(){const groups=new Map();const fr=lin('#e9dfc4').map(v=>v*255|0),si=lin('#c8bea5').map(v=>v*255|0);let n=0;
@@ -4205,7 +4216,7 @@ const TEMPLATE=false;
 const PRIV=(()=>{try{const h=location.hash||'';if(h.indexOf('#links=')===0){const t=h.slice(7).replace(/-/g,'+').replace(/_/g,'/');const j=decodeURIComponent(escape(atob(t)));JSON.parse(j);localStorage.setItem('eh-links',j);history.replaceState(null,'',location.pathname+location.search)}}catch(e){}try{return JSON.parse(localStorage.getItem('eh-links')||'null')||{}}catch(e){return{}}})();
 const URLS=Object.assign({golem:null,datahub:null,globe:null,chat:null},PRIV.urls||{});
 /* v1.6: every record opens its own room in GOLEM, not the front page */
-const ROOMOF={people:'people','v23:people':'people',roster:'people',nepsis:'carving',tree:'carving','v23:carving':'carving',library:'library',ledger:'ledger',wager:'ledger',orders:'orders','v23:orders':'orders',rules:'rules','v23:kairos':'kairos'};
+const ROOMOF={people:'people','v23:people':'people',roster:'people',nepsis:'carving',tree:'carving','v23:carving':'carving',library:'library',ledger:'ledger',wager:'ledger',orders:'orders','v23:orders':'orders',rules:'rules','v23:kairos':'kairos',genizah:'genizah',pantry:'pantry',notes:'notes'};   /* v1.52: the Genizah, the Pantry Book and his Notes open their rooms in GOLEM, on his device only (the link is private) */
 const DHOF={'datahub:globe':'globe'};
 const VIEWURL=k=>{if(TEMPLATE||!URLS.golem)return null;k=String(k);if(k==='datahub:globe')return URLS.globe;if(k.indexOf('datahub')===0)return URLS.datahub+'#'+(DHOF[k]||'brief');return URLS.golem+(ROOMOF[k]?'#'+ROOMOF[k]:'')};
 const HOUSEDOCS=TEMPLATE?{}:(PRIV.housedocs||{});
@@ -5429,7 +5440,7 @@ const TM={};async function build(){const t0=performance.now();let tm=t0;TM.start
   try{TM.water=mergeWater()}catch(e){TM.water=String(e)}tm=performance.now();makeClouds();makeCards();makeExtras();const PPL=LIVE?buildLife():buildPeople();mark('life');await Y();const WIN=LIVE?buildWindowDetail():0;mark('windows');await Y();wdOutdoor();const PRB=buildProps();wdApply();mark('props');await Y();TM.stairq=buildStairs();TM.chapel=chapelGlass();TM.bars=glazeInside();mark('stairs');await Y();const PRF=buildFloors();TM.trim=propTrim();fxInit();fxLightInit();postInit();rail();size();setTime('day');applyVis();styleUI();mark('scene');GOV.base=renderer.getPixelRatio();try{GOV.off=localStorage.getItem('euph_gov')==='off'}catch(e){}seaInit();seaUI();mark('sky');groveInit();mark('grove');flowersInit();mark('beds');if(posLoad())setTimeout(()=>toast('Walk, and you are back where you last stood.'),900);cullStep();
   window.__vx={THREE,finOn:()=>FIN_ON,kbot:()=>({P:kairosBot(),H:kairosHeadVox().V,person:personVox(outfit('none',null,()=>.37))}),groundY,get KH(){return KH},GOAL,goalOpen,URLS,WDRESS,wdApply,regRow,holesOf,T20,LMAP,LAMPS,LDAY,FULL,GROVE,IMP,BENCH,benchUI,pq:PQ,palette:PAL,trail:trailAt,settle:SETTLE,skins:CSKINS,windows:windowList,dep:DSTAT,seats:SEATS,kseat:()=>KSEAT,vr:VROOMS,dmap:DMAP,isWin:g=>isPane(g),isBlind:g=>g===C.winB,isInv:g=>!!(g&&(PF[g]&IV)),props:Object.assign({},PRO,PRB,typeof PRF!=="undefined"?PRF:{},typeof PRS!=="undefined"?PRS:{}),FP:()=>FPV,setFP:v=>{FPV=v},life:LIFE,win:WIN,post:postRender,style:SK,quadsTotal:quads,people:PPL,PEOPLE,moveTo,fall,setFly,tapJump,KEYS,PROPS,propGet,pbox,GOV,govSet,cullStep,pickTime,photo,posSave,posLoad,HALLS,GR:GROUPS,TM,pal:()=>PAL.length,grove:()=>({trees:GROVE.n,ready:GROVE.ready,got:GROVE.got||0,ver:TVER,drawn:GROVE.drawn,worker:!!TWORK,bad:TBAD}),pickSeason,seak:()=>SEAK,grassRGB:()=>PAL[C.grass[0]].map(v=>+v.toFixed(3)),flowers:()=>FBED?FBED.stats():null,KIT,SEASONS,sea:()=>SEA,liveAt:d=>{SEAD=d;pickTime('live')},perf:()=>({ms:GOV.ms,worst:GOV.worst,lv:GOV.lv,calls:renderer.info.render.calls,tris:renderer.info.render.triangles}),G,T,renderer,scene,camera,controls,quads,groups:GROUPS.length,trees:TREES,objs:OBJ.length,rooms:BLD.slice(1).reduce((s,b)=>s+b.rooms.length,0),gen:Math.round(t1-t0),mesh:Math.round(t2-t1),setTime,openB,close,setMode,PL,run,catalog,BLD,OBJ,goStairs,pickAt,FLIGHTS,stairRamp};
   TM.wall=Math.round(performance.now()-t0);frame();BENCH.first=performance.now();if(BENCH.on)setTimeout(benchUI,800);$('#bStats').onclick=()=>{const b=$('#bench');if(b)b.remove();else benchUI()};setTimeout(fxWarm,2500);if(!KIT||!GROVE.n||(GROVE.fd||0)>=GROVE.b.size*2)veilOff();else setTimeout(veilOff,8000)}
-function styleUI(){$('#brandS').textContent='Euphrates Hall v1.51 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
+function styleUI(){$('#brandS').textContent='Euphrates Hall v1.52 . the '+ST.n+' Estate';if(!SHOWCASE)$('#bStyle').hidden=true;$('#styleList').innerHTML=Object.entries(STYLES).map(([k,v])=>`<button class="b${k===SK?' on':''}" data-st="${k}">${esc(v.n)}<small>${esc(v.d)}</small></button>`).join('');
   $('#styleList').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>pickStyle(b.dataset.st));$('#bStyle').onclick=()=>{$('#stylebox').hidden=!$('#stylebox').hidden};
   if(ISO){for(const[id,dd]of[['#bRotL',-1],['#bRotR',1]]){const b=$(id);b.hidden=false;b.onclick=()=>{if(ISOV.rot)return;const a=ISOV.yaw;ISOV.rot={t0:performance.now(),a,b:a+dd*Math.PI/2};if(MODE==='walk'){ISOV.yaw=a+dd*Math.PI/2;ISOV.rot=null}}}}}
 $('#load').innerHTML='Raising Euphrates Hall<i>The '+ST.n+' Estate. Raising the mansion, about ten seconds.</i>';

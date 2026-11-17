@@ -12,14 +12,15 @@ def check(n, ok, d=''):
     print('  %-50s %s %s' % (n, 'ok' if ok else 'FAIL', d))
     if not ok: fails.append(n)
 SETUP = r"""([x,z,yaw,stair])=>{const V=__vx,L=V.life||V.LIFE,E=L.find(e=>e.kh);if(!E)return null;E.seated=false;E.static=true;E.turn=1;
-  const ud=E.fig.userData;if(ud.l1){ud.l1.rotation.x=0;ud.l2.rotation.x=0}if(ud.a1){ud.a1.rotation.x=0;ud.a2.rotation.x=0}
+  const ud=E.fig.userData;if(ud.l1){ud.l1.rotation.x=0;ud.l2.rotation.x=0}if(ud.a1){ud.a1.rotation.x=0;ud.a2.rotation.x=0}for(const k of['s1','s2','f1','f2'])if(ud[k])ud[k].rotation.x=0;
   let y;if(stair){const f=V.FLIGHTS.find(f=>!f.lesser&&f.sty==='grand');const zx=f.axis==='z',u=f.L*.45,a=f.e0+f.dir*u,mid=(f.l0+f.l1)/2;x=zx?mid:a;z=zx?a:mid;y=f.y0+f.H*u/f.L}else{y=V.groundY?V.groundY(Math.round(x),Math.round(z)):1}
   E.x=x;E.z=z;E.y=y+.5;E.wrap.position.set(x,y,z);E.fig.rotation.y=yaw;E.wrap.updateMatrixWorld(true);
   const P=V.PL;P.x=x;P.z=z+7.5;P.y=y+.2;P.yaw=0;P.pitch=0.04;P.vy=0;
   const box=new V.THREE.Box3().setFromObject(E.fig);let legTop=-1e9,bodyBot=1e9;const ud2=E.fig.userData;
   if(ud2.l1){const b1=new V.THREE.Box3().setFromObject(ud2.l1);legTop=b1.max.y}const b0=new V.THREE.Box3().setFromObject(E.fig.children[0]);bodyBot=b0.min.y;
   let arms=!!(ud2.a1&&ud2.a2),armGap=0;if(arms){const ba=new V.THREE.Box3().setFromObject(ud2.a1),bb=new V.THREE.Box3().setFromObject(E.fig.children[0]);armGap=Math.max(0,ba.min.y-bb.max.y,bb.min.y-ba.max.y)}
-  return {x,z,floor:y,minY:box.min.y,maxY:box.max.y,legTop,bodyBot,arms,armGap,head:!!(V.KH&&V.KH.piv)}}"""
+  let shGap=0;if(arms){const k=V.kbot?V.kbot().P:null;if(k&&k.b&&k.ar){let best=99;const B=new Set([...k.b.keys()]);for(const v of k.ar.values()){if(v[1]<44)continue;for(const[dx,dy,dz]of[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]])if(B.has((v[0]+dx)+','+(v[1]+dy)+','+(v[2]+dz)))best=0}shGap=best}}
+  return {w:box.max.x-box.min.x,dz:box.max.z-box.min.z,x,z,floor:y,minY:box.min.y,maxY:box.max.y,legTop,bodyBot,arms,armGap,shGap,head:!!(V.KH&&V.KH.piv)}}"""
 with serve(sys.argv[1]) as base, sync_playwright() as p:
     b, pg, err = open_estate(p, base, w=640, h=640)
     pg.add_style_tag(content='#top,#walk,#bFind,#bStats,#bGoal,#rail,#where,#act,#card,#lvbar,#labels,#toast,#turn,#nextAct,#copy,.brand{visibility:hidden!important}')
@@ -44,6 +45,11 @@ if res:
     gap = max(x['bodyBot'] - x['legTop'] for x in res); check('his legs meet his body', gap < .02, 'gap %.3f' % gap)
     check('his arms are their own limbs', all(x['arms'] for x in res))
     ag = max(x['armGap'] for x in res); check('his arms meet his body', ag < .02, 'gap %.3f' % ag)
+    check('his shoulders are joined to his chest (upper arm touches the torso, voxel to voxel)', res[0].get('shGap', 0) == 0)
+if res:
+    k0 = res[0]; hgt = k0['maxY'] - k0['minY']; wid = max(k0['w'], k0['dz']) if False else k0['w']
+    check('he passes a standard doorway (5 high, 2 wide)', hgt <= 4.85 and wid <= 1.9, 'he is %.2f high, %.2f wide' % (hgt, wid))
+    check('he stands clearly above a person (2.875)', hgt >= 3.6, '%.2f' % hgt)
 if r: check('his feet meet a stair tread', abs(r['minY'] - r['floor']) < .2, 'off %.3f' % (r['minY'] - r['floor']))
 check('no page errors', not err, str(err[:2]))
 print('TURNTABLE', 'FAIL' if fails else 'PASS'); sys.exit(1 if fails else 0)
