@@ -53,6 +53,11 @@ if __name__ == '__main__':
         fin_on = pg.evaluate('()=>__vx.finOn?__vx.finOn():true')
         if not fin_on: print('  the finish is switched off in this build (FIN_ON): census reported, not enforced')
         if c['bad'] and fin_on: fails.append('unfinished surfaces')
+        g = pg.evaluate("()=>__vx.glz?__vx.glz():null")
+        if g:
+            print('inside glazing: %d window runs barred, %d balcony doors with leaves' % (g['bars'], g['doors']))
+            if g['bars'] < 400: fails.append('windows without inside bars')
+            if g['doors'] < 2: fails.append('balcony doors without leaves')
         if os.environ.get('ZF_COL'): pg.evaluate('()=>{window.__ZCOL=new Map()}')
         z = pg.evaluate(ZF)
         for x in z['cols']: print('  col', x)
