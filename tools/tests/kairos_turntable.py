@@ -12,7 +12,7 @@ def check(n, ok, d=''):
     print('  %-50s %s %s' % (n, 'ok' if ok else 'FAIL', d))
     if not ok: fails.append(n)
 SETUP = r"""([x,z,yaw,stair])=>{const V=__vx,L=V.life||V.LIFE,E=L.find(e=>e.kh);if(!E)return null;E.seated=false;E.static=true;E.turn=1;
-  const ud=E.fig.userData;if(ud.l1){ud.l1.rotation.x=0;ud.l2.rotation.x=0}if(ud.a1){ud.a1.rotation.x=0;ud.a2.rotation.x=0}for(const k of['s1','s2','f1','f2'])if(ud[k])ud[k].rotation.x=0;
+  const ud=E.fig.userData;if(ud.l1){ud.l1.rotation.x=0;ud.l2.rotation.x=0}if(ud.a1){ud.a1.rotation.x=0;ud.a2.rotation.x=0}for(const k of['s1','s2','f1','f2'])if(ud[k])ud[k].rotation.x=(ud.rest&&ud.rest[k])||0;
   let y;if(stair){const f=V.FLIGHTS.find(f=>!f.lesser&&f.sty==='grand');const zx=f.axis==='z',u=f.L*.45,a=f.e0+f.dir*u,mid=(f.l0+f.l1)/2;x=zx?mid:a;z=zx?a:mid;y=f.y0+f.H*u/f.L}else{y=V.groundY?V.groundY(Math.round(x),Math.round(z)):1}
   E.x=x;E.z=z;E.y=y+.5;E.wrap.position.set(x,y,z);E.fig.rotation.y=yaw;E.wrap.updateMatrixWorld(true);
   const P=V.PL;P.x=x;P.z=z+7.5;P.y=y+.2;P.yaw=0;P.pitch=0.04;P.vy=0;

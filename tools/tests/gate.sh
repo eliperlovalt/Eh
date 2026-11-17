@@ -44,6 +44,14 @@ for f in src .; do
 done
 for f in src .; do
   s=$(date +%s)
+  if python3 tools/tests/objects_test.py "$f" > "$tmp/ob.log" 2>&1; then
+    echo "gate: ok   objects_test $f ($(( $(date +%s) - s ))s)"
+  else
+    echo "gate: FAIL objects_test $f"; tail -30 "$tmp/ob.log"; fail=1
+  fi
+done
+for f in src .; do
+  s=$(date +%s)
   if ZF_STRICT=0 python3 tools/tests/surface_test.py "$f" > "$tmp/sf.log" 2>&1; then
     echo "gate: ok   surface_test $f ($(( $(date +%s) - s ))s) $(grep -o 'z-fight scan.*' "$tmp/sf.log")"
   else
