@@ -6,24 +6,24 @@ State column: open / fixed in v1.5x / not a fault (why).
 ## The Kairos figure
 | # | Fault | State |
 |---|---|---|
-| K1 | The napkin reads as a white brick held flat on the left forearm; from the side, a box. Make it a thin cloth draped over the forearm, hanging both sides. | open |
-| K2 | The white gloves still turn pink at dusk (beside-a-person, middle panel). | open |
+| K1 | The napkin reads as a white brick held flat on the left forearm; from the side, a box. Make it a thin cloth draped over the forearm, hanging both sides. | fixed in v1.56: one voxel thin, hanging both sides |
+| K2 | The white gloves still turn pink at dusk (beside-a-person, middle panel). | fixed in v1.56: cuffs, gloves and napkin on their own material that holds its white |
 
 ## High
 | # | Fault | Pose | State |
 |---|---|---|---|
-| H1 | Bachelors' Corridor: the room beyond the green corridor is see-through: pale translucent floor tiles with a wood runner showing through (x 495 to 760, y 510 to 675), a glassy right wall with a lantern behind it (x 670 to 760). Also r064b (x 395 to 465). | r070a [0,25.5,12,0,0.08]; r064b [8,25.5,-64,3.1416,0.08] | open |
+| H1 | Bachelors' Corridor: the room beyond the green corridor is see-through: pale translucent floor tiles with a wood runner showing through (x 495 to 760, y 510 to 675), a glassy right wall with a lantern behind it (x 670 to 760). Also r064b (x 395 to 465). | r070a [0,25.5,12,0,0.08]; r064b [8,25.5,-64,3.1416,0.08] | not a fault: the glass lantern over the two-storey Saloon, seen from the second floor |
 
 ## Medium
 | # | Fault | Pose | State |
 |---|---|---|---|
-| M1 | The Women's Stair and the Men's Stair: flat dark gilt-edged plates, no flight; the Men's Stair barrel sinks into the plate; a loose red bar on the jamb (x 483 to 502, y 412 to 535). | r011a [-32,0.5,-24,0,0.08]; r013a [32,0.5,-24,0,0.08] | open |
-| M2 | Rooms not to their names: the Billiard Room (no table; looks into the grand stair hall); the Schoolroom (one floor lamp only); the Beer Cellar (empty, eye-level windows onto the lawn). | r028a [-30,7.5,-2,0,0.08]; r052a [52,17.5,4,0,0.08]; r006a [54,0.5,-44,0,0.08] | open |
+| M1 | The Women's Stair and the Men's Stair: flat dark gilt-edged plates, no flight; the Men's Stair barrel sinks into the plate; a loose red bar on the jamb (x 483 to 502, y 412 to 535). | r011a [-32,0.5,-24,0,0.08]; r013a [32,0.5,-24,0,0.08] | part fixed in v1.56: both stairs are fine flights (seen from the foot); 14 rugs, runners and pieces lying in stairs removed. Thin dark lines across the Men's Stair treads at mid height: open |
+| M2 | Rooms not to their names: the Billiard Room (no table; looks into the grand stair hall); the Schoolroom (one floor lamp only); the Beer Cellar (empty, eye-level windows onto the lawn). | r028a [-30,7.5,-2,0,0.08]; r052a [52,17.5,4,0,0.08]; r006a [54,0.5,-44,0,0.08] | fixed in v1.56 for the Schoolroom and the Beer Cellar. The Billiard Room pose is stale: the room has its table; the pose stands in a stair hall |
 | M3 | Pale vertical seams, full height, over the coloured upper wall (not the dado stripes); r050a has a matching step in the cornice. | r026a [-52,7.5,4,0,0.08] x 325; r050a [52,17.5,-30,0,0.08] x 320 to 330; r055a x 462; r057a [25,17.5,12,0,0.08] x 235 to 250; also r037a, r049b, r052a, r058a | open |
-| M4 | The Ambulance Bay: a large draped statue fills the bay (x 535 to 885); its head is three loose boxes; green leaf cubes float beside it (x 435 to 575, y 595 to 740). Remove the statue from this room. | r151a [11,0.5,204,0,0.08] | open |
-| M5 | The Nave: a robed figure on a plinth stands in the one-block centre aisle and blocks it; it has a skin-coloured face, so it reads as a person. A pale square column stands inside the west doorway (x 390 to 495, y 215 to 700): perhaps the "central pier" of His Grace's photo. | r129b [-155,0.5,-92,3.1416,0.08] | open |
-| M6 | Steward's Office, Agent's Room, Farm Office: a legless side-table top with papers and a red cube floats and runs into the sofa back (r124a x 275 to 450, y 575 to 645); a gold tray with two bottles and a candle floats (r156a x 438 to 600, y 675 to 750); the Farm Office bust's pedestal passes up through its table. | r124a [75,7.5,-10,0,0.08]; r125a [95,7.5,-10,0,0.08]; r156a [-125,0.5,130,0,0.08] | open |
-| M7 | The flower vase stands on the washstand jug's mouth, where the candle used to be. | r079a [-59,32.5,-56,0,0.08]; r146b [84.4,10.7,-96.4,2.0636,0.16]; r092a | open |
+| M4 | The Ambulance Bay: a large draped statue fills the bay (x 535 to 885); its head is three loose boxes; green leaf cubes float beside it (x 435 to 575, y 595 to 740). Remove the statue from this room. | r151a [11,0.5,204,0,0.08] | fixed in v1.56: no marble in a working room (it was the new bust, seen close) |
+| M5 | The Nave: a robed figure on a plinth stands in the one-block centre aisle and blocks it; it has a skin-coloured face, so it reads as a person. A pale square column stands inside the west doorway (x 390 to 495, y 215 to 700): perhaps the "central pier" of His Grace's photo. | r129b [-155,0.5,-92,3.1416,0.08] | open: the column is the Tower Porch door's jamb seen through the Nave door; the two doors stand one block apart by wall move 23. His Grace's choice whether to widen one |
+| M6 | Steward's Office, Agent's Room, Farm Office: a legless side-table top with papers and a red cube floats and runs into the sofa back (r124a x 275 to 450, y 575 to 645); a gold tray with two bottles and a candle floats (r156a x 438 to 600, y 675 to 750); the Farm Office bust's pedestal passes up through its table. | r124a [75,7.5,-10,0,0.08]; r125a [95,7.5,-10,0,0.08]; r156a [-125,0.5,130,0,0.08] | part fixed in v1.56: 12 small pieces left in the air are removed, a bust on a table removed. The Farm Office bust behind its table: open |
+| M7 | The flower vase stands on the washstand jug's mouth, where the candle used to be. | r079a [-59,32.5,-56,0,0.08]; r146b [84.4,10.7,-96.4,2.0636,0.16]; r092a | fixed in v1.56: nothing stands on a washstand (46 pieces off) |
 
 ## Low
 | Fault | Pose | State |
@@ -32,13 +32,13 @@ State column: open / fixed in v1.5x / not a fault (why).
 | Business Room: figures painted as live people stand on statue plinths (x 880 to 1050; r021b x 100 to 270); a desk lamp inside the seated woman (x 500 to 560, y 545 to 625). | r021a [-34,7.5,-44,0,0.08] | open |
 | Servants' Hall: a woman stands inside a chair (x 165 to 260, y 425 to 585). | r012a [0,0.5,-6,0,0.08] | open |
 | Stray cords: from the cornice to a table candelabra (x 428 to 432); a red line in the doorway (r052b x 828 to 833). | r033a [-49,7.5,28,0,0.08] | open |
-| Contents not to names: Silver Safe, Coal Store, Gun Room, Muniment Room, Tack Room, Pardes crypt study (bare). | r008a [-52,0.5,-10,0,0.08]; r019a [20,0.5,28,0,0.08]; r031a [30,7.5,-2,0,0.08]; r024a [54,7.5,-44,0,0.08]; r135b [118,0.5,-110,3.1416,0.08]; r127b [-155,-4.5,-92,3.1416,0.08] | open |
+| Contents not to names: Silver Safe, Coal Store, Gun Room, Muniment Room, Tack Room, Pardes crypt study (bare). | r008a [-52,0.5,-10,0,0.08]; r019a [20,0.5,28,0,0.08]; r031a [30,7.5,-2,0,0.08]; r024a [54,7.5,-44,0,0.08]; r135b [118,0.5,-110,3.1416,0.08]; r127b [-155,-4.5,-92,3.1416,0.08] | fixed in v1.56 for the Silver Safe, Coal Store, Muniment Room and Pardes. Gun Room and Tack Room: open |
 | Agent's Room: two identical calendars, both over the door case. | r125b [95,7.5,-22,3.1416,0.08] | open |
 | Coach House: the right cart's wheel is loose cubes on the floor (x 895 to 1040); inner windows show red wall behind the glass. | r137a [79,0.5,-78,0,0.08] | open |
 | Watch Room: the bicycle runs into a chair; its wheels are scattered cubes. | r153a [11,7.5,204,0,0.08] | open |
 | Tower Porch: the stained glass sits off its frame (x 850 to 915); the porch is flat dark grey. | r130a [-174.4,1.7,-86.6,-1.0427,0.16] | open |
 | Forge: the bar stock floats in staggered rows and crosses the window frame. | r136b [130,0.5,-110,3.1416,0.08] | open |
-| Lodging III: a grey block with a red top on the washstand; the same block on the chest in r081a. | r142a [99.5,9.5,-100,0,0.08]; r081a [-39,32.5,-56,0,0.08] | open |
+| Lodging III: a grey block with a red top on the washstand; the same block on the chest in r081a. | r142a [99.5,9.5,-100,0,0.08]; r081a [-39,32.5,-56,0,0.08] | fixed in v1.56 on the washstand; the chest in r081a: open |
 
 ## Still there from the last sweep
 | Fault | Pose | State |

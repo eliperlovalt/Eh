@@ -265,3 +265,10 @@ Since v1.55 (Estate Final, batches D and F, parts and the village stairs):
   Footprints are unchanged, so nothing new clips.
 - The village houses' stairs are fine flights (`flight2`, marked `lesser` and `vil`): 26 flights, oak treads, a string, balusters and a newel; they were bare plank blocks. The stair starts in a corner, so its first step is mounted from the room beside it (the unseen wall along that step is taken away); all 120 village rooms are reached. They are drawn within 40 blocks only (`ind` on the stair group): with the long view on, every "near" stair mesh is drawn everywhere, and the 26 flights cost 52 draws and 107k triangles from the lawn until they were tied to real distance.
 - Kairos stills of the final figure: `tools/shots/kairos-v155/`.
+
+Since v1.56 (KAIROS's sweep of v1.55, `tools/FAULTS-kairos-v155.md`; the cheap fixes, by His Grace's order to keep it lean):
+- Kairos: the napkin is one voxel thin and hangs down both sides of the forearm; the whites of the forearm (cuff, glove, napkin) are their own parts (`wl`, `wr`) on `KMATW`, a material with an emissive that follows the daylight (`sun.intensity`), so they hold their white at dusk and do not glow at night; a whiter shirt-front plate; the monocle's lens shows more as the light goes.
+- `tidy()`: nothing stands or lies in a stair (14: old runners and rugs lay as plates across the fine treads, a barrel sank into the Men's Stair); nothing stands on a washstand (46); a bust, statue or suit of armour stands on the floor, a statue only in a room 12 across and 7 high, none by a doorway (measured on the wall), none in a working room; a small piece left in the air when the table under it went is removed (12).
+- `STOCKX` adds the Schoolroom, the Beer Cellar, the Silver Safe, the Coal Store, the Muniment Room and Pardes.
+- `bust`: the side blocks of the head are gone (seen close they read as loose boxes).
+- Not faults: the "see-through room" off the Bachelors' Corridor is the glass lantern over the Saloon; the Billiard Room pose is stale. Open: see the fault file.

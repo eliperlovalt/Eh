@@ -58,7 +58,7 @@ def('bust',{label:'Marble bust on a column',room:'Library, Long Gallery, Entranc
   k.box(-3,0,-3,3,1,3,m);k.box(-2,2,-2,2,2,2,v);for(let y=3;y<=17;y++)for(let x=-2;x<=2;x++)for(let z=-2;z<=2;z++){if(Math.abs(x)===2&&Math.abs(z)===2)continue;if(Math.abs(x)<2&&Math.abs(z)<2)continue;k.put(x,y,z,(x+z)%2?v:m)}
   k.box(-2,18,-2,2,18,2,v);k.box(-3,19,-3,3,20,3,m);
   k.box(-3,21,-2,3,22,2,m);k.box(-4,22,-1,4,23,1,m);k.box(-3,23,-2,3,24,2,m);for(const x of[-3,-1,1,3])k.put(x,21,2,v);for(let i=0;i<4;i++){k.put(-3+i,24-i,3,v);k.put(3-i,24-i,3,v)}
-  k.box(-1,25,-1,1,25,1,m);k.box(-2,26,-2,2,30,2,m);k.box(-2,31,-2,2,31,1,v);k.box(-2,27,-3,2,31,-3,v);k.box(-3,28,-2,-3,30,0,v);k.box(3,28,-2,3,30,0,v);
+  k.box(-1,25,-1,1,25,1,m);k.box(-2,26,-2,2,30,2,m);k.box(-2,31,-2,2,31,2,v);k.box(-2,27,-3,2,31,-3,v);k.box(-2,29,-2,-2,30,-1,v);k.box(2,29,-2,2,30,-1,v);
   k.box(-2,30,3,2,30,3,v);k.put(-1,29,3,d);k.put(1,29,3,d);k.box(0,27,3,0,28,3,m);k.put(0,28,4,m);k.box(-1,26,3,1,26,3,d);return{V:k.V,size:[.8,3.6,.8]}});
 def('birdcage',{label:'Birdcage on a stand',room:'Morning Room, Orangery',act:'none'},o=>{const k=kit();
   k.disc(0,0,0,2,C.brass);k.box(0,1,0,0,16,0,C.brass);for(let y=17;y<=25;y++)for(let a=0;a<12;a++){const t=a/12*6.28,r=y>23?4-(y-23)*1.5:4;if(a%2||y===17||y===20)k.put(Math.round(Math.cos(t)*r),y,Math.round(Math.sin(t)*r),C.brass)}
