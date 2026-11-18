@@ -263,5 +263,5 @@ Since v1.55 (Estate Final, batches D and F, parts and the village stairs):
   - `lectern` (`props2.js`): an eagle with a head, a beak and spread wings on a knopped stem with three feet.
   - `altarTable` (`props3.js`): orphrey bands and a cross on the frontal, a standing cross between four candles, the book on a cushion.
   Footprints are unchanged, so nothing new clips.
-- The village houses' stairs are fine flights (`flight2`, marked `lesser` and `vil`): 26 flights, oak treads, a string, balusters and a newel; they were bare plank blocks. The stair starts in a corner, so its first step is mounted from the room beside it (the unseen wall along that step is taken away); all 120 village rooms are reached.
+- The village houses' stairs are fine flights (`flight2`, marked `lesser` and `vil`): 26 flights, oak treads, a string, balusters and a newel; they were bare plank blocks. The stair starts in a corner, so its first step is mounted from the room beside it (the unseen wall along that step is taken away); all 120 village rooms are reached. They are drawn within 40 blocks only (`ind` on the stair group): with the long view on, every "near" stair mesh is drawn everywhere, and the 26 flights cost 52 draws and 107k triangles from the lawn until they were tied to real distance.
 - Kairos stills of the final figure: `tools/shots/kairos-v155/`.
