@@ -62,7 +62,10 @@ def('bisellium',{label:'The Bisellium',room:'Great Hall dais',act:'sit, talk to 
   k.box(-9,10,-7,9,30,-7,C.giltD);k.box(-7,12,-6,7,28,-6,C.damask);for(let x=-6;x<=6;x++)k.put(x,31,-7,x%2?C.gilt:C.gold);k.box(-2,32,-7,2,34,-7,C.gold);k.put(0,35,-7,C.white);
   for(const x of[-11,11])for(let y=4;y<=8;y++){k.put(x,y,-8,C.gilt);k.put(x,y,8,C.gilt)}return{V:k.V,size:[2.9,4.1,2.2]}});
 def('pew',{label:'Chapel pew',room:'Chapel',act:'sit'},o=>{const k=kit(),W=o.w||16;
-  k.box(-W,0,-3,-W,9,4,C.oak);k.box(W,0,-3,W,9,4,C.oak);k.box(-W,5,-2,W,5,3,C.oakL,'seat');k.box(-W,6,-3,W,14,-3,C.oak);k.box(-W,14,-4,W,14,-3,C.oakL);k.box(-W+1,1,4,W-1,2,4,C.damask);return{V:k.V,size:[(2*W+1)/8.7,1.7,1]}});
+  /* v1.55: shaped ends with a poppy-head and a sunk panel, a framed back with a book ledge behind, a lipped seat, a kneeler on its board (it was two slabs and a plank) */
+  for(const x of[-W,W]){k.box(x,0,-3,x,15,-1,C.oak);k.box(x,0,0,x,11,2,C.oak);k.box(x,0,3,x,9,4,C.oak);k.box(x,16,-3,x,17,-2,C.oakL);k.put(x,18,-3,C.oakL);k.box(x,5,0,x,8,1,C.ebony);k.box(x,12,-3,x,13,-2,C.ebony)}
+  k.box(-W,5,-2,W,5,3,C.oakL,'seat');k.box(-W+1,4,3,W-1,4,3,C.oak);k.box(-W,6,-3,W,13,-3,C.oak);k.box(-W,14,-4,W,14,-3,C.oakL);k.box(-W,6,-3,W,6,-3,C.oakL);
+  for(let x=-W+5;x<W;x+=5)k.box(x,7,-3,x,13,-3,C.oakL);k.box(-W+1,10,-4,W-1,10,-4,C.oakL);k.box(-W+1,0,4,W-1,0,5,C.oak);k.box(-W+1,1,4,W-1,2,4,C.damask);return{V:k.V,size:[(2*W+1)/8.7,1.7,1]}});
 
 /* ---------------- tables and desks ---------------- */
 def('tableDining',{label:'State dining table, laid',room:'State Dining Room, Servants\' Hall (plain)',act:'touch: today'},o=>{const k=kit(),L=o.len||40,wd=o.wood||C.mah,laid=o.laid!==false;

@@ -107,7 +107,10 @@ def('font',{label:'Stone font with oak cover',room:'The village church',act:'loo
 def('churchBell',{label:'Church bell in its frame',room:'The village church tower',act:'ring'},o=>{const k=kit();for(const x of[-8,8])k.box(x,0,-1,x,22,1,C.oak);k.box(-8,22,-1,8,23,1,C.oak);for(let y=8;y<=19;y++){const r=Math.round(2+((19-y)/11)**1.4*5);k.ring(0,y,0,r,C.brass)}k.ring(0,8,0,7,'#9c7a1c');k.box(0,4,0,0,9,0,C.iron);k.box(0,20,0,0,21,0,C.brass);
   k.box(-8,21,0,-12,21,0,C.oak);for(let y=0;y<=20;y++)k.put(-12,y,0,'#c9a36a');return{V:k.V,size:[2.8,2.8,.9]}});
 def('altarTable',{label:'Altar table with frontal and candles',room:'The village church, the Chapel',act:'look'},o=>{const k=kit(),f=o.c||'#7a1f2a';k.box(-12,0,-4,12,10,4,C.oak);k.box(-12,1,5,12,10,5,f,'face');for(let x=-11;x<=11;x+=2)k.put(x,10,5,C.gold,'face');k.box(-13,11,-5,13,11,5,C.white);
-  for(const x of[-8,8]){k.box(x,12,0,x,13,0,C.brass);k.box(x,14,0,x,18,0,C.white);k.put(x,19,0,C.flame,'flame')}k.box(-3,12,-1,3,13,1,C.leather);return{V:k.V,size:[3,2.3,1.3]}});
+  /* v1.55: orphrey bands and a cross on the frontal, a standing cross between four candles, the book on its cushion (it was a box with two candles) */
+  for(const x of[-7,7])k.box(x,1,5,x,9,5,C.gold,'face');k.box(0,3,5,0,8,5,C.gold,'face');k.box(-2,6,5,2,6,5,C.gold,'face');
+  for(const x of[-10,-6,6,10]){const h=Math.abs(x)===6?19:17;k.box(x,12,0,x,13,0,C.brass);k.box(x,14,0,x,h,0,C.white);k.put(x,h+1,0,C.flame,'flame')}
+  k.box(-1,12,-2,1,12,-1,C.brass);k.box(0,13,-2,0,21,-2,C.brass);k.box(-2,18,-2,2,18,-2,C.brass);k.box(-3,12,1,3,12,3,f);k.box(-2,13,1,2,13,2,C.leather);return{V:k.V,size:[3,2.3,1.3]}});
 
 /* ---------------- variant map: layout.js picks one per room, so no two rooms repeat ---------------- */
 P.variants={chairDining:['chairDining','chairHall','windsor'],armchair:['armchair','fauteuil'],sofa:['sofa','settee','chaise'],libraryTable:['libraryTable','pedestalTable'],chandelier:['chandelier','chandelierGilt'],bed4:['bed4','fourPosterOak']};

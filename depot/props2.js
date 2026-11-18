@@ -53,9 +53,13 @@ def('tapestry',{label:'Tapestry (a hunt in the park)',room:'Great Hall, Long Gal
     else{const sky=y>H*.62,hill=y<H*.3+Math.sin(x/4)*2;c=sky?(r()<.1?'#d8d0b8':'#9fb3bf'):hill?(r()<.3?'#4a5a2a':'#5a6b33'):(r()<.2?'#6b7a3a':'#7a8a4a');
       const tx=Math.round(Math.sin(x*1.7)*3);if(!sky&&Math.abs(x%7)===0&&y<H*.62&&y>H*.3+tx)c='#3a2a1e';if(Math.abs(x-3)<=2&&Math.abs(y-H*.42)<=1)c='#a8703f';if(x===5&&y>H*.42&&y<H*.42+3)c='#d8c9a0'}
     k.put(x,y+20,0,c,'face')}k.box(-W-1,H+21,1,W+1,H+21,1,C.wal);return{V:k.V,size:[(2*W+3)/8.7,(H+22)/8.7,.2],anchor:'wall'}});
-def('bust',{label:'Marble bust on a column',room:'Library, Long Gallery, Entrance Hall',act:'look'},o=>{const k=kit(),m=C.marble;
-  k.box(-3,0,-3,3,1,3,m);for(let y=2;y<=18;y++)k.ring(0,y,0,2,y%4?m:C.marbleV);k.box(-3,19,-3,3,20,3,m);k.box(-3,21,-2,3,23,2,m);k.box(-2,24,-1,2,24,1,m);k.box(-2,25,-2,2,30,2,m);k.put(0,28,3,m);k.box(-2,31,-2,2,31,1,m);
-  k.put(-1,28,2,C.marbleV);k.put(1,28,2,C.marbleV);return{V:k.V,size:[.8,3.6,.8]}});
+def('bust',{label:'Marble bust on a column',room:'Library, Long Gallery, Entrance Hall',act:'look'},o=>{const k=kit(),m=C.marble,v=C.marbleV,d='#a9a294';
+  /* v1.55: a head with hair, a brow, eyes, a nose and a mouth on draped shoulders, on a fluted column with a base and a cap (it was a banded post with a blank block: the "blank grey statues" of the halls) */
+  k.box(-3,0,-3,3,1,3,m);k.box(-2,2,-2,2,2,2,v);for(let y=3;y<=17;y++)for(let x=-2;x<=2;x++)for(let z=-2;z<=2;z++){if(Math.abs(x)===2&&Math.abs(z)===2)continue;if(Math.abs(x)<2&&Math.abs(z)<2)continue;k.put(x,y,z,(x+z)%2?v:m)}
+  k.box(-2,18,-2,2,18,2,v);k.box(-3,19,-3,3,20,3,m);
+  k.box(-3,21,-2,3,22,2,m);k.box(-4,22,-1,4,23,1,m);k.box(-3,23,-2,3,24,2,m);for(const x of[-3,-1,1,3])k.put(x,21,2,v);for(let i=0;i<4;i++){k.put(-3+i,24-i,3,v);k.put(3-i,24-i,3,v)}
+  k.box(-1,25,-1,1,25,1,m);k.box(-2,26,-2,2,30,2,m);k.box(-2,31,-2,2,31,1,v);k.box(-2,27,-3,2,31,-3,v);k.box(-3,28,-2,-3,30,0,v);k.box(3,28,-2,3,30,0,v);
+  k.box(-2,30,3,2,30,3,v);k.put(-1,29,3,d);k.put(1,29,3,d);k.box(0,27,3,0,28,3,m);k.put(0,28,4,m);k.box(-1,26,3,1,26,3,d);return{V:k.V,size:[.8,3.6,.8]}});
 def('birdcage',{label:'Birdcage on a stand',room:'Morning Room, Orangery',act:'none'},o=>{const k=kit();
   k.disc(0,0,0,2,C.brass);k.box(0,1,0,0,16,0,C.brass);for(let y=17;y<=25;y++)for(let a=0;a<12;a++){const t=a/12*6.28,r=y>23?4-(y-23)*1.5:4;if(a%2||y===17||y===20)k.put(Math.round(Math.cos(t)*r),y,Math.round(Math.sin(t)*r),C.brass)}
   k.put(0,26,0,C.gold);k.put(0,20,0,'#e3b23c');k.put(0,21,0,'#e3b23c');k.put(1,21,0,'#d9531c');return{V:k.V,size:[1,3.1,1]}});
@@ -111,7 +115,9 @@ def('cardTable',{label:'Card table, cards dealt',room:'Card Room',act:'play'},o=
   for(const[x,z]of[[0,-4],[0,4],[-4,0],[4,0]]){k.put(x,10,z,C.white,'face');k.put(x+(z?1:0),10,z+(x?1:0),C.white,'face')}k.box(-1,10,-1,0,11,0,'#7a1f2a');return{V:k.V,size:[1.5,1.2,1.5]}});
 
 /* ---------------- the chapel and the crypt ---------------- */
-def('lectern',{label:'Eagle lectern',room:'Chapel',act:'read'},o=>{const k=kit();k.disc(0,0,0,3,C.brass);for(let y=1;y<=16;y++)k.ring(0,y,0,1,C.brass);k.box(-3,17,-2,3,18,3,C.brass);k.box(-1,19,3,1,20,5,C.brass);k.box(-5,18,-1,-4,19,2,C.brass);k.box(4,18,-1,5,19,2,C.brass);
+def('lectern',{label:'Eagle lectern',room:'Chapel',act:'read'},o=>{const k=kit();k.disc(0,0,0,4,C.brass);k.disc(0,1,0,3,C.brass);for(const[x,z]of[[4,0],[-2,3],[-2,-3]])k.put(x,0,z,C.gold);for(let y=2;y<=16;y++)k.ring(0,y,0,1,C.brass);k.disc(0,8,0,2,C.gold);k.disc(0,15,0,2,C.gold);
+  /* v1.55: an eagle with a head, a beak and spread wings on a knopped stem with three feet (it was a stick with a slab) */
+  k.box(-3,17,-2,3,18,3,C.brass);k.box(-1,19,3,1,20,5,C.brass);k.box(-1,21,4,0,22,5,C.brass);k.put(0,21,6,C.gold);k.put(-1,21,6,C.gold);k.put(-1,22,5,C.ebony);for(const s of[-1,1]){k.box(s*4,18,-1,s*5,19,2,C.brass);k.box(s*6,19,-1,s*6,20,1,C.brass);k.put(s*7,20,0,C.gold)}
   k.box(-3,19,-2,3,19,2,C.damask);k.box(-3,20,-2,3,20,2,C.paper,'face');return{V:k.V,size:[1.2,2.4,1]}});
 def('candleStand',{label:'Candle stand',room:'Chapel, crypt',act:'light'},o=>{const k=kit();k.disc(0,0,0,3,C.brass);k.box(0,1,0,0,12,0,C.brass);k.disc(0,13,0,4,C.brass);const r=rng(3);for(let i=0;i<9;i++){const a=i/9*6.28;const x=Math.round(Math.cos(a)*3),z=Math.round(Math.sin(a)*3);const h=1+Math.floor(r()*3);k.box(x,14,z,x,13+h,z,C.white);k.put(x,14+h,z,C.flame,'flame')}
   return{V:k.V,size:[1,2,1]}});
@@ -163,9 +169,13 @@ def('fountain',{label:'Fountain with three basins',room:'Parterre, forecourt',ac
   for(const[r,y]of[[9,16],[5,26]]){k.disc(0,y,0,r,C.stone);k.ring(0,y+1,0,r,C.stone);k.disc(0,y+1,0,r-1,'#5a8aa8');for(let yy=y+1;yy<=y+9&&r>6;yy++)k.ring(0,yy,0,1,C.stone)}
   for(let y=28;y<=34;y++)k.put(0,y,0,'#bfd8e8');for(let a=0;a<8;a++){const t=a/8*6.28;for(let s=1;s<=5;s++)k.put(Math.round(Math.cos(t)*(5+s)),26-Math.round(s*s/3),Math.round(Math.sin(t)*(5+s)),'#bfd8e8')}
   for(let a=0;a<12;a++){const t=a/12*6.28;for(let s=2;s<=6;s++)k.put(Math.round(Math.cos(t)*(9+s)),16-Math.round(s*s/3),Math.round(Math.sin(t)*(9+s)),'#bfd8e8')}return{V:k.V,size:[(2*R+1)/8.7,4,(2*R+1)/8.7]}});
-def('statue',{label:'Statue on a pedestal',room:'Parterre, the avenue, Long Walk',act:'look'},o=>{const k=kit(),m=C.marble;
-  k.box(-5,0,-5,5,2,5,C.stone);k.box(-4,3,-4,4,14,4,C.stone);k.box(-5,15,-5,5,16,5,C.stone);k.box(-2,17,-1,-1,27,1,m);k.box(1,17,-1,2,27,1,m);k.box(-3,28,-2,3,36,2,m);k.box(-3,33,-2,3,40,2,m);
-  for(let y=24;y<=36;y++)k.put(-4,y,0,m);for(let y=30;y<=44;y++)k.put(4,y,-Math.round((y-30)/5),m);k.box(-2,41,-2,2,45,2,m);for(let y=17;y<=30;y++)for(let x=-4;x<=4;x++)if(Math.abs(x)>=3&&y<28)k.put(x,y,2,C.marbleV);return{V:k.V,size:[1.2,5.3,1.2]}});
+def('statue',{label:'Statue on a pedestal',room:'Parterre, the avenue, Long Walk',act:'look'},o=>{const k=kit(),m=C.marble,v=C.marbleV;
+  /* v1.55: a draped figure with a head, hair, shoulders and arms on a panelled pedestal (it was a blank block on a block) */
+  k.box(-5,0,-5,5,1,5,C.stone);k.box(-4,2,-4,4,13,4,C.stone);k.box(-5,14,-5,5,15,5,C.stone);for(const s of[-4,4]){k.box(-2,4,s,2,11,s,v);k.box(s,4,-2,s,11,2,v)}
+  k.box(-2,16,-1,2,16,2,m);for(let y=17;y<=30;y++){const r=y<21?3:y<27?2.6:2.2,rz=y<21?2:1.6;for(let x=-3;x<=3;x++)for(let z=-2;z<=2;z++)if(Math.abs(x)<=r&&Math.abs(z)<=rz)k.put(x,y,z,(z===Math.floor(rz)&&(x+y)%3===0)||(x===Math.floor(r)&&y%4===0)?v:m)}
+  for(let i=0;i<8;i++)k.put(-3+i,30-i,2,v);k.box(-3,31,-1,3,37,1,m);k.box(-4,36,-1,4,38,1,m);for(let x=-3;x<=3;x+=2)k.box(x,31,1,x,35,1,v);
+  k.box(-4,29,-1,-4,35,0,m);k.put(-4,28,0,v);k.box(4,33,-1,4,35,0,m);k.box(4,32,0,4,33,3,m);k.box(3,33,3,5,35,4,v);k.put(4,36,4,v);
+  k.box(-1,39,-1,0,39,0,m);k.box(-2,40,-2,1,44,1,m);k.box(-2,44,-2,1,45,1,v);k.box(-2,40,-2,1,43,-2,v);k.box(-1,45,-3,0,45,-2,v);k.put(-2,42,2,v);k.put(1,42,2,v);k.put(-1,41,2,m);k.put(0,41,2,m);k.put(-1,40,2,v);k.put(0,40,2,v);return{V:k.V,size:[1.2,5.3,1.2]}});
 def('sundial',{label:'Sundial',room:'Parterre, kitchen garden',act:'tell the time'},o=>{const k=kit();k.box(-3,0,-3,3,1,3,C.stone);for(let y=2;y<=8;y++)k.ring(0,y,0,y===5?2:1,C.stone);k.disc(0,9,0,4,C.brass,'face');for(let a=0;a<12;a++){const t=a/12*6.28;k.put(Math.round(Math.cos(t)*4),10,Math.round(Math.sin(t)*4),C.black)}
   for(let z=-3;z<=1;z++)for(let y=10;y<=10+Math.round((z+3)*.8);y++)k.put(0,y,z,C.brass);return{V:k.V,size:[1,1.4,1]}});
 def('lampPost',{label:'Gas lamp post',room:'The drive, the village, the terrace',act:'light at dusk'},o=>{const k=kit();k.box(-2,0,-2,2,3,2,C.iron);for(let y=4;y<=30;y++){if(y<11||y===20||y===21)k.ring(0,y,0,1,C.iron);k.put(0,y,0,C.iron)}k.box(-3,30,0,3,30,0,C.iron);
